@@ -1053,6 +1053,82 @@
             </div>
           </div>
         </div>
+        <h2 class="right-line mt-6">Related Posts</h2>
+
+        <div class="row masonry-container">
+          <div class="col-md-4 masonry-item">
+            <article class="card card-info mb-4">
+              <figure class="ms-thumbnail ms-thumbnail-left">
+                <img src="assets/img/demo/post1.jpg" alt="" class="img-fluid">
+                <figcaption class="ms-thumbnail-caption text-center">
+                  <div class="ms-thumbnail-caption-content">
+                    <h3 class="ms-thumbnail-caption-title">Lorem ipsum dolor sit</h3>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                    <div class="mt-2">
+                      <a href="javascript:void(0)" class="btn-circle btn-circle-raised btn-circle-sm mr-1 btn-circle-white color-danger">
+                        <i class="zmdi zmdi-favorite"></i>
+                      </a>
+                      <a href="javascript:void(0)" class="btn-circle btn-circle-raised btn-circle-sm ml-1 mr-1 btn-circle-white color-warning">
+                        <i class="zmdi zmdi-star"></i>
+                      </a>
+                      <a href="javascript:void(0)" class="btn-circle btn-circle-raised btn-circle-sm ml-1 btn-circle-white color-success">
+                        <i class="zmdi zmdi-share"></i>
+                      </a>
+                    </div>
+                  </div>
+                </figcaption>
+              </figure>
+            </article>
+          </div>
+          <div class="col-md-4 masonry-item">
+            <article class="card card-danger mb-4">
+              <figure class="ms-thumbnail ms-thumbnail-left">
+                <img src="assets/img/demo/post5.jpg" alt="" class="img-fluid">
+                <figcaption class="ms-thumbnail-caption text-center">
+                  <div class="ms-thumbnail-caption-content">
+                    <h3 class="ms-thumbnail-caption-title">Lorem ipsum dolor sit</h3>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                    <div class="mt-2">
+                      <a href="javascript:void(0)" class="btn-circle btn-circle-raised btn-circle-sm mr-1 btn-circle-white color-danger">
+                        <i class="zmdi zmdi-favorite"></i>
+                      </a>
+                      <a href="javascript:void(0)" class="btn-circle btn-circle-raised btn-circle-sm ml-1 mr-1 btn-circle-white color-warning">
+                        <i class="zmdi zmdi-star"></i>
+                      </a>
+                      <a href="javascript:void(0)" class="btn-circle btn-circle-raised btn-circle-sm ml-1 btn-circle-white color-success">
+                        <i class="zmdi zmdi-share"></i>
+                      </a>
+                    </div>
+                  </div>
+                </figcaption>
+              </figure>
+            </article>
+          </div>
+          <div class="col-md-4 masonry-item">
+            <article class="card card-success mb-4">
+              <figure class="ms-thumbnail ms-thumbnail-left">
+                <img src="assets/img/demo/post5.jpg" alt="" class="img-fluid">
+                <figcaption class="ms-thumbnail-caption text-center">
+                  <div class="ms-thumbnail-caption-content">
+                    <h3 class="ms-thumbnail-caption-title">Lorem ipsum dolor sit</h3>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                    <div class="mt-2">
+                      <a href="javascript:void(0)" class="btn-circle btn-circle-raised btn-circle-sm mr-1 btn-circle-white color-danger">
+                        <i class="zmdi zmdi-favorite"></i>
+                      </a>
+                      <a href="javascript:void(0)" class="btn-circle btn-circle-raised btn-circle-sm ml-1 mr-1 btn-circle-white color-warning">
+                        <i class="zmdi zmdi-star"></i>
+                      </a>
+                      <a href="javascript:void(0)" class="btn-circle btn-circle-raised btn-circle-sm ml-1 btn-circle-white color-success">
+                        <i class="zmdi zmdi-share"></i>
+                      </a>
+                    </div>
+                  </div>
+                </figcaption>
+              </figure>
+            </article>
+          </div>
+        </div>
       </div>
       <!-- container -->
       <aside class="ms-footbar">
