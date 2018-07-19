@@ -851,7 +851,7 @@
                         </div>
                       </div>
                       <div class="col-lg-6 col-md-8">
-                        <a href="javascript:void(0)" class="btn btn-primary btn-sm btn-block animate-icon">Read more
+                        <a href="blog-post.php" class="btn btn-primary btn-sm btn-block animate-icon">Read more
                           <i class="ml-1 no-mr zmdi zmdi-long-arrow-right"></i>
                         </a>
                       </div>
@@ -874,7 +874,7 @@
                         </div>
                       </div>
                       <div class="col-lg-6 col-md-8">
-                        <a href="javascript:void(0)" class="btn btn-primary btn-sm btn-block animate-icon">Read more
+                        <a href="blog-post.php" class="btn btn-primary btn-sm btn-block animate-icon">Read more
                           <i class="ml-1 no-mr zmdi zmdi-long-arrow-right"></i>
                         </a>
                       </div>
@@ -917,7 +917,7 @@
                         </div>
                       </div>
                       <div class="col-lg-6 col-md-8">
-                        <a href="javascript:void(0)" class="btn btn-primary btn-sm btn-block animate-icon">Read more
+                        <a href="blog-post.php" class="btn btn-primary btn-sm btn-block animate-icon">Read more
                           <i class="ml-1 no-mr zmdi zmdi-long-arrow-right"></i>
                         </a>
                       </div>
@@ -940,7 +940,7 @@
                         </div>
                       </div>
                       <div class="col-lg-6 col-md-8">
-                        <a href="javascript:void(0)" class="btn btn-primary btn-sm btn-block animate-icon">Read more
+                        <a href="blog-post.php" class="btn btn-primary btn-sm btn-block animate-icon">Read more
                           <i class="ml-1 no-mr zmdi zmdi-long-arrow-right"></i>
                         </a>
                       </div>
@@ -982,7 +982,7 @@
                         </div>
                       </div>
                       <div class="col-lg-6 col-md-8">
-                        <a href="javascript:void(0)" class="btn btn-primary btn-sm btn-block animate-icon">Read more
+                        <a href="blog-post.php" class="btn btn-primary btn-sm btn-block animate-icon">Read more
                           <i class="ml-1 no-mr zmdi zmdi-long-arrow-right"></i>
                         </a>
                       </div>
@@ -1024,7 +1024,7 @@
                         </div>
                       </div>
                       <div class="col-lg-6 col-md-8">
-                        <a href="javascript:void(0)" class="btn btn-primary btn-sm btn-block animate-icon">Read more
+                        <a href="blog-post.php" class="btn btn-primary btn-sm btn-block animate-icon">Read more
                           <i class="ml-1 no-mr zmdi zmdi-long-arrow-right"></i>
                         </a>
                       </div>
@@ -1067,7 +1067,7 @@
                         </div>
                       </div>
                       <div class="col-lg-6 col-md-8">
-                        <a href="javascript:void(0)" class="btn btn-primary btn-sm btn-block animate-icon">Read more
+                        <a href="blog-post.php" class="btn btn-primary btn-sm btn-block animate-icon">Read more
                           <i class="ml-1 no-mr zmdi zmdi-long-arrow-right"></i>
                         </a>
                       </div>
@@ -1109,7 +1109,7 @@
                         </div>
                       </div>
                       <div class="col-lg-6 col-md-8">
-                        <a href="javascript:void(0)" class="btn btn-primary btn-sm btn-block animate-icon">Read more
+                        <a href="blog-post.php" class="btn btn-primary btn-sm btn-block animate-icon">Read more
                           <i class="ml-1 no-mr zmdi zmdi-long-arrow-right"></i>
                         </a>
                       </div>
@@ -1151,7 +1151,7 @@
                         </div>
                       </div>
                       <div class="col-lg-6 col-md-8">
-                        <a href="javascript:void(0)" class="btn btn-primary btn-sm btn-block animate-icon">Read more
+                        <a href="blog-post.php" class="btn btn-primary btn-sm btn-block animate-icon">Read more
                           <i class="ml-1 no-mr zmdi zmdi-long-arrow-right"></i>
                         </a>
                       </div>
@@ -1194,7 +1194,7 @@
                         </div>
                       </div>
                       <div class="col-lg-6 col-md-8">
-                        <a href="javascript:void(0)" class="btn btn-primary btn-sm btn-block animate-icon">Read more
+                        <a href="blog-post.php" class="btn btn-primary btn-sm btn-block animate-icon">Read more
                           <i class="ml-1 no-mr zmdi zmdi-long-arrow-right"></i>
                         </a>
                       </div>
@@ -1236,7 +1236,7 @@
                         </div>
                       </div>
                       <div class="col-lg-6 col-md-8">
-                        <a href="javascript:void(0)" class="btn btn-primary btn-sm btn-block animate-icon">Read more
+                        <a href="blog-post.php" class="btn btn-primary btn-sm btn-block animate-icon">Read more
                           <i class="ml-1 no-mr zmdi zmdi-long-arrow-right"></i>
                         </a>
                       </div>
@@ -1278,7 +1278,7 @@
                         </div>
                       </div>
                       <div class="col-lg-6 col-md-8">
-                        <a href="javascript:void(0)" class="btn btn-primary btn-sm btn-block animate-icon">Read more
+                        <a href="blog-post.php" class="btn btn-primary btn-sm btn-block animate-icon">Read more
                           <i class="ml-1 no-mr zmdi zmdi-long-arrow-right"></i>
                         </a>
                       </div>
