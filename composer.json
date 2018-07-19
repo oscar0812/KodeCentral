@@ -1,0 +1,18 @@
+{
+  "require": {
+    "propel/propel": "~2.0@dev",
+    "rych/phpass": "3.0.*@beta",
+    "phpmailer/phpmailer": "^6.0",
+    "league/oauth2-client": "^2.2",
+    "slim/slim": "^3.9",
+    "slim/php-view": "^2.2",
+    "paypal/rest-api-sdk-php": "^1.13",
+    "ckeditor/ckeditor": "dev-full/4.3.x"
+  },
+  "autoload": {
+    
+    "psr-4":{
+      "App\\": "app/"
+    }
+  }
+}
