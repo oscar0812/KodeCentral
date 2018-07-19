@@ -36,7 +36,7 @@
               <h2>Page Not Found</h2>
               <p class="lead lead-sm">We have not found what you are looking for.
                 <br>We have put our robots to search.</p>
-              <a href="index.php" class="btn btn-primary btn-raised">
+              <a href="home.php" class="btn btn-primary btn-raised">
                 <i class="zmdi zmdi-home"></i> Go Home</a>
             </div>
           </div>

@@ -36,7 +36,7 @@
               <h2>Internal Server Error</h2>
               <p class="lead lead-sm">Something has gone wrong we are trying to fix it.
                 <br>Meanwhile you can go back to the homepage.</p>
-              <a href="index.php" class="btn btn-primary btn-raised">
+              <a href="home.php" class="btn btn-primary btn-raised">
                 <i class="zmdi zmdi-home"></i> Go Home</a>
             </div>
           </div>

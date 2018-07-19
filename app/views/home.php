@@ -801,408 +801,149 @@
         </div>
         <!-- container -->
       </nav>
-      <div class="material-background"></div>
-      <div class="container container-full">
-        <div class="ms-paper">
-          <div class="row">
-            <div class="col-lg-3 ms-paper-menu-left-container">
-              <div class="ms-paper-menu-left">
-                <h3 class="ms-paper-menu-title">
-                  <i class="zmdi zmdi-apps"></i> Components Menu
-                  <a role="button" data-toggle="collapse" href="#collapseMenu" aria-expanded="false" aria-controls="collapseMenu" class="withripple">
-                    <i class="zmdi zmdi-menu"></i>
-                  </a>
-                </h3>
-                <div class="panel-menu collapse" id="collapseMenu">
-                  <ul class="panel-group ms-collapse-nav" id="components-nav" role="tablist" aria-multiselectable="true">
-                    <li class="card" role="tab" id="e1">
-                      <a role="button" data-toggle="collapse" href="#c1" aria-expanded="true" aria-controls="c1" class="collapsed withripple">
-                        <i class="fa fa-bold"></i> Bootstrap CSS</a>
-                      <ul id="c1" class="panel-collapse collapse" role="tabpanel" aria-labelledby="e1" data-parent="#components-nav">
-                        <li>
-                          <a class="withripple" href="component-typography.php">
-                            <i class="fa fa-font"></i> Typography</a>
-                        </li>
-                        <li>
-                          <a class="withripple" href="component-headers.php">
-                            <i class="fa fa-header"></i> Headers</a>
-                        </li>
-                        <li>
-                          <a class="withripple" href="component-dividers.php">
-                            <i class="fa fa-arrows-h"></i> Dividers</a>
-                        </li>
-                        <li>
-                          <a class="withripple" href="component-blockquotes.php">
-                            <i class="fa fa-quote-right"></i> Blockquotes</a>
-                        </li>
-                        <li>
-                          <a class="withripple" href="component-forms.php">
-                            <i class="fa fa-check-square-o"></i> Forms</a>
-                        </li>
-                        <li>
-                          <a class="withripple" href="component-slider.php">
-                            <i class="fa fa-sliders"></i> Sliders</a>
-                        </li>
-                        <li>
-                          <a class="withripple" href="component-tables.php">
-                            <i class="fa fa-table"></i> Tables</a>
-                        </li>
-                      </ul>
-                    </li>
-                    <li class="card" role="tab" id="e2">
-                      <a role="button" data-toggle="collapse" href="#c2" aria-expanded="true" aria-controls="c2" class="collapsed withripple">
-                        <i class="fa fa-hand-o-up"></i> Buttons</a>
-                      <ul id="c2" class="panel-collapse collapse" role="tabpanel" aria-labelledby="e2" data-parent="#components-nav">
-                        <li>
-                          <a class="withripple" href="component-basic-buttons.php">
-                            <i class="fa fa-arrow-circle-right"></i> Basic Buttons</a>
-                        </li>
-                        <li>
-                          <a class="withripple" href="component-buttons-components.php">
-                            <i class="fa fa-arrow-circle-right"></i> Buttons Components</a>
-                        </li>
-                        <li>
-                          <a class="withripple" href="component-social-buttons.php">
-                            <i class="fa fa-arrow-circle-right"></i> Social Buttons</a>
-                        </li>
-                      </ul>
-                    </li>
-                    <li class="card" role="tab" id="e3">
-                      <a role="button" data-toggle="collapse" href="#c3" aria-expanded="true" aria-controls="c3" class="collapsed withripple">
-                        <i class="fa fa-briefcase"></i> Icons</a>
-                      <ul id="c3" class="panel-collapse collapse" role="tabpanel" aria-labelledby="e3" data-parent="#components-nav">
-                        <li>
-                          <a class="withripple" href="component-icons-basic.php">
-                            <i class="fa fa-arrow-circle-right"></i> Basic Icons</a>
-                        </li>
-                        <li>
-                          <a class="withripple" href="component-icons-fontawesome.php">
-                            <i class="fa fa-arrow-circle-right"></i> Font Awesome</a>
-                        </li>
-                        <li>
-                          <a class="withripple" href="component-icons-iconic.php">
-                            <i class="fa fa-arrow-circle-right"></i> Material Design Iconic</a>
-                        </li>
-                        <li>
-                          <a class="withripple" href="component-icons-glyphicons.php">
-                            <i class="fa fa-arrow-circle-right"></i> Glyphicons</a>
-                        </li>
-                        <li>
-                          <a class="withripple" href="component-icons-ionicons.php">
-                            <i class="fa fa-arrow-circle-right"></i> Ionicons</a>
-                        </li>
-                      </ul>
-                    </li>
-                    <li class="card" role="tab" id="e4">
-                      <a role="button" data-toggle="collapse" href="#c4" aria-expanded="true" aria-controls="c4" class="withripple">
-                        <i class="fa fa-list-alt"></i> Basic Components</a>
-                      <ul id="c4" class="panel-collapse collapse show" role="tabpanel" aria-labelledby="e4" data-parent="#components-nav">
-                        <li>
-                          <a class="withripple" href="component-panels.php">
-                            <i class="zmdi zmdi-view-agenda"></i> Panels</a>
-                        </li>
-                        <li>
-                          <a class="withripple" href="component-alerts.php">
-                            <i class="zmdi zmdi-info"></i> Alerts &amp; Wells</a>
-                        </li>
-                        <li>
-                          <a class="withripple" href="component-badges.php">
-                            <i class="zmdi zmdi-tag"></i> Badges &amp; Badges Pills</a>
-                        </li>
-                        <li>
-                          <a class="withripple" href="component-lists.php">
-                            <i class="zmdi zmdi-view-list"></i> Lists</a>
-                        </li>
-                        <li>
-                          <a class="withripple" href="component-thumbnails.php">
-                            <i class="zmdi zmdi-image-o"></i> Thumbnails</a>
-                          </a>
-                        </li>
-                        <li>
-                          <a class="withripple" href="component-carousels.php">
-                            <i class="zmdi zmdi-view-carousel"></i> Carousels</a>
-                        </li>
-                        <li>
-                          <a class="withripple" href="component-modals.php">
-                            <i class="zmdi zmdi-window-maximize"></i> Modals</a>
-                        </li>
-                        <li>
-                          <a class="withripple active" href="component-tooltip.php">
-                            <i class="zmdi zmdi-pin-help"></i> Tooltip &amp; Popover</a>
-                        </li>
-                        <li>
-                          <a class="withripple" href="component-progress-bars.php">
-                            <i class="zmdi zmdi-view-headline"></i> Progress Bars</a>
-                        </li>
-                        <li>
-                          <a class="withripple" href="component-pagination.php">
-                            <i class="zmdi zmdi-n-2-square"></i> Pagination</a>
-                        </li>
-                        <li>
-                          <a class="withripple" href="component-breadcrumb.php">
-                            <i class="zmdi zmdi-label-alt-outline"></i> Breadcrumb</a>
-                        </li>
-                        <li>
-                          <a class="withripple" href="component-dropdowns.php">
-                            <i class="fa fa-info"></i> Dropdowns</a>
-                        </li>
-                      </ul>
-                    </li>
-                    <li class="card" role="tab" id="e5">
-                      <a role="button" data-toggle="collapse" href="#c5" aria-expanded="true" aria-controls="c5" class="collapsed withripple">
-                        <i class="zmdi zmdi-folder-star-alt"></i> Extra Components</a>
-                      <ul id="c5" class="panel-collapse collapse" role="tabpanel" aria-labelledby="e5" data-parent="#components-nav">
-                        <li>
-                          <a class="withripple" href="component-cards.php">
-                            <i class="zmdi zmdi-card-membership"></i> Cards</a>
-                        </li>
-                        <li>
-                          <a class="withripple" href="component-composite-cards.php">
-                            <i class="zmdi zmdi-card-giftcard"></i> Composite Cards</a>
-                        </li>
-                        <li>
-                          <a class="withripple" href="component-counters.php">
-                            <i class="zmdi zmdi-n-6-square"></i> Counters</a>
-                        </li>
-                        <li>
-                          <a class="withripple" href="component-audio-video.php">
-                            <i class="zmdi zmdi-play-circle"></i> Audio &amp; Video</a>
-                        </li>
-                        <li>
-                          <a class="withripple" href="component-masonry.php">
-                            <i class="zmdi zmdi-apps"></i> Masonry Layer</a>
-                        </li>
-                        <li>
-                          <a class="withripple" href="component-snackbar.php">
-                            <i class="zmdi zmdi-notifications-active"></i> SnackBar</a>
-                        </li>
-                        <li>
-                          <a class="withripple" href="component-lightbox.php">
-                            <i class="zmdi zmdi-collection-image-o"></i> Lightbox</a>
-                        </li>
-                      </ul>
-                    </li>
-                    <li class="card" role="tab" id="e6">
-                      <a role="button" data-toggle="collapse" href="#c6" aria-expanded="true" aria-controls="c6" class="collapsed withripple">
-                        <i class="zmdi zmdi-tab"></i> Collapses &amp; Tabs</a>
-                      <ul id="c6" class="panel-collapse collapse" role="tabpanel" aria-labelledby="e6" data-parent="#components-nav">
-                        <li>
-                          <a class="withripple" href="component-collapses.php">
-                            <i class="zmdi zmdi-view-day"></i> Collapses</a>
-                        </li>
-                        <li>
-                          <a class="withripple" href="component-horizontal-tabs.php">
-                            <i class="zmdi zmdi-tab"></i> Horitzontal Tabs</a>
-                        </li>
-                        <li>
-                          <a class="withripple" href="component-vertical-tabs.php">
-                            <i class="zmdi zmdi-menu"></i> Vertical Tabs</a>
-                        </li>
-                      </ul>
-                    </li>
-                    <li class="card" role="tab" id="e7">
-                      <a role="button" data-toggle="collapse" href="#c7" aria-expanded="true" aria-controls="c7" class="collapsed withripple">
-                        <i class="fa fa-area-chart"></i> Charts</a>
-                      <ul id="c7" class="panel-collapse collapse" role="tabpanel" aria-labelledby="e7" data-parent="#components-nav">
-                        <li>
-                          <a class="withripple" href="component-charts-circle.php">
-                            <i class<i class="zmdi zmdi-chart-donut"></i> Circle Charts</a>
-                        </li>
-                        <li>
-                          <a class="withripple" href="component-charts-bar.php">
-                            <i class="fa fa-bar-chart"></i> Bars Charts</a>
-                        </li>
-                        <li>
-                          <a class="withripple" href="component-charts-line.php">
-                            <i class="fa fa-line-chart"></i> Line Charts</a>
-                        </li>
-                        <li>
-                          <a class="withripple" href="component-charts-more.php">
-                            <i class="fa fa-pie-chart"></i> More Charts</a>
-                        </li>
-                      </ul>
-                    </li>
-                  </ul>
-                  <!-- ms-collapse-nav -->
+      <div class="ms-hero-page ms-hero-img-keyboard ms-hero-bg-primary mb-6">
+        <div class="container">
+          <div class="text-center">
+            <span class="ms-logo ms-logo-lg ms-logo-white center-block mb-2 mt-2 animated zoomInDown animation-delay-5">M</span>
+            <h1 class="no-m ms-site-title color-white center-block ms-site-title-lg mt-2 animated zoomInDown animation-delay-5">Blog</h1>
+            <p class="lead lead-lg color-white text-center center-block mt-2 mw-800 fw-300 animated fadeInUp animation-delay-7">Follow our blog and discover the latest content and trends in the market. In addition you will discover the best
+              <span class="colorStar">tricks</span> and
+              <span class="colorStar">discounts</span>.</p>
+          </div>
+        </div>
+      </div>
+      <div class="container">
+        <div class="row masonry-container">
+          <?php for($x=0; $x<9; $x++) { ?>
+          <div class="col-lg-4 col-md-6 masonry-item">
+            <article class="card card-royal mb-4">
+              <figure class="ms-thumbnail ms-thumbnail-left">
+                <img src="assets/img/demo/p5.jpg" alt="" class="img-fluid">
+                <figcaption class="ms-thumbnail-caption text-center">
+                  <div class="ms-thumbnail-caption-content">
+                    <h3 class="ms-thumbnail-caption-title">Lorem ipsum dolor sit</h3>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                    <div class="mt-2">
+                      <a href="javascript:void(0)" class="btn-circle btn-circle-raised btn-circle-sm mr-1 btn-circle-white color-danger">
+                        <i class="zmdi zmdi-favorite"></i>
+                      </a>
+                      <a href="javascript:void(0)" class="btn-circle btn-circle-raised btn-circle-sm ml-1 mr-1 btn-circle-white color-warning">
+                        <i class="zmdi zmdi-star"></i>
+                      </a>
+                      <a href="javascript:void(0)" class="btn-circle btn-circle-raised btn-circle-sm ml-1 btn-circle-white color-success">
+                        <i class="zmdi zmdi-share"></i>
+                      </a>
+                    </div>
+                  </div>
+                </figcaption>
+              </figure>
+              <div class="card-body">
+                <h2>
+                  <a href=javascript:void(0)>Lorem ipsum Minim in nulla labore sint</a>
+                </h2>
+                <p>Sed ut perspiciatis unde omnis iste natus error nesciunt voluptas sit voluptatem accusantium doloremque laudantium eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
+                <p>Sed ut perspiciatis unde omnis iste natus error nesciunt voluptas sit voluptatem accusantium doloremque laudantium eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
+                <div class="row">
+                  <div class="col-lg-6 col-md-4">
+                    <div class="mt-05">
+                      <a href="javascript:void(0)" class="ms-tag ms-tag-royal">Resources</a>
+                    </div>
+                  </div>
+                  <div class="col-lg-6 col-md-8">
+                    <a href="javascript:void(0)" class="btn btn-primary btn-sm btn-block animate-icon">Read more
+                      <i class="ml-1 no-mr zmdi zmdi-long-arrow-right"></i>
+                    </a>
+                  </div>
                 </div>
               </div>
-            </div>
-            <!-- col-lg-3 -->
-            <div class="col-lg-9 ms-paper-content-container">
-              <div class="ms-paper-content">
-                <h1>Tooltip &amp; Popover</h1>
-                <section class="ms-component-section">
-                  <h2 class="section-title no-margin-top">Basic Tooltip</h2>
-                  <button class="btn btn-default" data-toggle="tooltip" data-placement="left" title="Tooltip on left">Tooltip left</button>
-                  <button class="btn btn-default" data-toggle="tooltip" data-placement="top" title="Tooltip on top">Tooltip top</button>
-                  <button class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Tooltip on bottom">Tooltip bottom</button>
-                  <button class="btn btn-default" data-toggle="tooltip" data-placement="right" title="Tooltip on right">Tooltip right</button>
-                  <h3>With Color</h3>
-                  <button class="btn btn-primary" data-toggle="tooltip" data-template="<div class=&quot;tooltip tooltip-primary&quot; role=&quot;tooltip&quot;><div class=&quot;tooltip-inner&quot;></div></div>" data-placement="left" title="Tooltip Primary">
-                  Tooltip Primary </button>
-                  <button class="btn btn-info" data-toggle="tooltip" data-template="<div class=&quot;tooltip tooltip-info&quot; role=&quot;tooltip&quot;><div class=&quot;tooltip-inner&quot;></div></div>" data-placement="top"
-                    title="Tooltip Info"> Tooltip Info </button>
-                  <button class="btn btn-danger" data-toggle="tooltip" data-template="<div class=&quot;tooltip tooltip-danger&quot; role=&quot;tooltip&quot;><div class=&quot;tooltip-inner&quot;></div></div>" data-placement="right"
-                    title="Tooltip Danger"> Tooltip Danger </button>
-                  <button class="btn btn-warning" data-toggle="tooltip" data-template="<div class=&quot;tooltip tooltip-warning&quot; role=&quot;tooltip&quot;><div class=&quot;tooltip-inner&quot;></div></div>" data-placement="bottom"
-                    title="Tooltip Warning"> Tooltip Warning </button>
-                  <button class="btn btn-success" data-toggle="tooltip" data-template="<div class=&quot;tooltip tooltip-success&quot; role=&quot;tooltip&quot;><div class=&quot;tooltip-inner&quot;></div></div>" data-placement="left"
-                    title="Tooltip Success"> Tooltip Success </button>
-                  <button class="btn btn-royal" data-toggle="tooltip" data-template="<div class=&quot;tooltip tooltip-royal&quot; role=&quot;tooltip&quot;><div class=&quot;tooltip-inner&quot;></div></div>" data-placement="top"
-                    title="Tooltip Royal"> Tooltip Royal </button>
-                  <button class="btn btn-default" data-toggle="tooltip" data-template="<div class=&quot;tooltip tooltip-dark&quot; role=&quot;tooltip&quot;><div class=&quot;tooltip-inner&quot;></div></div>" data-placement="right"
-                    title="Tooltip Dark"> Tooltip Dark </button>
-                  <button class="btn btn-default" data-toggle="tooltip" data-template="<div class=&quot;tooltip tooltip-light&quot; role=&quot;tooltip&quot;><div class=&quot;tooltip-inner&quot;></div></div>" data-placement="bottom"
-                    title="Tooltip Light"> Tooltip Light </button>
-                  <hr class="dotted">
-                  <div class="card card-info card-code">
-                    <div class="card-header card-code-header" role="tab" id="codeHead1">
-                      <h4 class="panel-title card-code-title">
-                        <a class="collapsed withripple" role="button" data-toggle="collapse" href="#code1" aria-expanded="false" aria-controls="code1">
-                          <i class="zmdi zmdi-code"></i> Show Code </a>
-                      </h4>
-                    </div>
-                    <div id="code1" class="card-collapse collapse" role="tabpanel" aria-labelledby="codeHead1">
-                      <div class="card-code-block"> <pre><code class="language-markup line-numbers">&lt;h2 class=&quot;section-title no-margin-top&quot;&gt;Basic Tooltip&lt;/h2&gt;
-
-&lt;button class=&quot;btn btn-default&quot; data-toggle=&quot;tooltip&quot; data-placement=&quot;left&quot; title=&quot;Tooltip on left&quot;&gt;Tooltip on left&lt;/button&gt;
-&lt;button class=&quot;btn btn-default&quot; data-toggle=&quot;tooltip&quot; data-placement=&quot;top&quot; title=&quot;Tooltip on top&quot;&gt;Tooltip on top&lt;/button&gt;
-&lt;button class=&quot;btn btn-default&quot; data-toggle=&quot;tooltip&quot; data-placement=&quot;bottom&quot; title=&quot;Tooltip on bottom&quot;&gt;Tooltip on bottom&lt;/button&gt;
-&lt;button class=&quot;btn btn-default&quot; data-toggle=&quot;tooltip&quot; data-placement=&quot;right&quot; title=&quot;Tooltip on right&quot;&gt;Tooltip on right&lt;/button&gt;
-
-
-&lt;h3&gt;With Color&lt;/h3&gt;
-&lt;button
-    class=&quot;btn btn-primary&quot;
-
-    data-toggle=&quot;tooltip&quot;
-    data-template=&quot;&lt;div class=&quot;tooltip tooltip-primary&quot; role=&quot;tooltip&quot;&gt;&lt;div class=&quot;tooltip-inner&quot;&gt;&lt;/div&gt;&lt;/div&gt;&quot;
-    data-placement=&quot;left&quot;
-    title=&quot;Tooltip Primary&quot;&gt;
-    Tooltip Primary
-&lt;/button&gt;
-
-&lt;button
-    class=&quot;btn btn-info&quot;
-
-    data-toggle=&quot;tooltip&quot;
-    data-template=&quot;&lt;div class=&quot;tooltip tooltip-info&quot; role=&quot;tooltip&quot;&gt;&lt;div class=&quot;tooltip-inner&quot;&gt;&lt;/div&gt;&lt;/div&gt;&quot;
-    data-placement=&quot;top&quot;
-    title=&quot;Tooltip Info&quot;&gt;
-    Tooltip Info
-&lt;/button&gt;
-
-&lt;button
-    class=&quot;btn btn-danger&quot;
-
-    data-toggle=&quot;tooltip&quot;
-    data-template=&quot;&lt;div class=&quot;tooltip tooltip-danger&quot; role=&quot;tooltip&quot;&gt;&lt;div class=&quot;tooltip-inner&quot;&gt;&lt;/div&gt;&lt;/div&gt;&quot;
-    data-placement=&quot;right&quot;
-    title=&quot;Tooltip Danger&quot;&gt;
-    Tooltip Danger
-&lt;/button&gt;
-
-&lt;button
-    class=&quot;btn btn-warning&quot;
-
-    data-toggle=&quot;tooltip&quot;
-    data-template=&quot;&lt;div class=&quot;tooltip tooltip-warning&quot; role=&quot;tooltip&quot;&gt;&lt;div class=&quot;tooltip-inner&quot;&gt;&lt;/div&gt;&lt;/div&gt;&quot;
-    data-placement=&quot;bottom&quot;
-    title=&quot;Tooltip Warning&quot;&gt;
-    Tooltip Warning
-&lt;/button&gt;
-
-&lt;button
-    class=&quot;btn btn-success&quot;
-
-    data-toggle=&quot;tooltip&quot;
-    data-template=&quot;&lt;div class=&quot;tooltip tooltip-success&quot; role=&quot;tooltip&quot;&gt;&lt;div class=&quot;tooltip-inner&quot;&gt;&lt;/div&gt;&lt;/div&gt;&quot;
-    data-placement=&quot;left&quot;
-    title=&quot;Tooltip Success&quot;&gt;
-    Tooltip Success
-&lt;/button&gt;
-
-&lt;button
-    class=&quot;btn btn-royal&quot;
-
-    data-toggle=&quot;tooltip&quot;
-    data-template=&quot;&lt;div class=&quot;tooltip tooltip-royal&quot; role=&quot;tooltip&quot;&gt;&lt;div class=&quot;tooltip-inner&quot;&gt;&lt;/div&gt;&lt;/div&gt;&quot;
-    data-placement=&quot;top&quot;
-    title=&quot;Tooltip Royal&quot;&gt;
-    Tooltip Royal
-&lt;/button&gt;
-
-&lt;button
-    class=&quot;btn btn-default&quot;
-
-    data-toggle=&quot;tooltip&quot;
-    data-template=&quot;&lt;div class=&quot;tooltip tooltip-dark&quot; role=&quot;tooltip&quot;&gt;&lt;div class=&quot;tooltip-inner&quot;&gt;&lt;/div&gt;&lt;/div&gt;&quot;
-    data-placement=&quot;right&quot;
-    title=&quot;Tooltip Dark&quot;&gt;
-    Tooltip Dark
-&lt;/button&gt;
-
-&lt;button
-    class=&quot;btn btn-default&quot;
-
-    data-toggle=&quot;tooltip&quot;
-    data-template=&quot;&lt;div class=&quot;tooltip tooltip-light&quot; role=&quot;tooltip&quot;&gt;&lt;div class=&quot;tooltip-inner&quot;&gt;&lt;/div&gt;&lt;/div&gt;&quot;
-    data-placement=&quot;bottom&quot;
-    title=&quot;Tooltip Light&quot;&gt;
-    Tooltip Light
-&lt;/button&gt;
-</code></pre> </div>
-                    </div>
-                  </div>
-                  <!-- card-code -->
-                </section>
-                <section class="ms-component-section">
-                  <h2 class="section-title no-margin-top">Popover</h2>
-                  <button class="btn btn-default" data-container="body" data-toggle="popover" data-placement="left" title="Popover Title" data-content="Lorem ipsum dolor sit amet domi consectetur  adipisicing elit. Excepturi ab ipsum dolorem. Itaque qui intsuct distinctio.">
-                  Popover on left </button>
-                  <button class="btn btn-default" data-container="body" data-toggle="popover" data-placement="top" data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus."> Popover on top </button>
-                  <button class="btn btn-default" data-container="body" data-toggle="popover" data-placement="bottom" data-content="Vivamus
-                        sagittis lacus vel augue laoreet rutrum faucibus."> Popover on bottom </button>
-                  <button class="btn btn-default" data-container="body" data-toggle="popover" data-placement="right" data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus."> Popover on right </button>
-                  <hr class="dotted">
-                  <div class="card card-info card-code">
-                    <div class="card-header card-code-header" role="tab" id="codeHead2">
-                      <h4 class="panel-title card-code-title">
-                        <a class="collapsed withripple" role="button" data-toggle="collapse" href="#code2" aria-expanded="false" aria-controls="code2">
-                          <i class="zmdi zmdi-code"></i> Show Code </a>
-                      </h4>
-                    </div>
-                    <div id="code2" class="card-collapse collapse" role="tabpanel" aria-labelledby="codeHead2">
-                      <div class="card-code-block"> <pre><code class="language-markup line-numbers">&lt;h2 class=&quot;section-title no-margin-top&quot;&gt;Popover&lt;/h2&gt;
-
-&lt;button class=&quot;btn btn-default&quot; data-container=&quot;body&quot; data-toggle=&quot;popover&quot; data-placement=&quot;left&quot; title=&quot;Popover Title&quot; data-content=&quot;Lorem ipsum dolor sit amet domi consectetur  adipisicing elit. Excepturi ab ipsum dolorem. Itaque qui intsuct distinctio.&quot;&gt;
-Popover on left
-&lt;/button&gt;
-
-&lt;button class=&quot;btn btn-default&quot; data-container=&quot;body&quot; data-toggle=&quot;popover&quot; data-placement=&quot;top&quot; data-content=&quot;Vivamus sagittis lacus vel augue laoreet rutrum faucibus.&quot;&gt;
-Popover on top
-&lt;/button&gt;
-
-&lt;button class=&quot;btn btn-default&quot; data-container=&quot;body&quot; data-toggle=&quot;popover&quot; data-placement=&quot;bottom&quot; data-content=&quot;Vivamus
-sagittis lacus vel augue laoreet rutrum faucibus.&quot;&gt;
-Popover on bottom
-&lt;/button&gt;
-
-&lt;button class=&quot;btn btn-default&quot; data-container=&quot;body&quot; data-toggle=&quot;popover&quot; data-placement=&quot;right&quot; data-content=&quot;Vivamus sagittis lacus vel augue laoreet rutrum faucibus.&quot;&gt;
-Popover on right
-&lt;/button&gt;</code></pre> </div>
-                    </div>
-                  </div>
-                  <!-- card-code -->
-                </section>
-              </div>
-              <!-- ms-paper-content -->
-            </div>
-            <!-- col-lg-9 -->
+            </article>
           </div>
-          <!-- row -->
+          <div class="col-lg-4 col-md-6 masonry-item">
+            <article class="card card-success mb-4">
+              <figure class="ms-thumbnail ms-thumbnail-left">
+                <img src="assets/img/demo/p4.jpg" alt="" class="img-fluid">
+                <figcaption class="ms-thumbnail-caption text-center">
+                  <div class="ms-thumbnail-caption-content">
+                    <h3 class="ms-thumbnail-caption-title">Lorem ipsum dolor sit</h3>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                    <div class="mt-2">
+                      <a href="javascript:void(0)" class="btn-circle btn-circle-raised btn-circle-sm mr-1 btn-circle-white color-danger">
+                        <i class="zmdi zmdi-favorite"></i>
+                      </a>
+                      <a href="javascript:void(0)" class="btn-circle btn-circle-raised btn-circle-sm ml-1 mr-1 btn-circle-white color-warning">
+                        <i class="zmdi zmdi-star"></i>
+                      </a>
+                      <a href="javascript:void(0)" class="btn-circle btn-circle-raised btn-circle-sm ml-1 btn-circle-white color-success">
+                        <i class="zmdi zmdi-share"></i>
+                      </a>
+                    </div>
+                  </div>
+                </figcaption>
+              </figure>
+              <div class="card-body">
+                <h2>
+                  <a href=javascript:void(0)>Lorem ipsum Minim in nulla labore sint</a>
+                </h2>
+                <p>Sed ut perspiciatis unde omnis iste natus error nesciunt voluptas sit voluptatem accusantium doloremque laudantium eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
+                <div class="row">
+                  <div class="col-lg-6 col-md-4">
+                    <div class="mt-05">
+                      <a href="javascript:void(0)" class="ms-tag ms-tag-success">Multimedia</a>
+                    </div>
+                  </div>
+                  <div class="col-lg-6 col-md-8">
+                    <a href="javascript:void(0)" class="btn btn-primary btn-sm btn-block animate-icon">Read more
+                      <i class="ml-1 no-mr zmdi zmdi-long-arrow-right"></i>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </article>
+          </div>
+          <div class="col-lg-4 col-md-6 masonry-item">
+            <article class="card card-info mb-4">
+              <figure class="ms-thumbnail ms-thumbnail-left">
+                <img src="assets/img/demo/post1.jpg" alt="" class="img-fluid">
+                <figcaption class="ms-thumbnail-caption text-center">
+                  <div class="ms-thumbnail-caption-content">
+                    <h3 class="ms-thumbnail-caption-title">Lorem ipsum dolor sit</h3>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                    <div class="mt-2">
+                      <a href="javascript:void(0)" class="btn-circle btn-circle-raised btn-circle-sm mr-1 btn-circle-white color-danger">
+                        <i class="zmdi zmdi-favorite"></i>
+                      </a>
+                      <a href="javascript:void(0)" class="btn-circle btn-circle-raised btn-circle-sm ml-1 mr-1 btn-circle-white color-warning">
+                        <i class="zmdi zmdi-star"></i>
+                      </a>
+                      <a href="javascript:void(0)" class="btn-circle btn-circle-raised btn-circle-sm ml-1 btn-circle-white color-success">
+                        <i class="zmdi zmdi-share"></i>
+                      </a>
+                    </div>
+                  </div>
+                </figcaption>
+              </figure>
+              <div class="card-body">
+                <h2>
+                  <a href=javascript:void(0)>Lorem ipsum Minim in nulla labore sint</a>
+                </h2>
+                <p>Sed ut perspiciatis unde omnis iste natus error nesciunt voluptas sit voluptatem accusantium doloremque laudantium eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
+                <div class="row">
+                  <div class="col-lg-6 col-md-4">
+                    <div class="mt-05">
+                      <a href="javascript:void(0)" class="ms-tag ms-tag-info">Design</a>
+                    </div>
+                  </div>
+                  <div class="col-lg-6 col-md-8">
+                    <a href="javascript:void(0)" class="btn btn-primary btn-sm btn-block animate-icon">Read more
+                      <i class="ml-1 no-mr zmdi zmdi-long-arrow-right"></i>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </article>
+          </div>
+          <?php } ?>
         </div>
-        <!-- ms-paper -->
       </div>
       <!-- container -->
       <aside class="ms-footbar">
