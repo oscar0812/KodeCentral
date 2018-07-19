@@ -22,7 +22,7 @@
     <!-- TYPEWRITER ADDON -->
     <script type="text/javascript" src="assets/plugins/revolution/revolution-addons/typewriter/js/revolution.addon.typewriter.min.js"></script>
     <link rel="stylesheet" type="text/css" href="assets/plugins/revolution/revolution-addons/typewriter/css/typewriter.css">
-    <link rel="stylesheet" href="assets/css/style.light-blue-500.min.css">
+    <link rel="stylesheet" href="assets/css/style.blue-600.min.css">
     <!--[if lt IE 9]>
         <script src="assets/js/html5shiv.min.js"></script>
         <script src="assets/js/respond.min.js"></script>
