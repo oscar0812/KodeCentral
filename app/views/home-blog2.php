@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="assets/css/preload.min.css">
     <link rel="stylesheet" href="assets/css/plugins.min.css">
-    <link rel="stylesheet" href="assets/css/style.light-blue-500.min.css">
+    <link rel="stylesheet" href="assets/css/style.blue-600.min.css">
     <!--[if lt IE 9]>
         <script src="assets/js/html5shiv.min.js"></script>
         <script src="assets/js/respond.min.js"></script>
@@ -33,9 +33,9 @@
           <div class="navbar-header">
             <a class="navbar-brand" href="index.php">
               <!-- <img src="assets/img/demo/logo-navbar.png" alt=""> -->
-              <span class="ms-logo ms-logo-sm">M</span>
-              <span class="ms-title">Material
-                <strong>Style</strong>
+              <span class="ms-logo ms-logo-sm">KC</span>
+              <span class="ms-title">Kode
+                <strong>Central</strong>
               </span>
             </a>
           </div>
@@ -804,7 +804,7 @@
       <div class="ms-hero-page-override ms-hero-img-keyboard ms-hero-bg-primary mb-6">
         <div class="container">
           <div class="text-center">
-            <span class="ms-logo ms-logo-lg ms-logo-white center-block mb-2 mt-2 animated zoomInDown animation-delay-5">M</span>
+            <span class="ms-logo ms-logo-lg ms-logo-white center-block mb-2 mt-2 animated zoomInDown animation-delay-5">KC</span>
             <h1 class="no-m ms-site-title color-white center-block ms-site-title-lg mt-2 animated zoomInDown animation-delay-5">Blog</h1>
             <p class="lead lead-lg color-white text-center center-block mt-2 mw-800 fw-300 animated fadeInUp animation-delay-7">Follow our blog and discover the latest content and trends in the market. In addition you will discover the best
               <span class="colorStar">tricks</span> and
@@ -816,8 +816,8 @@
         <div class="row">
           <div class="col-lg-8 order-lg-2">
             <div class="row masonry-container">
-              <div class="col-md-6 masonry-item wow fadeInUp animation-delay-2">
-                <article class="card card-info mb-4 wow materialUp animation-delay-5">
+              <div class="col-md-6 masonry-item">
+                <article class="card card-info mb-4">
                   <figure class="ms-thumbnail ms-thumbnail-left">
                     <img src="assets/img/demo/post1.jpg" alt="" class="img-fluid">
                     <figcaption class="ms-thumbnail-caption text-center">
@@ -859,8 +859,8 @@
                   </div>
                 </article>
               </div>
-              <div class="col-md-6 masonry-item wow fadeInUp animation-delay-2">
-                <article class="card card-royal mb-4 wow materialUp animation-delay-5">
+              <div class="col-md-6 masonry-item">
+                <article class="card card-royal mb-4">
                   <div class="js-player" data-plyr-provider="vimeo" data-plyr-embed-id="94747106"></div>
                   <div class="card-body">
                     <h2>
@@ -882,8 +882,8 @@
                   </div>
                 </article>
               </div>
-              <div class="col-md-6 masonry-item wow fadeInUp animation-delay-2">
-                <article class="card card-success mb-4 wow materialUp animation-delay-5">
+              <div class="col-md-6 masonry-item">
+                <article class="card card-success mb-4">
                   <figure class="ms-thumbnail ms-thumbnail-left">
                     <img src="assets/img/demo/p3.jpg" alt="" class="img-fluid">
                     <figcaption class="ms-thumbnail-caption text-center">
@@ -925,8 +925,8 @@
                   </div>
                 </article>
               </div>
-              <div class="col-md-6 masonry-item wow fadeInUp animation-delay-2">
-                <article class="card mb-4 wow materialUp animation-delay-5">
+              <div class="col-md-6 masonry-item">
+                <article class="card mb-4">
                   <div class="js-player" data-plyr-provider="youtube" data-plyr-embed-id="bTqVqk7FSmY"></div>
                   <div class="card-body">
                     <h2>
@@ -948,8 +948,8 @@
                   </div>
                 </article>
               </div>
-              <div class="col-md-6 masonry-item wow fadeInUp animation-delay-2">
-                <article class="card card-danger mb-4 wow materialUp animation-delay-5">
+              <div class="col-md-6 masonry-item">
+                <article class="card card-danger mb-4">
                   <figure class="ms-thumbnail ms-thumbnail-left">
                     <img src="assets/img/demo/post5.jpg" alt="" class="img-fluid">
                     <figcaption class="ms-thumbnail-caption text-center">
@@ -990,8 +990,8 @@
                   </div>
                 </article>
               </div>
-              <div class="col-md-6 masonry-item wow fadeInUp animation-delay-2">
-                <article class="card card-info mb-4 wow materialUp animation-delay-5">
+              <div class="col-md-6 masonry-item">
+                <article class="card card-info mb-4">
                   <figure class="ms-thumbnail ms-thumbnail-left">
                     <img src="assets/img/demo/post4.jpg" alt="" class="img-fluid">
                     <figcaption class="ms-thumbnail-caption text-center">
@@ -1032,8 +1032,8 @@
                   </div>
                 </article>
               </div>
-              <div class="col-md-6 masonry-item wow fadeInUp animation-delay-2">
-                <article class="card card-info mb-4 wow materialUp animation-delay-5">
+              <div class="col-md-6 masonry-item">
+                <article class="card card-info mb-4">
                   <figure class="ms-thumbnail ms-thumbnail-left">
                     <img src="assets/img/demo/post2.jpg" alt="" class="img-fluid">
                     <figcaption class="ms-thumbnail-caption text-center">
@@ -1075,8 +1075,8 @@
                   </div>
                 </article>
               </div>
-              <div class="col-md-6 masonry-item wow fadeInUp animation-delay-2">
-                <article class="card card-info mb-4 wow materialUp animation-delay-5">
+              <div class="col-md-6 masonry-item">
+                <article class="card card-info mb-4">
                   <figure class="ms-thumbnail ms-thumbnail-left">
                     <img src="assets/img/demo/p2.jpg" alt="" class="img-fluid">
                     <figcaption class="ms-thumbnail-caption text-center">
@@ -1117,8 +1117,8 @@
                   </div>
                 </article>
               </div>
-              <div class="col-md-6 masonry-item wow fadeInUp animation-delay-2">
-                <article class="card card-danger mb-4 wow materialUp animation-delay-5">
+              <div class="col-md-6 masonry-item">
+                <article class="card card-danger mb-4">
                   <figure class="ms-thumbnail ms-thumbnail-left">
                     <img src="assets/img/demo/post3.jpg" alt="" class="img-fluid">
                     <figcaption class="ms-thumbnail-caption text-center">
@@ -1159,8 +1159,8 @@
                   </div>
                 </article>
               </div>
-              <div class="col-md-6 masonry-item wow fadeInUp animation-delay-2">
-                <article class="card card-royal mb-4 wow materialUp animation-delay-5">
+              <div class="col-md-6 masonry-item">
+                <article class="card card-royal mb-4">
                   <figure class="ms-thumbnail ms-thumbnail-left">
                     <img src="assets/img/demo/p5.jpg" alt="" class="img-fluid">
                     <figcaption class="ms-thumbnail-caption text-center">
@@ -1202,8 +1202,8 @@
                   </div>
                 </article>
               </div>
-              <div class="col-md-6 masonry-item wow fadeInUp animation-delay-2">
-                <article class="card card-success mb-4 wow materialUp animation-delay-5">
+              <div class="col-md-6 masonry-item">
+                <article class="card card-success mb-4">
                   <figure class="ms-thumbnail ms-thumbnail-left">
                     <img src="assets/img/demo/p4.jpg" alt="" class="img-fluid">
                     <figcaption class="ms-thumbnail-caption text-center">
@@ -1244,8 +1244,8 @@
                   </div>
                 </article>
               </div>
-              <div class="col-md-6 masonry-item wow fadeInUp animation-delay-2">
-                <article class="card card-info mb-4 wow materialUp animation-delay-5">
+              <div class="col-md-6 masonry-item">
+                <article class="card card-info mb-4">
                   <figure class="ms-thumbnail ms-thumbnail-left">
                     <img src="assets/img/demo/post1.jpg" alt="" class="img-fluid">
                     <figcaption class="ms-thumbnail-caption text-center">
