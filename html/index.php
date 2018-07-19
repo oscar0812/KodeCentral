@@ -20,7 +20,7 @@ $container['notFoundHandler'] = function ($c) {
 };
 
 $app->get('/', function ($request, $response, $args) {
-    return $this->view->render($response, "blog-full.php", []);
+    return $this->view->render($response, "home.php", []);
 })->setName('home');
 
 $app->get('/{name}', function ($request, $response, $args) {
