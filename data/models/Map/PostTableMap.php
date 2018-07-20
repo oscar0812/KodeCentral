@@ -142,9 +142,9 @@ class PostTableMap extends TableMap
         $this->setUseIdGenerator(true);
         // columns
         $this->addPrimaryKey('id', 'Id', 'INTEGER', true, null, null);
-        $this->addColumn('title', 'Title', 'INTEGER', true, null, null);
-        $this->addColumn('summary', 'Summary', 'INTEGER', true, null, null);
-        $this->addColumn('text', 'Text', 'INTEGER', true, null, null);
+        $this->addColumn('title', 'Title', 'VARCHAR', true, 128, null);
+        $this->addColumn('summary', 'Summary', 'VARCHAR', true, 256, null);
+        $this->addColumn('text', 'Text', 'VARCHAR', true, 8192, null);
     } // initialize()
 
     /**

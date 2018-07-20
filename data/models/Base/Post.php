@@ -69,21 +69,21 @@ abstract class Post implements ActiveRecordInterface
     /**
      * The value for the title field.
      *
-     * @var        int
+     * @var        string
      */
     protected $title;
 
     /**
      * The value for the summary field.
      *
-     * @var        int
+     * @var        string
      */
     protected $summary;
 
     /**
      * The value for the text field.
      *
-     * @var        int
+     * @var        string
      */
     protected $text;
 
@@ -333,7 +333,7 @@ abstract class Post implements ActiveRecordInterface
     /**
      * Get the [title] column value.
      *
-     * @return int
+     * @return string
      */
     public function getTitle()
     {
@@ -343,7 +343,7 @@ abstract class Post implements ActiveRecordInterface
     /**
      * Get the [summary] column value.
      *
-     * @return int
+     * @return string
      */
     public function getSummary()
     {
@@ -353,7 +353,7 @@ abstract class Post implements ActiveRecordInterface
     /**
      * Get the [text] column value.
      *
-     * @return int
+     * @return string
      */
     public function getText()
     {
@@ -383,13 +383,13 @@ abstract class Post implements ActiveRecordInterface
     /**
      * Set the value of [title] column.
      *
-     * @param int $v new value
+     * @param string $v new value
      * @return $this|\Post The current object (for fluent API support)
      */
     public function setTitle($v)
     {
         if ($v !== null) {
-            $v = (int) $v;
+            $v = (string) $v;
         }
 
         if ($this->title !== $v) {
@@ -403,13 +403,13 @@ abstract class Post implements ActiveRecordInterface
     /**
      * Set the value of [summary] column.
      *
-     * @param int $v new value
+     * @param string $v new value
      * @return $this|\Post The current object (for fluent API support)
      */
     public function setSummary($v)
     {
         if ($v !== null) {
-            $v = (int) $v;
+            $v = (string) $v;
         }
 
         if ($this->summary !== $v) {
@@ -423,13 +423,13 @@ abstract class Post implements ActiveRecordInterface
     /**
      * Set the value of [text] column.
      *
-     * @param int $v new value
+     * @param string $v new value
      * @return $this|\Post The current object (for fluent API support)
      */
     public function setText($v)
     {
         if ($v !== null) {
-            $v = (int) $v;
+            $v = (string) $v;
         }
 
         if ($this->text !== $v) {
@@ -480,13 +480,13 @@ abstract class Post implements ActiveRecordInterface
             $this->id = (null !== $col) ? (int) $col : null;
 
             $col = $row[TableMap::TYPE_NUM == $indexType ? 1 + $startcol : PostTableMap::translateFieldName('Title', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->title = (null !== $col) ? (int) $col : null;
+            $this->title = (null !== $col) ? (string) $col : null;
 
             $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : PostTableMap::translateFieldName('Summary', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->summary = (null !== $col) ? (int) $col : null;
+            $this->summary = (null !== $col) ? (string) $col : null;
 
             $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : PostTableMap::translateFieldName('Text', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->text = (null !== $col) ? (int) $col : null;
+            $this->text = (null !== $col) ? (string) $col : null;
             $this->resetModified();
 
             $this->setNew(false);
@@ -723,13 +723,13 @@ abstract class Post implements ActiveRecordInterface
                         $stmt->bindValue($identifier, $this->id, PDO::PARAM_INT);
                         break;
                     case 'title':
-                        $stmt->bindValue($identifier, $this->title, PDO::PARAM_INT);
+                        $stmt->bindValue($identifier, $this->title, PDO::PARAM_STR);
                         break;
                     case 'summary':
-                        $stmt->bindValue($identifier, $this->summary, PDO::PARAM_INT);
+                        $stmt->bindValue($identifier, $this->summary, PDO::PARAM_STR);
                         break;
                     case 'text':
-                        $stmt->bindValue($identifier, $this->text, PDO::PARAM_INT);
+                        $stmt->bindValue($identifier, $this->text, PDO::PARAM_STR);
                         break;
                 }
             }

@@ -41,23 +41,23 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildPost findOneOrCreate(ConnectionInterface $con = null) Return the first ChildPost matching the query, or a new ChildPost object populated from the query conditions when no match is found
  *
  * @method     ChildPost findOneById(int $id) Return the first ChildPost filtered by the id column
- * @method     ChildPost findOneByTitle(int $title) Return the first ChildPost filtered by the title column
- * @method     ChildPost findOneBySummary(int $summary) Return the first ChildPost filtered by the summary column
- * @method     ChildPost findOneByText(int $text) Return the first ChildPost filtered by the text column *
+ * @method     ChildPost findOneByTitle(string $title) Return the first ChildPost filtered by the title column
+ * @method     ChildPost findOneBySummary(string $summary) Return the first ChildPost filtered by the summary column
+ * @method     ChildPost findOneByText(string $text) Return the first ChildPost filtered by the text column *
 
  * @method     ChildPost requirePk($key, ConnectionInterface $con = null) Return the ChildPost by primary key and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildPost requireOne(ConnectionInterface $con = null) Return the first ChildPost matching the query and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  *
  * @method     ChildPost requireOneById(int $id) Return the first ChildPost filtered by the id column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
- * @method     ChildPost requireOneByTitle(int $title) Return the first ChildPost filtered by the title column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
- * @method     ChildPost requireOneBySummary(int $summary) Return the first ChildPost filtered by the summary column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
- * @method     ChildPost requireOneByText(int $text) Return the first ChildPost filtered by the text column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildPost requireOneByTitle(string $title) Return the first ChildPost filtered by the title column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildPost requireOneBySummary(string $summary) Return the first ChildPost filtered by the summary column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildPost requireOneByText(string $text) Return the first ChildPost filtered by the text column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  *
  * @method     ChildPost[]|ObjectCollection find(ConnectionInterface $con = null) Return ChildPost objects based on current ModelCriteria
  * @method     ChildPost[]|ObjectCollection findById(int $id) Return ChildPost objects filtered by the id column
- * @method     ChildPost[]|ObjectCollection findByTitle(int $title) Return ChildPost objects filtered by the title column
- * @method     ChildPost[]|ObjectCollection findBySummary(int $summary) Return ChildPost objects filtered by the summary column
- * @method     ChildPost[]|ObjectCollection findByText(int $text) Return ChildPost objects filtered by the text column
+ * @method     ChildPost[]|ObjectCollection findByTitle(string $title) Return ChildPost objects filtered by the title column
+ * @method     ChildPost[]|ObjectCollection findBySummary(string $summary) Return ChildPost objects filtered by the summary column
+ * @method     ChildPost[]|ObjectCollection findByText(string $text) Return ChildPost objects filtered by the text column
  * @method     ChildPost[]|\Propel\Runtime\Util\PropelModelPager paginate($page = 1, $maxPerPage = 10, ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
  *
  */
@@ -292,35 +292,19 @@ abstract class PostQuery extends ModelCriteria
      *
      * Example usage:
      * <code>
-     * $query->filterByTitle(1234); // WHERE title = 1234
-     * $query->filterByTitle(array(12, 34)); // WHERE title IN (12, 34)
-     * $query->filterByTitle(array('min' => 12)); // WHERE title > 12
+     * $query->filterByTitle('fooValue');   // WHERE title = 'fooValue'
+     * $query->filterByTitle('%fooValue%', Criteria::LIKE); // WHERE title LIKE '%fooValue%'
      * </code>
      *
-     * @param     mixed $title The value to use as filter.
-     *              Use scalar values for equality.
-     *              Use array values for in_array() equivalent.
-     *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
+     * @param     string $title The value to use as filter.
      * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
      *
      * @return $this|ChildPostQuery The current query, for fluid interface
      */
     public function filterByTitle($title = null, $comparison = null)
     {
-        if (is_array($title)) {
-            $useMinMax = false;
-            if (isset($title['min'])) {
-                $this->addUsingAlias(PostTableMap::COL_TITLE, $title['min'], Criteria::GREATER_EQUAL);
-                $useMinMax = true;
-            }
-            if (isset($title['max'])) {
-                $this->addUsingAlias(PostTableMap::COL_TITLE, $title['max'], Criteria::LESS_EQUAL);
-                $useMinMax = true;
-            }
-            if ($useMinMax) {
-                return $this;
-            }
-            if (null === $comparison) {
+        if (null === $comparison) {
+            if (is_array($title)) {
                 $comparison = Criteria::IN;
             }
         }
@@ -333,35 +317,19 @@ abstract class PostQuery extends ModelCriteria
      *
      * Example usage:
      * <code>
-     * $query->filterBySummary(1234); // WHERE summary = 1234
-     * $query->filterBySummary(array(12, 34)); // WHERE summary IN (12, 34)
-     * $query->filterBySummary(array('min' => 12)); // WHERE summary > 12
+     * $query->filterBySummary('fooValue');   // WHERE summary = 'fooValue'
+     * $query->filterBySummary('%fooValue%', Criteria::LIKE); // WHERE summary LIKE '%fooValue%'
      * </code>
      *
-     * @param     mixed $summary The value to use as filter.
-     *              Use scalar values for equality.
-     *              Use array values for in_array() equivalent.
-     *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
+     * @param     string $summary The value to use as filter.
      * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
      *
      * @return $this|ChildPostQuery The current query, for fluid interface
      */
     public function filterBySummary($summary = null, $comparison = null)
     {
-        if (is_array($summary)) {
-            $useMinMax = false;
-            if (isset($summary['min'])) {
-                $this->addUsingAlias(PostTableMap::COL_SUMMARY, $summary['min'], Criteria::GREATER_EQUAL);
-                $useMinMax = true;
-            }
-            if (isset($summary['max'])) {
-                $this->addUsingAlias(PostTableMap::COL_SUMMARY, $summary['max'], Criteria::LESS_EQUAL);
-                $useMinMax = true;
-            }
-            if ($useMinMax) {
-                return $this;
-            }
-            if (null === $comparison) {
+        if (null === $comparison) {
+            if (is_array($summary)) {
                 $comparison = Criteria::IN;
             }
         }
@@ -374,35 +342,19 @@ abstract class PostQuery extends ModelCriteria
      *
      * Example usage:
      * <code>
-     * $query->filterByText(1234); // WHERE text = 1234
-     * $query->filterByText(array(12, 34)); // WHERE text IN (12, 34)
-     * $query->filterByText(array('min' => 12)); // WHERE text > 12
+     * $query->filterByText('fooValue');   // WHERE text = 'fooValue'
+     * $query->filterByText('%fooValue%', Criteria::LIKE); // WHERE text LIKE '%fooValue%'
      * </code>
      *
-     * @param     mixed $text The value to use as filter.
-     *              Use scalar values for equality.
-     *              Use array values for in_array() equivalent.
-     *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
+     * @param     string $text The value to use as filter.
      * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
      *
      * @return $this|ChildPostQuery The current query, for fluid interface
      */
     public function filterByText($text = null, $comparison = null)
     {
-        if (is_array($text)) {
-            $useMinMax = false;
-            if (isset($text['min'])) {
-                $this->addUsingAlias(PostTableMap::COL_TEXT, $text['min'], Criteria::GREATER_EQUAL);
-                $useMinMax = true;
-            }
-            if (isset($text['max'])) {
-                $this->addUsingAlias(PostTableMap::COL_TEXT, $text['max'], Criteria::LESS_EQUAL);
-                $useMinMax = true;
-            }
-            if ($useMinMax) {
-                return $this;
-            }
-            if (null === $comparison) {
+        if (null === $comparison) {
+            if (is_array($text)) {
                 $comparison = Criteria::IN;
             }
         }
