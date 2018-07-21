@@ -59,7 +59,7 @@ class PostTableMap extends TableMap
     /**
      * The total number of columns
      */
-    const NUM_COLUMNS = 6;
+    const NUM_COLUMNS = 7;
 
     /**
      * The number of lazy-loaded columns
@@ -69,7 +69,7 @@ class PostTableMap extends TableMap
     /**
      * The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS)
      */
-    const NUM_HYDRATE_COLUMNS = 6;
+    const NUM_HYDRATE_COLUMNS = 7;
 
     /**
      * the column name for the id field
@@ -102,6 +102,11 @@ class PostTableMap extends TableMap
     const COL_POSTED_DATE = 'post.posted_date';
 
     /**
+     * the column name for the category_id field
+     */
+    const COL_CATEGORY_ID = 'post.category_id';
+
+    /**
      * The default string format for model objects of the related table
      */
     const DEFAULT_STRING_FORMAT = 'YAML';
@@ -113,11 +118,11 @@ class PostTableMap extends TableMap
      * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        self::TYPE_PHPNAME       => array('Id', 'Title', 'Hyperlink', 'Summary', 'Text', 'PostedDate', ),
-        self::TYPE_CAMELNAME     => array('id', 'title', 'hyperlink', 'summary', 'text', 'postedDate', ),
-        self::TYPE_COLNAME       => array(PostTableMap::COL_ID, PostTableMap::COL_TITLE, PostTableMap::COL_HYPERLINK, PostTableMap::COL_SUMMARY, PostTableMap::COL_TEXT, PostTableMap::COL_POSTED_DATE, ),
-        self::TYPE_FIELDNAME     => array('id', 'title', 'hyperlink', 'summary', 'text', 'posted_date', ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, )
+        self::TYPE_PHPNAME       => array('Id', 'Title', 'Hyperlink', 'Summary', 'Text', 'PostedDate', 'CategoryId', ),
+        self::TYPE_CAMELNAME     => array('id', 'title', 'hyperlink', 'summary', 'text', 'postedDate', 'categoryId', ),
+        self::TYPE_COLNAME       => array(PostTableMap::COL_ID, PostTableMap::COL_TITLE, PostTableMap::COL_HYPERLINK, PostTableMap::COL_SUMMARY, PostTableMap::COL_TEXT, PostTableMap::COL_POSTED_DATE, PostTableMap::COL_CATEGORY_ID, ),
+        self::TYPE_FIELDNAME     => array('id', 'title', 'hyperlink', 'summary', 'text', 'posted_date', 'category_id', ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, )
     );
 
     /**
@@ -127,11 +132,11 @@ class PostTableMap extends TableMap
      * e.g. self::$fieldKeys[self::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        self::TYPE_PHPNAME       => array('Id' => 0, 'Title' => 1, 'Hyperlink' => 2, 'Summary' => 3, 'Text' => 4, 'PostedDate' => 5, ),
-        self::TYPE_CAMELNAME     => array('id' => 0, 'title' => 1, 'hyperlink' => 2, 'summary' => 3, 'text' => 4, 'postedDate' => 5, ),
-        self::TYPE_COLNAME       => array(PostTableMap::COL_ID => 0, PostTableMap::COL_TITLE => 1, PostTableMap::COL_HYPERLINK => 2, PostTableMap::COL_SUMMARY => 3, PostTableMap::COL_TEXT => 4, PostTableMap::COL_POSTED_DATE => 5, ),
-        self::TYPE_FIELDNAME     => array('id' => 0, 'title' => 1, 'hyperlink' => 2, 'summary' => 3, 'text' => 4, 'posted_date' => 5, ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, )
+        self::TYPE_PHPNAME       => array('Id' => 0, 'Title' => 1, 'Hyperlink' => 2, 'Summary' => 3, 'Text' => 4, 'PostedDate' => 5, 'CategoryId' => 6, ),
+        self::TYPE_CAMELNAME     => array('id' => 0, 'title' => 1, 'hyperlink' => 2, 'summary' => 3, 'text' => 4, 'postedDate' => 5, 'categoryId' => 6, ),
+        self::TYPE_COLNAME       => array(PostTableMap::COL_ID => 0, PostTableMap::COL_TITLE => 1, PostTableMap::COL_HYPERLINK => 2, PostTableMap::COL_SUMMARY => 3, PostTableMap::COL_TEXT => 4, PostTableMap::COL_POSTED_DATE => 5, PostTableMap::COL_CATEGORY_ID => 6, ),
+        self::TYPE_FIELDNAME     => array('id' => 0, 'title' => 1, 'hyperlink' => 2, 'summary' => 3, 'text' => 4, 'posted_date' => 5, 'category_id' => 6, ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, )
     );
 
     /**
@@ -157,6 +162,7 @@ class PostTableMap extends TableMap
         $this->addColumn('summary', 'Summary', 'VARCHAR', true, 256, null);
         $this->addColumn('text', 'Text', 'VARCHAR', true, 8192, null);
         $this->addColumn('posted_date', 'PostedDate', 'DATE', true, null, null);
+        $this->addForeignKey('category_id', 'CategoryId', 'INTEGER', 'category', 'id', true, null, null);
     } // initialize()
 
     /**
@@ -164,6 +170,13 @@ class PostTableMap extends TableMap
      */
     public function buildRelations()
     {
+        $this->addRelation('Category', '\\Category', RelationMap::MANY_TO_ONE, array (
+  0 =>
+  array (
+    0 => ':category_id',
+    1 => ':id',
+  ),
+), null, null, null, false);
     } // buildRelations()
 
     /**
@@ -313,6 +326,7 @@ class PostTableMap extends TableMap
             $criteria->addSelectColumn(PostTableMap::COL_SUMMARY);
             $criteria->addSelectColumn(PostTableMap::COL_TEXT);
             $criteria->addSelectColumn(PostTableMap::COL_POSTED_DATE);
+            $criteria->addSelectColumn(PostTableMap::COL_CATEGORY_ID);
         } else {
             $criteria->addSelectColumn($alias . '.id');
             $criteria->addSelectColumn($alias . '.title');
@@ -320,6 +334,7 @@ class PostTableMap extends TableMap
             $criteria->addSelectColumn($alias . '.summary');
             $criteria->addSelectColumn($alias . '.text');
             $criteria->addSelectColumn($alias . '.posted_date');
+            $criteria->addSelectColumn($alias . '.category_id');
         }
     }
 

@@ -14,6 +14,13 @@
     <column name="summary" phpName="Summary" type="VARCHAR" size="256" required="true"/>
     <column name="text" phpName="Text" type="VARCHAR" size="8192" required="true"/>
     <column name="posted_date" phpName="PostedDate" type="DATE" required="true"/>
+    <column name="category_id" phpName="CategoryId" type="INTEGER" required="true"/>
+    <foreign-key foreignTable="category" name="post_ibfk_1">
+      <reference local="category_id" foreign="id"/>
+    </foreign-key>
+    <index name="category_id">
+      <index-column name="category_id"/>
+    </index>
     <vendor type="mysql">
       <parameter name="Engine" value="InnoDB"/>
     </vendor>

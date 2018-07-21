@@ -10,6 +10,7 @@ use Map\PostTableMap;
 use Propel\Runtime\Propel;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
+use Propel\Runtime\ActiveQuery\ModelJoin;
 use Propel\Runtime\Collection\ObjectCollection;
 use Propel\Runtime\Connection\ConnectionInterface;
 use Propel\Runtime\Exception\PropelException;
@@ -25,6 +26,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildPostQuery orderBySummary($order = Criteria::ASC) Order by the summary column
  * @method     ChildPostQuery orderByText($order = Criteria::ASC) Order by the text column
  * @method     ChildPostQuery orderByPostedDate($order = Criteria::ASC) Order by the posted_date column
+ * @method     ChildPostQuery orderByCategoryId($order = Criteria::ASC) Order by the category_id column
  *
  * @method     ChildPostQuery groupById() Group by the id column
  * @method     ChildPostQuery groupByTitle() Group by the title column
@@ -32,6 +34,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildPostQuery groupBySummary() Group by the summary column
  * @method     ChildPostQuery groupByText() Group by the text column
  * @method     ChildPostQuery groupByPostedDate() Group by the posted_date column
+ * @method     ChildPostQuery groupByCategoryId() Group by the category_id column
  *
  * @method     ChildPostQuery leftJoin($relation) Adds a LEFT JOIN clause to the query
  * @method     ChildPostQuery rightJoin($relation) Adds a RIGHT JOIN clause to the query
@@ -41,6 +44,18 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildPostQuery rightJoinWith($relation) Adds a RIGHT JOIN clause and with to the query
  * @method     ChildPostQuery innerJoinWith($relation) Adds a INNER JOIN clause and with to the query
  *
+ * @method     ChildPostQuery leftJoinCategory($relationAlias = null) Adds a LEFT JOIN clause to the query using the Category relation
+ * @method     ChildPostQuery rightJoinCategory($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Category relation
+ * @method     ChildPostQuery innerJoinCategory($relationAlias = null) Adds a INNER JOIN clause to the query using the Category relation
+ *
+ * @method     ChildPostQuery joinWithCategory($joinType = Criteria::INNER_JOIN) Adds a join clause and with to the query using the Category relation
+ *
+ * @method     ChildPostQuery leftJoinWithCategory() Adds a LEFT JOIN clause and with to the query using the Category relation
+ * @method     ChildPostQuery rightJoinWithCategory() Adds a RIGHT JOIN clause and with to the query using the Category relation
+ * @method     ChildPostQuery innerJoinWithCategory() Adds a INNER JOIN clause and with to the query using the Category relation
+ *
+ * @method     \CategoryQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
+ *
  * @method     ChildPost findOne(ConnectionInterface $con = null) Return the first ChildPost matching the query
  * @method     ChildPost findOneOrCreate(ConnectionInterface $con = null) Return the first ChildPost matching the query, or a new ChildPost object populated from the query conditions when no match is found
  *
@@ -49,7 +64,8 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildPost findOneByHyperlink(string $hyperlink) Return the first ChildPost filtered by the hyperlink column
  * @method     ChildPost findOneBySummary(string $summary) Return the first ChildPost filtered by the summary column
  * @method     ChildPost findOneByText(string $text) Return the first ChildPost filtered by the text column
- * @method     ChildPost findOneByPostedDate(string $posted_date) Return the first ChildPost filtered by the posted_date column *
+ * @method     ChildPost findOneByPostedDate(string $posted_date) Return the first ChildPost filtered by the posted_date column
+ * @method     ChildPost findOneByCategoryId(int $category_id) Return the first ChildPost filtered by the category_id column *
 
  * @method     ChildPost requirePk($key, ConnectionInterface $con = null) Return the ChildPost by primary key and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildPost requireOne(ConnectionInterface $con = null) Return the first ChildPost matching the query and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
@@ -60,6 +76,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildPost requireOneBySummary(string $summary) Return the first ChildPost filtered by the summary column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildPost requireOneByText(string $text) Return the first ChildPost filtered by the text column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildPost requireOneByPostedDate(string $posted_date) Return the first ChildPost filtered by the posted_date column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildPost requireOneByCategoryId(int $category_id) Return the first ChildPost filtered by the category_id column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  *
  * @method     ChildPost[]|ObjectCollection find(ConnectionInterface $con = null) Return ChildPost objects based on current ModelCriteria
  * @method     ChildPost[]|ObjectCollection findById(int $id) Return ChildPost objects filtered by the id column
@@ -68,6 +85,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildPost[]|ObjectCollection findBySummary(string $summary) Return ChildPost objects filtered by the summary column
  * @method     ChildPost[]|ObjectCollection findByText(string $text) Return ChildPost objects filtered by the text column
  * @method     ChildPost[]|ObjectCollection findByPostedDate(string $posted_date) Return ChildPost objects filtered by the posted_date column
+ * @method     ChildPost[]|ObjectCollection findByCategoryId(int $category_id) Return ChildPost objects filtered by the category_id column
  * @method     ChildPost[]|\Propel\Runtime\Util\PropelModelPager paginate($page = 1, $maxPerPage = 10, ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
  *
  */
@@ -166,7 +184,7 @@ abstract class PostQuery extends ModelCriteria
      */
     protected function findPkSimple($key, ConnectionInterface $con)
     {
-        $sql = 'SELECT id, title, hyperlink, summary, text, posted_date FROM post WHERE id = :p0';
+        $sql = 'SELECT id, title, hyperlink, summary, text, posted_date, category_id FROM post WHERE id = :p0';
         try {
             $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
@@ -438,6 +456,126 @@ abstract class PostQuery extends ModelCriteria
         }
 
         return $this->addUsingAlias(PostTableMap::COL_POSTED_DATE, $postedDate, $comparison);
+    }
+
+    /**
+     * Filter the query on the category_id column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByCategoryId(1234); // WHERE category_id = 1234
+     * $query->filterByCategoryId(array(12, 34)); // WHERE category_id IN (12, 34)
+     * $query->filterByCategoryId(array('min' => 12)); // WHERE category_id > 12
+     * </code>
+     *
+     * @see       filterByCategory()
+     *
+     * @param     mixed $categoryId The value to use as filter.
+     *              Use scalar values for equality.
+     *              Use array values for in_array() equivalent.
+     *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildPostQuery The current query, for fluid interface
+     */
+    public function filterByCategoryId($categoryId = null, $comparison = null)
+    {
+        if (is_array($categoryId)) {
+            $useMinMax = false;
+            if (isset($categoryId['min'])) {
+                $this->addUsingAlias(PostTableMap::COL_CATEGORY_ID, $categoryId['min'], Criteria::GREATER_EQUAL);
+                $useMinMax = true;
+            }
+            if (isset($categoryId['max'])) {
+                $this->addUsingAlias(PostTableMap::COL_CATEGORY_ID, $categoryId['max'], Criteria::LESS_EQUAL);
+                $useMinMax = true;
+            }
+            if ($useMinMax) {
+                return $this;
+            }
+            if (null === $comparison) {
+                $comparison = Criteria::IN;
+            }
+        }
+
+        return $this->addUsingAlias(PostTableMap::COL_CATEGORY_ID, $categoryId, $comparison);
+    }
+
+    /**
+     * Filter the query by a related \Category object
+     *
+     * @param \Category|ObjectCollection $category The related object(s) to use as filter
+     * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @throws \Propel\Runtime\Exception\PropelException
+     *
+     * @return ChildPostQuery The current query, for fluid interface
+     */
+    public function filterByCategory($category, $comparison = null)
+    {
+        if ($category instanceof \Category) {
+            return $this
+                ->addUsingAlias(PostTableMap::COL_CATEGORY_ID, $category->getId(), $comparison);
+        } elseif ($category instanceof ObjectCollection) {
+            if (null === $comparison) {
+                $comparison = Criteria::IN;
+            }
+
+            return $this
+                ->addUsingAlias(PostTableMap::COL_CATEGORY_ID, $category->toKeyValue('PrimaryKey', 'Id'), $comparison);
+        } else {
+            throw new PropelException('filterByCategory() only accepts arguments of type \Category or Collection');
+        }
+    }
+
+    /**
+     * Adds a JOIN clause to the query using the Category relation
+     *
+     * @param     string $relationAlias optional alias for the relation
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return $this|ChildPostQuery The current query, for fluid interface
+     */
+    public function joinCategory($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        $tableMap = $this->getTableMap();
+        $relationMap = $tableMap->getRelation('Category');
+
+        // create a ModelJoin object for this join
+        $join = new ModelJoin();
+        $join->setJoinType($joinType);
+        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
+        if ($previousJoin = $this->getPreviousJoin()) {
+            $join->setPreviousJoin($previousJoin);
+        }
+
+        // add the ModelJoin to the current object
+        if ($relationAlias) {
+            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
+            $this->addJoinObject($join, $relationAlias);
+        } else {
+            $this->addJoinObject($join, 'Category');
+        }
+
+        return $this;
+    }
+
+    /**
+     * Use the Category relation Category object
+     *
+     * @see useQuery()
+     *
+     * @param     string $relationAlias optional alias for the relation,
+     *                                   to be used as main alias in the secondary query
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return \CategoryQuery A secondary query class using the current class as primary query
+     */
+    public function useCategoryQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        return $this
+            ->joinCategory($relationAlias, $joinType)
+            ->useQuery($relationAlias ? $relationAlias : 'Category', '\CategoryQuery');
     }
 
     /**

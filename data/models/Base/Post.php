@@ -2,6 +2,8 @@
 
 namespace Base;
 
+use \Category as ChildCategory;
+use \CategoryQuery as ChildCategoryQuery;
 use \PostQuery as ChildPostQuery;
 use \DateTime;
 use \Exception;
@@ -102,6 +104,18 @@ abstract class Post implements ActiveRecordInterface
      * @var        DateTime
      */
     protected $posted_date;
+
+    /**
+     * The value for the category_id field.
+     *
+     * @var        int
+     */
+    protected $category_id;
+
+    /**
+     * @var        ChildCategory
+     */
+    protected $aCategory;
 
     /**
      * Flag to prevent endless save loop, if this object is referenced
@@ -407,6 +421,16 @@ abstract class Post implements ActiveRecordInterface
     }
 
     /**
+     * Get the [category_id] column value.
+     *
+     * @return int
+     */
+    public function getCategoryId()
+    {
+        return $this->category_id;
+    }
+
+    /**
      * Set the value of [id] column.
      *
      * @param int $v new value
@@ -527,6 +551,30 @@ abstract class Post implements ActiveRecordInterface
     } // setPostedDate()
 
     /**
+     * Set the value of [category_id] column.
+     *
+     * @param int $v new value
+     * @return $this|\Post The current object (for fluent API support)
+     */
+    public function setCategoryId($v)
+    {
+        if ($v !== null) {
+            $v = (int) $v;
+        }
+
+        if ($this->category_id !== $v) {
+            $this->category_id = $v;
+            $this->modifiedColumns[PostTableMap::COL_CATEGORY_ID] = true;
+        }
+
+        if ($this->aCategory !== null && $this->aCategory->getId() !== $v) {
+            $this->aCategory = null;
+        }
+
+        return $this;
+    } // setCategoryId()
+
+    /**
      * Indicates whether the columns in this object are only set to default values.
      *
      * This method can be used in conjunction with isModified() to indicate whether an object is both
@@ -582,6 +630,9 @@ abstract class Post implements ActiveRecordInterface
                 $col = null;
             }
             $this->posted_date = (null !== $col) ? PropelDateTime::newInstance($col, null, 'DateTime') : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 6 + $startcol : PostTableMap::translateFieldName('CategoryId', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->category_id = (null !== $col) ? (int) $col : null;
             $this->resetModified();
 
             $this->setNew(false);
@@ -590,7 +641,7 @@ abstract class Post implements ActiveRecordInterface
                 $this->ensureConsistency();
             }
 
-            return $startcol + 6; // 6 = PostTableMap::NUM_HYDRATE_COLUMNS.
+            return $startcol + 7; // 7 = PostTableMap::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
             throw new PropelException(sprintf('Error populating %s object', '\\Post'), 0, $e);
@@ -612,6 +663,9 @@ abstract class Post implements ActiveRecordInterface
      */
     public function ensureConsistency()
     {
+        if ($this->aCategory !== null && $this->category_id !== $this->aCategory->getId()) {
+            $this->aCategory = null;
+        }
     } // ensureConsistency
 
     /**
@@ -651,6 +705,7 @@ abstract class Post implements ActiveRecordInterface
 
         if ($deep) {  // also de-associate any related objects?
 
+            $this->aCategory = null;
         } // if (deep)
     }
 
@@ -754,6 +809,18 @@ abstract class Post implements ActiveRecordInterface
         if (!$this->alreadyInSave) {
             $this->alreadyInSave = true;
 
+            // We call the save method on the following object(s) if they
+            // were passed to this object by their corresponding set
+            // method.  This object relates to these object(s) by a
+            // foreign key reference.
+
+            if ($this->aCategory !== null) {
+                if ($this->aCategory->isModified() || $this->aCategory->isNew()) {
+                    $affectedRows += $this->aCategory->save($con);
+                }
+                $this->setCategory($this->aCategory);
+            }
+
             if ($this->isNew() || $this->isModified()) {
                 // persist changes
                 if ($this->isNew()) {
@@ -809,6 +876,9 @@ abstract class Post implements ActiveRecordInterface
         if ($this->isColumnModified(PostTableMap::COL_POSTED_DATE)) {
             $modifiedColumns[':p' . $index++]  = 'posted_date';
         }
+        if ($this->isColumnModified(PostTableMap::COL_CATEGORY_ID)) {
+            $modifiedColumns[':p' . $index++]  = 'category_id';
+        }
 
         $sql = sprintf(
             'INSERT INTO post (%s) VALUES (%s)',
@@ -837,6 +907,9 @@ abstract class Post implements ActiveRecordInterface
                         break;
                     case 'posted_date':
                         $stmt->bindValue($identifier, $this->posted_date ? $this->posted_date->format("Y-m-d H:i:s.u") : null, PDO::PARAM_STR);
+                        break;
+                    case 'category_id':
+                        $stmt->bindValue($identifier, $this->category_id, PDO::PARAM_INT);
                         break;
                 }
             }
@@ -918,6 +991,9 @@ abstract class Post implements ActiveRecordInterface
             case 5:
                 return $this->getPostedDate();
                 break;
+            case 6:
+                return $this->getCategoryId();
+                break;
             default:
                 return null;
                 break;
@@ -935,10 +1011,11 @@ abstract class Post implements ActiveRecordInterface
      *                    Defaults to TableMap::TYPE_PHPNAME.
      * @param     boolean $includeLazyLoadColumns (optional) Whether to include lazy loaded columns. Defaults to TRUE.
      * @param     array $alreadyDumpedObjects List of objects to skip to avoid recursion
+     * @param     boolean $includeForeignObjects (optional) Whether to include hydrated related objects. Default to FALSE.
      *
      * @return array an associative array containing the field names (as keys) and field values
      */
-    public function toArray($keyType = TableMap::TYPE_PHPNAME, $includeLazyLoadColumns = true, $alreadyDumpedObjects = array())
+    public function toArray($keyType = TableMap::TYPE_PHPNAME, $includeLazyLoadColumns = true, $alreadyDumpedObjects = array(), $includeForeignObjects = false)
     {
 
         if (isset($alreadyDumpedObjects['Post'][$this->hashCode()])) {
@@ -953,6 +1030,7 @@ abstract class Post implements ActiveRecordInterface
             $keys[3] => $this->getSummary(),
             $keys[4] => $this->getText(),
             $keys[5] => $this->getPostedDate(),
+            $keys[6] => $this->getCategoryId(),
         );
         if ($result[$keys[5]] instanceof \DateTimeInterface) {
             $result[$keys[5]] = $result[$keys[5]]->format('c');
@@ -963,6 +1041,23 @@ abstract class Post implements ActiveRecordInterface
             $result[$key] = $virtualColumn;
         }
 
+        if ($includeForeignObjects) {
+            if (null !== $this->aCategory) {
+
+                switch ($keyType) {
+                    case TableMap::TYPE_CAMELNAME:
+                        $key = 'category';
+                        break;
+                    case TableMap::TYPE_FIELDNAME:
+                        $key = 'category';
+                        break;
+                    default:
+                        $key = 'Category';
+                }
+
+                $result[$key] = $this->aCategory->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
+            }
+        }
 
         return $result;
     }
@@ -1014,6 +1109,9 @@ abstract class Post implements ActiveRecordInterface
             case 5:
                 $this->setPostedDate($value);
                 break;
+            case 6:
+                $this->setCategoryId($value);
+                break;
         } // switch()
 
         return $this;
@@ -1057,6 +1155,9 @@ abstract class Post implements ActiveRecordInterface
         }
         if (array_key_exists($keys[5], $arr)) {
             $this->setPostedDate($arr[$keys[5]]);
+        }
+        if (array_key_exists($keys[6], $arr)) {
+            $this->setCategoryId($arr[$keys[6]]);
         }
     }
 
@@ -1116,6 +1217,9 @@ abstract class Post implements ActiveRecordInterface
         }
         if ($this->isColumnModified(PostTableMap::COL_POSTED_DATE)) {
             $criteria->add(PostTableMap::COL_POSTED_DATE, $this->posted_date);
+        }
+        if ($this->isColumnModified(PostTableMap::COL_CATEGORY_ID)) {
+            $criteria->add(PostTableMap::COL_CATEGORY_ID, $this->category_id);
         }
 
         return $criteria;
@@ -1208,6 +1312,7 @@ abstract class Post implements ActiveRecordInterface
         $copyObj->setSummary($this->getSummary());
         $copyObj->setText($this->getText());
         $copyObj->setPostedDate($this->getPostedDate());
+        $copyObj->setCategoryId($this->getCategoryId());
         if ($makeNew) {
             $copyObj->setNew(true);
             $copyObj->setId(NULL); // this is a auto-increment column, so set to default value
@@ -1237,18 +1342,73 @@ abstract class Post implements ActiveRecordInterface
     }
 
     /**
+     * Declares an association between this object and a ChildCategory object.
+     *
+     * @param  ChildCategory $v
+     * @return $this|\Post The current object (for fluent API support)
+     * @throws PropelException
+     */
+    public function setCategory(ChildCategory $v = null)
+    {
+        if ($v === null) {
+            $this->setCategoryId(NULL);
+        } else {
+            $this->setCategoryId($v->getId());
+        }
+
+        $this->aCategory = $v;
+
+        // Add binding for other direction of this n:n relationship.
+        // If this object has already been added to the ChildCategory object, it will not be re-added.
+        if ($v !== null) {
+            $v->addPost($this);
+        }
+
+
+        return $this;
+    }
+
+
+    /**
+     * Get the associated ChildCategory object
+     *
+     * @param  ConnectionInterface $con Optional Connection object.
+     * @return ChildCategory The associated ChildCategory object.
+     * @throws PropelException
+     */
+    public function getCategory(ConnectionInterface $con = null)
+    {
+        if ($this->aCategory === null && ($this->category_id != 0)) {
+            $this->aCategory = ChildCategoryQuery::create()->findPk($this->category_id, $con);
+            /* The following can be used additionally to
+                guarantee the related object contains a reference
+                to this object.  This level of coupling may, however, be
+                undesirable since it could result in an only partially populated collection
+                in the referenced object.
+                $this->aCategory->addPosts($this);
+             */
+        }
+
+        return $this->aCategory;
+    }
+
+    /**
      * Clears the current object, sets all attributes to their default values and removes
      * outgoing references as well as back-references (from other objects to this one. Results probably in a database
      * change of those foreign objects when you call `save` there).
      */
     public function clear()
     {
+        if (null !== $this->aCategory) {
+            $this->aCategory->removePost($this);
+        }
         $this->id = null;
         $this->title = null;
         $this->hyperlink = null;
         $this->summary = null;
         $this->text = null;
         $this->posted_date = null;
+        $this->category_id = null;
         $this->alreadyInSave = false;
         $this->clearAllReferences();
         $this->resetModified();
@@ -1269,6 +1429,7 @@ abstract class Post implements ActiveRecordInterface
         if ($deep) {
         } // if ($deep)
 
+        $this->aCategory = null;
     }
 
     /**
