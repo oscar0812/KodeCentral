@@ -2,11 +2,10 @@
 
 namespace Base;
 
-use \PostQuery as ChildPostQuery;
-use \DateTime;
+use \CategoryQuery as ChildCategoryQuery;
 use \Exception;
 use \PDO;
-use Map\PostTableMap;
+use Map\CategoryTableMap;
 use Propel\Runtime\Propel;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
@@ -18,21 +17,20 @@ use Propel\Runtime\Exception\LogicException;
 use Propel\Runtime\Exception\PropelException;
 use Propel\Runtime\Map\TableMap;
 use Propel\Runtime\Parser\AbstractParser;
-use Propel\Runtime\Util\PropelDateTime;
 
 /**
- * Base class that represents a row from the 'post' table.
+ * Base class that represents a row from the 'category' table.
  *
  *
  *
  * @package    propel.generator..Base
  */
-abstract class Post implements ActiveRecordInterface
+abstract class Category implements ActiveRecordInterface
 {
     /**
      * TableMap class name
      */
-    const TABLE_MAP = '\\Map\\PostTableMap';
+    const TABLE_MAP = '\\Map\\CategoryTableMap';
 
 
     /**
@@ -69,39 +67,11 @@ abstract class Post implements ActiveRecordInterface
     protected $id;
 
     /**
-     * The value for the title field.
+     * The value for the name field.
      *
      * @var        string
      */
-    protected $title;
-
-    /**
-     * The value for the hyperlink field.
-     *
-     * @var        string
-     */
-    protected $hyperlink;
-
-    /**
-     * The value for the summary field.
-     *
-     * @var        string
-     */
-    protected $summary;
-
-    /**
-     * The value for the text field.
-     *
-     * @var        string
-     */
-    protected $text;
-
-    /**
-     * The value for the posted_date field.
-     *
-     * @var        DateTime
-     */
-    protected $posted_date;
+    protected $name;
 
     /**
      * Flag to prevent endless save loop, if this object is referenced
@@ -112,7 +82,7 @@ abstract class Post implements ActiveRecordInterface
     protected $alreadyInSave = false;
 
     /**
-     * Initializes internal state of Base\Post object.
+     * Initializes internal state of Base\Category object.
      */
     public function __construct()
     {
@@ -207,9 +177,9 @@ abstract class Post implements ActiveRecordInterface
     }
 
     /**
-     * Compares this with another <code>Post</code> instance.  If
-     * <code>obj</code> is an instance of <code>Post</code>, delegates to
-     * <code>equals(Post)</code>.  Otherwise, returns <code>false</code>.
+     * Compares this with another <code>Category</code> instance.  If
+     * <code>obj</code> is an instance of <code>Category</code>, delegates to
+     * <code>equals(Category)</code>.  Otherwise, returns <code>false</code>.
      *
      * @param  mixed   $obj The object to compare to.
      * @return boolean Whether equal to the object specified.
@@ -275,7 +245,7 @@ abstract class Post implements ActiveRecordInterface
      * @param string $name  The virtual column name
      * @param mixed  $value The value to give to the virtual column
      *
-     * @return $this|Post The current object, for fluid interface
+     * @return $this|Category The current object, for fluid interface
      */
     public function setVirtualColumn($name, $value)
     {
@@ -347,70 +317,20 @@ abstract class Post implements ActiveRecordInterface
     }
 
     /**
-     * Get the [title] column value.
+     * Get the [name] column value.
      *
      * @return string
      */
-    public function getTitle()
+    public function getName()
     {
-        return $this->title;
-    }
-
-    /**
-     * Get the [hyperlink] column value.
-     *
-     * @return string
-     */
-    public function getHyperlink()
-    {
-        return $this->hyperlink;
-    }
-
-    /**
-     * Get the [summary] column value.
-     *
-     * @return string
-     */
-    public function getSummary()
-    {
-        return $this->summary;
-    }
-
-    /**
-     * Get the [text] column value.
-     *
-     * @return string
-     */
-    public function getText()
-    {
-        return $this->text;
-    }
-
-    /**
-     * Get the [optionally formatted] temporal [posted_date] column value.
-     *
-     *
-     * @param      string|null $format The date/time format string (either date()-style or strftime()-style).
-     *                            If format is NULL, then the raw DateTime object will be returned.
-     *
-     * @return string|DateTime Formatted date/time value as string or DateTime object (if format is NULL), NULL if column is NULL, and 0 if column value is 0000-00-00
-     *
-     * @throws PropelException - if unable to parse/validate the date/time value.
-     */
-    public function getPostedDate($format = NULL)
-    {
-        if ($format === null) {
-            return $this->posted_date;
-        } else {
-            return $this->posted_date instanceof \DateTimeInterface ? $this->posted_date->format($format) : null;
-        }
+        return $this->name;
     }
 
     /**
      * Set the value of [id] column.
      *
      * @param int $v new value
-     * @return $this|\Post The current object (for fluent API support)
+     * @return $this|\Category The current object (for fluent API support)
      */
     public function setId($v)
     {
@@ -420,111 +340,31 @@ abstract class Post implements ActiveRecordInterface
 
         if ($this->id !== $v) {
             $this->id = $v;
-            $this->modifiedColumns[PostTableMap::COL_ID] = true;
+            $this->modifiedColumns[CategoryTableMap::COL_ID] = true;
         }
 
         return $this;
     } // setId()
 
     /**
-     * Set the value of [title] column.
+     * Set the value of [name] column.
      *
      * @param string $v new value
-     * @return $this|\Post The current object (for fluent API support)
+     * @return $this|\Category The current object (for fluent API support)
      */
-    public function setTitle($v)
+    public function setName($v)
     {
         if ($v !== null) {
             $v = (string) $v;
         }
 
-        if ($this->title !== $v) {
-            $this->title = $v;
-            $this->modifiedColumns[PostTableMap::COL_TITLE] = true;
+        if ($this->name !== $v) {
+            $this->name = $v;
+            $this->modifiedColumns[CategoryTableMap::COL_NAME] = true;
         }
 
         return $this;
-    } // setTitle()
-
-    /**
-     * Set the value of [hyperlink] column.
-     *
-     * @param string $v new value
-     * @return $this|\Post The current object (for fluent API support)
-     */
-    public function setHyperlink($v)
-    {
-        if ($v !== null) {
-            $v = (string) $v;
-        }
-
-        if ($this->hyperlink !== $v) {
-            $this->hyperlink = $v;
-            $this->modifiedColumns[PostTableMap::COL_HYPERLINK] = true;
-        }
-
-        return $this;
-    } // setHyperlink()
-
-    /**
-     * Set the value of [summary] column.
-     *
-     * @param string $v new value
-     * @return $this|\Post The current object (for fluent API support)
-     */
-    public function setSummary($v)
-    {
-        if ($v !== null) {
-            $v = (string) $v;
-        }
-
-        if ($this->summary !== $v) {
-            $this->summary = $v;
-            $this->modifiedColumns[PostTableMap::COL_SUMMARY] = true;
-        }
-
-        return $this;
-    } // setSummary()
-
-    /**
-     * Set the value of [text] column.
-     *
-     * @param string $v new value
-     * @return $this|\Post The current object (for fluent API support)
-     */
-    public function setText($v)
-    {
-        if ($v !== null) {
-            $v = (string) $v;
-        }
-
-        if ($this->text !== $v) {
-            $this->text = $v;
-            $this->modifiedColumns[PostTableMap::COL_TEXT] = true;
-        }
-
-        return $this;
-    } // setText()
-
-    /**
-     * Sets the value of [posted_date] column to a normalized version of the date/time value specified.
-     *
-     * @param  mixed $v string, integer (timestamp), or \DateTimeInterface value.
-     *               Empty strings are treated as NULL.
-     * @return $this|\Post The current object (for fluent API support)
-     */
-    public function setPostedDate($v)
-    {
-        $dt = PropelDateTime::newInstance($v, null, 'DateTime');
-        if ($this->posted_date !== null || $dt !== null) {
-            if ($this->posted_date === null || $dt === null || $dt->format("Y-m-d") !== $this->posted_date->format("Y-m-d")) {
-                $this->posted_date = $dt === null ? null : clone $dt;
-                $this->modifiedColumns[PostTableMap::COL_POSTED_DATE] = true;
-            }
-        } // if either are not null
-
-        return $this;
-    } // setPostedDate()
+    } // setName()
 
     /**
      * Indicates whether the columns in this object are only set to default values.
@@ -562,26 +402,11 @@ abstract class Post implements ActiveRecordInterface
     {
         try {
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 0 + $startcol : PostTableMap::translateFieldName('Id', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 0 + $startcol : CategoryTableMap::translateFieldName('Id', TableMap::TYPE_PHPNAME, $indexType)];
             $this->id = (null !== $col) ? (int) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 1 + $startcol : PostTableMap::translateFieldName('Title', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->title = (null !== $col) ? (string) $col : null;
-
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : PostTableMap::translateFieldName('Hyperlink', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->hyperlink = (null !== $col) ? (string) $col : null;
-
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : PostTableMap::translateFieldName('Summary', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->summary = (null !== $col) ? (string) $col : null;
-
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : PostTableMap::translateFieldName('Text', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->text = (null !== $col) ? (string) $col : null;
-
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 5 + $startcol : PostTableMap::translateFieldName('PostedDate', TableMap::TYPE_PHPNAME, $indexType)];
-            if ($col === '0000-00-00') {
-                $col = null;
-            }
-            $this->posted_date = (null !== $col) ? PropelDateTime::newInstance($col, null, 'DateTime') : null;
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 1 + $startcol : CategoryTableMap::translateFieldName('Name', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->name = (null !== $col) ? (string) $col : null;
             $this->resetModified();
 
             $this->setNew(false);
@@ -590,10 +415,10 @@ abstract class Post implements ActiveRecordInterface
                 $this->ensureConsistency();
             }
 
-            return $startcol + 6; // 6 = PostTableMap::NUM_HYDRATE_COLUMNS.
+            return $startcol + 2; // 2 = CategoryTableMap::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
-            throw new PropelException(sprintf('Error populating %s object', '\\Post'), 0, $e);
+            throw new PropelException(sprintf('Error populating %s object', '\\Category'), 0, $e);
         }
     }
 
@@ -635,13 +460,13 @@ abstract class Post implements ActiveRecordInterface
         }
 
         if ($con === null) {
-            $con = Propel::getServiceContainer()->getReadConnection(PostTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getReadConnection(CategoryTableMap::DATABASE_NAME);
         }
 
         // We don't need to alter the object instance pool; we're just modifying this instance
         // already in the pool.
 
-        $dataFetcher = ChildPostQuery::create(null, $this->buildPkeyCriteria())->setFormatter(ModelCriteria::FORMAT_STATEMENT)->find($con);
+        $dataFetcher = ChildCategoryQuery::create(null, $this->buildPkeyCriteria())->setFormatter(ModelCriteria::FORMAT_STATEMENT)->find($con);
         $row = $dataFetcher->fetch();
         $dataFetcher->close();
         if (!$row) {
@@ -660,8 +485,8 @@ abstract class Post implements ActiveRecordInterface
      * @param      ConnectionInterface $con
      * @return void
      * @throws PropelException
-     * @see Post::setDeleted()
-     * @see Post::isDeleted()
+     * @see Category::setDeleted()
+     * @see Category::isDeleted()
      */
     public function delete(ConnectionInterface $con = null)
     {
@@ -670,11 +495,11 @@ abstract class Post implements ActiveRecordInterface
         }
 
         if ($con === null) {
-            $con = Propel::getServiceContainer()->getWriteConnection(PostTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(CategoryTableMap::DATABASE_NAME);
         }
 
         $con->transaction(function () use ($con) {
-            $deleteQuery = ChildPostQuery::create()
+            $deleteQuery = ChildCategoryQuery::create()
                 ->filterByPrimaryKey($this->getPrimaryKey());
             $ret = $this->preDelete($con);
             if ($ret) {
@@ -709,7 +534,7 @@ abstract class Post implements ActiveRecordInterface
         }
 
         if ($con === null) {
-            $con = Propel::getServiceContainer()->getWriteConnection(PostTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(CategoryTableMap::DATABASE_NAME);
         }
 
         return $con->transaction(function () use ($con) {
@@ -728,7 +553,7 @@ abstract class Post implements ActiveRecordInterface
                     $this->postUpdate($con);
                 }
                 $this->postSave($con);
-                PostTableMap::addInstanceToPool($this);
+                CategoryTableMap::addInstanceToPool($this);
             } else {
                 $affectedRows = 0;
             }
@@ -785,33 +610,21 @@ abstract class Post implements ActiveRecordInterface
         $modifiedColumns = array();
         $index = 0;
 
-        $this->modifiedColumns[PostTableMap::COL_ID] = true;
+        $this->modifiedColumns[CategoryTableMap::COL_ID] = true;
         if (null !== $this->id) {
-            throw new PropelException('Cannot insert a value for auto-increment primary key (' . PostTableMap::COL_ID . ')');
+            throw new PropelException('Cannot insert a value for auto-increment primary key (' . CategoryTableMap::COL_ID . ')');
         }
 
          // check the columns in natural order for more readable SQL queries
-        if ($this->isColumnModified(PostTableMap::COL_ID)) {
+        if ($this->isColumnModified(CategoryTableMap::COL_ID)) {
             $modifiedColumns[':p' . $index++]  = 'id';
         }
-        if ($this->isColumnModified(PostTableMap::COL_TITLE)) {
-            $modifiedColumns[':p' . $index++]  = 'title';
-        }
-        if ($this->isColumnModified(PostTableMap::COL_HYPERLINK)) {
-            $modifiedColumns[':p' . $index++]  = 'hyperlink';
-        }
-        if ($this->isColumnModified(PostTableMap::COL_SUMMARY)) {
-            $modifiedColumns[':p' . $index++]  = 'summary';
-        }
-        if ($this->isColumnModified(PostTableMap::COL_TEXT)) {
-            $modifiedColumns[':p' . $index++]  = 'text';
-        }
-        if ($this->isColumnModified(PostTableMap::COL_POSTED_DATE)) {
-            $modifiedColumns[':p' . $index++]  = 'posted_date';
+        if ($this->isColumnModified(CategoryTableMap::COL_NAME)) {
+            $modifiedColumns[':p' . $index++]  = 'name';
         }
 
         $sql = sprintf(
-            'INSERT INTO post (%s) VALUES (%s)',
+            'INSERT INTO category (%s) VALUES (%s)',
             implode(', ', $modifiedColumns),
             implode(', ', array_keys($modifiedColumns))
         );
@@ -823,20 +636,8 @@ abstract class Post implements ActiveRecordInterface
                     case 'id':
                         $stmt->bindValue($identifier, $this->id, PDO::PARAM_INT);
                         break;
-                    case 'title':
-                        $stmt->bindValue($identifier, $this->title, PDO::PARAM_STR);
-                        break;
-                    case 'hyperlink':
-                        $stmt->bindValue($identifier, $this->hyperlink, PDO::PARAM_STR);
-                        break;
-                    case 'summary':
-                        $stmt->bindValue($identifier, $this->summary, PDO::PARAM_STR);
-                        break;
-                    case 'text':
-                        $stmt->bindValue($identifier, $this->text, PDO::PARAM_STR);
-                        break;
-                    case 'posted_date':
-                        $stmt->bindValue($identifier, $this->posted_date ? $this->posted_date->format("Y-m-d H:i:s.u") : null, PDO::PARAM_STR);
+                    case 'name':
+                        $stmt->bindValue($identifier, $this->name, PDO::PARAM_STR);
                         break;
                 }
             }
@@ -884,7 +685,7 @@ abstract class Post implements ActiveRecordInterface
      */
     public function getByName($name, $type = TableMap::TYPE_PHPNAME)
     {
-        $pos = PostTableMap::translateFieldName($name, $type, TableMap::TYPE_NUM);
+        $pos = CategoryTableMap::translateFieldName($name, $type, TableMap::TYPE_NUM);
         $field = $this->getByPosition($pos);
 
         return $field;
@@ -904,19 +705,7 @@ abstract class Post implements ActiveRecordInterface
                 return $this->getId();
                 break;
             case 1:
-                return $this->getTitle();
-                break;
-            case 2:
-                return $this->getHyperlink();
-                break;
-            case 3:
-                return $this->getSummary();
-                break;
-            case 4:
-                return $this->getText();
-                break;
-            case 5:
-                return $this->getPostedDate();
+                return $this->getName();
                 break;
             default:
                 return null;
@@ -941,23 +730,15 @@ abstract class Post implements ActiveRecordInterface
     public function toArray($keyType = TableMap::TYPE_PHPNAME, $includeLazyLoadColumns = true, $alreadyDumpedObjects = array())
     {
 
-        if (isset($alreadyDumpedObjects['Post'][$this->hashCode()])) {
+        if (isset($alreadyDumpedObjects['Category'][$this->hashCode()])) {
             return '*RECURSION*';
         }
-        $alreadyDumpedObjects['Post'][$this->hashCode()] = true;
-        $keys = PostTableMap::getFieldNames($keyType);
+        $alreadyDumpedObjects['Category'][$this->hashCode()] = true;
+        $keys = CategoryTableMap::getFieldNames($keyType);
         $result = array(
             $keys[0] => $this->getId(),
-            $keys[1] => $this->getTitle(),
-            $keys[2] => $this->getHyperlink(),
-            $keys[3] => $this->getSummary(),
-            $keys[4] => $this->getText(),
-            $keys[5] => $this->getPostedDate(),
+            $keys[1] => $this->getName(),
         );
-        if ($result[$keys[5]] instanceof \DateTimeInterface) {
-            $result[$keys[5]] = $result[$keys[5]]->format('c');
-        }
-
         $virtualColumns = $this->virtualColumns;
         foreach ($virtualColumns as $key => $virtualColumn) {
             $result[$key] = $virtualColumn;
@@ -976,11 +757,11 @@ abstract class Post implements ActiveRecordInterface
      *                one of the class type constants TableMap::TYPE_PHPNAME, TableMap::TYPE_CAMELNAME
      *                TableMap::TYPE_COLNAME, TableMap::TYPE_FIELDNAME, TableMap::TYPE_NUM.
      *                Defaults to TableMap::TYPE_PHPNAME.
-     * @return $this|\Post
+     * @return $this|\Category
      */
     public function setByName($name, $value, $type = TableMap::TYPE_PHPNAME)
     {
-        $pos = PostTableMap::translateFieldName($name, $type, TableMap::TYPE_NUM);
+        $pos = CategoryTableMap::translateFieldName($name, $type, TableMap::TYPE_NUM);
 
         return $this->setByPosition($pos, $value);
     }
@@ -991,7 +772,7 @@ abstract class Post implements ActiveRecordInterface
      *
      * @param  int $pos position in xml schema
      * @param  mixed $value field value
-     * @return $this|\Post
+     * @return $this|\Category
      */
     public function setByPosition($pos, $value)
     {
@@ -1000,19 +781,7 @@ abstract class Post implements ActiveRecordInterface
                 $this->setId($value);
                 break;
             case 1:
-                $this->setTitle($value);
-                break;
-            case 2:
-                $this->setHyperlink($value);
-                break;
-            case 3:
-                $this->setSummary($value);
-                break;
-            case 4:
-                $this->setText($value);
-                break;
-            case 5:
-                $this->setPostedDate($value);
+                $this->setName($value);
                 break;
         } // switch()
 
@@ -1038,25 +807,13 @@ abstract class Post implements ActiveRecordInterface
      */
     public function fromArray($arr, $keyType = TableMap::TYPE_PHPNAME)
     {
-        $keys = PostTableMap::getFieldNames($keyType);
+        $keys = CategoryTableMap::getFieldNames($keyType);
 
         if (array_key_exists($keys[0], $arr)) {
             $this->setId($arr[$keys[0]]);
         }
         if (array_key_exists($keys[1], $arr)) {
-            $this->setTitle($arr[$keys[1]]);
-        }
-        if (array_key_exists($keys[2], $arr)) {
-            $this->setHyperlink($arr[$keys[2]]);
-        }
-        if (array_key_exists($keys[3], $arr)) {
-            $this->setSummary($arr[$keys[3]]);
-        }
-        if (array_key_exists($keys[4], $arr)) {
-            $this->setText($arr[$keys[4]]);
-        }
-        if (array_key_exists($keys[5], $arr)) {
-            $this->setPostedDate($arr[$keys[5]]);
+            $this->setName($arr[$keys[1]]);
         }
     }
 
@@ -1077,7 +834,7 @@ abstract class Post implements ActiveRecordInterface
      * @param string $data The source data to import from
      * @param string $keyType The type of keys the array uses.
      *
-     * @return $this|\Post The current object, for fluid interface
+     * @return $this|\Category The current object, for fluid interface
      */
     public function importFrom($parser, $data, $keyType = TableMap::TYPE_PHPNAME)
     {
@@ -1097,25 +854,13 @@ abstract class Post implements ActiveRecordInterface
      */
     public function buildCriteria()
     {
-        $criteria = new Criteria(PostTableMap::DATABASE_NAME);
+        $criteria = new Criteria(CategoryTableMap::DATABASE_NAME);
 
-        if ($this->isColumnModified(PostTableMap::COL_ID)) {
-            $criteria->add(PostTableMap::COL_ID, $this->id);
+        if ($this->isColumnModified(CategoryTableMap::COL_ID)) {
+            $criteria->add(CategoryTableMap::COL_ID, $this->id);
         }
-        if ($this->isColumnModified(PostTableMap::COL_TITLE)) {
-            $criteria->add(PostTableMap::COL_TITLE, $this->title);
-        }
-        if ($this->isColumnModified(PostTableMap::COL_HYPERLINK)) {
-            $criteria->add(PostTableMap::COL_HYPERLINK, $this->hyperlink);
-        }
-        if ($this->isColumnModified(PostTableMap::COL_SUMMARY)) {
-            $criteria->add(PostTableMap::COL_SUMMARY, $this->summary);
-        }
-        if ($this->isColumnModified(PostTableMap::COL_TEXT)) {
-            $criteria->add(PostTableMap::COL_TEXT, $this->text);
-        }
-        if ($this->isColumnModified(PostTableMap::COL_POSTED_DATE)) {
-            $criteria->add(PostTableMap::COL_POSTED_DATE, $this->posted_date);
+        if ($this->isColumnModified(CategoryTableMap::COL_NAME)) {
+            $criteria->add(CategoryTableMap::COL_NAME, $this->name);
         }
 
         return $criteria;
@@ -1133,8 +878,8 @@ abstract class Post implements ActiveRecordInterface
      */
     public function buildPkeyCriteria()
     {
-        $criteria = ChildPostQuery::create();
-        $criteria->add(PostTableMap::COL_ID, $this->id);
+        $criteria = ChildCategoryQuery::create();
+        $criteria->add(CategoryTableMap::COL_ID, $this->id);
 
         return $criteria;
     }
@@ -1196,18 +941,14 @@ abstract class Post implements ActiveRecordInterface
      * If desired, this method can also make copies of all associated (fkey referrers)
      * objects.
      *
-     * @param      object $copyObj An object of \Post (or compatible) type.
+     * @param      object $copyObj An object of \Category (or compatible) type.
      * @param      boolean $deepCopy Whether to also copy all rows that refer (by fkey) to the current row.
      * @param      boolean $makeNew Whether to reset autoincrement PKs and make the object new.
      * @throws PropelException
      */
     public function copyInto($copyObj, $deepCopy = false, $makeNew = true)
     {
-        $copyObj->setTitle($this->getTitle());
-        $copyObj->setHyperlink($this->getHyperlink());
-        $copyObj->setSummary($this->getSummary());
-        $copyObj->setText($this->getText());
-        $copyObj->setPostedDate($this->getPostedDate());
+        $copyObj->setName($this->getName());
         if ($makeNew) {
             $copyObj->setNew(true);
             $copyObj->setId(NULL); // this is a auto-increment column, so set to default value
@@ -1223,7 +964,7 @@ abstract class Post implements ActiveRecordInterface
      * objects.
      *
      * @param  boolean $deepCopy Whether to also copy all rows that refer (by fkey) to the current row.
-     * @return \Post Clone of current object.
+     * @return \Category Clone of current object.
      * @throws PropelException
      */
     public function copy($deepCopy = false)
@@ -1244,11 +985,7 @@ abstract class Post implements ActiveRecordInterface
     public function clear()
     {
         $this->id = null;
-        $this->title = null;
-        $this->hyperlink = null;
-        $this->summary = null;
-        $this->text = null;
-        $this->posted_date = null;
+        $this->name = null;
         $this->alreadyInSave = false;
         $this->clearAllReferences();
         $this->resetModified();
@@ -1278,7 +1015,7 @@ abstract class Post implements ActiveRecordInterface
      */
     public function __toString()
     {
-        return (string) $this->exportTo(PostTableMap::DEFAULT_STRING_FORMAT);
+        return (string) $this->exportTo(CategoryTableMap::DEFAULT_STRING_FORMAT);
     }
 
     /**

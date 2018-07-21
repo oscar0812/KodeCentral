@@ -21,13 +21,17 @@ use Propel\Runtime\Exception\PropelException;
  *
  * @method     ChildPostQuery orderById($order = Criteria::ASC) Order by the id column
  * @method     ChildPostQuery orderByTitle($order = Criteria::ASC) Order by the title column
+ * @method     ChildPostQuery orderByHyperlink($order = Criteria::ASC) Order by the hyperlink column
  * @method     ChildPostQuery orderBySummary($order = Criteria::ASC) Order by the summary column
  * @method     ChildPostQuery orderByText($order = Criteria::ASC) Order by the text column
+ * @method     ChildPostQuery orderByPostedDate($order = Criteria::ASC) Order by the posted_date column
  *
  * @method     ChildPostQuery groupById() Group by the id column
  * @method     ChildPostQuery groupByTitle() Group by the title column
+ * @method     ChildPostQuery groupByHyperlink() Group by the hyperlink column
  * @method     ChildPostQuery groupBySummary() Group by the summary column
  * @method     ChildPostQuery groupByText() Group by the text column
+ * @method     ChildPostQuery groupByPostedDate() Group by the posted_date column
  *
  * @method     ChildPostQuery leftJoin($relation) Adds a LEFT JOIN clause to the query
  * @method     ChildPostQuery rightJoin($relation) Adds a RIGHT JOIN clause to the query
@@ -42,22 +46,28 @@ use Propel\Runtime\Exception\PropelException;
  *
  * @method     ChildPost findOneById(int $id) Return the first ChildPost filtered by the id column
  * @method     ChildPost findOneByTitle(string $title) Return the first ChildPost filtered by the title column
+ * @method     ChildPost findOneByHyperlink(string $hyperlink) Return the first ChildPost filtered by the hyperlink column
  * @method     ChildPost findOneBySummary(string $summary) Return the first ChildPost filtered by the summary column
- * @method     ChildPost findOneByText(string $text) Return the first ChildPost filtered by the text column *
+ * @method     ChildPost findOneByText(string $text) Return the first ChildPost filtered by the text column
+ * @method     ChildPost findOneByPostedDate(string $posted_date) Return the first ChildPost filtered by the posted_date column *
 
  * @method     ChildPost requirePk($key, ConnectionInterface $con = null) Return the ChildPost by primary key and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildPost requireOne(ConnectionInterface $con = null) Return the first ChildPost matching the query and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  *
  * @method     ChildPost requireOneById(int $id) Return the first ChildPost filtered by the id column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildPost requireOneByTitle(string $title) Return the first ChildPost filtered by the title column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildPost requireOneByHyperlink(string $hyperlink) Return the first ChildPost filtered by the hyperlink column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildPost requireOneBySummary(string $summary) Return the first ChildPost filtered by the summary column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildPost requireOneByText(string $text) Return the first ChildPost filtered by the text column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildPost requireOneByPostedDate(string $posted_date) Return the first ChildPost filtered by the posted_date column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  *
  * @method     ChildPost[]|ObjectCollection find(ConnectionInterface $con = null) Return ChildPost objects based on current ModelCriteria
  * @method     ChildPost[]|ObjectCollection findById(int $id) Return ChildPost objects filtered by the id column
  * @method     ChildPost[]|ObjectCollection findByTitle(string $title) Return ChildPost objects filtered by the title column
+ * @method     ChildPost[]|ObjectCollection findByHyperlink(string $hyperlink) Return ChildPost objects filtered by the hyperlink column
  * @method     ChildPost[]|ObjectCollection findBySummary(string $summary) Return ChildPost objects filtered by the summary column
  * @method     ChildPost[]|ObjectCollection findByText(string $text) Return ChildPost objects filtered by the text column
+ * @method     ChildPost[]|ObjectCollection findByPostedDate(string $posted_date) Return ChildPost objects filtered by the posted_date column
  * @method     ChildPost[]|\Propel\Runtime\Util\PropelModelPager paginate($page = 1, $maxPerPage = 10, ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
  *
  */
@@ -156,7 +166,7 @@ abstract class PostQuery extends ModelCriteria
      */
     protected function findPkSimple($key, ConnectionInterface $con)
     {
-        $sql = 'SELECT id, title, summary, text FROM post WHERE id = :p0';
+        $sql = 'SELECT id, title, hyperlink, summary, text, posted_date FROM post WHERE id = :p0';
         try {
             $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
@@ -313,6 +323,31 @@ abstract class PostQuery extends ModelCriteria
     }
 
     /**
+     * Filter the query on the hyperlink column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByHyperlink('fooValue');   // WHERE hyperlink = 'fooValue'
+     * $query->filterByHyperlink('%fooValue%', Criteria::LIKE); // WHERE hyperlink LIKE '%fooValue%'
+     * </code>
+     *
+     * @param     string $hyperlink The value to use as filter.
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildPostQuery The current query, for fluid interface
+     */
+    public function filterByHyperlink($hyperlink = null, $comparison = null)
+    {
+        if (null === $comparison) {
+            if (is_array($hyperlink)) {
+                $comparison = Criteria::IN;
+            }
+        }
+
+        return $this->addUsingAlias(PostTableMap::COL_HYPERLINK, $hyperlink, $comparison);
+    }
+
+    /**
      * Filter the query on the summary column
      *
      * Example usage:
@@ -360,6 +395,49 @@ abstract class PostQuery extends ModelCriteria
         }
 
         return $this->addUsingAlias(PostTableMap::COL_TEXT, $text, $comparison);
+    }
+
+    /**
+     * Filter the query on the posted_date column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByPostedDate('2011-03-14'); // WHERE posted_date = '2011-03-14'
+     * $query->filterByPostedDate('now'); // WHERE posted_date = '2011-03-14'
+     * $query->filterByPostedDate(array('max' => 'yesterday')); // WHERE posted_date > '2011-03-13'
+     * </code>
+     *
+     * @param     mixed $postedDate The value to use as filter.
+     *              Values can be integers (unix timestamps), DateTime objects, or strings.
+     *              Empty strings are treated as NULL.
+     *              Use scalar values for equality.
+     *              Use array values for in_array() equivalent.
+     *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildPostQuery The current query, for fluid interface
+     */
+    public function filterByPostedDate($postedDate = null, $comparison = null)
+    {
+        if (is_array($postedDate)) {
+            $useMinMax = false;
+            if (isset($postedDate['min'])) {
+                $this->addUsingAlias(PostTableMap::COL_POSTED_DATE, $postedDate['min'], Criteria::GREATER_EQUAL);
+                $useMinMax = true;
+            }
+            if (isset($postedDate['max'])) {
+                $this->addUsingAlias(PostTableMap::COL_POSTED_DATE, $postedDate['max'], Criteria::LESS_EQUAL);
+                $useMinMax = true;
+            }
+            if ($useMinMax) {
+                return $this;
+            }
+            if (null === $comparison) {
+                $comparison = Criteria::IN;
+            }
+        }
+
+        return $this->addUsingAlias(PostTableMap::COL_POSTED_DATE, $postedDate, $comparison);
     }
 
     /**
