@@ -10,7 +10,9 @@
     "ckeditor/ckeditor": "dev-full/4.3.x"
   },
   "autoload": {
-    
+    "classmap": [
+      "data/models/"
+    ],
     "psr-4":{
       "App\\": "app/"
     }
