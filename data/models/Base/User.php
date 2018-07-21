@@ -2,41 +2,40 @@
 
 namespace Base;
 
-use \Category as ChildCategory;
-use \CategoryQuery as ChildCategoryQuery;
+use \Post as ChildPost;
 use \PostQuery as ChildPostQuery;
 use \User as ChildUser;
 use \UserQuery as ChildUserQuery;
-use \DateTime;
 use \Exception;
 use \PDO;
 use Map\PostTableMap;
+use Map\UserTableMap;
 use Propel\Runtime\Propel;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\ActiveRecord\ActiveRecordInterface;
 use Propel\Runtime\Collection\Collection;
+use Propel\Runtime\Collection\ObjectCollection;
 use Propel\Runtime\Connection\ConnectionInterface;
 use Propel\Runtime\Exception\BadMethodCallException;
 use Propel\Runtime\Exception\LogicException;
 use Propel\Runtime\Exception\PropelException;
 use Propel\Runtime\Map\TableMap;
 use Propel\Runtime\Parser\AbstractParser;
-use Propel\Runtime\Util\PropelDateTime;
 
 /**
- * Base class that represents a row from the 'post' table.
+ * Base class that represents a row from the 'user' table.
  *
  *
  *
  * @package    propel.generator..Base
  */
-abstract class Post implements ActiveRecordInterface
+abstract class User implements ActiveRecordInterface
 {
     /**
      * TableMap class name
      */
-    const TABLE_MAP = '\\Map\\PostTableMap';
+    const TABLE_MAP = '\\Map\\UserTableMap';
 
 
     /**
@@ -73,63 +72,38 @@ abstract class Post implements ActiveRecordInterface
     protected $id;
 
     /**
-     * The value for the title field.
+     * The value for the full_name field.
      *
      * @var        string
      */
-    protected $title;
+    protected $full_name;
 
     /**
-     * The value for the hyperlink field.
+     * The value for the username field.
      *
      * @var        string
      */
-    protected $hyperlink;
+    protected $username;
 
     /**
-     * The value for the summary field.
+     * The value for the email field.
      *
      * @var        string
      */
-    protected $summary;
+    protected $email;
 
     /**
-     * The value for the text field.
+     * The value for the password field.
      *
      * @var        string
      */
-    protected $text;
+    protected $password;
 
     /**
-     * The value for the posted_date field.
-     *
-     * @var        DateTime
+     * @var        ObjectCollection|ChildPost[] Collection to store aggregation of ChildPost objects.
      */
-    protected $posted_date;
-
-    /**
-     * The value for the category_id field.
-     *
-     * @var        int
-     */
-    protected $category_id;
-
-    /**
-     * The value for the posted_by_user_id field.
-     *
-     * @var        int
-     */
-    protected $posted_by_user_id;
-
-    /**
-     * @var        ChildCategory
-     */
-    protected $aCategory;
-
-    /**
-     * @var        ChildUser
-     */
-    protected $aUser;
+    protected $collPosts;
+    protected $collPostsPartial;
 
     /**
      * Flag to prevent endless save loop, if this object is referenced
@@ -140,7 +114,13 @@ abstract class Post implements ActiveRecordInterface
     protected $alreadyInSave = false;
 
     /**
-     * Initializes internal state of Base\Post object.
+     * An array of objects scheduled for deletion.
+     * @var ObjectCollection|ChildPost[]
+     */
+    protected $postsScheduledForDeletion = null;
+
+    /**
+     * Initializes internal state of Base\User object.
      */
     public function __construct()
     {
@@ -235,9 +215,9 @@ abstract class Post implements ActiveRecordInterface
     }
 
     /**
-     * Compares this with another <code>Post</code> instance.  If
-     * <code>obj</code> is an instance of <code>Post</code>, delegates to
-     * <code>equals(Post)</code>.  Otherwise, returns <code>false</code>.
+     * Compares this with another <code>User</code> instance.  If
+     * <code>obj</code> is an instance of <code>User</code>, delegates to
+     * <code>equals(User)</code>.  Otherwise, returns <code>false</code>.
      *
      * @param  mixed   $obj The object to compare to.
      * @return boolean Whether equal to the object specified.
@@ -303,7 +283,7 @@ abstract class Post implements ActiveRecordInterface
      * @param string $name  The virtual column name
      * @param mixed  $value The value to give to the virtual column
      *
-     * @return $this|Post The current object, for fluid interface
+     * @return $this|User The current object, for fluid interface
      */
     public function setVirtualColumn($name, $value)
     {
@@ -375,90 +355,50 @@ abstract class Post implements ActiveRecordInterface
     }
 
     /**
-     * Get the [title] column value.
+     * Get the [full_name] column value.
      *
      * @return string
      */
-    public function getTitle()
+    public function getFullName()
     {
-        return $this->title;
+        return $this->full_name;
     }
 
     /**
-     * Get the [hyperlink] column value.
+     * Get the [username] column value.
      *
      * @return string
      */
-    public function getHyperlink()
+    public function getUsername()
     {
-        return $this->hyperlink;
+        return $this->username;
     }
 
     /**
-     * Get the [summary] column value.
+     * Get the [email] column value.
      *
      * @return string
      */
-    public function getSummary()
+    public function getEmail()
     {
-        return $this->summary;
+        return $this->email;
     }
 
     /**
-     * Get the [text] column value.
+     * Get the [password] column value.
      *
      * @return string
      */
-    public function getText()
+    public function getPassword()
     {
-        return $this->text;
-    }
-
-    /**
-     * Get the [optionally formatted] temporal [posted_date] column value.
-     *
-     *
-     * @param      string|null $format The date/time format string (either date()-style or strftime()-style).
-     *                            If format is NULL, then the raw DateTime object will be returned.
-     *
-     * @return string|DateTime Formatted date/time value as string or DateTime object (if format is NULL), NULL if column is NULL, and 0 if column value is 0000-00-00
-     *
-     * @throws PropelException - if unable to parse/validate the date/time value.
-     */
-    public function getPostedDate($format = NULL)
-    {
-        if ($format === null) {
-            return $this->posted_date;
-        } else {
-            return $this->posted_date instanceof \DateTimeInterface ? $this->posted_date->format($format) : null;
-        }
-    }
-
-    /**
-     * Get the [category_id] column value.
-     *
-     * @return int
-     */
-    public function getCategoryId()
-    {
-        return $this->category_id;
-    }
-
-    /**
-     * Get the [posted_by_user_id] column value.
-     *
-     * @return int
-     */
-    public function getPostedByUserId()
-    {
-        return $this->posted_by_user_id;
+        return $this->password;
     }
 
     /**
      * Set the value of [id] column.
      *
      * @param int $v new value
-     * @return $this|\Post The current object (for fluent API support)
+     * @return $this|\User The current object (for fluent API support)
      */
     public function setId($v)
     {
@@ -468,159 +408,91 @@ abstract class Post implements ActiveRecordInterface
 
         if ($this->id !== $v) {
             $this->id = $v;
-            $this->modifiedColumns[PostTableMap::COL_ID] = true;
+            $this->modifiedColumns[UserTableMap::COL_ID] = true;
         }
 
         return $this;
     } // setId()
 
     /**
-     * Set the value of [title] column.
+     * Set the value of [full_name] column.
      *
      * @param string $v new value
-     * @return $this|\Post The current object (for fluent API support)
+     * @return $this|\User The current object (for fluent API support)
      */
-    public function setTitle($v)
+    public function setFullName($v)
     {
         if ($v !== null) {
             $v = (string) $v;
         }
 
-        if ($this->title !== $v) {
-            $this->title = $v;
-            $this->modifiedColumns[PostTableMap::COL_TITLE] = true;
+        if ($this->full_name !== $v) {
+            $this->full_name = $v;
+            $this->modifiedColumns[UserTableMap::COL_FULL_NAME] = true;
         }
 
         return $this;
-    } // setTitle()
+    } // setFullName()
 
     /**
-     * Set the value of [hyperlink] column.
+     * Set the value of [username] column.
      *
      * @param string $v new value
-     * @return $this|\Post The current object (for fluent API support)
+     * @return $this|\User The current object (for fluent API support)
      */
-    public function setHyperlink($v)
+    public function setUsername($v)
     {
         if ($v !== null) {
             $v = (string) $v;
         }
 
-        if ($this->hyperlink !== $v) {
-            $this->hyperlink = $v;
-            $this->modifiedColumns[PostTableMap::COL_HYPERLINK] = true;
+        if ($this->username !== $v) {
+            $this->username = $v;
+            $this->modifiedColumns[UserTableMap::COL_USERNAME] = true;
         }
 
         return $this;
-    } // setHyperlink()
+    } // setUsername()
 
     /**
-     * Set the value of [summary] column.
+     * Set the value of [email] column.
      *
      * @param string $v new value
-     * @return $this|\Post The current object (for fluent API support)
+     * @return $this|\User The current object (for fluent API support)
      */
-    public function setSummary($v)
+    public function setEmail($v)
     {
         if ($v !== null) {
             $v = (string) $v;
         }
 
-        if ($this->summary !== $v) {
-            $this->summary = $v;
-            $this->modifiedColumns[PostTableMap::COL_SUMMARY] = true;
+        if ($this->email !== $v) {
+            $this->email = $v;
+            $this->modifiedColumns[UserTableMap::COL_EMAIL] = true;
         }
 
         return $this;
-    } // setSummary()
+    } // setEmail()
 
     /**
-     * Set the value of [text] column.
+     * Set the value of [password] column.
      *
      * @param string $v new value
-     * @return $this|\Post The current object (for fluent API support)
+     * @return $this|\User The current object (for fluent API support)
      */
-    public function setText($v)
+    public function setPassword($v)
     {
         if ($v !== null) {
             $v = (string) $v;
         }
 
-        if ($this->text !== $v) {
-            $this->text = $v;
-            $this->modifiedColumns[PostTableMap::COL_TEXT] = true;
+        if ($this->password !== $v) {
+            $this->password = $v;
+            $this->modifiedColumns[UserTableMap::COL_PASSWORD] = true;
         }
 
         return $this;
-    } // setText()
-
-    /**
-     * Sets the value of [posted_date] column to a normalized version of the date/time value specified.
-     *
-     * @param  mixed $v string, integer (timestamp), or \DateTimeInterface value.
-     *               Empty strings are treated as NULL.
-     * @return $this|\Post The current object (for fluent API support)
-     */
-    public function setPostedDate($v)
-    {
-        $dt = PropelDateTime::newInstance($v, null, 'DateTime');
-        if ($this->posted_date !== null || $dt !== null) {
-            if ($this->posted_date === null || $dt === null || $dt->format("Y-m-d") !== $this->posted_date->format("Y-m-d")) {
-                $this->posted_date = $dt === null ? null : clone $dt;
-                $this->modifiedColumns[PostTableMap::COL_POSTED_DATE] = true;
-            }
-        } // if either are not null
-
-        return $this;
-    } // setPostedDate()
-
-    /**
-     * Set the value of [category_id] column.
-     *
-     * @param int $v new value
-     * @return $this|\Post The current object (for fluent API support)
-     */
-    public function setCategoryId($v)
-    {
-        if ($v !== null) {
-            $v = (int) $v;
-        }
-
-        if ($this->category_id !== $v) {
-            $this->category_id = $v;
-            $this->modifiedColumns[PostTableMap::COL_CATEGORY_ID] = true;
-        }
-
-        if ($this->aCategory !== null && $this->aCategory->getId() !== $v) {
-            $this->aCategory = null;
-        }
-
-        return $this;
-    } // setCategoryId()
-
-    /**
-     * Set the value of [posted_by_user_id] column.
-     *
-     * @param int $v new value
-     * @return $this|\Post The current object (for fluent API support)
-     */
-    public function setPostedByUserId($v)
-    {
-        if ($v !== null) {
-            $v = (int) $v;
-        }
-
-        if ($this->posted_by_user_id !== $v) {
-            $this->posted_by_user_id = $v;
-            $this->modifiedColumns[PostTableMap::COL_POSTED_BY_USER_ID] = true;
-        }
-
-        if ($this->aUser !== null && $this->aUser->getId() !== $v) {
-            $this->aUser = null;
-        }
-
-        return $this;
-    } // setPostedByUserId()
+    } // setPassword()
 
     /**
      * Indicates whether the columns in this object are only set to default values.
@@ -658,32 +530,20 @@ abstract class Post implements ActiveRecordInterface
     {
         try {
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 0 + $startcol : PostTableMap::translateFieldName('Id', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 0 + $startcol : UserTableMap::translateFieldName('Id', TableMap::TYPE_PHPNAME, $indexType)];
             $this->id = (null !== $col) ? (int) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 1 + $startcol : PostTableMap::translateFieldName('Title', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->title = (null !== $col) ? (string) $col : null;
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 1 + $startcol : UserTableMap::translateFieldName('FullName', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->full_name = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : PostTableMap::translateFieldName('Hyperlink', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->hyperlink = (null !== $col) ? (string) $col : null;
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : UserTableMap::translateFieldName('Username', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->username = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : PostTableMap::translateFieldName('Summary', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->summary = (null !== $col) ? (string) $col : null;
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : UserTableMap::translateFieldName('Email', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->email = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : PostTableMap::translateFieldName('Text', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->text = (null !== $col) ? (string) $col : null;
-
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 5 + $startcol : PostTableMap::translateFieldName('PostedDate', TableMap::TYPE_PHPNAME, $indexType)];
-            if ($col === '0000-00-00') {
-                $col = null;
-            }
-            $this->posted_date = (null !== $col) ? PropelDateTime::newInstance($col, null, 'DateTime') : null;
-
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 6 + $startcol : PostTableMap::translateFieldName('CategoryId', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->category_id = (null !== $col) ? (int) $col : null;
-
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 7 + $startcol : PostTableMap::translateFieldName('PostedByUserId', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->posted_by_user_id = (null !== $col) ? (int) $col : null;
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : UserTableMap::translateFieldName('Password', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->password = (null !== $col) ? (string) $col : null;
             $this->resetModified();
 
             $this->setNew(false);
@@ -692,10 +552,10 @@ abstract class Post implements ActiveRecordInterface
                 $this->ensureConsistency();
             }
 
-            return $startcol + 8; // 8 = PostTableMap::NUM_HYDRATE_COLUMNS.
+            return $startcol + 5; // 5 = UserTableMap::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
-            throw new PropelException(sprintf('Error populating %s object', '\\Post'), 0, $e);
+            throw new PropelException(sprintf('Error populating %s object', '\\User'), 0, $e);
         }
     }
 
@@ -714,12 +574,6 @@ abstract class Post implements ActiveRecordInterface
      */
     public function ensureConsistency()
     {
-        if ($this->aCategory !== null && $this->category_id !== $this->aCategory->getId()) {
-            $this->aCategory = null;
-        }
-        if ($this->aUser !== null && $this->posted_by_user_id !== $this->aUser->getId()) {
-            $this->aUser = null;
-        }
     } // ensureConsistency
 
     /**
@@ -743,13 +597,13 @@ abstract class Post implements ActiveRecordInterface
         }
 
         if ($con === null) {
-            $con = Propel::getServiceContainer()->getReadConnection(PostTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getReadConnection(UserTableMap::DATABASE_NAME);
         }
 
         // We don't need to alter the object instance pool; we're just modifying this instance
         // already in the pool.
 
-        $dataFetcher = ChildPostQuery::create(null, $this->buildPkeyCriteria())->setFormatter(ModelCriteria::FORMAT_STATEMENT)->find($con);
+        $dataFetcher = ChildUserQuery::create(null, $this->buildPkeyCriteria())->setFormatter(ModelCriteria::FORMAT_STATEMENT)->find($con);
         $row = $dataFetcher->fetch();
         $dataFetcher->close();
         if (!$row) {
@@ -759,8 +613,8 @@ abstract class Post implements ActiveRecordInterface
 
         if ($deep) {  // also de-associate any related objects?
 
-            $this->aCategory = null;
-            $this->aUser = null;
+            $this->collPosts = null;
+
         } // if (deep)
     }
 
@@ -770,8 +624,8 @@ abstract class Post implements ActiveRecordInterface
      * @param      ConnectionInterface $con
      * @return void
      * @throws PropelException
-     * @see Post::setDeleted()
-     * @see Post::isDeleted()
+     * @see User::setDeleted()
+     * @see User::isDeleted()
      */
     public function delete(ConnectionInterface $con = null)
     {
@@ -780,11 +634,11 @@ abstract class Post implements ActiveRecordInterface
         }
 
         if ($con === null) {
-            $con = Propel::getServiceContainer()->getWriteConnection(PostTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(UserTableMap::DATABASE_NAME);
         }
 
         $con->transaction(function () use ($con) {
-            $deleteQuery = ChildPostQuery::create()
+            $deleteQuery = ChildUserQuery::create()
                 ->filterByPrimaryKey($this->getPrimaryKey());
             $ret = $this->preDelete($con);
             if ($ret) {
@@ -819,7 +673,7 @@ abstract class Post implements ActiveRecordInterface
         }
 
         if ($con === null) {
-            $con = Propel::getServiceContainer()->getWriteConnection(PostTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(UserTableMap::DATABASE_NAME);
         }
 
         return $con->transaction(function () use ($con) {
@@ -838,7 +692,7 @@ abstract class Post implements ActiveRecordInterface
                     $this->postUpdate($con);
                 }
                 $this->postSave($con);
-                PostTableMap::addInstanceToPool($this);
+                UserTableMap::addInstanceToPool($this);
             } else {
                 $affectedRows = 0;
             }
@@ -864,25 +718,6 @@ abstract class Post implements ActiveRecordInterface
         if (!$this->alreadyInSave) {
             $this->alreadyInSave = true;
 
-            // We call the save method on the following object(s) if they
-            // were passed to this object by their corresponding set
-            // method.  This object relates to these object(s) by a
-            // foreign key reference.
-
-            if ($this->aCategory !== null) {
-                if ($this->aCategory->isModified() || $this->aCategory->isNew()) {
-                    $affectedRows += $this->aCategory->save($con);
-                }
-                $this->setCategory($this->aCategory);
-            }
-
-            if ($this->aUser !== null) {
-                if ($this->aUser->isModified() || $this->aUser->isNew()) {
-                    $affectedRows += $this->aUser->save($con);
-                }
-                $this->setUser($this->aUser);
-            }
-
             if ($this->isNew() || $this->isModified()) {
                 // persist changes
                 if ($this->isNew()) {
@@ -892,6 +727,23 @@ abstract class Post implements ActiveRecordInterface
                     $affectedRows += $this->doUpdate($con);
                 }
                 $this->resetModified();
+            }
+
+            if ($this->postsScheduledForDeletion !== null) {
+                if (!$this->postsScheduledForDeletion->isEmpty()) {
+                    \PostQuery::create()
+                        ->filterByPrimaryKeys($this->postsScheduledForDeletion->getPrimaryKeys(false))
+                        ->delete($con);
+                    $this->postsScheduledForDeletion = null;
+                }
+            }
+
+            if ($this->collPosts !== null) {
+                foreach ($this->collPosts as $referrerFK) {
+                    if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
+                        $affectedRows += $referrerFK->save($con);
+                    }
+                }
             }
 
             $this->alreadyInSave = false;
@@ -914,39 +766,30 @@ abstract class Post implements ActiveRecordInterface
         $modifiedColumns = array();
         $index = 0;
 
-        $this->modifiedColumns[PostTableMap::COL_ID] = true;
+        $this->modifiedColumns[UserTableMap::COL_ID] = true;
         if (null !== $this->id) {
-            throw new PropelException('Cannot insert a value for auto-increment primary key (' . PostTableMap::COL_ID . ')');
+            throw new PropelException('Cannot insert a value for auto-increment primary key (' . UserTableMap::COL_ID . ')');
         }
 
          // check the columns in natural order for more readable SQL queries
-        if ($this->isColumnModified(PostTableMap::COL_ID)) {
+        if ($this->isColumnModified(UserTableMap::COL_ID)) {
             $modifiedColumns[':p' . $index++]  = 'id';
         }
-        if ($this->isColumnModified(PostTableMap::COL_TITLE)) {
-            $modifiedColumns[':p' . $index++]  = 'title';
+        if ($this->isColumnModified(UserTableMap::COL_FULL_NAME)) {
+            $modifiedColumns[':p' . $index++]  = 'full_name';
         }
-        if ($this->isColumnModified(PostTableMap::COL_HYPERLINK)) {
-            $modifiedColumns[':p' . $index++]  = 'hyperlink';
+        if ($this->isColumnModified(UserTableMap::COL_USERNAME)) {
+            $modifiedColumns[':p' . $index++]  = 'username';
         }
-        if ($this->isColumnModified(PostTableMap::COL_SUMMARY)) {
-            $modifiedColumns[':p' . $index++]  = 'summary';
+        if ($this->isColumnModified(UserTableMap::COL_EMAIL)) {
+            $modifiedColumns[':p' . $index++]  = 'email';
         }
-        if ($this->isColumnModified(PostTableMap::COL_TEXT)) {
-            $modifiedColumns[':p' . $index++]  = 'text';
-        }
-        if ($this->isColumnModified(PostTableMap::COL_POSTED_DATE)) {
-            $modifiedColumns[':p' . $index++]  = 'posted_date';
-        }
-        if ($this->isColumnModified(PostTableMap::COL_CATEGORY_ID)) {
-            $modifiedColumns[':p' . $index++]  = 'category_id';
-        }
-        if ($this->isColumnModified(PostTableMap::COL_POSTED_BY_USER_ID)) {
-            $modifiedColumns[':p' . $index++]  = 'posted_by_user_id';
+        if ($this->isColumnModified(UserTableMap::COL_PASSWORD)) {
+            $modifiedColumns[':p' . $index++]  = 'password';
         }
 
         $sql = sprintf(
-            'INSERT INTO post (%s) VALUES (%s)',
+            'INSERT INTO user (%s) VALUES (%s)',
             implode(', ', $modifiedColumns),
             implode(', ', array_keys($modifiedColumns))
         );
@@ -958,26 +801,17 @@ abstract class Post implements ActiveRecordInterface
                     case 'id':
                         $stmt->bindValue($identifier, $this->id, PDO::PARAM_INT);
                         break;
-                    case 'title':
-                        $stmt->bindValue($identifier, $this->title, PDO::PARAM_STR);
+                    case 'full_name':
+                        $stmt->bindValue($identifier, $this->full_name, PDO::PARAM_STR);
                         break;
-                    case 'hyperlink':
-                        $stmt->bindValue($identifier, $this->hyperlink, PDO::PARAM_STR);
+                    case 'username':
+                        $stmt->bindValue($identifier, $this->username, PDO::PARAM_STR);
                         break;
-                    case 'summary':
-                        $stmt->bindValue($identifier, $this->summary, PDO::PARAM_STR);
+                    case 'email':
+                        $stmt->bindValue($identifier, $this->email, PDO::PARAM_STR);
                         break;
-                    case 'text':
-                        $stmt->bindValue($identifier, $this->text, PDO::PARAM_STR);
-                        break;
-                    case 'posted_date':
-                        $stmt->bindValue($identifier, $this->posted_date ? $this->posted_date->format("Y-m-d H:i:s.u") : null, PDO::PARAM_STR);
-                        break;
-                    case 'category_id':
-                        $stmt->bindValue($identifier, $this->category_id, PDO::PARAM_INT);
-                        break;
-                    case 'posted_by_user_id':
-                        $stmt->bindValue($identifier, $this->posted_by_user_id, PDO::PARAM_INT);
+                    case 'password':
+                        $stmt->bindValue($identifier, $this->password, PDO::PARAM_STR);
                         break;
                 }
             }
@@ -1025,7 +859,7 @@ abstract class Post implements ActiveRecordInterface
      */
     public function getByName($name, $type = TableMap::TYPE_PHPNAME)
     {
-        $pos = PostTableMap::translateFieldName($name, $type, TableMap::TYPE_NUM);
+        $pos = UserTableMap::translateFieldName($name, $type, TableMap::TYPE_NUM);
         $field = $this->getByPosition($pos);
 
         return $field;
@@ -1045,25 +879,16 @@ abstract class Post implements ActiveRecordInterface
                 return $this->getId();
                 break;
             case 1:
-                return $this->getTitle();
+                return $this->getFullName();
                 break;
             case 2:
-                return $this->getHyperlink();
+                return $this->getUsername();
                 break;
             case 3:
-                return $this->getSummary();
+                return $this->getEmail();
                 break;
             case 4:
-                return $this->getText();
-                break;
-            case 5:
-                return $this->getPostedDate();
-                break;
-            case 6:
-                return $this->getCategoryId();
-                break;
-            case 7:
-                return $this->getPostedByUserId();
+                return $this->getPassword();
                 break;
             default:
                 return null;
@@ -1089,60 +914,38 @@ abstract class Post implements ActiveRecordInterface
     public function toArray($keyType = TableMap::TYPE_PHPNAME, $includeLazyLoadColumns = true, $alreadyDumpedObjects = array(), $includeForeignObjects = false)
     {
 
-        if (isset($alreadyDumpedObjects['Post'][$this->hashCode()])) {
+        if (isset($alreadyDumpedObjects['User'][$this->hashCode()])) {
             return '*RECURSION*';
         }
-        $alreadyDumpedObjects['Post'][$this->hashCode()] = true;
-        $keys = PostTableMap::getFieldNames($keyType);
+        $alreadyDumpedObjects['User'][$this->hashCode()] = true;
+        $keys = UserTableMap::getFieldNames($keyType);
         $result = array(
             $keys[0] => $this->getId(),
-            $keys[1] => $this->getTitle(),
-            $keys[2] => $this->getHyperlink(),
-            $keys[3] => $this->getSummary(),
-            $keys[4] => $this->getText(),
-            $keys[5] => $this->getPostedDate(),
-            $keys[6] => $this->getCategoryId(),
-            $keys[7] => $this->getPostedByUserId(),
+            $keys[1] => $this->getFullName(),
+            $keys[2] => $this->getUsername(),
+            $keys[3] => $this->getEmail(),
+            $keys[4] => $this->getPassword(),
         );
-        if ($result[$keys[5]] instanceof \DateTimeInterface) {
-            $result[$keys[5]] = $result[$keys[5]]->format('c');
-        }
-
         $virtualColumns = $this->virtualColumns;
         foreach ($virtualColumns as $key => $virtualColumn) {
             $result[$key] = $virtualColumn;
         }
 
         if ($includeForeignObjects) {
-            if (null !== $this->aCategory) {
+            if (null !== $this->collPosts) {
 
                 switch ($keyType) {
                     case TableMap::TYPE_CAMELNAME:
-                        $key = 'category';
+                        $key = 'posts';
                         break;
                     case TableMap::TYPE_FIELDNAME:
-                        $key = 'category';
+                        $key = 'posts';
                         break;
                     default:
-                        $key = 'Category';
+                        $key = 'Posts';
                 }
 
-                $result[$key] = $this->aCategory->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
-            }
-            if (null !== $this->aUser) {
-
-                switch ($keyType) {
-                    case TableMap::TYPE_CAMELNAME:
-                        $key = 'user';
-                        break;
-                    case TableMap::TYPE_FIELDNAME:
-                        $key = 'user';
-                        break;
-                    default:
-                        $key = 'User';
-                }
-
-                $result[$key] = $this->aUser->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
+                $result[$key] = $this->collPosts->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
             }
         }
 
@@ -1158,11 +961,11 @@ abstract class Post implements ActiveRecordInterface
      *                one of the class type constants TableMap::TYPE_PHPNAME, TableMap::TYPE_CAMELNAME
      *                TableMap::TYPE_COLNAME, TableMap::TYPE_FIELDNAME, TableMap::TYPE_NUM.
      *                Defaults to TableMap::TYPE_PHPNAME.
-     * @return $this|\Post
+     * @return $this|\User
      */
     public function setByName($name, $value, $type = TableMap::TYPE_PHPNAME)
     {
-        $pos = PostTableMap::translateFieldName($name, $type, TableMap::TYPE_NUM);
+        $pos = UserTableMap::translateFieldName($name, $type, TableMap::TYPE_NUM);
 
         return $this->setByPosition($pos, $value);
     }
@@ -1173,7 +976,7 @@ abstract class Post implements ActiveRecordInterface
      *
      * @param  int $pos position in xml schema
      * @param  mixed $value field value
-     * @return $this|\Post
+     * @return $this|\User
      */
     public function setByPosition($pos, $value)
     {
@@ -1182,25 +985,16 @@ abstract class Post implements ActiveRecordInterface
                 $this->setId($value);
                 break;
             case 1:
-                $this->setTitle($value);
+                $this->setFullName($value);
                 break;
             case 2:
-                $this->setHyperlink($value);
+                $this->setUsername($value);
                 break;
             case 3:
-                $this->setSummary($value);
+                $this->setEmail($value);
                 break;
             case 4:
-                $this->setText($value);
-                break;
-            case 5:
-                $this->setPostedDate($value);
-                break;
-            case 6:
-                $this->setCategoryId($value);
-                break;
-            case 7:
-                $this->setPostedByUserId($value);
+                $this->setPassword($value);
                 break;
         } // switch()
 
@@ -1226,31 +1020,22 @@ abstract class Post implements ActiveRecordInterface
      */
     public function fromArray($arr, $keyType = TableMap::TYPE_PHPNAME)
     {
-        $keys = PostTableMap::getFieldNames($keyType);
+        $keys = UserTableMap::getFieldNames($keyType);
 
         if (array_key_exists($keys[0], $arr)) {
             $this->setId($arr[$keys[0]]);
         }
         if (array_key_exists($keys[1], $arr)) {
-            $this->setTitle($arr[$keys[1]]);
+            $this->setFullName($arr[$keys[1]]);
         }
         if (array_key_exists($keys[2], $arr)) {
-            $this->setHyperlink($arr[$keys[2]]);
+            $this->setUsername($arr[$keys[2]]);
         }
         if (array_key_exists($keys[3], $arr)) {
-            $this->setSummary($arr[$keys[3]]);
+            $this->setEmail($arr[$keys[3]]);
         }
         if (array_key_exists($keys[4], $arr)) {
-            $this->setText($arr[$keys[4]]);
-        }
-        if (array_key_exists($keys[5], $arr)) {
-            $this->setPostedDate($arr[$keys[5]]);
-        }
-        if (array_key_exists($keys[6], $arr)) {
-            $this->setCategoryId($arr[$keys[6]]);
-        }
-        if (array_key_exists($keys[7], $arr)) {
-            $this->setPostedByUserId($arr[$keys[7]]);
+            $this->setPassword($arr[$keys[4]]);
         }
     }
 
@@ -1271,7 +1056,7 @@ abstract class Post implements ActiveRecordInterface
      * @param string $data The source data to import from
      * @param string $keyType The type of keys the array uses.
      *
-     * @return $this|\Post The current object, for fluid interface
+     * @return $this|\User The current object, for fluid interface
      */
     public function importFrom($parser, $data, $keyType = TableMap::TYPE_PHPNAME)
     {
@@ -1291,31 +1076,22 @@ abstract class Post implements ActiveRecordInterface
      */
     public function buildCriteria()
     {
-        $criteria = new Criteria(PostTableMap::DATABASE_NAME);
+        $criteria = new Criteria(UserTableMap::DATABASE_NAME);
 
-        if ($this->isColumnModified(PostTableMap::COL_ID)) {
-            $criteria->add(PostTableMap::COL_ID, $this->id);
+        if ($this->isColumnModified(UserTableMap::COL_ID)) {
+            $criteria->add(UserTableMap::COL_ID, $this->id);
         }
-        if ($this->isColumnModified(PostTableMap::COL_TITLE)) {
-            $criteria->add(PostTableMap::COL_TITLE, $this->title);
+        if ($this->isColumnModified(UserTableMap::COL_FULL_NAME)) {
+            $criteria->add(UserTableMap::COL_FULL_NAME, $this->full_name);
         }
-        if ($this->isColumnModified(PostTableMap::COL_HYPERLINK)) {
-            $criteria->add(PostTableMap::COL_HYPERLINK, $this->hyperlink);
+        if ($this->isColumnModified(UserTableMap::COL_USERNAME)) {
+            $criteria->add(UserTableMap::COL_USERNAME, $this->username);
         }
-        if ($this->isColumnModified(PostTableMap::COL_SUMMARY)) {
-            $criteria->add(PostTableMap::COL_SUMMARY, $this->summary);
+        if ($this->isColumnModified(UserTableMap::COL_EMAIL)) {
+            $criteria->add(UserTableMap::COL_EMAIL, $this->email);
         }
-        if ($this->isColumnModified(PostTableMap::COL_TEXT)) {
-            $criteria->add(PostTableMap::COL_TEXT, $this->text);
-        }
-        if ($this->isColumnModified(PostTableMap::COL_POSTED_DATE)) {
-            $criteria->add(PostTableMap::COL_POSTED_DATE, $this->posted_date);
-        }
-        if ($this->isColumnModified(PostTableMap::COL_CATEGORY_ID)) {
-            $criteria->add(PostTableMap::COL_CATEGORY_ID, $this->category_id);
-        }
-        if ($this->isColumnModified(PostTableMap::COL_POSTED_BY_USER_ID)) {
-            $criteria->add(PostTableMap::COL_POSTED_BY_USER_ID, $this->posted_by_user_id);
+        if ($this->isColumnModified(UserTableMap::COL_PASSWORD)) {
+            $criteria->add(UserTableMap::COL_PASSWORD, $this->password);
         }
 
         return $criteria;
@@ -1333,8 +1109,8 @@ abstract class Post implements ActiveRecordInterface
      */
     public function buildPkeyCriteria()
     {
-        $criteria = ChildPostQuery::create();
-        $criteria->add(PostTableMap::COL_ID, $this->id);
+        $criteria = ChildUserQuery::create();
+        $criteria->add(UserTableMap::COL_ID, $this->id);
 
         return $criteria;
     }
@@ -1396,20 +1172,31 @@ abstract class Post implements ActiveRecordInterface
      * If desired, this method can also make copies of all associated (fkey referrers)
      * objects.
      *
-     * @param      object $copyObj An object of \Post (or compatible) type.
+     * @param      object $copyObj An object of \User (or compatible) type.
      * @param      boolean $deepCopy Whether to also copy all rows that refer (by fkey) to the current row.
      * @param      boolean $makeNew Whether to reset autoincrement PKs and make the object new.
      * @throws PropelException
      */
     public function copyInto($copyObj, $deepCopy = false, $makeNew = true)
     {
-        $copyObj->setTitle($this->getTitle());
-        $copyObj->setHyperlink($this->getHyperlink());
-        $copyObj->setSummary($this->getSummary());
-        $copyObj->setText($this->getText());
-        $copyObj->setPostedDate($this->getPostedDate());
-        $copyObj->setCategoryId($this->getCategoryId());
-        $copyObj->setPostedByUserId($this->getPostedByUserId());
+        $copyObj->setFullName($this->getFullName());
+        $copyObj->setUsername($this->getUsername());
+        $copyObj->setEmail($this->getEmail());
+        $copyObj->setPassword($this->getPassword());
+
+        if ($deepCopy) {
+            // important: temporarily setNew(false) because this affects the behavior of
+            // the getter/setter methods for fkey referrer objects.
+            $copyObj->setNew(false);
+
+            foreach ($this->getPosts() as $relObj) {
+                if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
+                    $copyObj->addPost($relObj->copy($deepCopy));
+                }
+            }
+
+        } // if ($deepCopy)
+
         if ($makeNew) {
             $copyObj->setNew(true);
             $copyObj->setId(NULL); // this is a auto-increment column, so set to default value
@@ -1425,7 +1212,7 @@ abstract class Post implements ActiveRecordInterface
      * objects.
      *
      * @param  boolean $deepCopy Whether to also copy all rows that refer (by fkey) to the current row.
-     * @return \Post Clone of current object.
+     * @return \User Clone of current object.
      * @throws PropelException
      */
     public function copy($deepCopy = false)
@@ -1438,106 +1225,271 @@ abstract class Post implements ActiveRecordInterface
         return $copyObj;
     }
 
+
     /**
-     * Declares an association between this object and a ChildCategory object.
+     * Initializes a collection based on the name of a relation.
+     * Avoids crafting an 'init[$relationName]s' method name
+     * that wouldn't work when StandardEnglishPluralizer is used.
      *
-     * @param  ChildCategory $v
-     * @return $this|\Post The current object (for fluent API support)
+     * @param      string $relationName The name of the relation to initialize
+     * @return void
+     */
+    public function initRelation($relationName)
+    {
+        if ('Post' == $relationName) {
+            $this->initPosts();
+            return;
+        }
+    }
+
+    /**
+     * Clears out the collPosts collection
+     *
+     * This does not modify the database; however, it will remove any associated objects, causing
+     * them to be refetched by subsequent calls to accessor method.
+     *
+     * @return void
+     * @see        addPosts()
+     */
+    public function clearPosts()
+    {
+        $this->collPosts = null; // important to set this to NULL since that means it is uninitialized
+    }
+
+    /**
+     * Reset is the collPosts collection loaded partially.
+     */
+    public function resetPartialPosts($v = true)
+    {
+        $this->collPostsPartial = $v;
+    }
+
+    /**
+     * Initializes the collPosts collection.
+     *
+     * By default this just sets the collPosts collection to an empty array (like clearcollPosts());
+     * however, you may wish to override this method in your stub class to provide setting appropriate
+     * to your application -- for example, setting the initial array to the values stored in database.
+     *
+     * @param      boolean $overrideExisting If set to true, the method call initializes
+     *                                        the collection even if it is not empty
+     *
+     * @return void
+     */
+    public function initPosts($overrideExisting = true)
+    {
+        if (null !== $this->collPosts && !$overrideExisting) {
+            return;
+        }
+
+        $collectionClassName = PostTableMap::getTableMap()->getCollectionClassName();
+
+        $this->collPosts = new $collectionClassName;
+        $this->collPosts->setModel('\Post');
+    }
+
+    /**
+     * Gets an array of ChildPost objects which contain a foreign key that references this object.
+     *
+     * If the $criteria is not null, it is used to always fetch the results from the database.
+     * Otherwise the results are fetched from the database the first time, then cached.
+     * Next time the same method is called without $criteria, the cached collection is returned.
+     * If this ChildUser is new, it will return
+     * an empty collection or the current collection; the criteria is ignored on a new object.
+     *
+     * @param      Criteria $criteria optional Criteria object to narrow the query
+     * @param      ConnectionInterface $con optional connection object
+     * @return ObjectCollection|ChildPost[] List of ChildPost objects
      * @throws PropelException
      */
-    public function setCategory(ChildCategory $v = null)
+    public function getPosts(Criteria $criteria = null, ConnectionInterface $con = null)
     {
-        if ($v === null) {
-            $this->setCategoryId(NULL);
-        } else {
-            $this->setCategoryId($v->getId());
+        $partial = $this->collPostsPartial && !$this->isNew();
+        if (null === $this->collPosts || null !== $criteria  || $partial) {
+            if ($this->isNew() && null === $this->collPosts) {
+                // return empty collection
+                $this->initPosts();
+            } else {
+                $collPosts = ChildPostQuery::create(null, $criteria)
+                    ->filterByUser($this)
+                    ->find($con);
+
+                if (null !== $criteria) {
+                    if (false !== $this->collPostsPartial && count($collPosts)) {
+                        $this->initPosts(false);
+
+                        foreach ($collPosts as $obj) {
+                            if (false == $this->collPosts->contains($obj)) {
+                                $this->collPosts->append($obj);
+                            }
+                        }
+
+                        $this->collPostsPartial = true;
+                    }
+
+                    return $collPosts;
+                }
+
+                if ($partial && $this->collPosts) {
+                    foreach ($this->collPosts as $obj) {
+                        if ($obj->isNew()) {
+                            $collPosts[] = $obj;
+                        }
+                    }
+                }
+
+                $this->collPosts = $collPosts;
+                $this->collPostsPartial = false;
+            }
         }
 
-        $this->aCategory = $v;
+        return $this->collPosts;
+    }
 
-        // Add binding for other direction of this n:n relationship.
-        // If this object has already been added to the ChildCategory object, it will not be re-added.
-        if ($v !== null) {
-            $v->addPost($this);
+    /**
+     * Sets a collection of ChildPost objects related by a one-to-many relationship
+     * to the current object.
+     * It will also schedule objects for deletion based on a diff between old objects (aka persisted)
+     * and new objects from the given Propel collection.
+     *
+     * @param      Collection $posts A Propel collection.
+     * @param      ConnectionInterface $con Optional connection object
+     * @return $this|ChildUser The current object (for fluent API support)
+     */
+    public function setPosts(Collection $posts, ConnectionInterface $con = null)
+    {
+        /** @var ChildPost[] $postsToDelete */
+        $postsToDelete = $this->getPosts(new Criteria(), $con)->diff($posts);
+
+
+        $this->postsScheduledForDeletion = $postsToDelete;
+
+        foreach ($postsToDelete as $postRemoved) {
+            $postRemoved->setUser(null);
         }
 
+        $this->collPosts = null;
+        foreach ($posts as $post) {
+            $this->addPost($post);
+        }
+
+        $this->collPosts = $posts;
+        $this->collPostsPartial = false;
+
+        return $this;
+    }
+
+    /**
+     * Returns the number of related Post objects.
+     *
+     * @param      Criteria $criteria
+     * @param      boolean $distinct
+     * @param      ConnectionInterface $con
+     * @return int             Count of related Post objects.
+     * @throws PropelException
+     */
+    public function countPosts(Criteria $criteria = null, $distinct = false, ConnectionInterface $con = null)
+    {
+        $partial = $this->collPostsPartial && !$this->isNew();
+        if (null === $this->collPosts || null !== $criteria || $partial) {
+            if ($this->isNew() && null === $this->collPosts) {
+                return 0;
+            }
+
+            if ($partial && !$criteria) {
+                return count($this->getPosts());
+            }
+
+            $query = ChildPostQuery::create(null, $criteria);
+            if ($distinct) {
+                $query->distinct();
+            }
+
+            return $query
+                ->filterByUser($this)
+                ->count($con);
+        }
+
+        return count($this->collPosts);
+    }
+
+    /**
+     * Method called to associate a ChildPost object to this object
+     * through the ChildPost foreign key attribute.
+     *
+     * @param  ChildPost $l ChildPost
+     * @return $this|\User The current object (for fluent API support)
+     */
+    public function addPost(ChildPost $l)
+    {
+        if ($this->collPosts === null) {
+            $this->initPosts();
+            $this->collPostsPartial = true;
+        }
+
+        if (!$this->collPosts->contains($l)) {
+            $this->doAddPost($l);
+
+            if ($this->postsScheduledForDeletion and $this->postsScheduledForDeletion->contains($l)) {
+                $this->postsScheduledForDeletion->remove($this->postsScheduledForDeletion->search($l));
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param ChildPost $post The ChildPost object to add.
+     */
+    protected function doAddPost(ChildPost $post)
+    {
+        $this->collPosts[]= $post;
+        $post->setUser($this);
+    }
+
+    /**
+     * @param  ChildPost $post The ChildPost object to remove.
+     * @return $this|ChildUser The current object (for fluent API support)
+     */
+    public function removePost(ChildPost $post)
+    {
+        if ($this->getPosts()->contains($post)) {
+            $pos = $this->collPosts->search($post);
+            $this->collPosts->remove($pos);
+            if (null === $this->postsScheduledForDeletion) {
+                $this->postsScheduledForDeletion = clone $this->collPosts;
+                $this->postsScheduledForDeletion->clear();
+            }
+            $this->postsScheduledForDeletion[]= clone $post;
+            $post->setUser(null);
+        }
 
         return $this;
     }
 
 
     /**
-     * Get the associated ChildCategory object
+     * If this collection has already been initialized with
+     * an identical criteria, it returns the collection.
+     * Otherwise if this User is new, it will return
+     * an empty collection; or if this User has previously
+     * been saved, it will retrieve related Posts from storage.
      *
-     * @param  ConnectionInterface $con Optional Connection object.
-     * @return ChildCategory The associated ChildCategory object.
-     * @throws PropelException
-     */
-    public function getCategory(ConnectionInterface $con = null)
-    {
-        if ($this->aCategory === null && ($this->category_id != 0)) {
-            $this->aCategory = ChildCategoryQuery::create()->findPk($this->category_id, $con);
-            /* The following can be used additionally to
-                guarantee the related object contains a reference
-                to this object.  This level of coupling may, however, be
-                undesirable since it could result in an only partially populated collection
-                in the referenced object.
-                $this->aCategory->addPosts($this);
-             */
-        }
-
-        return $this->aCategory;
-    }
-
-    /**
-     * Declares an association between this object and a ChildUser object.
+     * This method is protected by default in order to keep the public
+     * api reasonable.  You can provide public methods for those you
+     * actually need in User.
      *
-     * @param  ChildUser $v
-     * @return $this|\Post The current object (for fluent API support)
-     * @throws PropelException
+     * @param      Criteria $criteria optional Criteria object to narrow the query
+     * @param      ConnectionInterface $con optional connection object
+     * @param      string $joinBehavior optional join type to use (defaults to Criteria::LEFT_JOIN)
+     * @return ObjectCollection|ChildPost[] List of ChildPost objects
      */
-    public function setUser(ChildUser $v = null)
+    public function getPostsJoinCategory(Criteria $criteria = null, ConnectionInterface $con = null, $joinBehavior = Criteria::LEFT_JOIN)
     {
-        if ($v === null) {
-            $this->setPostedByUserId(NULL);
-        } else {
-            $this->setPostedByUserId($v->getId());
-        }
+        $query = ChildPostQuery::create(null, $criteria);
+        $query->joinWith('Category', $joinBehavior);
 
-        $this->aUser = $v;
-
-        // Add binding for other direction of this n:n relationship.
-        // If this object has already been added to the ChildUser object, it will not be re-added.
-        if ($v !== null) {
-            $v->addPost($this);
-        }
-
-
-        return $this;
-    }
-
-
-    /**
-     * Get the associated ChildUser object
-     *
-     * @param  ConnectionInterface $con Optional Connection object.
-     * @return ChildUser The associated ChildUser object.
-     * @throws PropelException
-     */
-    public function getUser(ConnectionInterface $con = null)
-    {
-        if ($this->aUser === null && ($this->posted_by_user_id != 0)) {
-            $this->aUser = ChildUserQuery::create()->findPk($this->posted_by_user_id, $con);
-            /* The following can be used additionally to
-                guarantee the related object contains a reference
-                to this object.  This level of coupling may, however, be
-                undesirable since it could result in an only partially populated collection
-                in the referenced object.
-                $this->aUser->addPosts($this);
-             */
-        }
-
-        return $this->aUser;
+        return $this->getPosts($query, $con);
     }
 
     /**
@@ -1547,20 +1499,11 @@ abstract class Post implements ActiveRecordInterface
      */
     public function clear()
     {
-        if (null !== $this->aCategory) {
-            $this->aCategory->removePost($this);
-        }
-        if (null !== $this->aUser) {
-            $this->aUser->removePost($this);
-        }
         $this->id = null;
-        $this->title = null;
-        $this->hyperlink = null;
-        $this->summary = null;
-        $this->text = null;
-        $this->posted_date = null;
-        $this->category_id = null;
-        $this->posted_by_user_id = null;
+        $this->full_name = null;
+        $this->username = null;
+        $this->email = null;
+        $this->password = null;
         $this->alreadyInSave = false;
         $this->clearAllReferences();
         $this->resetModified();
@@ -1579,10 +1522,14 @@ abstract class Post implements ActiveRecordInterface
     public function clearAllReferences($deep = false)
     {
         if ($deep) {
+            if ($this->collPosts) {
+                foreach ($this->collPosts as $o) {
+                    $o->clearAllReferences($deep);
+                }
+            }
         } // if ($deep)
 
-        $this->aCategory = null;
-        $this->aUser = null;
+        $this->collPosts = null;
     }
 
     /**
@@ -1592,7 +1539,7 @@ abstract class Post implements ActiveRecordInterface
      */
     public function __toString()
     {
-        return (string) $this->exportTo(PostTableMap::DEFAULT_STRING_FORMAT);
+        return (string) $this->exportTo(UserTableMap::DEFAULT_STRING_FORMAT);
     }
 
     /**

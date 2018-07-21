@@ -2,8 +2,8 @@
 
 namespace Map;
 
-use \Post;
-use \PostQuery;
+use \User;
+use \UserQuery;
 use Propel\Runtime\Propel;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\InstancePoolTrait;
@@ -16,7 +16,7 @@ use Propel\Runtime\Map\TableMapTrait;
 
 
 /**
- * This class defines the structure of the 'post' table.
+ * This class defines the structure of the 'user' table.
  *
  *
  *
@@ -26,7 +26,7 @@ use Propel\Runtime\Map\TableMapTrait;
  * (i.e. if it's a text column type).
  *
  */
-class PostTableMap extends TableMap
+class UserTableMap extends TableMap
 {
     use InstancePoolTrait;
     use TableMapTrait;
@@ -34,7 +34,7 @@ class PostTableMap extends TableMap
     /**
      * The (dot-path) name of this class
      */
-    const CLASS_NAME = '.Map.PostTableMap';
+    const CLASS_NAME = '.Map.UserTableMap';
 
     /**
      * The default database name for this class
@@ -44,22 +44,22 @@ class PostTableMap extends TableMap
     /**
      * The table name for this class
      */
-    const TABLE_NAME = 'post';
+    const TABLE_NAME = 'user';
 
     /**
      * The related Propel class for this table
      */
-    const OM_CLASS = '\\Post';
+    const OM_CLASS = '\\User';
 
     /**
      * A class that can be returned by this tableMap
      */
-    const CLASS_DEFAULT = 'Post';
+    const CLASS_DEFAULT = 'User';
 
     /**
      * The total number of columns
      */
-    const NUM_COLUMNS = 8;
+    const NUM_COLUMNS = 5;
 
     /**
      * The number of lazy-loaded columns
@@ -69,47 +69,32 @@ class PostTableMap extends TableMap
     /**
      * The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS)
      */
-    const NUM_HYDRATE_COLUMNS = 8;
+    const NUM_HYDRATE_COLUMNS = 5;
 
     /**
      * the column name for the id field
      */
-    const COL_ID = 'post.id';
+    const COL_ID = 'user.id';
 
     /**
-     * the column name for the title field
+     * the column name for the full_name field
      */
-    const COL_TITLE = 'post.title';
+    const COL_FULL_NAME = 'user.full_name';
 
     /**
-     * the column name for the hyperlink field
+     * the column name for the username field
      */
-    const COL_HYPERLINK = 'post.hyperlink';
+    const COL_USERNAME = 'user.username';
 
     /**
-     * the column name for the summary field
+     * the column name for the email field
      */
-    const COL_SUMMARY = 'post.summary';
+    const COL_EMAIL = 'user.email';
 
     /**
-     * the column name for the text field
+     * the column name for the password field
      */
-    const COL_TEXT = 'post.text';
-
-    /**
-     * the column name for the posted_date field
-     */
-    const COL_POSTED_DATE = 'post.posted_date';
-
-    /**
-     * the column name for the category_id field
-     */
-    const COL_CATEGORY_ID = 'post.category_id';
-
-    /**
-     * the column name for the posted_by_user_id field
-     */
-    const COL_POSTED_BY_USER_ID = 'post.posted_by_user_id';
+    const COL_PASSWORD = 'user.password';
 
     /**
      * The default string format for model objects of the related table
@@ -123,11 +108,11 @@ class PostTableMap extends TableMap
      * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        self::TYPE_PHPNAME       => array('Id', 'Title', 'Hyperlink', 'Summary', 'Text', 'PostedDate', 'CategoryId', 'PostedByUserId', ),
-        self::TYPE_CAMELNAME     => array('id', 'title', 'hyperlink', 'summary', 'text', 'postedDate', 'categoryId', 'postedByUserId', ),
-        self::TYPE_COLNAME       => array(PostTableMap::COL_ID, PostTableMap::COL_TITLE, PostTableMap::COL_HYPERLINK, PostTableMap::COL_SUMMARY, PostTableMap::COL_TEXT, PostTableMap::COL_POSTED_DATE, PostTableMap::COL_CATEGORY_ID, PostTableMap::COL_POSTED_BY_USER_ID, ),
-        self::TYPE_FIELDNAME     => array('id', 'title', 'hyperlink', 'summary', 'text', 'posted_date', 'category_id', 'posted_by_user_id', ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, )
+        self::TYPE_PHPNAME       => array('Id', 'FullName', 'Username', 'Email', 'Password', ),
+        self::TYPE_CAMELNAME     => array('id', 'fullName', 'username', 'email', 'password', ),
+        self::TYPE_COLNAME       => array(UserTableMap::COL_ID, UserTableMap::COL_FULL_NAME, UserTableMap::COL_USERNAME, UserTableMap::COL_EMAIL, UserTableMap::COL_PASSWORD, ),
+        self::TYPE_FIELDNAME     => array('id', 'full_name', 'username', 'email', 'password', ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, )
     );
 
     /**
@@ -137,11 +122,11 @@ class PostTableMap extends TableMap
      * e.g. self::$fieldKeys[self::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        self::TYPE_PHPNAME       => array('Id' => 0, 'Title' => 1, 'Hyperlink' => 2, 'Summary' => 3, 'Text' => 4, 'PostedDate' => 5, 'CategoryId' => 6, 'PostedByUserId' => 7, ),
-        self::TYPE_CAMELNAME     => array('id' => 0, 'title' => 1, 'hyperlink' => 2, 'summary' => 3, 'text' => 4, 'postedDate' => 5, 'categoryId' => 6, 'postedByUserId' => 7, ),
-        self::TYPE_COLNAME       => array(PostTableMap::COL_ID => 0, PostTableMap::COL_TITLE => 1, PostTableMap::COL_HYPERLINK => 2, PostTableMap::COL_SUMMARY => 3, PostTableMap::COL_TEXT => 4, PostTableMap::COL_POSTED_DATE => 5, PostTableMap::COL_CATEGORY_ID => 6, PostTableMap::COL_POSTED_BY_USER_ID => 7, ),
-        self::TYPE_FIELDNAME     => array('id' => 0, 'title' => 1, 'hyperlink' => 2, 'summary' => 3, 'text' => 4, 'posted_date' => 5, 'category_id' => 6, 'posted_by_user_id' => 7, ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, )
+        self::TYPE_PHPNAME       => array('Id' => 0, 'FullName' => 1, 'Username' => 2, 'Email' => 3, 'Password' => 4, ),
+        self::TYPE_CAMELNAME     => array('id' => 0, 'fullName' => 1, 'username' => 2, 'email' => 3, 'password' => 4, ),
+        self::TYPE_COLNAME       => array(UserTableMap::COL_ID => 0, UserTableMap::COL_FULL_NAME => 1, UserTableMap::COL_USERNAME => 2, UserTableMap::COL_EMAIL => 3, UserTableMap::COL_PASSWORD => 4, ),
+        self::TYPE_FIELDNAME     => array('id' => 0, 'full_name' => 1, 'username' => 2, 'email' => 3, 'password' => 4, ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, )
     );
 
     /**
@@ -154,21 +139,18 @@ class PostTableMap extends TableMap
     public function initialize()
     {
         // attributes
-        $this->setName('post');
-        $this->setPhpName('Post');
+        $this->setName('user');
+        $this->setPhpName('User');
         $this->setIdentifierQuoting(false);
-        $this->setClassName('\\Post');
+        $this->setClassName('\\User');
         $this->setPackage('');
         $this->setUseIdGenerator(true);
         // columns
         $this->addPrimaryKey('id', 'Id', 'INTEGER', true, null, null);
-        $this->addColumn('title', 'Title', 'VARCHAR', true, 128, null);
-        $this->addColumn('hyperlink', 'Hyperlink', 'VARCHAR', true, 128, null);
-        $this->addColumn('summary', 'Summary', 'VARCHAR', true, 256, null);
-        $this->addColumn('text', 'Text', 'VARCHAR', true, 8192, null);
-        $this->addColumn('posted_date', 'PostedDate', 'DATE', true, null, null);
-        $this->addForeignKey('category_id', 'CategoryId', 'INTEGER', 'category', 'id', true, null, null);
-        $this->addForeignKey('posted_by_user_id', 'PostedByUserId', 'INTEGER', 'user', 'id', true, null, null);
+        $this->addColumn('full_name', 'FullName', 'VARCHAR', true, 128, null);
+        $this->addColumn('username', 'Username', 'VARCHAR', true, 64, null);
+        $this->addColumn('email', 'Email', 'VARCHAR', true, 128, null);
+        $this->addColumn('password', 'Password', 'VARCHAR', true, 256, null);
     } // initialize()
 
     /**
@@ -176,20 +158,13 @@ class PostTableMap extends TableMap
      */
     public function buildRelations()
     {
-        $this->addRelation('Category', '\\Category', RelationMap::MANY_TO_ONE, array (
-  0 =>
-  array (
-    0 => ':category_id',
-    1 => ':id',
-  ),
-), null, null, null, false);
-        $this->addRelation('User', '\\User', RelationMap::MANY_TO_ONE, array (
+        $this->addRelation('Post', '\\Post', RelationMap::ONE_TO_MANY, array (
   0 =>
   array (
     0 => ':posted_by_user_id',
     1 => ':id',
   ),
-), null, null, null, false);
+), null, null, 'Posts', false);
     } // buildRelations()
 
     /**
@@ -249,7 +224,7 @@ class PostTableMap extends TableMap
      */
     public static function getOMClass($withPrefix = true)
     {
-        return $withPrefix ? PostTableMap::CLASS_DEFAULT : PostTableMap::OM_CLASS;
+        return $withPrefix ? UserTableMap::CLASS_DEFAULT : UserTableMap::OM_CLASS;
     }
 
     /**
@@ -263,22 +238,22 @@ class PostTableMap extends TableMap
      *
      * @throws PropelException Any exceptions caught during processing will be
      *                         rethrown wrapped into a PropelException.
-     * @return array           (Post object, last column rank)
+     * @return array           (User object, last column rank)
      */
     public static function populateObject($row, $offset = 0, $indexType = TableMap::TYPE_NUM)
     {
-        $key = PostTableMap::getPrimaryKeyHashFromRow($row, $offset, $indexType);
-        if (null !== ($obj = PostTableMap::getInstanceFromPool($key))) {
+        $key = UserTableMap::getPrimaryKeyHashFromRow($row, $offset, $indexType);
+        if (null !== ($obj = UserTableMap::getInstanceFromPool($key))) {
             // We no longer rehydrate the object, since this can cause data loss.
             // See http://www.propelorm.org/ticket/509
             // $obj->hydrate($row, $offset, true); // rehydrate
-            $col = $offset + PostTableMap::NUM_HYDRATE_COLUMNS;
+            $col = $offset + UserTableMap::NUM_HYDRATE_COLUMNS;
         } else {
-            $cls = PostTableMap::OM_CLASS;
-            /** @var Post $obj */
+            $cls = UserTableMap::OM_CLASS;
+            /** @var User $obj */
             $obj = new $cls();
             $col = $obj->hydrate($row, $offset, false, $indexType);
-            PostTableMap::addInstanceToPool($obj, $key);
+            UserTableMap::addInstanceToPool($obj, $key);
         }
 
         return array($obj, $col);
@@ -301,18 +276,18 @@ class PostTableMap extends TableMap
         $cls = static::getOMClass(false);
         // populate the object(s)
         while ($row = $dataFetcher->fetch()) {
-            $key = PostTableMap::getPrimaryKeyHashFromRow($row, 0, $dataFetcher->getIndexType());
-            if (null !== ($obj = PostTableMap::getInstanceFromPool($key))) {
+            $key = UserTableMap::getPrimaryKeyHashFromRow($row, 0, $dataFetcher->getIndexType());
+            if (null !== ($obj = UserTableMap::getInstanceFromPool($key))) {
                 // We no longer rehydrate the object, since this can cause data loss.
                 // See http://www.propelorm.org/ticket/509
                 // $obj->hydrate($row, 0, true); // rehydrate
                 $results[] = $obj;
             } else {
-                /** @var Post $obj */
+                /** @var User $obj */
                 $obj = new $cls();
                 $obj->hydrate($row);
                 $results[] = $obj;
-                PostTableMap::addInstanceToPool($obj, $key);
+                UserTableMap::addInstanceToPool($obj, $key);
             } // if key exists
         }
 
@@ -333,23 +308,17 @@ class PostTableMap extends TableMap
     public static function addSelectColumns(Criteria $criteria, $alias = null)
     {
         if (null === $alias) {
-            $criteria->addSelectColumn(PostTableMap::COL_ID);
-            $criteria->addSelectColumn(PostTableMap::COL_TITLE);
-            $criteria->addSelectColumn(PostTableMap::COL_HYPERLINK);
-            $criteria->addSelectColumn(PostTableMap::COL_SUMMARY);
-            $criteria->addSelectColumn(PostTableMap::COL_TEXT);
-            $criteria->addSelectColumn(PostTableMap::COL_POSTED_DATE);
-            $criteria->addSelectColumn(PostTableMap::COL_CATEGORY_ID);
-            $criteria->addSelectColumn(PostTableMap::COL_POSTED_BY_USER_ID);
+            $criteria->addSelectColumn(UserTableMap::COL_ID);
+            $criteria->addSelectColumn(UserTableMap::COL_FULL_NAME);
+            $criteria->addSelectColumn(UserTableMap::COL_USERNAME);
+            $criteria->addSelectColumn(UserTableMap::COL_EMAIL);
+            $criteria->addSelectColumn(UserTableMap::COL_PASSWORD);
         } else {
             $criteria->addSelectColumn($alias . '.id');
-            $criteria->addSelectColumn($alias . '.title');
-            $criteria->addSelectColumn($alias . '.hyperlink');
-            $criteria->addSelectColumn($alias . '.summary');
-            $criteria->addSelectColumn($alias . '.text');
-            $criteria->addSelectColumn($alias . '.posted_date');
-            $criteria->addSelectColumn($alias . '.category_id');
-            $criteria->addSelectColumn($alias . '.posted_by_user_id');
+            $criteria->addSelectColumn($alias . '.full_name');
+            $criteria->addSelectColumn($alias . '.username');
+            $criteria->addSelectColumn($alias . '.email');
+            $criteria->addSelectColumn($alias . '.password');
         }
     }
 
@@ -362,7 +331,7 @@ class PostTableMap extends TableMap
      */
     public static function getTableMap()
     {
-        return Propel::getServiceContainer()->getDatabaseMap(PostTableMap::DATABASE_NAME)->getTable(PostTableMap::TABLE_NAME);
+        return Propel::getServiceContainer()->getDatabaseMap(UserTableMap::DATABASE_NAME)->getTable(UserTableMap::TABLE_NAME);
     }
 
     /**
@@ -370,16 +339,16 @@ class PostTableMap extends TableMap
      */
     public static function buildTableMap()
     {
-        $dbMap = Propel::getServiceContainer()->getDatabaseMap(PostTableMap::DATABASE_NAME);
-        if (!$dbMap->hasTable(PostTableMap::TABLE_NAME)) {
-            $dbMap->addTableObject(new PostTableMap());
+        $dbMap = Propel::getServiceContainer()->getDatabaseMap(UserTableMap::DATABASE_NAME);
+        if (!$dbMap->hasTable(UserTableMap::TABLE_NAME)) {
+            $dbMap->addTableObject(new UserTableMap());
         }
     }
 
     /**
-     * Performs a DELETE on the database, given a Post or Criteria object OR a primary key value.
+     * Performs a DELETE on the database, given a User or Criteria object OR a primary key value.
      *
-     * @param mixed               $values Criteria or Post object or primary key or array of primary keys
+     * @param mixed               $values Criteria or User object or primary key or array of primary keys
      *              which is used to create the DELETE statement
      * @param  ConnectionInterface $con the connection to use
      * @return int             The number of affected rows (if supported by underlying database driver).  This includes CASCADE-related rows
@@ -390,27 +359,27 @@ class PostTableMap extends TableMap
      public static function doDelete($values, ConnectionInterface $con = null)
      {
         if (null === $con) {
-            $con = Propel::getServiceContainer()->getWriteConnection(PostTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(UserTableMap::DATABASE_NAME);
         }
 
         if ($values instanceof Criteria) {
             // rename for clarity
             $criteria = $values;
-        } elseif ($values instanceof \Post) { // it's a model object
+        } elseif ($values instanceof \User) { // it's a model object
             // create criteria based on pk values
             $criteria = $values->buildPkeyCriteria();
         } else { // it's a primary key, or an array of pks
-            $criteria = new Criteria(PostTableMap::DATABASE_NAME);
-            $criteria->add(PostTableMap::COL_ID, (array) $values, Criteria::IN);
+            $criteria = new Criteria(UserTableMap::DATABASE_NAME);
+            $criteria->add(UserTableMap::COL_ID, (array) $values, Criteria::IN);
         }
 
-        $query = PostQuery::create()->mergeWith($criteria);
+        $query = UserQuery::create()->mergeWith($criteria);
 
         if ($values instanceof Criteria) {
-            PostTableMap::clearInstancePool();
+            UserTableMap::clearInstancePool();
         } elseif (!is_object($values)) { // it's a primary key, or an array of pks
             foreach ((array) $values as $singleval) {
-                PostTableMap::removeInstanceFromPool($singleval);
+                UserTableMap::removeInstanceFromPool($singleval);
             }
         }
 
@@ -418,20 +387,20 @@ class PostTableMap extends TableMap
     }
 
     /**
-     * Deletes all rows from the post table.
+     * Deletes all rows from the user table.
      *
      * @param ConnectionInterface $con the connection to use
      * @return int The number of affected rows (if supported by underlying database driver).
      */
     public static function doDeleteAll(ConnectionInterface $con = null)
     {
-        return PostQuery::create()->doDeleteAll($con);
+        return UserQuery::create()->doDeleteAll($con);
     }
 
     /**
-     * Performs an INSERT on the database, given a Post or Criteria object.
+     * Performs an INSERT on the database, given a User or Criteria object.
      *
-     * @param mixed               $criteria Criteria or Post object containing data that is used to create the INSERT statement.
+     * @param mixed               $criteria Criteria or User object containing data that is used to create the INSERT statement.
      * @param ConnectionInterface $con the ConnectionInterface connection to use
      * @return mixed           The new primary key.
      * @throws PropelException Any exceptions caught during processing will be
@@ -440,22 +409,22 @@ class PostTableMap extends TableMap
     public static function doInsert($criteria, ConnectionInterface $con = null)
     {
         if (null === $con) {
-            $con = Propel::getServiceContainer()->getWriteConnection(PostTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(UserTableMap::DATABASE_NAME);
         }
 
         if ($criteria instanceof Criteria) {
             $criteria = clone $criteria; // rename for clarity
         } else {
-            $criteria = $criteria->buildCriteria(); // build Criteria from Post object
+            $criteria = $criteria->buildCriteria(); // build Criteria from User object
         }
 
-        if ($criteria->containsKey(PostTableMap::COL_ID) && $criteria->keyContainsValue(PostTableMap::COL_ID) ) {
-            throw new PropelException('Cannot insert a value for auto-increment primary key ('.PostTableMap::COL_ID.')');
+        if ($criteria->containsKey(UserTableMap::COL_ID) && $criteria->keyContainsValue(UserTableMap::COL_ID) ) {
+            throw new PropelException('Cannot insert a value for auto-increment primary key ('.UserTableMap::COL_ID.')');
         }
 
 
         // Set the correct dbName
-        $query = PostQuery::create()->mergeWith($criteria);
+        $query = UserQuery::create()->mergeWith($criteria);
 
         // use transaction because $criteria could contain info
         // for more than one table (I guess, conceivably)
@@ -464,7 +433,7 @@ class PostTableMap extends TableMap
         });
     }
 
-} // PostTableMap
+} // UserTableMap
 // This is the static code needed to register the TableMap for this table with the main Propel class.
 //
-PostTableMap::buildTableMap();
+UserTableMap::buildTableMap();
