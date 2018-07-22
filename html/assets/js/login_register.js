@@ -1,6 +1,13 @@
 $(function() {
   $('.is-empty').removeClass('is-empty');
 
+  $('#login-form').on('submit', function(e){
+    ajaxForm(e.target, function(data) {
+      console.log(data);
+    });
+    return false;
+  })
+
   $('#register-form').validate({
     rules: {
       'Register[Username]': {
