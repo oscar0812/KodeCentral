@@ -1,21 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
+  <?php $home = replaceLast('index.php/', '', $router->pathFor('home'));?>
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="theme-color" content="#333">
-    <title>Material Style</title>
+    <title>Kode Central | <?=$post->getTitle()?></title>
     <meta name="description" content="Material Style Theme">
-    <link rel="shortcut icon" href="assets/img/favicon.png?v=3">
+    <link rel="shortcut icon" href="<?=$home?>assets/img/favicon.png?v=3">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="assets/css/preload.min.css">
-    <link rel="stylesheet" href="assets/css/plugins.min.css">
-    <link rel="stylesheet" href="assets/css/style.blue-600.min.css">
+    <link rel="stylesheet" href="<?=$home?>assets/css/preload.min.css">
+    <link rel="stylesheet" href="<?=$home?>assets/css/plugins.min.css">
+    <link rel="stylesheet" href="<?=$home?>assets/css/style.blue-600.min.css">
     <!--[if lt IE 9]>
-        <script src="assets/js/html5shiv.min.js"></script>
-        <script src="assets/js/respond.min.js"></script>
+        <script src="<?=$home?>assets/js/html5shiv.min.js"></script>
+        <script src="<?=$home?>assets/js/respond.min.js"></script>
     <![endif]-->
   </head>
   <body>
@@ -36,7 +37,7 @@
               <div class="card-body card-body-big">
                 <h1 class="no-mt"><?=$post->getTitle()?></h1>
                 <div class="mb-4">
-                  <img src="assets/img/demo/avatar50.jpg" alt="..." class="img-circle mr-1"> by
+                  <img src="<?=$home?>assets/img/demo/avatar50.jpg" alt="..." class="img-circle mr-1"> by
                   <a href="<?=$router->pathFor('user-profile')?>"><?=$post->getUser()->getUsername()?></a> in
                   <a href="javascript:void(0)" class="ms-tag ms-tag-info"><?=$post->getCategory()->getName()?></a>
                   <span class="ml-1 d-none d-sm-inline">
@@ -91,7 +92,7 @@
                       <div class="media mb-2">
                         <div class="media-left media-middle">
                           <a href="#">
-                            <img class="d-flex mr-3 media-object media-object-circle" src="assets/img/demo/p75.jpg" alt="..."> </a>
+                            <img class="d-flex mr-3 media-object media-object-circle" src="<?=$home?>assets/img/demo/p75.jpg" alt="..."> </a>
                         </div>
                         <div class="media-body">
                           <a href="javascript:void(0)" class="media-heading">Lorem ipsum dolor sit amet in consectetur adipisicing</a>
@@ -108,7 +109,7 @@
                       <div class="media mb-2">
                         <div class="media-left media-middle">
                           <a href="#">
-                            <img class="d-flex mr-3 media-object media-object-circle" src="assets/img/demo/p75.jpg" alt="..."> </a>
+                            <img class="d-flex mr-3 media-object media-object-circle" src="<?=$home?>assets/img/demo/p75.jpg" alt="..."> </a>
                         </div>
                         <div class="media-body">
                           <a href="javascript:void(0)" class="media-heading">Nemo enim ipsam voluptatem quia voluptas sit aspernatur</a>
@@ -125,7 +126,7 @@
                       <div class="media">
                         <div class="media-left media-middle">
                           <a href="#">
-                            <img class="d-flex mr-3 media-object media-object-circle" src="assets/img/demo/p75.jpg" alt="..."> </a>
+                            <img class="d-flex mr-3 media-object media-object-circle" src="<?=$home?>assets/img/demo/p75.jpg" alt="..."> </a>
                         </div>
                         <div class="media-body">
                           <a href="javascript:void(0)" class="media-heading">inventore veritatis et vitae quasi architecto beatae </a>
@@ -232,7 +233,7 @@
           <div class="col-md-4 masonry-item">
             <article class="card card-info mb-4">
               <figure class="ms-thumbnail ms-thumbnail-left">
-                <img src="assets/img/demo/post1.jpg" alt="" class="img-fluid">
+                <img src="<?=$home?>assets/img/demo/post1.jpg" alt="" class="img-fluid">
                 <figcaption class="ms-thumbnail-caption text-center">
                   <div class="ms-thumbnail-caption-content">
                     <h3 class="ms-thumbnail-caption-title">Lorem ipsum dolor sit</h3>
@@ -256,7 +257,7 @@
           <div class="col-md-4 masonry-item">
             <article class="card card-danger mb-4">
               <figure class="ms-thumbnail ms-thumbnail-left">
-                <img src="assets/img/demo/post5.jpg" alt="" class="img-fluid">
+                <img src="<?=$home?>assets/img/demo/post5.jpg" alt="" class="img-fluid">
                 <figcaption class="ms-thumbnail-caption text-center">
                   <div class="ms-thumbnail-caption-content">
                     <h3 class="ms-thumbnail-caption-title">Lorem ipsum dolor sit</h3>
@@ -280,7 +281,7 @@
           <div class="col-md-4 masonry-item">
             <article class="card card-success mb-4">
               <figure class="ms-thumbnail ms-thumbnail-left">
-                <img src="assets/img/demo/post5.jpg" alt="" class="img-fluid">
+                <img src="<?=$home?>assets/img/demo/post5.jpg" alt="" class="img-fluid">
                 <figcaption class="ms-thumbnail-caption text-center">
                   <div class="ms-thumbnail-caption-content">
                     <h3 class="ms-thumbnail-caption-title">Lorem ipsum dolor sit</h3>
@@ -308,7 +309,7 @@
     </div>
     <!-- ms-site-container -->
     <?php require_once('templates/slidebar.php')?>
-    <script src="assets/js/plugins.min.js"></script>
-    <script src="assets/js/app.min.js"></script>
+    <script src="<?=$home?>assets/js/plugins.min.js"></script>
+    <script src="<?=$home?>assets/js/app.min.js"></script>
   </body>
 </html>

@@ -2,7 +2,7 @@
   <div class="sb-slidebar-container">
     <header class="ms-slidebar-header">
       <div class="ms-slidebar-login">
-        <a href="<?=$router->pathFor('user-login')?>" class="withripple">
+        <a href="<?=$router->pathFor('user-login-form')?>" class="withripple">
           <i class="zmdi zmdi-account"></i> Account</a>
       </div>
       <div class="ms-slidebar-title">

@@ -50,7 +50,7 @@
           <div class="card-body">
             <div class="tab-content">
               <div role="tabpanel" class="tab-pane fade active show" id="ms-login-tab">
-                <form>
+                <form id="login-form" action="<?=$router->pathFor('user-credentials')?>" method="post">
                   <fieldset>
                     <div class="form-group label-floating">
                       <div class="input-group">
@@ -58,7 +58,7 @@
                           <i class="zmdi zmdi-account"></i>
                         </span>
                         <label class="control-label" for="ms-form-user">Username</label>
-                        <input type="text" id="ms-form-user" class="form-control"> </div>
+                        <input type="text" id="ms-form-user" name="Login[Username]" class="form-control"> </div>
                     </div>
                     <div class="form-group label-floating">
                       <div class="input-group">
@@ -66,16 +66,11 @@
                           <i class="zmdi zmdi-lock"></i>
                         </span>
                         <label class="control-label" for="ms-form-pass">Password</label>
-                        <input type="password" id="ms-form-pass" class="form-control"> </div>
+                        <input type="password" id="ms-form-pass" name="Login[Password]" class="form-control"> </div>
                     </div>
                     <div class="row mt-2">
                       <div class="col-5">
-                        <div class="form-group mt-1">
-                          <div class="checkbox">
-                            <label>
-                              <input type="checkbox"> Remember </label>
-                          </div>
-                        </div>
+
                       </div>
                       <div class="col-7">
                         <button class="btn btn-raised btn-primary pull-right">Login</button>
@@ -94,7 +89,7 @@
                 </div>
               </div>
               <div role="tabpanel" class="tab-pane fade" id="ms-register-tab">
-                <form>
+                <form id="register-form" action="<?=$router->pathFor('user-credentials')?>" method="post">
                   <fieldset>
                     <div class="form-group label-floating">
                       <div class="input-group">
@@ -102,7 +97,7 @@
                           <i class="zmdi zmdi-account"></i>
                         </span>
                         <label class="control-label" for="ms-form-user-r">Username</label>
-                        <input type="text" id="ms-form-user-r" class="form-control"> </div>
+                        <input type="text" id="ms-form-user-r" name="Register[Username]" class="form-control"> </div>
                     </div>
                     <div class="form-group label-floating">
                       <div class="input-group">
@@ -110,7 +105,7 @@
                           <i class="zmdi zmdi-email"></i>
                         </span>
                         <label class="control-label" for="ms-form-email-r">Email</label>
-                        <input type="email" id="ms-form-email-r" class="form-control"> </div>
+                        <input type="email" id="ms-form-email-r" name="Register[Email]" class="form-control"> </div>
                     </div>
                     <div class="form-group label-floating">
                       <div class="input-group">
@@ -118,21 +113,15 @@
                           <i class="zmdi zmdi-lock"></i>
                         </span>
                         <label class="control-label" for="ms-form-pass-r">Password</label>
-                        <input type="password" id="ms-form-pass-r" class="form-control"> </div>
-                    </div>
-                    <div class="form-group label-floating">
-                      <div class="input-group">
-                        <span class="input-group-addon">
-                          <i class="zmdi zmdi-lock"></i>
-                        </span>
-                        <label class="control-label" for="ms-form-pass-retype">Re-type Password</label>
-                        <input type="password" id="ms-form-pass-retype" class="form-control"> </div>
+                        <input type="password" id="ms-form-pass-r" name="Register[Password]" class="form-control"> </div>
                     </div>
                     <button class="btn btn-raised btn-block btn-primary">Register Now</button>
+                    <label id="register-label" class="invisible">Email is already in use</label>
                   </fieldset>
                 </form>
               </div>
               <div role="tabpanel" class="tab-pane fade" id="ms-recovery-tab">
+                <form id="forgot-form" action="<?=$router->pathFor('user-credentials')?>" method="post">
                 <fieldset>
                   <div class="form-group label-floating">
                     <div class="input-group">
@@ -140,7 +129,7 @@
                         <i class="zmdi zmdi-account"></i>
                       </span>
                       <label class="control-label" for="ms-form-user-recovery">Username</label>
-                      <input type="text" id="ms-form-user-recovery" class="form-control"> </div>
+                      <input type="text" id="ms-form-user-recovery" name="Forgot[Username]" class="form-control"> </div>
                   </div>
                   <div class="form-group label-floating">
                     <div class="input-group">
@@ -148,7 +137,7 @@
                         <i class="zmdi zmdi-email"></i>
                       </span>
                       <label class="control-label" for="ms-form-email-recovery">Email</label>
-                      <input type="email" id="ms-form-email-recovery" class="form-control"> </div>
+                      <input type="email" id="ms-form-email-recovery" name="Forgot[Email]" class="form-control"> </div>
                   </div>
                   <button class="btn btn-raised btn-block btn-primary">Send Password</button>
                 </fieldset>
@@ -165,5 +154,7 @@
     </div>
     <script src="assets/js/plugins.min.js"></script>
     <script src="assets/js/app.min.js"></script>
+    <script src="assets/js/jquery.validate.min.js"></script>
+    <script src="assets/js/login_register.js"></script>
   </body>
 </html>
