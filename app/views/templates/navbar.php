@@ -1,16 +1,17 @@
-<nav class="navbar navbar-expand-md navbar-static ms-navbar
-ms-navbar-primary navbar-mode stay-on-top-navbar">
+<nav class="navbar navbar-expand-md  navbar-static ms-navbar ms-navbar-primary navbar-mode stay-on-top-navbar">
   <div class="container container-full">
     <div class="navbar-header">
-      <a class="navbar-brand" href="index.php">
+      <a class="navbar-brand" href="<?=$router->pathFor('home')?>">
         <!-- <img src="assets/img/demo/logo-navbar.png" alt=""> -->
         <span class="ms-logo ms-logo-sm">KC</span>
         <span class="ms-title">Kode
-          <strong>Central</strong>
+          <strong>Cental</strong>
         </span>
       </a>
     </div>
+    <a href="javascript:void(0)" class="ms-toggle-left btn-navbar-menu">
+      <i class="zmdi zmdi-menu"></i>
+    </a>
   </div>
-
   <!-- container -->
 </nav>
