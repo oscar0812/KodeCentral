@@ -8,14 +8,14 @@
     <meta name="theme-color" content="#333">
     <title>Material Style</title>
     <meta name="description" content="Material Style Theme">
-    <link rel="shortcut icon" href="assets/img/favicon.png?v=3">
+    <link rel="shortcut icon" href="<?=$home?>assets/img/favicon.png?v=3">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="assets/css/preload.min.css">
-    <link rel="stylesheet" href="assets/css/plugins.min.css">
-    <link rel="stylesheet" href="assets/css/style.blue-600.min.css">
+    <link rel="stylesheet" href="<?=$home?>assets/css/preload.min.css">
+    <link rel="stylesheet" href="<?=$home?>assets/css/plugins.min.css">
+    <link rel="stylesheet" href="<?=$home?>assets/css/style.blue-600.min.css">
     <!--[if lt IE 9]>
-        <script src="assets/js/html5shiv.min.js"></script>
-        <script src="assets/js/respond.min.js"></script>
+        <script src="<?=$home?>assets/js/html5shiv.min.js"></script>
+        <script src="<?=$home?>assets/js/respond.min.js"></script>
     <![endif]-->
   </head>
   <body>
@@ -36,14 +36,14 @@
               <h2>Page Not Found</h2>
               <p class="lead lead-sm">We have not found what you are looking for.
                 <br>We have put our robots to search.</p>
-              <a href="home.php" class="btn btn-primary btn-raised">
+              <a href="<?=$home?>" class="btn btn-primary btn-raised">
                 <i class="zmdi zmdi-home"></i> Go Home</a>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <script src="assets/js/plugins.min.js"></script>
-    <script src="assets/js/app.min.js"></script>
+    <script src="<?=$home?>assets/js/plugins.min.js"></script>
+    <script src="<?=$home?>assets/js/app.min.js"></script>
   </body>
 </html>

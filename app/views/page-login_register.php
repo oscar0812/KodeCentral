@@ -158,7 +158,7 @@
           </div>
         </div>
         <div class="text-center animated fadeInUp animation-delay-7">
-          <a href="home.php" class="btn btn-white">
+          <a href="<?=$router->pathFor('home')?>" class="btn btn-white">
             <i class="zmdi zmdi-home"></i> Go Home</a>
         </div>
       </div>

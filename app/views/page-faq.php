@@ -31,7 +31,7 @@
       <nav class="navbar navbar-expand-md  navbar-static ms-navbar ms-navbar-primary navbar-mode">
         <div class="container container-full">
           <div class="navbar-header">
-            <a class="navbar-brand" href="home.php">
+            <a class="navbar-brand" href="<?=$router->pathFor('home')?>">
               <!-- <img src="assets/img/demo/logo-navbar.png" alt=""> -->
               <span class="ms-logo ms-logo-sm">M</span>
               <span class="ms-title">Material
@@ -91,7 +91,7 @@
                       <div class="tab-pane active" id="tab-general" role="tabpanel">
                         <ul class="ms-tab-menu-right-container">
                           <li>
-                            <a href="home.php">Default Home</a>
+                            <a href="<?=$router->pathFor('home')?>">Default Home</a>
                           </li>
                           <li>
                             <a href="home-generic-2.php">Home Black Slider</a>
@@ -200,7 +200,7 @@
                             <a href="home-blog.php">Home Blog 1</a>
                           </li>
                           <li>
-                            <a href="home.php">Home Blog 2</a>
+                            <a href="<?=$router->pathFor('home')?>">Home Blog 2</a>
                           </li>
                           <li class="disable">
                             <a href="javascript:void(0)">Home Blog 3 (Next Update)</a>
@@ -960,7 +960,7 @@
                 <h3 class="ms-footbar-title">Sitemap</h3>
                 <ul class="list-unstyled ms-icon-list three_cols">
                   <li>
-                    <a href="home.php">
+                    <a href="<?=$router->pathFor('home')?>">
                       <i class="zmdi zmdi-home"></i> Home</a>
                   </li>
                   <li>
@@ -1180,7 +1180,7 @@
               <i class="zmdi zmdi-home"></i> Home </a>
             <ul id="sc1" class="card-collapse collapse" role="tabpanel" aria-labelledby="sch1" data-parent="#slidebar-menu">
               <li>
-                <a href="home.php">Default Home</a>
+                <a href="<?=$router->pathFor('home')?>">Default Home</a>
               </li>
               <li>
                 <a href="home-generic-2.php">Home Black Slider</a>
