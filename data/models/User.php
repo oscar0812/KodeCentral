@@ -30,9 +30,26 @@ class User extends BaseUser
     }
 
     // returns true if $password => hashed($password)
-    public function login($password)
+    public function verifyPassword($password)
     {
         return PHPassLib\Hash\BCrypt::verify($password, $this->getPassword());
+    }
+
+    // log user in (save a session for it)
+    public function logIn()
+    {
+        session_start_safe();
+        $_SESSION['user_id'] = $this->getId();
+    }
+
+    // return user that is currently logged in, null if no user logged in
+    public static function current()
+    {
+        session_start_safe();
+        if (isset($_SESSION['user_id'])) {
+            return UserQuery::create()->findPk($_SESSION['user_id']);
+        }
+        return null;
     }
 
     // for validation purposes, validation seems to fail with empty strings,
