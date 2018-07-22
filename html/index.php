@@ -15,7 +15,8 @@ $container['view'] = new \Slim\Views\PhpRenderer("../app/views/");
 // if url is not found (404)
 $container['notFoundHandler'] = function ($c) {
     return function ($request, $response) use ($c) {
-        return $c['view']->render($response->withStatus(404), 'page-404.php', ['router' => $c->router]);
+        return $c['view']->render($response->withStatus(404), 'page-404.php',
+        ['router' => $c->router, 'home'=>$c->router->pathFor('home')]);
     };
 };
 
@@ -40,6 +41,16 @@ $app->get('/post-{hyperlink}', function ($request, $response, $args) {
         ['router'=>$this->router, 'post'=>$post]
     );
 })->setName('blog-post');
+
+$app->get('/login', function ($request, $response, $args) {
+    return $this->view->render(
+        $response,'page-login_register.php',['router'=>$this->router]);
+})->setName('user-login');
+
+$app->get('/profile', function ($request, $response, $args) {
+    return $this->view->render(
+        $response,'page-profile.php',['router'=>$this->router]);
+})->setName('user-profile');
 
 $router = $app->getContainer()->router;
 
