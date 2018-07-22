@@ -37,6 +37,12 @@
     <column name="username" phpName="Username" type="VARCHAR" size="64" required="true"/>
     <column name="email" phpName="Email" type="VARCHAR" size="128" required="true"/>
     <column name="password" phpName="Password" type="VARCHAR" size="256" required="true"/>
+    <unique name="username">
+      <unique-column name="username"/>
+    </unique>
+    <unique name="email">
+      <unique-column name="email"/>
+    </unique>
     <vendor type="mysql">
       <parameter name="Engine" value="InnoDB"/>
     </vendor>
