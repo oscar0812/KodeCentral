@@ -11,7 +11,7 @@ class LoggedOutController
     public static function setUpRouting($app)
     {
         $app->group('/account', function () use ($app) {
-          // show the login, register, forgot password forms
+            // show the login, register, forgot password forms
             $app->get('', function ($request, $response, $args) {
                 return $this->view->render(
                 $response,
@@ -46,7 +46,8 @@ class LoggedOutController
                     }
                     $user->logIn();
                     return $response->withJSON(['success'=>true,
-                    'redirect_link'=>$this->router->pathFor('user-profile')]);
+                    'redirect_link'=>
+                    $this->router->pathFor('user-profile', ['username'=>$user->getUsername()])]);
                 } elseif (isset($post['Register'])) {
                     // trying to make new account
                     $user = new \User();
@@ -66,12 +67,13 @@ class LoggedOutController
                 }
             })->setName('user-credentials');
         })->add(function ($request, $response, $next) {
-            if (\User::current() == null) {
+            $user = \User::current();
+            if ($user == null) {
                 // not signed in, so show them forms to sign in
                 return $next($request, $response);
             } else {
                 // already signed in, redirect to profile
-                return $response->withRedirect($this->router->pathFor('user-profile'));
+                return $response->withRedirect($this->router->pathFor('user-profile', ['username'=>$user->getUsername()]));
             }
         });
     }
