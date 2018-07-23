@@ -69,10 +69,11 @@
                         <input type="password" id="ms-form-pass" name="Login[Password]" class="form-control"> </div>
                     </div>
                     <div class="row mt-2">
-                      <div class="col-5">
-
+                      <div class="col-6">
+                        <label id="login-label" class="invisible text-danger">Incorrect Email or Password</label>
                       </div>
-                      <div class="col-7">
+                      <div class="col-1"></div>
+                      <div class="col-5">
                         <button class="btn btn-raised btn-primary pull-right">Login</button>
                       </div>
                     </div>
