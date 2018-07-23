@@ -46,6 +46,14 @@ $app->get('/post-{hyperlink}', function ($request, $response, $args) {
     );
 })->setName('blog-post');
 
+$app->get('/test', function ($request, $response, $args) {
+    echo "test";
+    $user = new \User();
+    $user->setJoinDate(getCurrentDate());
+    print_r($user->toArray());
+    return null;
+})->setName('home');
+
 App\Controllers\UserController::setUpRouting($app);
 App\Controllers\AccountController::setUpRouting($app);
 
