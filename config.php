@@ -19,16 +19,6 @@ function session_start_safe()
     }
 }
 
-// client functions
-function currentClient()
-{
-    session_start_safe();
-    if (isset($_SESSION['client_id'])) {
-        return ClientQuery::create()->findPk($_SESSION['client_id']);
-    }
-    return null;
-}
-
 function replaceLast($replace_this, $with_this, $original)
 {
     $pos = strrpos($original, $replace_this);
@@ -36,4 +26,23 @@ function replaceLast($replace_this, $with_this, $original)
         $original = substr_replace($original, $with_this, $pos, strlen($replace_this));
     }
     return $original;
+}
+
+function getCurrentDateTime()
+{
+    $dt = new DateTime();
+    $dt->setTimezone(new DateTimeZone("Canada/Saskatchewan"));
+    return $dt;
+}
+
+function getCurrentDate()
+{
+    $today = getCurrentDateTime();
+    $today->setTime(0, 0);
+    return $today;
+}
+
+function getCurrentTime()
+{
+    return getCurrentDateTime()->getTimestamp();
 }
