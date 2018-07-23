@@ -13,10 +13,18 @@ class UserController
         $app->get('/profile', function ($request, $response, $args) {
             return $this->view->render(
               $response,
-              'page-profile.php',
-              ['router'=>$this->router]
+                'page-profile.php',
+              ['router'=>$this->router, 'user'=>\User::current()]
           );
         })->setName('user-profile');
+    }
+
+    public function logOut($app)
+    {
+        $app->get('/logout', function ($request, $response, $args) {
+            \User::logOut();
+            return $response->withRedirect($this->router->pathFor('user-login-form'));
+        })->setName('user-logout');
     }
 
     public static function setUpRouting($app)
@@ -24,6 +32,7 @@ class UserController
         $controller = new UserController();
         $app->group('', function () use ($controller, $app) {
             $controller->profile($app);
+            $controller->logOut($app);
         })->add(function ($request, $response, $next) {
             if (\User::current() != null) {
                 // signed in, show them what they want
