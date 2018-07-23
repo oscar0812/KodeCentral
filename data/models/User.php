@@ -42,6 +42,13 @@ class User extends BaseUser
         $_SESSION['user_id'] = $this->getId();
     }
 
+    // log user out (remove session)
+    public static function logOut()
+    {
+        session_start_safe();
+        unset($_SESSION['user_id']);
+    }
+
     // return user that is currently logged in, null if no user logged in
     public static function current()
     {
