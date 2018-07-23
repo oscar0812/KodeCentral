@@ -36,8 +36,8 @@
               <div class="col-lg-12 col-md-6 order-md-1">
                 <div class="card animated fadeInUp animation-delay-7">
                   <div class="ms-hero-bg-primary ms-hero-img-coffee">
-                    <h3 class="color-white index-1 text-center no-m pt-4">Victoria Smith</h3>
-                    <div class="color-medium index-1 text-center np-m">@vic_smith</div>
+                    <h3 class="color-white index-1 text-center no-m pt-4"><?=$user->getUsername()?></h3>
+                    <div class="color-medium index-1 text-center np-m">@<?=$user->getUsername()?></div>
                     <img src="assets/img/demo/avatar1.jpg" alt="..." class="img-avatar-circle"> </div>
                   <div class="card-body pt-4 text-center">
                     <h3 class="color-primary">Bio</h3>
@@ -167,31 +167,19 @@
                 <tr>
                   <th>
                     <i class="zmdi zmdi-account mr-1 color-success"></i> User Name</th>
-                  <td>vic_smith</td>
-                </tr>
-                <tr>
-                  <th>
-                    <i class="zmdi zmdi-face mr-1 color-warning"></i> Fullname</th>
-                  <td>Victoria Smith</td>
+                  <td><?=$user->getUsername()?></td>
                 </tr>
                 <tr>
                   <th>
                     <i class="zmdi zmdi-email mr-1 color-danger"></i> Email</th>
                   <td>
-                    <a href="#">mail@example.com</a>
-                  </td>
-                </tr>
-                <tr>
-                  <th>
-                    <i class="zmdi zmdi-link mr-1 color-info"></i> Website</th>
-                  <td>
-                    <a href="#">www.example.com</a>
+                    <a href="#"><?=$user->getEmail()?></a>
                   </td>
                 </tr>
                 <tr>
                   <th>
                     <i class="zmdi zmdi-calendar mr-1 color-royal"></i> Member Since</th>
-                  <td>12/11/2015</td>
+                  <td><?=$user->getJoinDate()->format('m/d/Y')?></td>
                 </tr>
               </table>
             </div>
@@ -363,6 +351,7 @@
       <!-- container -->
       <?php require_once('templates/footer.php')?>
     </div>
+    <?php require_once('templates/slidebar.php')?>
     <!-- ms-site-container -->
     <script src="assets/js/plugins.min.js"></script>
     <script src="assets/js/app.min.js"></script>
