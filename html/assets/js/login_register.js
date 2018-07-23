@@ -1,9 +1,13 @@
 $(function() {
   $('.is-empty').removeClass('is-empty');
 
-  $('#login-form').on('submit', function(e){
+  $('#login-form').on('submit', function(e) {
     ajaxForm(e.target, function(data) {
-      console.log(data);
+      if (data['success']) {
+        window.location.href = data['redirect_link'];
+      } else {
+        $("#login-label").removeClass('invisible');
+      }
     });
     return false;
   })
