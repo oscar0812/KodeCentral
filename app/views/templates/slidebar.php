@@ -1,9 +1,17 @@
+<?php $user = \User::current()?>
 <div class="ms-slidebar sb-slidebar sb-left sb-style-overlay" id="ms-slidebar">
   <div class="sb-slidebar-container">
     <header class="ms-slidebar-header">
       <div class="ms-slidebar-login">
-        <a href="<?=$router->pathFor('user-login-form')?>" class="withripple">
-          <i class="zmdi zmdi-account"></i> Account</a>
+        <?php $path = ($user == null)?'user-login-form': 'user-profile';
+              $name = ($user == null)?'Account': $user->getUsername()?>
+        <a href="<?=$router->pathFor($path)?>" class="withripple">
+          <i class="zmdi zmdi-account"></i> <?=$name?></a>
+
+        <?php if($user != null) { ?>
+          <a href="<?=$router->pathFor('user-logout')?>" class="withripple">
+            <i class="zmdi zmdi-book"></i> Log out</a>
+        <?php } ?>
       </div>
       <div class="ms-slidebar-title">
         <form class="search-form">
