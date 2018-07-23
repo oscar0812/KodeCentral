@@ -1,6 +1,6 @@
 <?php
 use App\Mail\Mail;
-use App\Controllers\UserController;
+use App\Controllers\LoggedInController;
 
 require '../vendor/autoload.php';
 
@@ -54,7 +54,7 @@ $app->get('/test', function ($request, $response, $args) {
     return null;
 })->setName('home');
 
-App\Controllers\UserController::setUpRouting($app);
-App\Controllers\AccountController::setUpRouting($app);
+App\Controllers\LoggedInController::setUpRouting($app);
+App\Controllers\LoggedOutController::setUpRouting($app);
 
 $app->run();

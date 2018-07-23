@@ -6,7 +6,7 @@ use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Slim\Exception\NotFoundException;
 
-class AccountController
+class LoggedOutController
 {
     public static function setUpRouting($app)
     {

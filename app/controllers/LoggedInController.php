@@ -6,7 +6,7 @@ use Psr\Http\Message\ResponseInterface;
 use Slim\Exception\NotFoundException;
 
 // User needs to be signed in to access this group
-class UserController
+class LoggedInController
 {
     public function profile($app)
     {
@@ -29,7 +29,7 @@ class UserController
 
     public static function setUpRouting($app)
     {
-        $controller = new UserController();
+        $controller = new LoggedInController();
         $app->group('', function () use ($controller, $app) {
             $controller->profile($app);
             $controller->logOut($app);
