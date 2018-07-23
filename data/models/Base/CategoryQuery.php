@@ -34,17 +34,17 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildCategoryQuery rightJoinWith($relation) Adds a RIGHT JOIN clause and with to the query
  * @method     ChildCategoryQuery innerJoinWith($relation) Adds a INNER JOIN clause and with to the query
  *
- * @method     ChildCategoryQuery leftJoinPost($relationAlias = null) Adds a LEFT JOIN clause to the query using the Post relation
- * @method     ChildCategoryQuery rightJoinPost($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Post relation
- * @method     ChildCategoryQuery innerJoinPost($relationAlias = null) Adds a INNER JOIN clause to the query using the Post relation
+ * @method     ChildCategoryQuery leftJoinPostCategory($relationAlias = null) Adds a LEFT JOIN clause to the query using the PostCategory relation
+ * @method     ChildCategoryQuery rightJoinPostCategory($relationAlias = null) Adds a RIGHT JOIN clause to the query using the PostCategory relation
+ * @method     ChildCategoryQuery innerJoinPostCategory($relationAlias = null) Adds a INNER JOIN clause to the query using the PostCategory relation
  *
- * @method     ChildCategoryQuery joinWithPost($joinType = Criteria::INNER_JOIN) Adds a join clause and with to the query using the Post relation
+ * @method     ChildCategoryQuery joinWithPostCategory($joinType = Criteria::INNER_JOIN) Adds a join clause and with to the query using the PostCategory relation
  *
- * @method     ChildCategoryQuery leftJoinWithPost() Adds a LEFT JOIN clause and with to the query using the Post relation
- * @method     ChildCategoryQuery rightJoinWithPost() Adds a RIGHT JOIN clause and with to the query using the Post relation
- * @method     ChildCategoryQuery innerJoinWithPost() Adds a INNER JOIN clause and with to the query using the Post relation
+ * @method     ChildCategoryQuery leftJoinWithPostCategory() Adds a LEFT JOIN clause and with to the query using the PostCategory relation
+ * @method     ChildCategoryQuery rightJoinWithPostCategory() Adds a RIGHT JOIN clause and with to the query using the PostCategory relation
+ * @method     ChildCategoryQuery innerJoinWithPostCategory() Adds a INNER JOIN clause and with to the query using the PostCategory relation
  *
- * @method     \PostQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
+ * @method     \PostCategoryQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
  *
  * @method     ChildCategory findOne(ConnectionInterface $con = null) Return the first ChildCategory matching the query
  * @method     ChildCategory findOneOrCreate(ConnectionInterface $con = null) Return the first ChildCategory matching the query, or a new ChildCategory object populated from the query conditions when no match is found
@@ -316,40 +316,40 @@ abstract class CategoryQuery extends ModelCriteria
     }
 
     /**
-     * Filter the query by a related \Post object
+     * Filter the query by a related \PostCategory object
      *
-     * @param \Post|ObjectCollection $post the related object to use as filter
+     * @param \PostCategory|ObjectCollection $postCategory the related object to use as filter
      * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
      *
      * @return ChildCategoryQuery The current query, for fluid interface
      */
-    public function filterByPost($post, $comparison = null)
+    public function filterByPostCategory($postCategory, $comparison = null)
     {
-        if ($post instanceof \Post) {
+        if ($postCategory instanceof \PostCategory) {
             return $this
-                ->addUsingAlias(CategoryTableMap::COL_ID, $post->getCategoryId(), $comparison);
-        } elseif ($post instanceof ObjectCollection) {
+                ->addUsingAlias(CategoryTableMap::COL_ID, $postCategory->getCategoryId(), $comparison);
+        } elseif ($postCategory instanceof ObjectCollection) {
             return $this
-                ->usePostQuery()
-                ->filterByPrimaryKeys($post->getPrimaryKeys())
+                ->usePostCategoryQuery()
+                ->filterByPrimaryKeys($postCategory->getPrimaryKeys())
                 ->endUse();
         } else {
-            throw new PropelException('filterByPost() only accepts arguments of type \Post or Collection');
+            throw new PropelException('filterByPostCategory() only accepts arguments of type \PostCategory or Collection');
         }
     }
 
     /**
-     * Adds a JOIN clause to the query using the Post relation
+     * Adds a JOIN clause to the query using the PostCategory relation
      *
      * @param     string $relationAlias optional alias for the relation
      * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
      *
      * @return $this|ChildCategoryQuery The current query, for fluid interface
      */
-    public function joinPost($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    public function joinPostCategory($relationAlias = null, $joinType = Criteria::INNER_JOIN)
     {
         $tableMap = $this->getTableMap();
-        $relationMap = $tableMap->getRelation('Post');
+        $relationMap = $tableMap->getRelation('PostCategory');
 
         // create a ModelJoin object for this join
         $join = new ModelJoin();
@@ -364,14 +364,14 @@ abstract class CategoryQuery extends ModelCriteria
             $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
             $this->addJoinObject($join, $relationAlias);
         } else {
-            $this->addJoinObject($join, 'Post');
+            $this->addJoinObject($join, 'PostCategory');
         }
 
         return $this;
     }
 
     /**
-     * Use the Post relation Post object
+     * Use the PostCategory relation PostCategory object
      *
      * @see useQuery()
      *
@@ -379,13 +379,30 @@ abstract class CategoryQuery extends ModelCriteria
      *                                   to be used as main alias in the secondary query
      * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
      *
-     * @return \PostQuery A secondary query class using the current class as primary query
+     * @return \PostCategoryQuery A secondary query class using the current class as primary query
      */
-    public function usePostQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    public function usePostCategoryQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
     {
         return $this
-            ->joinPost($relationAlias, $joinType)
-            ->useQuery($relationAlias ? $relationAlias : 'Post', '\PostQuery');
+            ->joinPostCategory($relationAlias, $joinType)
+            ->useQuery($relationAlias ? $relationAlias : 'PostCategory', '\PostCategoryQuery');
+    }
+
+    /**
+     * Filter the query by a related Post object
+     * using the post_category table as cross reference
+     *
+     * @param Post $post the related object to use as filter
+     * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return ChildCategoryQuery The current query, for fluid interface
+     */
+    public function filterByPost($post, $comparison = Criteria::EQUAL)
+    {
+        return $this
+            ->usePostCategoryQuery()
+            ->filterByPost($post, $comparison)
+            ->endUse();
     }
 
     /**

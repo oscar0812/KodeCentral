@@ -26,9 +26,10 @@ $container['notFoundHandler'] = function ($c) {
 
 $app->get('/', function ($request, $response, $args) {
     return $this->view->render(
-        $response,
-        'home.php',
-        ['router'=>$this->router, 'posts'=>\PostQuery::create()->find(), 'categories'=>\CategoryQuery::create()->find()]
+        $response, 'home.php',
+        ['router'=>$this->router,
+        'posts'=>\PostQuery::create()->find(),
+        'all_categories'=>\CategoryQuery::create()->find()]
     );
 })->setName('home');
 

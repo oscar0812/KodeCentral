@@ -14,5 +14,12 @@ use Base\Post as BasePost;
  */
 class Post extends BasePost
 {
-
+    public function categoriesString()
+    {
+        $str = "";
+        foreach ($this->getCategories() as $category) {
+            $str .= ('category-'.$category->getName(). ' ');
+        }
+        return rtrim($str, ' ');
+    }
 }

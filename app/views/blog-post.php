@@ -39,7 +39,9 @@
                 <div class="mb-4">
                   <img src="<?=$home?>assets/img/demo/avatar50.jpg" alt="..." class="img-circle mr-1"> by
                   <a href="<?=$router->pathFor('user-profile')?>"><?=$post->getUser()->getUsername()?></a> in
-                  <a href="javascript:void(0)" class="ms-tag ms-tag-info"><?=$post->getCategory()->getName()?></a>
+                  <?php foreach ($post->getCategories() as $category) { ?>
+                  <a href="javascript:void(0)" class="ms-tag ms-tag-info"><?=$category->getName()?></a>
+                  <?php } ?>
                   <span class="ml-1 d-none d-sm-inline">
                     <i class="zmdi zmdi-time mr-05 color-info"></i>
                     <span class="color-medium-dark"><?=$post->getPostedDate()->format('M d, Y')?></span>

@@ -58,7 +58,7 @@
                       <label>
                         <input type="radio" name="optionsRadios" id="optionsRadios0" value="option0" checked="" class="filter" data-filter="all"> All </label>
                     </div>
-                    <?php foreach($categories as $category) { ?>
+                    <?php foreach($all_categories as $category) { ?>
                     <div class="radio no-mb">
                       <label>
                         <input type="radio" name="optionsRadios" id="optionsRadios<?=$category->getId()?>" value="option<?=$category->getId()?>" class="filter" data-filter=".category-<?=$category->getName()?>"> <?=$category->getName()?> </label>
@@ -99,8 +99,8 @@
           </div>
           <div class="col-md-9">
             <div class="row" id="Container">
-              <?php foreach($posts as $post) { ?>
-              <div class="col-md-4 col-sm-6 mix category-Bots">
+              <?php foreach($posts as $post) {?>
+              <div class="col-md-4 col-sm-6 mix <?=$post->categoriesString()?>">
                 <div class="card width-auto">
                   <figure class="ms-thumbnail">
                     <img src="assets/img/demo/port1.jpg" alt="" class="img-fluid">
