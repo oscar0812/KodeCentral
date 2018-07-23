@@ -8,15 +8,15 @@ use Slim\Exception\NotFoundException;
 // User needs to be signed in to access this group
 class LoggedInController
 {
-    public function profile($app)
+    public function createPost($app)
     {
-        $app->get('/profile', function ($request, $response, $args) {
+        $app->get('/create-post', function ($request, $response, $args) {
             return $this->view->render(
-              $response,
-                'page-profile.php',
-              ['router'=>$this->router, 'user'=>\User::current()]
-          );
-        })->setName('user-profile');
+            $response,
+            'create-post.php',
+            ['router'=>$this->router, 'post'=>$post]
+        );
+        })->setName('create-post');
     }
 
     public function logOut($app)
@@ -31,7 +31,7 @@ class LoggedInController
     {
         $controller = new LoggedInController();
         $app->group('', function () use ($controller, $app) {
-            $controller->profile($app);
+            $controller->createPost($app);
             $controller->logOut($app);
         })->add(function ($request, $response, $next) {
             if (\User::current() != null) {
