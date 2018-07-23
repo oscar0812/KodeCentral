@@ -6,6 +6,7 @@ use \Post as ChildPost;
 use \PostQuery as ChildPostQuery;
 use \User as ChildUser;
 use \UserQuery as ChildUserQuery;
+use \DateTime;
 use \Exception;
 use \PDO;
 use Map\PostTableMap;
@@ -22,6 +23,7 @@ use Propel\Runtime\Exception\LogicException;
 use Propel\Runtime\Exception\PropelException;
 use Propel\Runtime\Map\TableMap;
 use Propel\Runtime\Parser\AbstractParser;
+use Propel\Runtime\Util\PropelDateTime;
 
 /**
  * Base class that represents a row from the 'user' table.
@@ -84,6 +86,13 @@ abstract class User implements ActiveRecordInterface
      * @var        string
      */
     protected $email;
+
+    /**
+     * The value for the join_date field.
+     *
+     * @var        DateTime
+     */
+    protected $join_date;
 
     /**
      * The value for the password field.
@@ -368,6 +377,26 @@ abstract class User implements ActiveRecordInterface
     }
 
     /**
+     * Get the [optionally formatted] temporal [join_date] column value.
+     *
+     *
+     * @param      string|null $format The date/time format string (either date()-style or strftime()-style).
+     *                            If format is NULL, then the raw DateTime object will be returned.
+     *
+     * @return string|DateTime Formatted date/time value as string or DateTime object (if format is NULL), NULL if column is NULL, and 0 if column value is 0000-00-00
+     *
+     * @throws PropelException - if unable to parse/validate the date/time value.
+     */
+    public function getJoinDate($format = NULL)
+    {
+        if ($format === null) {
+            return $this->join_date;
+        } else {
+            return $this->join_date instanceof \DateTimeInterface ? $this->join_date->format($format) : null;
+        }
+    }
+
+    /**
      * Get the [password] column value.
      *
      * @return string
@@ -438,6 +467,26 @@ abstract class User implements ActiveRecordInterface
     } // setEmail()
 
     /**
+     * Sets the value of [join_date] column to a normalized version of the date/time value specified.
+     *
+     * @param  mixed $v string, integer (timestamp), or \DateTimeInterface value.
+     *               Empty strings are treated as NULL.
+     * @return $this|\User The current object (for fluent API support)
+     */
+    public function setJoinDate($v)
+    {
+        $dt = PropelDateTime::newInstance($v, null, 'DateTime');
+        if ($this->join_date !== null || $dt !== null) {
+            if ($this->join_date === null || $dt === null || $dt->format("Y-m-d") !== $this->join_date->format("Y-m-d")) {
+                $this->join_date = $dt === null ? null : clone $dt;
+                $this->modifiedColumns[UserTableMap::COL_JOIN_DATE] = true;
+            }
+        } // if either are not null
+
+        return $this;
+    } // setJoinDate()
+
+    /**
      * Set the value of [password] column.
      *
      * @param string $v new value
@@ -502,7 +551,13 @@ abstract class User implements ActiveRecordInterface
             $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : UserTableMap::translateFieldName('Email', TableMap::TYPE_PHPNAME, $indexType)];
             $this->email = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : UserTableMap::translateFieldName('Password', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : UserTableMap::translateFieldName('JoinDate', TableMap::TYPE_PHPNAME, $indexType)];
+            if ($col === '0000-00-00') {
+                $col = null;
+            }
+            $this->join_date = (null !== $col) ? PropelDateTime::newInstance($col, null, 'DateTime') : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : UserTableMap::translateFieldName('Password', TableMap::TYPE_PHPNAME, $indexType)];
             $this->password = (null !== $col) ? (string) $col : null;
             $this->resetModified();
 
@@ -512,7 +567,7 @@ abstract class User implements ActiveRecordInterface
                 $this->ensureConsistency();
             }
 
-            return $startcol + 4; // 4 = UserTableMap::NUM_HYDRATE_COLUMNS.
+            return $startcol + 5; // 5 = UserTableMap::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
             throw new PropelException(sprintf('Error populating %s object', '\\User'), 0, $e);
@@ -741,6 +796,9 @@ abstract class User implements ActiveRecordInterface
         if ($this->isColumnModified(UserTableMap::COL_EMAIL)) {
             $modifiedColumns[':p' . $index++]  = 'email';
         }
+        if ($this->isColumnModified(UserTableMap::COL_JOIN_DATE)) {
+            $modifiedColumns[':p' . $index++]  = 'join_date';
+        }
         if ($this->isColumnModified(UserTableMap::COL_PASSWORD)) {
             $modifiedColumns[':p' . $index++]  = 'password';
         }
@@ -763,6 +821,9 @@ abstract class User implements ActiveRecordInterface
                         break;
                     case 'email':
                         $stmt->bindValue($identifier, $this->email, PDO::PARAM_STR);
+                        break;
+                    case 'join_date':
+                        $stmt->bindValue($identifier, $this->join_date ? $this->join_date->format("Y-m-d H:i:s.u") : null, PDO::PARAM_STR);
                         break;
                     case 'password':
                         $stmt->bindValue($identifier, $this->password, PDO::PARAM_STR);
@@ -839,6 +900,9 @@ abstract class User implements ActiveRecordInterface
                 return $this->getEmail();
                 break;
             case 3:
+                return $this->getJoinDate();
+                break;
+            case 4:
                 return $this->getPassword();
                 break;
             default:
@@ -874,8 +938,13 @@ abstract class User implements ActiveRecordInterface
             $keys[0] => $this->getId(),
             $keys[1] => $this->getUsername(),
             $keys[2] => $this->getEmail(),
-            $keys[3] => $this->getPassword(),
+            $keys[3] => $this->getJoinDate(),
+            $keys[4] => $this->getPassword(),
         );
+        if ($result[$keys[3]] instanceof \DateTimeInterface) {
+            $result[$keys[3]] = $result[$keys[3]]->format('c');
+        }
+
         $virtualColumns = $this->virtualColumns;
         foreach ($virtualColumns as $key => $virtualColumn) {
             $result[$key] = $virtualColumn;
@@ -941,6 +1010,9 @@ abstract class User implements ActiveRecordInterface
                 $this->setEmail($value);
                 break;
             case 3:
+                $this->setJoinDate($value);
+                break;
+            case 4:
                 $this->setPassword($value);
                 break;
         } // switch()
@@ -979,7 +1051,10 @@ abstract class User implements ActiveRecordInterface
             $this->setEmail($arr[$keys[2]]);
         }
         if (array_key_exists($keys[3], $arr)) {
-            $this->setPassword($arr[$keys[3]]);
+            $this->setJoinDate($arr[$keys[3]]);
+        }
+        if (array_key_exists($keys[4], $arr)) {
+            $this->setPassword($arr[$keys[4]]);
         }
     }
 
@@ -1030,6 +1105,9 @@ abstract class User implements ActiveRecordInterface
         }
         if ($this->isColumnModified(UserTableMap::COL_EMAIL)) {
             $criteria->add(UserTableMap::COL_EMAIL, $this->email);
+        }
+        if ($this->isColumnModified(UserTableMap::COL_JOIN_DATE)) {
+            $criteria->add(UserTableMap::COL_JOIN_DATE, $this->join_date);
         }
         if ($this->isColumnModified(UserTableMap::COL_PASSWORD)) {
             $criteria->add(UserTableMap::COL_PASSWORD, $this->password);
@@ -1122,6 +1200,7 @@ abstract class User implements ActiveRecordInterface
     {
         $copyObj->setUsername($this->getUsername());
         $copyObj->setEmail($this->getEmail());
+        $copyObj->setJoinDate($this->getJoinDate());
         $copyObj->setPassword($this->getPassword());
 
         if ($deepCopy) {
@@ -1442,6 +1521,7 @@ abstract class User implements ActiveRecordInterface
         $this->id = null;
         $this->username = null;
         $this->email = null;
+        $this->join_date = null;
         $this->password = null;
         $this->alreadyInSave = false;
         $this->clearAllReferences();
