@@ -6,12 +6,12 @@ use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Slim\Exception\NotFoundException;
 
-// User needs to be signed in to access this group
 class AccountController
 {
     public static function setUpRouting($app)
     {
         $app->group('/account', function () use ($app) {
+          // show the login, register, forgot password forms
             $app->get('', function ($request, $response, $args) {
                 return $this->view->render(
                 $response,
@@ -45,13 +45,15 @@ class AccountController
                         return $response->withJSON(['success'=>false]);
                     }
                     $user->logIn();
-                    return $response->withJSON(['success'=>true]);
+                    return $response->withJSON(['success'=>true,
+                    'redirect_link'=>$this->router->pathFor('user-profile')]);
                 } elseif (isset($post['Register'])) {
                     // trying to make new account
                     $user = new \User();
                     foreach ($post['Register'] as $key => $value) {
                         $user->setByName($key, $value);
                     }
+                    $user->setJoinDate(getCurrentDate());
                     // validate here
                     $user->save();
                     return $response->withJSON(['success'=>true]);
