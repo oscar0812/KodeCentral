@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+  <?php $home = replaceLast('index.php/', '', $router->pathFor('home'));?>
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,14 +9,14 @@
     <meta name="theme-color" content="#333">
     <title>Material Style</title>
     <meta name="description" content="Material Style Theme">
-    <link rel="shortcut icon" href="assets/img/favicon.png?v=3">
+    <link rel="shortcut icon" href="<?=$home?>assets/img/favicon.png?v=3">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="assets/css/preload.min.css">
-    <link rel="stylesheet" href="assets/css/plugins.min.css">
-    <link rel="stylesheet" href="assets/css/style.blue-600.min.css">
+    <link rel="stylesheet" href="<?=$home?>assets/css/preload.min.css">
+    <link rel="stylesheet" href="<?=$home?>assets/css/plugins.min.css">
+    <link rel="stylesheet" href="<?=$home?>assets/css/style.blue-600.min.css">
     <!--[if lt IE 9]>
-        <script src="assets/js/html5shiv.min.js"></script>
-        <script src="assets/js/respond.min.js"></script>
+        <script src="<?=$home?>assets/js/html5shiv.min.js"></script>
+        <script src="<?=$home?>assets/js/respond.min.js"></script>
     <![endif]-->
   </head>
   <body>
@@ -38,7 +39,7 @@
                   <div class="ms-hero-bg-primary ms-hero-img-coffee">
                     <h3 class="color-white index-1 text-center no-m pt-4"><?=$user->getUsername()?></h3>
                     <div class="color-medium index-1 text-center np-m">@<?=$user->getUsername()?></div>
-                    <img src="assets/img/demo/avatar1.jpg" alt="..." class="img-avatar-circle"> </div>
+                    <img src="<?=$home?>assets/img/demo/avatar1.jpg" alt="..." class="img-avatar-circle"> </div>
                   <div class="card-body pt-4 text-center">
                     <h3 class="color-primary">Bio</h3>
                     <p>Lorem ipsum dolor sit amet, consectetur alter adipisicing elit. Facilis, natuse inse voluptates officia repudiandae beatae magni es magnam autem molestias.</p>
@@ -58,7 +59,7 @@
                 <a href="javascript:void(0)" class="btn btn-warning btn-raised btn-block animated fadeInUp animation-delay-12">
                   <i class="zmdi zmdi-edit"></i> Edit Profile</a>
                 <a href="javascript:void(0)" class="btn btn-danger btn-raised btn-block animated fadeInUp animation-delay-12">
-                  <i class="zmdi zmdi-delete"></i> Delete User</a>
+                  <i class="fa fa-sign-out"></i> Log Out</a>
               </div>
               <div class="col-lg-12 col-md-6 order-md-2 order-lg-3">
                 <div class="card animated fadeInUp animation-delay-12">
@@ -69,7 +70,7 @@
                     <div class="ms-media-list">
                       <div class="media mb-2">
                         <a class="mr-3" href="#">
-                          <img class="media-object" src="assets/img/demo/avatar6.jpg"> </a>
+                          <img class="media-object" src="<?=$home?>assets/img/demo/avatar6.jpg"> </a>
                         <div class="media-body">
                           <h4 class="mt-0 mb-0 color-warning">Maria Sharaphova</h4>
                           <a href="mailto:joe@example.com?subject=feedback">maria.sha@example.com</a>
@@ -89,7 +90,7 @@
                       <div class="media mb-2">
                         <div class="media-left media-middle">
                           <a class="mr-3" href="#">
-                            <img class="media-object" src="assets/img/demo/avatar3.jpg"> </a>
+                            <img class="media-object" src="<?=$home?>assets/img/demo/avatar3.jpg"> </a>
                         </div>
                         <div class="media-body">
                           <h4 class="mt-0 mb-0 color-warning">Rafael Nadal</h4>
@@ -110,7 +111,7 @@
                       <div class="media mb-2">
                         <div class="media-left media-middle">
                           <a class="mr-3" href="#">
-                            <img class="media-object" src="assets/img/demo/avatar5.jpg"> </a>
+                            <img class="media-object" src="<?=$home?>assets/img/demo/avatar5.jpg"> </a>
                         </div>
                         <div class="media-body">
                           <h4 class="mt-0 mb-0 color-warning">Roger Federer</h4>
@@ -193,7 +194,7 @@
                         <span>March</span>
                       </time>
                       <i class="ms-timeline-point bg-royal"></i>
-                      <img src="assets/img/demo/avatar6.jpg" class="ms-timeline-point-img"> </div>
+                      <img src="<?=$home?>assets/img/demo/avatar6.jpg" class="ms-timeline-point-img"> </div>
                     <div class="card card-royal">
                       <div class="card-header">
                         <h3 class="card-title">Card Title</h3>
@@ -201,7 +202,7 @@
                       <div class="card-body">
                         <div class="row">
                           <div class="col-sm-4">
-                            <img src="assets/img/demo/office1.jpg" alt="" class="img-fluid"> </div>
+                            <img src="<?=$home?>assets/img/demo/office1.jpg" alt="" class="img-fluid"> </div>
                           <div class="col-sm-8">
                             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laborum, praesentium, quam! Quia fugiat aperiam.</p>
                             <p>Perspiciatis soluta voluptate dolore officiis libero repellat cupiditate explicabo atque facere aliquam.</p>
@@ -263,7 +264,7 @@
                         <span>February</span>
                       </time>
                       <i class="ms-timeline-point bg-warning"></i>
-                      <img src="assets/img/demo/avatar2.jpg" class="ms-timeline-point-img"> </div>
+                      <img src="<?=$home?>assets/img/demo/avatar2.jpg" class="ms-timeline-point-img"> </div>
                     <div class="card card-warning">
                       <div class="card-header">
                         <h3 class="card-title">Card Title</h3>
@@ -272,11 +273,11 @@
                         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nam, nulla recusandae blanditiis architecto soluta culpa obcaecati quis earum atque consequuntur.</p>
                         <div class="row">
                           <div class="col-sm-4">
-                            <img src="assets/img/demo/office2.jpg" alt="" class="img-fluid"> </div>
+                            <img src="<?=$home?>assets/img/demo/office2.jpg" alt="" class="img-fluid"> </div>
                           <div class="col-sm-4">
-                            <img src="assets/img/demo/office3.jpg" alt="" class="img-fluid"> </div>
+                            <img src="<?=$home?>assets/img/demo/office3.jpg" alt="" class="img-fluid"> </div>
                           <div class="col-sm-4">
-                            <img src="assets/img/demo/office4.jpg" alt="" class="img-fluid"> </div>
+                            <img src="<?=$home?>assets/img/demo/office4.jpg" alt="" class="img-fluid"> </div>
                         </div>
                         <br>
                         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis, ipsum voluptates eius placeat dolorum reprehenderit ducimus accusamus magni aspernatur at dolore assumenda quae suscipit enim veritatis obcaecati molestias laudantium
@@ -307,7 +308,7 @@
                         <span>January</span>
                       </time>
                       <i class="ms-timeline-point bg-info"></i>
-                      <img src="assets/img/demo/avatar3.jpg" class="ms-timeline-point-img"> </div>
+                      <img src="<?=$home?>assets/img/demo/avatar3.jpg" class="ms-timeline-point-img"> </div>
                     <div class="card card-info">
                       <div class="card-header">
                         <h3 class="card-title">Card Title</h3>
@@ -326,7 +327,7 @@
                       <div class="ms-hero-bg-primary ms-hero-img-coffee">
                         <h3 class="color-white index-1 text-center no-m pt-4">Victoria Smith</h3>
                         <div class="color-medium index-1 text-center np-m">@vic_smith</div>
-                        <img src="assets/img/demo/avatar1.jpg" alt="..." class="img-avatar-circle"> </div>
+                        <img src="<?=$home?>assets/img/demo/avatar1.jpg" alt="..." class="img-avatar-circle"> </div>
                       <div class="card-body pt-4 text-center">
                         <h3 class="color-primary">Bio</h3>
                         <p>Lorem ipsum dolor sit amet, consectetur alter adipisicing elit. Facilis, natuse inse voluptates officia repudiandae beatae magni es magnam autem molestias.</p>
@@ -353,7 +354,7 @@
     </div>
     <?php require_once('templates/slidebar.php')?>
     <!-- ms-site-container -->
-    <script src="assets/js/plugins.min.js"></script>
-    <script src="assets/js/app.min.js"></script>
+    <script src="<?=$home?>assets/js/plugins.min.js"></script>
+    <script src="<?=$home?>assets/js/app.min.js"></script>
   </body>
 </html>
