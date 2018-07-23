@@ -38,7 +38,8 @@
                 <h1 class="no-mt"><?=$post->getTitle()?></h1>
                 <div class="mb-4">
                   <img src="<?=$home?>assets/img/demo/avatar50.jpg" alt="..." class="img-circle mr-1"> by
-                  <a href="<?=$router->pathFor('user-profile')?>"><?=$post->getUser()->getUsername()?></a> in
+                  <?php $username = $post->getUser()->getUsername();?>
+                  <a href="<?=$router->pathFor('user-profile', ['username'=>$username])?>"><?=$username?></a> in
                   <?php foreach ($post->getCategories() as $category) { ?>
                   <a href="javascript:void(0)" class="ms-tag ms-tag-info"><?=$category->getName()?></a>
                   <?php } ?>
