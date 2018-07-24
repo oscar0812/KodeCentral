@@ -10,13 +10,22 @@ class LoggedInController
 {
     public function createPost($app)
     {
+        // show view to create a new post
         $app->get('/create-post', function ($request, $response, $args) {
             return $this->view->render(
             $response,
             'create-post.php',
-            ['router'=>$this->router, 'post'=>$post]
+            ['router'=>$this->router, 'user'=>\User::current(), 'categories'=>\CategoryQuery::create()]
         );
         })->setName('create-post');
+
+        // post information coming in, new post is being created
+        // TODO: validate post
+        $app->post('/create-post', function ($request, $response, $args) {
+            $post = \Post::fromPostRequest($request->getParsedBody());
+            $post->save();
+            return $response->withJson(['success'=>true]);
+        });
     }
 
     public function logOut($app)

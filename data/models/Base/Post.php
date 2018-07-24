@@ -92,13 +92,6 @@ abstract class Post implements ActiveRecordInterface
     protected $hyperlink;
 
     /**
-     * The value for the summary field.
-     *
-     * @var        string
-     */
-    protected $summary;
-
-    /**
      * The value for the text field.
      *
      * @var        string
@@ -416,16 +409,6 @@ abstract class Post implements ActiveRecordInterface
     }
 
     /**
-     * Get the [summary] column value.
-     *
-     * @return string
-     */
-    public function getSummary()
-    {
-        return $this->summary;
-    }
-
-    /**
      * Get the [text] column value.
      *
      * @return string
@@ -524,26 +507,6 @@ abstract class Post implements ActiveRecordInterface
 
         return $this;
     } // setHyperlink()
-
-    /**
-     * Set the value of [summary] column.
-     *
-     * @param string $v new value
-     * @return $this|\Post The current object (for fluent API support)
-     */
-    public function setSummary($v)
-    {
-        if ($v !== null) {
-            $v = (string) $v;
-        }
-
-        if ($this->summary !== $v) {
-            $this->summary = $v;
-            $this->modifiedColumns[PostTableMap::COL_SUMMARY] = true;
-        }
-
-        return $this;
-    } // setSummary()
 
     /**
      * Set the value of [text] column.
@@ -654,19 +617,16 @@ abstract class Post implements ActiveRecordInterface
             $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : PostTableMap::translateFieldName('Hyperlink', TableMap::TYPE_PHPNAME, $indexType)];
             $this->hyperlink = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : PostTableMap::translateFieldName('Summary', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->summary = (null !== $col) ? (string) $col : null;
-
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : PostTableMap::translateFieldName('Text', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : PostTableMap::translateFieldName('Text', TableMap::TYPE_PHPNAME, $indexType)];
             $this->text = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 5 + $startcol : PostTableMap::translateFieldName('PostedDate', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : PostTableMap::translateFieldName('PostedDate', TableMap::TYPE_PHPNAME, $indexType)];
             if ($col === '0000-00-00') {
                 $col = null;
             }
             $this->posted_date = (null !== $col) ? PropelDateTime::newInstance($col, null, 'DateTime') : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 6 + $startcol : PostTableMap::translateFieldName('PostedByUserId', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 5 + $startcol : PostTableMap::translateFieldName('PostedByUserId', TableMap::TYPE_PHPNAME, $indexType)];
             $this->posted_by_user_id = (null !== $col) ? (int) $col : null;
             $this->resetModified();
 
@@ -676,7 +636,7 @@ abstract class Post implements ActiveRecordInterface
                 $this->ensureConsistency();
             }
 
-            return $startcol + 7; // 7 = PostTableMap::NUM_HYDRATE_COLUMNS.
+            return $startcol + 6; // 6 = PostTableMap::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
             throw new PropelException(sprintf('Error populating %s object', '\\Post'), 0, $e);
@@ -951,9 +911,6 @@ abstract class Post implements ActiveRecordInterface
         if ($this->isColumnModified(PostTableMap::COL_HYPERLINK)) {
             $modifiedColumns[':p' . $index++]  = 'hyperlink';
         }
-        if ($this->isColumnModified(PostTableMap::COL_SUMMARY)) {
-            $modifiedColumns[':p' . $index++]  = 'summary';
-        }
         if ($this->isColumnModified(PostTableMap::COL_TEXT)) {
             $modifiedColumns[':p' . $index++]  = 'text';
         }
@@ -982,9 +939,6 @@ abstract class Post implements ActiveRecordInterface
                         break;
                     case 'hyperlink':
                         $stmt->bindValue($identifier, $this->hyperlink, PDO::PARAM_STR);
-                        break;
-                    case 'summary':
-                        $stmt->bindValue($identifier, $this->summary, PDO::PARAM_STR);
                         break;
                     case 'text':
                         $stmt->bindValue($identifier, $this->text, PDO::PARAM_STR);
@@ -1067,15 +1021,12 @@ abstract class Post implements ActiveRecordInterface
                 return $this->getHyperlink();
                 break;
             case 3:
-                return $this->getSummary();
-                break;
-            case 4:
                 return $this->getText();
                 break;
-            case 5:
+            case 4:
                 return $this->getPostedDate();
                 break;
-            case 6:
+            case 5:
                 return $this->getPostedByUserId();
                 break;
             default:
@@ -1111,13 +1062,12 @@ abstract class Post implements ActiveRecordInterface
             $keys[0] => $this->getId(),
             $keys[1] => $this->getTitle(),
             $keys[2] => $this->getHyperlink(),
-            $keys[3] => $this->getSummary(),
-            $keys[4] => $this->getText(),
-            $keys[5] => $this->getPostedDate(),
-            $keys[6] => $this->getPostedByUserId(),
+            $keys[3] => $this->getText(),
+            $keys[4] => $this->getPostedDate(),
+            $keys[5] => $this->getPostedByUserId(),
         );
-        if ($result[$keys[5]] instanceof \DateTimeInterface) {
-            $result[$keys[5]] = $result[$keys[5]]->format('c');
+        if ($result[$keys[4]] instanceof \DateTimeInterface) {
+            $result[$keys[4]] = $result[$keys[4]]->format('c');
         }
 
         $virtualColumns = $this->virtualColumns;
@@ -1200,15 +1150,12 @@ abstract class Post implements ActiveRecordInterface
                 $this->setHyperlink($value);
                 break;
             case 3:
-                $this->setSummary($value);
-                break;
-            case 4:
                 $this->setText($value);
                 break;
-            case 5:
+            case 4:
                 $this->setPostedDate($value);
                 break;
-            case 6:
+            case 5:
                 $this->setPostedByUserId($value);
                 break;
         } // switch()
@@ -1247,16 +1194,13 @@ abstract class Post implements ActiveRecordInterface
             $this->setHyperlink($arr[$keys[2]]);
         }
         if (array_key_exists($keys[3], $arr)) {
-            $this->setSummary($arr[$keys[3]]);
+            $this->setText($arr[$keys[3]]);
         }
         if (array_key_exists($keys[4], $arr)) {
-            $this->setText($arr[$keys[4]]);
+            $this->setPostedDate($arr[$keys[4]]);
         }
         if (array_key_exists($keys[5], $arr)) {
-            $this->setPostedDate($arr[$keys[5]]);
-        }
-        if (array_key_exists($keys[6], $arr)) {
-            $this->setPostedByUserId($arr[$keys[6]]);
+            $this->setPostedByUserId($arr[$keys[5]]);
         }
     }
 
@@ -1307,9 +1251,6 @@ abstract class Post implements ActiveRecordInterface
         }
         if ($this->isColumnModified(PostTableMap::COL_HYPERLINK)) {
             $criteria->add(PostTableMap::COL_HYPERLINK, $this->hyperlink);
-        }
-        if ($this->isColumnModified(PostTableMap::COL_SUMMARY)) {
-            $criteria->add(PostTableMap::COL_SUMMARY, $this->summary);
         }
         if ($this->isColumnModified(PostTableMap::COL_TEXT)) {
             $criteria->add(PostTableMap::COL_TEXT, $this->text);
@@ -1408,7 +1349,6 @@ abstract class Post implements ActiveRecordInterface
     {
         $copyObj->setTitle($this->getTitle());
         $copyObj->setHyperlink($this->getHyperlink());
-        $copyObj->setSummary($this->getSummary());
         $copyObj->setText($this->getText());
         $copyObj->setPostedDate($this->getPostedDate());
         $copyObj->setPostedByUserId($this->getPostedByUserId());
@@ -2031,7 +1971,6 @@ abstract class Post implements ActiveRecordInterface
         $this->id = null;
         $this->title = null;
         $this->hyperlink = null;
-        $this->summary = null;
         $this->text = null;
         $this->posted_date = null;
         $this->posted_by_user_id = null;

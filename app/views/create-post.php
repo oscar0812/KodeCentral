@@ -44,19 +44,23 @@
       <div class="container">
         <div class="card card-hero animated fadeInUp animation-delay-7">
           <div class="card-body">
-            <form class="form-horizontal">
+            <form id="create-form" class="form-horizontal" action"" method="post">
               <fieldset class="container">
                 <div class="form-group label-floating">
-                  <label class="control-label" for="focusedInput2">Title</label>
-                  <input class="form-control" id="focusedInput2" type="text">
+                  <label class="control-label" for="title">Title</label>
+                  <input class="form-control" id="title" type="text">
                   <p class="help-block">Short and simple</p>
                 </div>
-                <div class="form-group label-floating">
-                  <label class="control-label" for="focusedInput2">Summary</label>
-                  <input class="form-control" id="focusedInput2" type="text">
-                  <p class="help-block">What are you going to talk about?</p>
+                <div class="form-group row justify-content-start">
+                  <label for="categories-select" class="col-lg-2 control-label">Categories</label>
+                  <div class="col-lg-10">
+                    <select id="categories-select" multiple="" class="selectpicker form-control" data-dropup-auto="false">
+                      <?php foreach ($categories as $c) { ?>
+                        <option><?=$c->getName()?></option>
+                      <?php } ?>
+                    </select>
+                  </div>
                 </div>
-
                 <div class="form-group">
                   <div id="standalone-container">
                     <div id="toolbar-container">
@@ -96,8 +100,6 @@
                       </span>
                       <span class="ql-formats">
                         <button class="ql-link"></button>
-                        <button class="ql-image"></button>
-                        <button class="ql-video"></button>
                         <button class="ql-formula"></button>
                       </span>
                       <span class="ql-formats">
@@ -111,7 +113,7 @@
                 <div class="form-group row">
                   <div class="col-lg-10">
                     <button type="submit" class="btn btn-raised btn-primary">Submit</button>
-                    <button type="button" class="btn btn-danger">Cancel</button>
+                    <a href="<?=$router->pathFor('user-profile', ['username'=>$user->getUsername()])?>" class="btn btn-danger"> cancel </a>
                   </div>
                 </div>
               </fieldset>
@@ -128,9 +130,7 @@
     <script src="<?=$home?>assets/js/app.min.js"></script>
 
     <script src="<?=$home?>assets/plugins/quill/js/katex.min.js"></script>
-
     <script src="<?=$home?>assets/plugins/quill/js/highlight.min.js"></script>
-
     <script src="<?=$home?>assets/plugins/quill/js/quill.min.js"></script>
 
     <script>
@@ -142,6 +142,44 @@
         },
         placeholder: 'Write your mind off...',
         theme: 'snow'
+      });
+
+      $(function() {
+        $('#create-form').on('submit', function(e) {
+          title = $('#title').val();
+          html = $(quill.root).html();
+          categories = $('#categories-select').val();
+
+          if (title.trim() == "") {
+            $('#title').focus();
+            return false;
+          }
+
+          // for some odd reason empty text is the following on the WYSIWYG
+          empty_text = "<p><br></p>";
+
+          if (html == empty_text || html == "") {
+            $(quill.root).focus();
+            return false;
+          }
+
+          $.ajax({
+            type: "POST",
+            data: {
+              title: title,
+              text: html,
+              categories: categories
+            },
+            url: "",
+            dataType: "json",
+            success: function(data) {
+              console.log(data);
+            }
+          });
+
+
+          return false;
+        });
       });
     </script>
   </body>

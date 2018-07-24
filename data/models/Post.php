@@ -22,4 +22,45 @@ class Post extends BasePost
         }
         return rtrim($str, ' ');
     }
+
+    // the summary is just a short description
+    public function getSummary()
+    {
+        return substr($this->getText(), 0, 60).'...';
+    }
+
+    private static function uniqueLink($link)
+    {
+        $link = preg_replace('/\s+/', '-', strtolower($link));
+
+        if (\PostQuery::create()->findOneByHyperlink($link) != null) {
+            // not unique hyperlink, try again
+            // random string 8 in length
+            $extra = substr(md5(uniqid(mt_rand(), true)), 0, 8);
+            return $link.'-'.$extra;
+        }
+        return $link;
+    }
+
+    public static function fromPostRequest($data)
+    {
+        $post = new \Post();
+        // replace whitespace with 1 space
+        $post->setTitle(preg_replace('/\s+/', ' ', $data['title']));
+        $post->setText($data['text']);
+        $post->setUser(\User::current());
+        $post->setPostedDate(getCurrentDate());
+        $post->setUser(\User::current());
+
+        // hyperlink has to be unique
+        $post->setHyperlink(\Post::uniqueLink($post->getTitle()));
+
+        // add the categories
+        foreach ($data['categories'] as $c_name) {
+            $category = \CategoryQuery::create()->findOneByName($c_name);
+            $post->addCategory($category);
+        }
+
+        return $post;
+    }
 }
