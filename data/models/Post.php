@@ -50,7 +50,7 @@ class Post extends BasePost
         }
         // replace whitespace with 1 space
         $post->setTitle(preg_replace('/\s+/', ' ', $data['title']));
-        $post->setText($data['text']);
+        $post->setText(preg_replace('/&nbsp;/', ' ', $data['text']));
         $post->setUser(\User::current());
         $post->setPostedDate(getCurrentDate());
         $post->setUser(\User::current());
