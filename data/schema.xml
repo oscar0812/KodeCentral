@@ -11,7 +11,7 @@
     <column name="id" phpName="Id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
     <column name="title" phpName="Title" type="VARCHAR" size="128" required="true"/>
     <column name="hyperlink" phpName="Hyperlink" type="VARCHAR" size="128" required="true"/>
-    <column name="text" phpName="Text" type="VARCHAR" size="8192" required="true"/>
+    <column name="text" phpName="Text" type="VARCHAR" size="32768" required="true"/>
     <column name="posted_date" phpName="PostedDate" type="DATE" required="true"/>
     <column name="posted_by_user_id" phpName="PostedByUserId" type="INTEGER" required="true"/>
     <foreign-key foreignTable="user" name="post_ibfk_2">
