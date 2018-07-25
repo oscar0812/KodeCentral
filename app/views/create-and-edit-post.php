@@ -57,17 +57,18 @@
                   <div class="col-lg-10">
                     <select id="categories-select" multiple="" class="selectpicker form-control" data-dropup-auto="false">
                       <?php foreach ($all_categories as $ac) {
-                          $selected = false;
+    $selected = false;
 
-                          foreach ($post_categories as $pc) {
-                            if ($ac->getId() == $pc->getId()) {
-                              $selected = true;
-                            }
-                          } ?>
+    foreach ($post_categories as $pc) {
+        if ($ac->getId() == $pc->getId()) {
+            $selected = true;
+        }
+    } ?>
 
                           <option <?=$selected?"selected":""?>>
                           <?=$ac->getName()?></option>
-                        <?php } ?>
+                        <?php
+} ?>
                     </select>
                   </div>
                 </div>
@@ -125,9 +126,11 @@
                   <div class="col-lg-10">
                     <button type="submit" class="btn btn-raised btn-primary">Submit</button>
                     <a href="<?=$router->pathFor('user-profile', ['username'=>$user->getUsername()])?>" class="btn btn-danger"> cancel </a>
-                    <?php if($editing) { ?>
+                    <?php if ($editing) {
+        ?>
                     <a href="<?=$router->pathFor('view-post', ['hyperlink'=>$post->getHyperlink()])?>" class="btn btn-success"> view </a>
-                    <?php } ?>
+                    <?php
+    } ?>
                   </div>
                 </div>
                 <div class="form-group row">
@@ -165,6 +168,13 @@
 
       // set the contents of the editor if editing an already submitted post
       preload = $('#preload-content');
+
+      preload.find('code').each(function() {
+        // add highlighting to each code block
+        // parents html will be w.e html code had, and also has ql-syntax class
+        $(this).parent().addClass('ql-syntax').html($(this).html());
+      });
+
       $(quill.root).html(preload.html());
       // remove it once we get data out, to reduce html page size
       preload.remove();
@@ -172,7 +182,8 @@
       $(function() {
         $('#create-form').on('submit', function(e) {
           title = $('#title').val();
-          html = $(quill.root).html();
+          root = $(quill.root).clone();
+          html = root.html();
           categories = $('#categories-select').val();
 
           if (title.trim() == "") {
@@ -194,11 +205,24 @@
               removeClass('text-danger').addClass('text-success');
           response.text('Loading...');
 
+          code = root.find('.ql-syntax');
+          code.removeClass('.ql-syntax');
+          code.each(function(){
+            // grab the code blocks from here and convert to what hightlight.js
+            // likes
+            text = $(this).text();
+            $(this).empty();
+            $(this).removeAttr('class').removeAttr('spellcheck');
+
+            code_block = $('<code>').text(text);
+            $(this).wrapInner(code_block);
+          });
+
           $.ajax({
             type: "POST",
             data: {
               title: title,
-              text: html,
+              text: root.html(),
               categories: categories
             },
             url: "",
