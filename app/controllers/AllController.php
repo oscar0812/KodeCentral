@@ -31,9 +31,8 @@ class AllController
                 throw new \Slim\Exception\NotFoundException($request, $response);
             }
             return $this->view->render(
-                $response,
-                'view-post.php',
-                ['router'=>$this->router, 'post'=>$post]
+                $response, 'view-post.php',
+                ['router'=>$this->router, 'post'=>$post, 'user'=>\User::current()]
             );
         })->setName('view-post');
     }

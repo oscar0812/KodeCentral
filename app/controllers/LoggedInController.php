@@ -15,7 +15,7 @@ class LoggedInController
             return $this->view->render(
             $response,
             'create-and-edit-post.php',
-            ['router'=>$this->router, 'user'=>\User::current(), 'categories'=>\CategoryQuery::create()]
+            ['router'=>$this->router, 'user'=>\User::current(), 'all_categories'=>\CategoryQuery::create()]
         );
         })->setName('create-post');
 
@@ -25,7 +25,7 @@ class LoggedInController
             $post = \Post::fromPostRequest($request->getParsedBody());
             $post->save();
             return $response->withJson(['success'=>true,
-            'redirect'=>$router->pathFor('view-post', ['hyperlink'=>$post->getHyperlink()])]);
+            'redirect'=>$this->router->pathFor('view-post', ['hyperlink'=>$post->getHyperlink()])]);
         });
     }
 

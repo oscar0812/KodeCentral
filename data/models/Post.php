@@ -26,7 +26,8 @@ class Post extends BasePost
     // the summary is just a short description
     public function getSummary()
     {
-        return substr($this->getText(), 0, 60).'...';
+        // post text has html tags, take them off before sub stringing
+        return substr(strip_tags($this->getText()), 0, 60).'...';
     }
 
     private static function uniqueLink($link)
@@ -54,7 +55,7 @@ class Post extends BasePost
         $post->setPostedDate(getCurrentDate());
         $post->setUser(\User::current());
 
-        if ($post == null) {
+        if ($post->getHyperlink() == "") {
             // hyperlink has to be unique
             $post->setHyperlink(\Post::uniqueLink($post->getTitle()));
         }

@@ -54,10 +54,12 @@
                   </span>
                   <span class="ml-1">
                     <i class="zmdi zmdi-comments color-royal mr-05"></i> 25</span>
+                  <?php if($user!= null && $post->getUser() == $user) { ?>
                   <span class="ml-1">
                     <a href="<?=$router->pathFor('edit-post', ['hyperlink'=>$post->getHyperlink()])?>" class="btn-circle btn-circle-danger">
                       <i class="fa fa-pencil"> Edit</i>
                     </a>
+                  <?php } ?>
                   </span>
                 </div>
                 <!-- post text here -->
