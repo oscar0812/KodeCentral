@@ -1,3 +1,4 @@
+<?php if(!isset($home)) $home = '';?>
 <aside class="ms-footbar">
   <div class="container">
     <div class="row">
@@ -50,7 +51,7 @@
                 <i class="zmdi zmdi-lock"></i> Login</a>
             </li>
             <li>
-              <a href="page-contact.php">
+              <a href="<?=$router->pathFor('contact-us')?>">
                 <i class="zmdi zmdi-email"></i> Contact</a>
             </li>
           </ul>

@@ -7,8 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="theme-color" content="#333">
-    <title>Material Style</title>
-    <meta name="description" content="Material Style Theme">
+    <title>Kode Central</title>
+    <meta name="description" content="Kode Central, a place for programmers">
     <link rel="shortcut icon" href="<?=$home?>assets/img/favicon.png?v=3">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="<?=$home?>assets/css/preload.min.css">
@@ -174,7 +174,7 @@
                   <th>
                     <i class="zmdi zmdi-email mr-1 color-danger"></i> Email</th>
                   <td>
-                    <a href="#"><?=$user->getEmail()?></a>
+                    <a href="mailto:<?=$user->getEmail()?>"><?=$user->getEmail()?></a>
                   </td>
                 </tr>
                 <tr>

@@ -8,6 +8,16 @@ use Slim\Exception\NotFoundException;
 // All the routes here can be seen if logged in or out, doesnt matter
 class AllController
 {
+    public function contactUs($app)
+    {
+        $app->get('/contact', function ($request, $response, $args) {
+            return $this->view->render(
+              $response,
+                'page-contact.php',
+                ['router'=>$this->router]
+            );
+        })->setName('contact-us');
+    }
     public function home($app)
     {
         $app->get('/', function ($request, $response, $args) {
@@ -31,7 +41,8 @@ class AllController
                 throw new \Slim\Exception\NotFoundException($request, $response);
             }
             return $this->view->render(
-                $response, 'view-post.php',
+                $response,
+                'view-post.php',
                 ['router'=>$this->router, 'post'=>$post, 'user'=>\User::current()]
             );
         })->setName('view-post');
@@ -43,8 +54,8 @@ class AllController
         $app->get('/profile/{username}', function ($request, $response, $args) {
             $user = \UserQuery::create()->findOneByUsername($args['username']);
 
-            if($user == null){
-              throw new \Slim\Exception\NotFoundException($request, $response);
+            if ($user == null) {
+                throw new \Slim\Exception\NotFoundException($request, $response);
             }
 
             $current = \User::current();
@@ -53,7 +64,8 @@ class AllController
                 $visiting = false;
             }
             return $this->view->render(
-              $response, 'page-profile.php',
+              $response,
+                'page-profile.php',
               ['router'=>$this->router, 'user'=>$user, 'visiting'=>$visiting]
           );
         })->setName('user-profile');
@@ -63,6 +75,7 @@ class AllController
     {
         $controller = new AllController();
         $controller->home($app);
+        $controller->contactUs($app);
         $controller->post($app);
         $controller->profile($app);
     }

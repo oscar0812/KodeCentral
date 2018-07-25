@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Material Style - Responsive Email Template</title>
+    <title>Kode Central - Responsive Email Template</title>
     <meta http-equiv="Content-Type" content="text/html;" charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -121,7 +121,7 @@
   </head>
   <body style="margin: 0 !important; padding: 0 !important;">
     <!-- hidden preheader text - Remember to change it! -->
-    <div style="display: none; font-size: 1px; color: #fefefe; line-height: 1px; font-family: 'Roboto', Helvetica, Arial, sans-serif; max-height: 0px; max-width: 0px; opacity: 0; overflow: hidden;mso-hide:all;"> Material Style - Responsive Email Template </div>
+    <div style="display: none; font-size: 1px; color: #fefefe; line-height: 1px; font-family: 'Roboto', Helvetica, Arial, sans-serif; max-height: 0px; max-width: 0px; opacity: 0; overflow: hidden;mso-hide:all;"> Kode Central - Responsive Email Template </div>
     <!-- Don't forget to include a header -->
     <!-- Header full centre -->
     <table border="0" cellpadding="0" cellspacing="0" width="100%">
@@ -155,7 +155,7 @@
                         <tr>
                           <td style="padding: 0 0 16px 0;" align="center">
                             <a href="#" target="_blank">
-                              <img style="display: block; font-family: 'Roboto', Helvetica, Arial, sans-serif; color: #333333; font-size: 14px; width: 600px; height: 368px;" class="img-max" src="assets/img/email/img1.jpg" alt="Material Style" width="600"
+                              <img style="display: block; font-family: 'Roboto', Helvetica, Arial, sans-serif; color: #333333; font-size: 14px; width: 600px; height: 368px;" class="img-max" src="assets/img/email/img1.jpg" alt="Kode Central" width="600"
                                 height="250" border="0"> </a>
                           </td>
                         </tr>
@@ -225,7 +225,7 @@
                         <tr>
                           <td align="center" valign="top">
                             <a href="#" target="_blank">
-                              <img style="display: block; padding: 0 0 8px 0; font-family: 'Roboto', Helvetica, Arial, sans-serif; color: #333333; font-size: 14px; width: 150px; height: 84px;" class="img-max" src="assets/img/email/img2.jpg" alt="Material Style"
+                              <img style="display: block; padding: 0 0 8px 0; font-family: 'Roboto', Helvetica, Arial, sans-serif; color: #333333; font-size: 14px; width: 150px; height: 84px;" class="img-max" src="assets/img/email/img2.jpg" alt="Kode Central"
                                 width="150" height="84" border="0"> </a>
                           </td>
                         </tr>
@@ -278,7 +278,7 @@
                         <tr>
                           <td align="center" valign="top">
                             <a href="#" target="_blank">
-                              <img style="display: block; padding: 0 0 8px 0; font-family: 'Roboto', Helvetica, Arial, sans-serif; color: #333333; font-size: 14px; width: 150px; height: 84px;" class="img-max" src="assets/img/email/img3.jpg" alt="Material Style"
+                              <img style="display: block; padding: 0 0 8px 0; font-family: 'Roboto', Helvetica, Arial, sans-serif; color: #333333; font-size: 14px; width: 150px; height: 84px;" class="img-max" src="assets/img/email/img3.jpg" alt="Kode Central"
                                 width="150" height="84" border="0"> </a>
                           </td>
                         </tr>
@@ -331,7 +331,7 @@
                         <tr>
                           <td align="center" valign="top">
                             <a href="#" target="_blank">
-                              <img style="display: block; padding: 0 0 8px 0; font-family: 'Roboto', Helvetica, Arial, sans-serif; color: #333333; font-size: 14px; width: 150px; height: 84px;" class="img-max" src="assets/img/email/img4.jpg" alt="Material Style"
+                              <img style="display: block; padding: 0 0 8px 0; font-family: 'Roboto', Helvetica, Arial, sans-serif; color: #333333; font-size: 14px; width: 150px; height: 84px;" class="img-max" src="assets/img/email/img4.jpg" alt="Kode Central"
                                 width="150" height="84" border="0"> </a>
                           </td>
                         </tr>
@@ -399,7 +399,7 @@
                       <!-- content -->
                       <table border="0" cellpadding="0" cellspacing="0" width="100%">
                         <tr>
-                          <td style="color: #90A4AE; font-family: 'Roboto', Helvetica, Arial, sans-serif; font-size: 14px; font-weight: normal; line-height: 21px;" align="center"> Material Style is a project by
+                          <td style="color: #90A4AE; font-family: 'Roboto', Helvetica, Arial, sans-serif; font-size: 14px; font-weight: normal; line-height: 21px;" align="center"> Kode Central is a project by
                             <a style="color: #CFD8DC; text-decoration: none;" href="#">AGM Studio</a>
                           </td>
                         </tr>

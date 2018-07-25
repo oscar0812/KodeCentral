@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="theme-color" content="#333">
-    <title>Material Style</title>
-    <meta name="description" content="Material Style Theme">
+    <title>Kode Central</title>
+    <meta name="description" content="Kode Central, a place for programmers">
     <link rel="shortcut icon" href="assets/img/favicon.png?v=3">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="assets/css/preload.min.css">
@@ -292,7 +292,7 @@
                     <a href="javascript:void(0)" class="has_children dropdown-item">Form</a>
                     <ul class="dropdown-menu">
                       <li>
-                        <a class="dropdown-item" href="page-contact.php">Contact Option 1</a>
+                        <a class="dropdown-item" href="<?=$router->pathFor('contact-us')?>">Contact Option 1</a>
                       </li>
                       <li>
                         <a class="dropdown-item" href="page-contact2.php">Contact Option 2</a>
@@ -930,7 +930,7 @@
                       <i class="zmdi zmdi-lock"></i> Login</a>
                   </li>
                   <li>
-                    <a href="page-contact.php">
+                    <a href="<?=$router->pathFor('contact-us')?>">
                       <i class="zmdi zmdi-email"></i> Contact</a>
                   </li>
                 </ul>
@@ -1066,7 +1066,7 @@
       </aside>
       <footer class="ms-footer">
         <div class="container">
-          <p>Copyright &copy; Material Style 2017</p>
+          <p>Copyright &copy; Kode Central 2017</p>
         </div>
       </footer>
       <div class="btn-back-top">
@@ -1145,7 +1145,7 @@
                 <a href="page-timeline_left.php">Timeline</a>
               </li>
               <li>
-                <a href="page-contact.php">Contact Option</a>
+                <a href="<?=$router->pathFor('contact-us')?>">Contact Option</a>
               </li>
               <li>
                 <a href="page-login.php">Login</a>

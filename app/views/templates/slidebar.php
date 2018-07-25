@@ -54,7 +54,7 @@
           <i class="zmdi zmdi-star"></i> Favorites</a>
       </li>
       <li>
-        <a class="link" href="page-all.php">
+        <a class="link" href="<?=$router->pathFor('contact-us')?>">
           <i class="zmdi zmdi-email"></i> Contact Us</a>
       </li>
       <li>
