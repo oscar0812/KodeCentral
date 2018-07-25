@@ -58,7 +58,7 @@
               <div class="col-lg-12 col-md-12 order-md-3 order-lg-2">
                 <a href="javascript:void(0)" class="btn btn-warning btn-raised btn-block animated fadeInUp animation-delay-12">
                   <i class="zmdi zmdi-edit"></i> Edit Profile</a>
-                <a href="javascript:void(0)" class="btn btn-danger btn-raised btn-block animated fadeInUp animation-delay-12">
+                <a href="<?=$router->pathFor('user-logout')?>" class="btn btn-danger btn-raised btn-block animated fadeInUp animation-delay-12">
                   <i class="fa fa-sign-out"></i> Log Out</a>
               </div>
               <div class="col-lg-12 col-md-6 order-md-2 order-lg-3">

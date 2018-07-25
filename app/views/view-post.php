@@ -14,6 +14,9 @@
     <link rel="stylesheet" href="<?=$home?>assets/css/preload.min.css">
     <link rel="stylesheet" href="<?=$home?>assets/css/plugins.min.css">
     <link rel="stylesheet" href="<?=$home?>assets/css/style.blue-600.min.css">
+    <link rel="stylesheet" href="<?=$home?>assets/plugins/quill/css/katex.min.css" />
+    <link rel="stylesheet" href="<?=$home?>assets/plugins/quill/css/monokai-sublime.min.css" />
+    <link rel="stylesheet" href="<?=$home?>assets/plugins/quill/css/quill.snow.css" />
     <!--[if lt IE 9]>
         <script src="<?=$home?>assets/js/html5shiv.min.js"></script>
         <script src="<?=$home?>assets/js/respond.min.js"></script>
@@ -58,9 +61,7 @@
                   </span>
                 </div>
                 <!-- post text here -->
-
-                <?=$post->getText()?>
-
+                <div id="post-text"><?=$post->getText()?></div>
                 <!-- post text ends here -->
               </div>
             </div>
@@ -321,5 +322,13 @@
     <?php require_once('templates/slidebar.php')?>
     <script src="<?=$home?>assets/js/plugins.min.js"></script>
     <script src="<?=$home?>assets/js/app.min.js"></script>
+    <script src="<?=$home?>assets/plugins/quill/js/katex.min.js"></script>
+    <script src="<?=$home?>assets/plugins/quill/js/highlight.min.js"></script>
+    <script src="<?=$home?>assets/plugins/quill/js/quill.min.js"></script>
+    <script type="text/javascript">
+      // wrap .ql-syntax inside div class="ql-editor" and wrap that in div class="ql-snow"
+      // in order to show quill syntax highlighting
+      $('.ql-syntax').wrap($('<div class="ql-snow">')).wrap($('<div class="ql-editor">'));
+    </script>
   </body>
 </html>

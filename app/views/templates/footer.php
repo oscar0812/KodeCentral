@@ -76,7 +76,7 @@
             <div class="media">
               <div class="media-left media-middle">
                 <a href="javascript:void(0)">
-                  <img class="media-object media-object-circle" src="assets/img/demo/p75.jpg" alt="..."> </a>
+                  <img class="media-object media-object-circle" src="<?=$home?>assets/img/demo/p75.jpg" alt="..."> </a>
               </div>
               <div class="media-body">
                 <h4 class="media-heading">
@@ -95,7 +95,7 @@
             <div class="media">
               <div class="media-left media-middle">
                 <a href="javascript:void(0)">
-                  <img class="media-object media-object-circle" src="assets/img/demo/p75.jpg" alt="..."> </a>
+                  <img class="media-object media-object-circle" src="<?=$home?>assets/img/demo/p75.jpg" alt="..."> </a>
               </div>
               <div class="media-body">
                 <h4 class="media-heading">
@@ -114,7 +114,7 @@
             <div class="media">
               <div class="media-left media-middle">
                 <a href="javascript:void(0)">
-                  <img class="media-object media-object-circle" src="assets/img/demo/p75.jpg" alt="..."> </a>
+                  <img class="media-object media-object-circle" src="<?=$home?>assets/img/demo/p75.jpg" alt="..."> </a>
               </div>
               <div class="media-body">
                 <h4 class="media-heading">
