@@ -35,7 +35,9 @@
           <div class="col-lg-8">
             <div class="card animated fadeInLeftTiny animation-delay-5">
               <div class="card-body card-body-big">
-                <h1 class="no-mt"><?=$post->getTitle()?></h1>
+                <h1 class="no-mt"><?=$post->getTitle()?>
+                </h1>
+
                 <div class="mb-4">
                   <img src="<?=$home?>assets/img/demo/avatar50.jpg" alt="..." class="img-circle mr-1"> by
                   <?php $username = $post->getUser()->getUsername();?>
@@ -49,6 +51,11 @@
                   </span>
                   <span class="ml-1">
                     <i class="zmdi zmdi-comments color-royal mr-05"></i> 25</span>
+                  <span class="ml-1">
+                    <a href="<?=$router->pathFor('edit-post', ['hyperlink'=>$post->getHyperlink()])?>" class="btn-circle btn-circle-danger">
+                      <i class="fa fa-pencil"> Edit</i>
+                    </a>
+                  </span>
                 </div>
                 <!-- post text here -->
 

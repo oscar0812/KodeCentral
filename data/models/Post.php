@@ -42,9 +42,11 @@ class Post extends BasePost
         return $link;
     }
 
-    public static function fromPostRequest($data)
+    public static function fromPostRequest($data, $post = null)
     {
-        $post = new \Post();
+        if ($post == null) {
+            $post = new \Post();
+        }
         // replace whitespace with 1 space
         $post->setTitle(preg_replace('/\s+/', ' ', $data['title']));
         $post->setText($data['text']);
@@ -52,14 +54,15 @@ class Post extends BasePost
         $post->setPostedDate(getCurrentDate());
         $post->setUser(\User::current());
 
-        // hyperlink has to be unique
-        $post->setHyperlink(\Post::uniqueLink($post->getTitle()));
+        if ($post == null) {
+            // hyperlink has to be unique
+            $post->setHyperlink(\Post::uniqueLink($post->getTitle()));
+        }
 
         // add the categories
-        foreach ($data['categories'] as $c_name) {
-            $category = \CategoryQuery::create()->findOneByName($c_name);
-            $post->addCategory($category);
-        }
+        $categories = \CategoryQuery::create()->filterByName($data['categories'])->find();
+
+        $post->setCategories($categories);
 
         return $post;
     }

@@ -107,7 +107,7 @@
                     <figcaption class="ms-thumbnail-caption text-center">
                       <div class="ms-thumbnail-caption-content">
                         <h4 class="ms-thumbnail-caption-title mb-2"><?=$post->getTitle()?></h4>
-                        <a href="<?=$router->pathFor('blog-post', ['hyperlink'=>$post->getHyperlink()])?>" class="btn-circle btn-circle-raised btn-circle-xs mr-1 btn-circle-white color-info">
+                        <a href="<?=$router->pathFor('view-post', ['hyperlink'=>$post->getHyperlink()])?>" class="btn-circle btn-circle-raised btn-circle-xs mr-1 btn-circle-white color-info">
                           <i class="zmdi zmdi-eye"></i>
                         </a>
                         <a href="javascript:void(0)" class="btn-circle btn-circle-raised btn-circle-xs ml-1 mr-1 btn-circle-white color-danger">

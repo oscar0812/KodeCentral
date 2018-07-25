@@ -715,11 +715,11 @@
                   </li>
                   <li class="dropdown-divider"></li>
                   <li>
-                    <a class="dropdown-item" href="blog-post.php">
+                    <a class="dropdown-item" href="view-post.php">
                       <i class="zmdi zmdi-file-text"></i> Blog Post 1</a>
                   </li>
                   <li>
-                    <a class="dropdown-item" href="blog-post2.php">
+                    <a class="dropdown-item" href="view-post2.php">
                       <i class="zmdi zmdi-file-text"></i> Blog Post 2</a>
                   </li>
                 </ul>
@@ -1255,10 +1255,10 @@
                 <a href="blog-full2.php">Blog Full Page 2</a>
               </li>
               <li>
-                <a href="blog-post.php">Blog Post 1</a>
+                <a href="view-post.php">Blog Post 1</a>
               </li>
               <li>
-                <a href="blog-post2.php">Blog Post 2</a>
+                <a href="view-post2.php">Blog Post 2</a>
               </li>
             </ul>
           </li>

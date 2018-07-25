@@ -32,10 +32,10 @@ class AllController
             }
             return $this->view->render(
                 $response,
-                'blog-post.php',
+                'view-post.php',
                 ['router'=>$this->router, 'post'=>$post]
             );
-        })->setName('blog-post');
+        })->setName('view-post');
     }
 
     public function profile($app)
@@ -43,7 +43,11 @@ class AllController
         // when visiting someones profile
         $app->get('/profile/{username}', function ($request, $response, $args) {
             $user = \UserQuery::create()->findOneByUsername($args['username']);
-            
+
+            if($user == null){
+              throw new \Slim\Exception\NotFoundException($request, $response);
+            }
+
             $current = \User::current();
             $visiting = true;
             if ($current != null && $current->getId() == $user->getId()) {

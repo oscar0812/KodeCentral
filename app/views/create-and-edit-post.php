@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <?php $home = replaceLast('index.php/', '', $router->pathFor('home'));?>
+  <?php (isset($post) && $post!= null)?$editing = true:$editing = false; ?>
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -36,8 +37,8 @@
       <div class="ms-hero-page-override ms-hero-img-team ms-hero-bg-primary">
         <div class="container">
           <div class="text-center">
-            <h1 class="no-m ms-site-title color-white center-block ms-site-title-lg mt-2 animated zoomInDown animation-delay-5">New Post</h1>
-            <p class="lead lead-lg color-light text-center center-block mt-2 mw-800 text-uppercase fw-300 animated fadeInUp animation-delay-7">Create a new blog post</p>
+            <h1 class="no-m ms-site-title color-white center-block ms-site-title-lg mt-2 animated zoomInDown animation-delay-5"><?=$editing?"Editing":"New"?> Post</h1>
+            <p class="lead lead-lg color-light text-center center-block mt-2 mw-800 text-uppercase fw-300 animated fadeInUp animation-delay-7"><?=$editing?$post->getTitle():"Create a new blog post"?></p>
           </div>
         </div>
       </div>
@@ -48,16 +49,25 @@
               <fieldset class="container">
                 <div class="form-group label-floating">
                   <label class="control-label" for="title">Title</label>
-                  <input class="form-control" id="title" type="text">
+                  <input class="form-control" id="title" type="text" value="<?=$editing?$post->getTitle():""?>">
                   <p class="help-block">Short and simple</p>
                 </div>
                 <div class="form-group row justify-content-start">
                   <label for="categories-select" class="col-lg-2 control-label">Categories</label>
                   <div class="col-lg-10">
                     <select id="categories-select" multiple="" class="selectpicker form-control" data-dropup-auto="false">
-                      <?php foreach ($categories as $c) { ?>
-                        <option><?=$c->getName()?></option>
-                      <?php } ?>
+                      <?php foreach ($all_categories as $ac) {
+                          $selected = false;
+
+                          foreach ($post_categories as $pc) {
+                            if ($ac->getId() == $pc->getId()) {
+                              $selected = true;
+                            }
+                          } ?>
+
+                          <option <?=$selected?"selected":""?>>
+                          <?=$ac->getName()?></option>
+                        <?php } ?>
                     </select>
                   </div>
                 </div>
@@ -107,6 +117,7 @@
                       </span>
                     </div>
                     <div id="editor-container"></div>
+                    <div class="invisible" id="preload-content"><?=$editing?$post->getText():""?></div>
                   </div>
                 </div>
 
@@ -114,6 +125,14 @@
                   <div class="col-lg-10">
                     <button type="submit" class="btn btn-raised btn-primary">Submit</button>
                     <a href="<?=$router->pathFor('user-profile', ['username'=>$user->getUsername()])?>" class="btn btn-danger"> cancel </a>
+                    <?php if($editing) { ?>
+                    <a href="<?=$router->pathFor('view-post', ['hyperlink'=>$post->getHyperlink()])?>" class="btn btn-success"> view </a>
+                    <?php } ?>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <div class="col-lg-10">
+                    <p class="invisible" id="submit-response">Hello</p>
                   </div>
                 </div>
               </fieldset>
@@ -144,6 +163,12 @@
         theme: 'snow'
       });
 
+      // set the contents of the editor if editing an already submitted post
+      preload = $('#preload-content');
+      $(quill.root).html(preload.html());
+      // remove it once we get data out, to reduce html page size
+      preload.remove();
+
       $(function() {
         $('#create-form').on('submit', function(e) {
           title = $('#title').val();
@@ -163,6 +188,12 @@
             return false;
           }
 
+          // show the user that something is happening
+          response = $('#submit-response');
+          response.removeClass('invisible').
+              removeClass('text-danger').addClass('text-success');
+          response.text('Loading...');
+
           $.ajax({
             type: "POST",
             data: {
@@ -173,10 +204,21 @@
             url: "",
             dataType: "json",
             success: function(data) {
-              console.log(data);
+
+              if(data['success']){
+                if(typeof data['redirect'] != 'undefined'){
+                  // if the logic is to redirect, then do it
+                  window.location.href = data['redirect'];
+                  return;
+                }
+
+                response.addClass('text-success').removeClass('text-danger');
+              } else {
+                response.addClass('text-danger').removeClass('text-success');
+              }
+              response.text(data['text']);
             }
           });
-
 
           return false;
         });
