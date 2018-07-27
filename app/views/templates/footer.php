@@ -39,7 +39,7 @@
         </div>
         <div class="ms-footbar-block">
           <h3 class="ms-footbar-title">Subscribe</h3>
-          <p class="">Lorem ipsum Amet fugiat elit nisi anim mollit minim labore ut esse Duis ullamco ad dolor veniam velit.</p>
+          <p class="">Stay in the loop with our fast and easy emailing system! Just enter your address and subscribe.</p>
           <form>
             <div class="form-group label-floating mt-2 mb-1">
               <div class="input-group ms-input-subscribe">
@@ -88,7 +88,7 @@
       <div class="col-lg-3 col-md-5 ms-footer-col ms-footer-text-right">
         <div class="ms-footbar-block">
           <div class="ms-footbar-title">
-            <span class="ms-logo ms-logo-white ms-logo-sm mr-1">M</span>
+            <span class="ms-logo ms-logo-white ms-logo-sm mr-1">KC</span>
             <h3 class="no-m ms-site-title">Kode
               <span>Central</span>
             </h3>
@@ -100,7 +100,7 @@
               <i class="color-warning-light zmdi zmdi-map mr-1"></i> San Francisco, CA 94107</p>
             <p>
               <i class="color-info-light zmdi zmdi-email mr-1"></i>
-              <a href="mailto:joe@example.com">example@domain.com</a>
+              <a href="mailto:team@aszend.com">team@aszend.com</a>
             </p>
             <p>
               <i class="color-royal-light zmdi zmdi-phone mr-1"></i>+34 123 456 7890 </p>
