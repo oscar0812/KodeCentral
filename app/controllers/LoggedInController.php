@@ -57,11 +57,19 @@ class LoggedInController
             $post = \PostQuery::create()->findOneByHyperlink($args['hyperlink']);
 
             if ($post == null || $post->getUser() != \User::current()) {
-                return $reponse->withJson(['success'=>false]);
+                return $response->withJson(['success'=>false]);
             }
+            $link = $post->getHyperlink();
             $post = \Post::fromPostRequest($request->getParsedBody(), $post);
             $post->save();
-            return $response->withJson(['success'=>true, 'text'=>'Post successfully updated!']);
+            $json = ['success'=>true, 'text'=>'Post successfully updated!'];
+            if ($post->getHyperlink() != $link) {
+                // link changed, redirect to avoid errors
+                $json['redirect'] =
+                $this->router->pathFor('edit-post', ['hyperlink'=>$post->getHyperlink()]);
+            }
+
+            return $response->withJson($json);
         });
     }
 

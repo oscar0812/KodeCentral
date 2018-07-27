@@ -226,7 +226,7 @@
             url: "",
             dataType: "json",
             success: function(data) {
-
+              console.log(data);
               if(data['success']){
                 if(typeof data['redirect'] != 'undefined'){
                   // if the logic is to redirect, then do it

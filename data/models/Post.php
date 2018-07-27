@@ -30,24 +30,34 @@ class Post extends BasePost
         return substr(strip_tags($this->getText()), 0, 60).'...';
     }
 
-    private static function uniqueLink($link)
+    public function setUniqueHyperlink($link = null)
     {
-        $link = preg_replace('/\s+/', '-', strtolower($link));
-
-        if (\PostQuery::create()->findOneByHyperlink($link) != null) {
-            // not unique hyperlink, try again
-            // random string 8 in length
-            $extra = substr(md5(uniqid(mt_rand(), true)), 0, 8);
-            return $link.'-'.$extra;
+        if ($link == null) {
+            $link = $this->getTitle();
         }
-        return $link;
+
+        // lowercase the text and replace spaces with dashes
+        $link = preg_replace('/\s+/', '-', strtolower($link));
+        if ($this->getHyperlink() == "" || $this->getHyperlink() != $link) {
+            // check if another post has this link
+            $post = \PostQuery::create()->findOneByHyperlink($link);
+
+            if ($post == null) {
+                // no post with this hyperlink, set it
+                $this->setHyperlink($link);
+            } else {
+                $extra = substr(md5(uniqid(mt_rand(), true)), 0, 8);
+                $this->setUniqueHyperlink($link.'-'.$extra);
+            }
+        }
     }
 
     public static function fromPostRequest($data, $post = null)
     {
-        if ($post == null) {
+        if (!isset($post) || $post == null) {
             $post = new \Post();
         }
+
         // replace whitespace with 1 space
         $post->setTitle(preg_replace('/\s+/', ' ', $data['title']));
         $post->setText(preg_replace('/&nbsp;/', ' ', $data['text']));
@@ -55,10 +65,8 @@ class Post extends BasePost
         $post->setPostedDate(getCurrentDate());
         $post->setUser(\User::current());
 
-        if ($post->getHyperlink() == "") {
-            // hyperlink has to be unique
-            $post->setHyperlink(\Post::uniqueLink($post->getTitle()));
-        }
+        // hyperlink has to be unique
+        $post->setUniqueHyperlink();
 
         // add the categories
         $categories = \CategoryQuery::create()->filterByName($data['categories'])->find();
