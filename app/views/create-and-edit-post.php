@@ -52,25 +52,23 @@
                   <input class="form-control" id="title" type="text" value="<?=$editing?$post->getTitle():""?>">
                   <p class="help-block">Short and simple</p>
                 </div>
-                <div class="form-group row justify-content-start">
-                  <label for="categories-select" class="col-lg-2 control-label">Categories</label>
-                  <div class="col-lg-10">
-                    <select id="categories-select" multiple="" class="selectpicker form-control" data-dropup-auto="false">
-                      <?php foreach ($all_categories as $ac) {
-    $selected = false;
+                <div class="form-group label-floating">
+                  <label class="control-label" for="categories-select">Categories</label>
+                  <select id="categories-select" multiple="" class="selectpicker form-control" data-dropup-auto="false">
+                    <?php foreach ($all_categories as $ac) {
+                      $selected = false;
 
-    foreach ($post_categories as $pc) {
-        if ($ac->getId() == $pc->getId()) {
-            $selected = true;
-        }
-    } ?>
+                      foreach ($post_categories as $pc) {
+                        if ($ac->getId() == $pc->getId()) {
+                          $selected = true;
+                        }
+                      } ?>
 
-                          <option <?=$selected?"selected":""?>>
-                          <?=$ac->getName()?></option>
-                        <?php
-} ?>
-                    </select>
-                  </div>
+                        <option <?=$selected?"selected":""?>>
+                        <?=$ac->getName()?></option>
+                      <?php
+                    } ?>
+                  </select>
                 </div>
                 <div class="form-group">
                   <div id="standalone-container">
