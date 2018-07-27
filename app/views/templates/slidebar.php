@@ -28,10 +28,6 @@
       </div>
     </header>
     <ul class="ms-slidebar-menu" id="slidebar-menu" role="tablist" aria-multiselectable="true">
-      <li>
-        <a class="link" href="<?=$router->pathFor('home')?>">
-          <i class="zmdi zmdi-home"></i> Home</a>
-      </li>
       <?php if($c_user != null ) { ?>
       <li class="card" role="tab">
         <a class="collapsed" role="button" data-toggle="collapse" href="#sc1" aria-expanded="false" aria-controls="sc1">
@@ -50,19 +46,31 @@
       </li>
       <?php } ?>
       <li>
-        <a class="link" href="page-all.php">
-          <i class="zmdi zmdi-star"></i> Favorites</a>
+        <a class="link" href="<?=$router->pathFor('home')?>">
+          <i class="zmdi zmdi-home"></i> Home</a>
+      </li>
+      <li>
+        <a class="link" href="<?=$router->pathFor('about-us')?>">
+          <i class="zmdi zmdi-favorite-outline"></i> About Us</a>
+      </li>
+      <li>
+        <a class="link" href="<?=$router->pathFor('our-team')?>">
+          <i class="zmdi zmdi-accounts"></i> Our Team</a>
+      </li>
+      <li>
+        <a class="link" href="<?=$router->pathFor('faq')?>">
+          <i class="zmdi zmdi-help"></i> FAQ</a>
+      </li>
+      <li>
+        <a class="link" href="<?=$router->pathFor('user-login-form')?>">
+          <i class="zmdi zmdi-lock"></i> Login</a>
       </li>
       <li>
         <a class="link" href="<?=$router->pathFor('contact-us')?>">
-          <i class="zmdi zmdi-email"></i> Contact Us</a>
+          <i class="zmdi zmdi-email"></i> Contact</a>
       </li>
       <li>
-        <a class="link" href="page-all.php">
-          <i class="zmdi zmdi-favorite"></i> About Us</a>
-      </li>
-      <li>
-        <a class="link" href="page-all.php">
+        <a class="link" href="<?=$router->pathFor('all-pages')?>">
           <i class="zmdi zmdi-link"></i> All Pages</a>
       </li>
     </ul>

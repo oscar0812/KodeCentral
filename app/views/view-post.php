@@ -48,7 +48,7 @@
                   <?php } ?>
                   <span class="ml-1 d-none d-sm-inline">
                     <i class="zmdi zmdi-time mr-05 color-info"></i>
-                    <span class="color-medium-dark"><?=$post->getPostedDate()->format('M d, Y')?></span>
+                    <span class="color-medium-dark"><?=$post->getPostedDate()->format('F d, Y')?></span>
                   </span>
                   <span class="ml-1">
                     <i class="zmdi zmdi-comments color-royal mr-05"></i> 25</span>

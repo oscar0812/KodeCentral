@@ -1,4 +1,5 @@
-<?php if(!isset($home)) $home = '';?>
+<?php if(!isset($home)) $home = '';
+      $latest_posts = \PostQuery::create()->orderByPostedDate('desc')->limit(3)->find();?>
 <aside class="ms-footbar">
   <div class="container">
     <div class="row">
@@ -32,7 +33,7 @@
             </li>
             <li>
               <a href="<?=$router->pathFor('all-pages')?>">
-                <i class="zmdi zmdi-email"></i> All Pages</a>
+                <i class="zmdi zmdi-link"></i> All Pages</a>
             </li>
           </ul>
         </div>
@@ -52,65 +53,35 @@
       </div>
       <div class="col-lg-5 col-md-7 ms-footer-col ms-footer-alt-color">
         <div class="ms-footbar-block">
-          <h3 class="ms-footbar-title text-center mb-2">Last Articles</h3>
+          <h3 class="ms-footbar-title text-center mb-2">Last Posts</h3>
           <div class="ms-footer-media">
-            <div class="media">
-              <div class="media-left media-middle">
-                <a href="javascript:void(0)">
-                  <img class="media-object media-object-circle" src="<?=$home?>assets/img/demo/p75.jpg" alt="..."> </a>
-              </div>
-              <div class="media-body">
-                <h4 class="media-heading">
-                  <a href="javascript:void(0)">Lorem ipsum dolor sit expedita cumque amet consectetur adipisicing repellat</a>
-                </h4>
-                <div class="media-footer">
-                  <span>
-                    <i class="zmdi zmdi-time color-info-light"></i> August 18, 2016</span>
-                  <span>
-                    <i class="zmdi zmdi-folder-outline color-warning-light"></i>
-                    <a href="javascript:void(0)">Design</a>
-                  </span>
+
+            <?php foreach ($latest_posts as $post) { ?>
+              <!-- media block -->
+              <div class="media">
+                <div class="media-left media-middle">
+                  <a href="<?=$router->pathFor('view-post', ['hyperlink'=>$post->getHyperlink()])?>">
+                    <img class="media-object media-object-circle" src="<?=$home?>assets/img/demo/p75.jpg" alt="..."> </a>
+                </div>
+                <div class="media-body">
+                  <h4 class="media-heading">
+                    <a href="<?=$router->pathFor('view-post', ['hyperlink'=>$post->getHyperlink()])?>">
+                      <?=$post->getTitle()?></a>
+                  </h4>
+                  <div class="media-footer">
+                    <span><?=$post->getSummary()?></span><br>
+                    <span>
+                      <i class="zmdi zmdi-time color-info-light"></i> <?=$post->getPostedDate()->format('F d, Y')?></span>
+                    <span>
+                      <i class="zmdi zmdi-folder-outline color-warning-light"></i>
+                      <?=$post->getCategories()[0]->getName()?>
+                    </span>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="media">
-              <div class="media-left media-middle">
-                <a href="javascript:void(0)">
-                  <img class="media-object media-object-circle" src="<?=$home?>assets/img/demo/p75.jpg" alt="..."> </a>
-              </div>
-              <div class="media-body">
-                <h4 class="media-heading">
-                  <a href="javascript:void(0)">Labore ut esse Duis consectetur expedita cumque ullamco ad dolor veniam velit</a>
-                </h4>
-                <div class="media-footer">
-                  <span>
-                    <i class="zmdi zmdi-time color-info-light"></i> August 18, 2016</span>
-                  <span>
-                    <i class="zmdi zmdi-folder-outline color-warning-light"></i>
-                    <a href="javascript:void(0)">News</a>
-                  </span>
-                </div>
-              </div>
-            </div>
-            <div class="media">
-              <div class="media-left media-middle">
-                <a href="javascript:void(0)">
-                  <img class="media-object media-object-circle" src="<?=$home?>assets/img/demo/p75.jpg" alt="..."> </a>
-              </div>
-              <div class="media-body">
-                <h4 class="media-heading">
-                  <a href="javascript:void(0)">voluptates deserunt ducimus expedita cumque quaerat molestiae labore</a>
-                </h4>
-                <div class="media-footer">
-                  <span>
-                    <i class="zmdi zmdi-time color-info-light"></i> August 18, 2016</span>
-                  <span>
-                    <i class="zmdi zmdi-folder-outline color-warning-light"></i>
-                    <a href="javascript:void(0)">Productivity</a>
-                  </span>
-                </div>
-              </div>
-            </div>
+              <!-- /media block -->
+            <?php } ?>
+
           </div>
         </div>
       </div>
