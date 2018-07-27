@@ -8,16 +8,6 @@ use Slim\Exception\NotFoundException;
 // All the routes here can be seen if logged in or out, doesnt matter
 class AllController
 {
-    public function contactUs($app)
-    {
-        $app->get('/contact', function ($request, $response, $args) {
-            return $this->view->render(
-              $response,
-                'page-contact.php',
-                ['router'=>$this->router]
-            );
-        })->setName('contact-us');
-    }
     public function home($app)
     {
         $app->get('/', function ($request, $response, $args) {
@@ -29,6 +19,73 @@ class AllController
                 'all_categories'=>\CategoryQuery::create()->find()]
             );
         })->setName('home');
+    }
+
+    // TODO: make contact page work (send email and stuff)
+    public function contactUs($app)
+    {
+        $app->get('/contact', function ($request, $response, $args) {
+            return $this->view->render(
+              $response,
+                'page-contact.php',
+                ['router'=>$this->router]
+            );
+        })->setName('contact-us');
+    }
+
+    public function aboutUs($app)
+    {
+        $app->get('/about', function ($request, $response, $args) {
+            return $this->view->render(
+              $response,
+                'page-about.php',
+                ['router'=>$this->router]
+            );
+        })->setName('about-us');
+    }
+
+    public function ourTeam($app)
+    {
+        $app->get('/team', function ($request, $response, $args) {
+            return $this->view->render(
+              $response,
+                'page-team.php',
+                ['router'=>$this->router]
+            );
+        })->setName('our-team');
+    }
+
+    public function faq($app)
+    {
+        $app->get('/faq', function ($request, $response, $args) {
+            return $this->view->render(
+              $response,
+                'page-faq.php',
+                ['router'=>$this->router]
+            );
+        })->setName('faq');
+    }
+
+    public function appPost($app)
+    {
+        $app->get('/app', function ($request, $response, $args) {
+            return $this->view->render(
+              $response,
+                'home-app.php',
+                ['router'=>$this->router]
+            );
+        })->setName('app');
+    }
+
+    public function allPages($app)
+    {
+        $app->get('/all', function ($request, $response, $args) {
+            return $this->view->render(
+              $response,
+                'page-all.php',
+                ['router'=>$this->router]
+            );
+        })->setName('all-pages');
     }
 
     public function post($app)
@@ -76,6 +133,12 @@ class AllController
         $controller = new AllController();
         $controller->home($app);
         $controller->contactUs($app);
+        $controller->aboutUs($app);
+        $controller->ourTeam($app);
+        $controller->faq($app);
+        $controller->appPost($app);
+        $controller->allPages($app);
+
         $controller->post($app);
         $controller->profile($app);
     }

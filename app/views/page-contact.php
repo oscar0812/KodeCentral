@@ -75,9 +75,9 @@
             <div class="card card-primary animated fadeInUp animation-delay-7">
               <div class="card-body">
                 <div class="text-center mb-2">
-                  <span class="ms-logo ms-logo-sm mr-1">M</span>
-                  <h3 class="no-m ms-site-title">Material
-                    <span>Style</span>
+                  <span class="ms-logo ms-logo-sm mr-1">KC</span>
+                  <h3 class="no-m ms-site-title">Kode
+                    <span>Central</span>
                   </h3>
                 </div>
                 <address class="no-mb">

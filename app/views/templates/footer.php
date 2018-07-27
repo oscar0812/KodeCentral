@@ -7,52 +7,32 @@
           <h3 class="ms-footbar-title">Sitemap</h3>
           <ul class="list-unstyled ms-icon-list three_cols">
             <li>
-              <a href="index.php">
+              <a href="<?=$router->pathFor('home')?>">
                 <i class="zmdi zmdi-home"></i> Home</a>
             </li>
             <li>
-              <a href="page-blog.php">
-                <i class="zmdi zmdi-edit"></i> Blog</a>
-            </li>
-            <li>
-              <a href="page-blog.php">
-                <i class="zmdi zmdi-image-o"></i> Portafolio</a>
-            </li>
-            <li>
-              <a href="portfolio-filters_sidebar.php">
-                <i class="zmdi zmdi-case"></i> Works</a>
-            </li>
-            <li>
-              <a href="page-timeline_left2.php">
-                <i class="zmdi zmdi-time"></i> Timeline</a>
-            </li>
-            <li>
-              <a href="page-pricing.php">
-                <i class="zmdi zmdi-money"></i> Pricing</a>
-            </li>
-            <li>
-              <a href="page-about.php">
+              <a href="<?=$router->pathFor('about-us')?>">
                 <i class="zmdi zmdi-favorite-outline"></i> About Us</a>
             </li>
             <li>
-              <a href="page-team2.php">
+              <a href="<?=$router->pathFor('our-team')?>">
                 <i class="zmdi zmdi-accounts"></i> Our Team</a>
             </li>
             <li>
-              <a href="page-services.php">
-                <i class="zmdi zmdi-face"></i> Services</a>
-            </li>
-            <li>
-              <a href="page-faq2.php">
+              <a href="<?=$router->pathFor('faq')?>">
                 <i class="zmdi zmdi-help"></i> FAQ</a>
             </li>
             <li>
-              <a href="page-login2.php">
+              <a href="<?=$router->pathFor('user-login-form')?>">
                 <i class="zmdi zmdi-lock"></i> Login</a>
             </li>
             <li>
               <a href="<?=$router->pathFor('contact-us')?>">
                 <i class="zmdi zmdi-email"></i> Contact</a>
+            </li>
+            <li>
+              <a href="<?=$router->pathFor('all-pages')?>">
+                <i class="zmdi zmdi-email"></i> All Pages</a>
             </li>
           </ul>
         </div>
