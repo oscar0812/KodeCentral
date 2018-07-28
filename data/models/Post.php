@@ -37,7 +37,7 @@ class Post extends BasePost
         }
 
         // lowercase the text and replace spaces with dashes
-        $link = preg_replace('/\s+/', '-', strtolower($link));
+        $link = urlencode(preg_replace('/\s+/', '-', strtolower($link)));
         if ($this->getHyperlink() == "" || $this->getHyperlink() != $link) {
             // check if another post has this link
             $post = \PostQuery::create()->findOneByHyperlink($link);
@@ -58,15 +58,21 @@ class Post extends BasePost
             $post = new \Post();
         }
 
-        // replace whitespace with 1 space
-        $post->setTitle(preg_replace('/\s+/', ' ', $data['title']));
         $post->setText(preg_replace('/&nbsp;/', ' ', $data['text']));
         $post->setUser(\User::current());
         $post->setPostedDate(getCurrentDate());
-        $post->setUser(\User::current());
 
-        // hyperlink has to be unique
-        $post->setUniqueHyperlink();
+        // replace whitespace with 1 space
+        $new_title = preg_replace('/\s+/', ' ', $data['title']);
+        $old_title = $post->getTitle();
+
+        $post->setTitle($new_title);
+
+        if (strtolower($new_title) != strtolower($old_title)) {
+            // title changed
+            // hyperlink has to be unique
+            $post->setUniqueHyperlink();
+        }
 
         // add the categories
         $categories = \CategoryQuery::create()->filterByName($data['categories'])->find();

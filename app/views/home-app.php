@@ -32,7 +32,7 @@
       <div class="ms-hero-page ms-hero-img-coffee ms-hero-bg-dark no-pb overflow-hidden ms-bg-fixed">
         <div class="container">
           <div class="text-center color-white">
-            <span class="ms-logo ms-logo-whit animated bounceInDown animation-delay-5">M</span>
+            <span class="ms-logo ms-logo-whit animated bounceInDown animation-delay-5">KC</span>
             <h1 class="animated bounceInDown animation-delay-6">Awesome App</h1>
             <p class="lead lead-lg animated bounceInDown animation-delay-7">Create amazing things</p>
           </div>

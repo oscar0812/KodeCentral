@@ -32,9 +32,9 @@
       <header class="ms-hero bg-primary-dark pb-4 pt-4 mb-6">
         <div class="container">
           <div class="text-center">
-            <span class="ms-logo ms-logo-lg ms-logo-white center-block mb-2 mt-2 animated zoomInDown animation-delay-5">M</span>
-            <h1 class="no-m ms-site-title color-white center-block ms-site-title-lg mt-2 animated zoomInDown animation-delay-5">Material
-              <span>Style</span>
+            <span class="ms-logo ms-logo-lg ms-logo-white center-block mb-2 mt-2 animated zoomInDown animation-delay-5">KC</span>
+            <h1 class="no-m ms-site-title color-white center-block ms-site-title-lg mt-2 animated zoomInDown animation-delay-5">Kode
+              <span>Central</span>
             </h1>
             <p class="lead mt-2 animated zoomInDown animation-delay-5">We help you create your project, your dream.</p>
           </div>

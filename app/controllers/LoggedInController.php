@@ -73,6 +73,19 @@ class LoggedInController
         });
     }
 
+    public function userPosts($app)
+    {
+        $app->get('/my-posts', function ($request, $response, $args) {
+            $user = \User::current();
+            $posts = \PostQuery::create()->filterByUser($user)->orderByPostedDate('desc')->find();
+            return $this->view->render(
+            $response,
+              'post-list.php',
+              ['router'=>$this->router, 'user'=>$user, 'posts'=>$posts]
+          );
+        })->setName('user-posts');
+    }
+
     public function logOut($app)
     {
         $app->get('/logout', function ($request, $response, $args) {
@@ -87,6 +100,7 @@ class LoggedInController
         $app->group('', function () use ($controller, $app) {
             $controller->createPost($app);
             $controller->editPost($app);
+            $controller->userPosts($app);
             $controller->logOut($app);
         })->add(function ($request, $response, $next) {
             if (\User::current() != null) {

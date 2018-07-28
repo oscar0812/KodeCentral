@@ -97,10 +97,12 @@ class AllController
                 // invalid post, throw 404
                 throw new \Slim\Exception\NotFoundException($request, $response);
             }
+            // show three related posts
+            $r_p = \PostQuery::create()->limit(3)->find();
             return $this->view->render(
                 $response,
                 'view-post.php',
-                ['router'=>$this->router, 'post'=>$post, 'user'=>\User::current()]
+                ['router'=>$this->router, 'post'=>$post, 'related_posts'=>$r_p , 'user'=>\User::current()]
             );
         })->setName('view-post');
     }

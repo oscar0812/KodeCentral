@@ -52,8 +52,8 @@
                   <input class="form-control" id="title" type="text" value="<?=$editing?$post->getTitle():""?>">
                   <p class="help-block">Short and simple</p>
                 </div>
-                <div class="form-group label-floating">
-                  <label class="control-label" for="categories-select">Categories</label>
+                <div class="form-group">
+                  <span>Categories</span>
                   <select id="categories-select" multiple="" class="selectpicker form-control" data-dropup-auto="false">
                     <?php foreach ($all_categories as $ac) {
                       $selected = false;
@@ -226,7 +226,7 @@
             url: "",
             dataType: "json",
             success: function(data) {
-              console.log(data);
+
               if(data['success']){
                 if(typeof data['redirect'] != 'undefined'){
                   // if the logic is to redirect, then do it

@@ -34,7 +34,7 @@
           <i class="zmdi zmdi-comment"></i> Posts </a>
         <ul id="sc1" class="card-collapse collapse" role="tabpanel" aria-labelledby="sch1" data-parent="#slidebar-menu">
           <li>
-            <a href="home-generic-2.php">My posts</a>
+            <a href="<?=$router->pathFor('user-posts')?>">My posts</a>
           </li>
           <li>
             <a href="<?=$router->pathFor('create-post')?>">Create New</a>

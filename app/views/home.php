@@ -37,7 +37,7 @@
               <span class="color-warning">rigorous process</span> of creation. Our principles are creativity, design, experience and knowledge.</p>
             <a href="<?=$router->pathFor('user-login-form')?>" class="btn btn-raised btn-warning animated fadeInUp animation-delay-10">
               <i class="zmdi zmdi-accounts"></i> Become a member</a>
-            <a href="javascript:void(0)" class="btn btn-raised btn-info animated fadeInUp animation-delay-10">
+            <a href="<?=$router->pathFor('contact-us')?>" class="btn btn-raised btn-info animated fadeInUp animation-delay-10">
               <i class="zmdi zmdi-email"></i> Concact us</a>
           </div>
         </div>
@@ -112,9 +112,6 @@
                         </a>
                         <a href="javascript:void(0)" class="btn-circle btn-circle-raised btn-circle-xs ml-1 mr-1 btn-circle-white color-danger">
                           <i class="zmdi zmdi-favorite"></i>
-                        </a>
-                        <a href="javascript:void(0)" class="btn-circle btn-circle-raised btn-circle-xs ml-1 btn-circle-white color-success">
-                          <i class="zmdi zmdi-share"></i>
                         </a>
                       </div>
                     </figcaption>
