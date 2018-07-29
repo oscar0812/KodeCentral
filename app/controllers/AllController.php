@@ -88,7 +88,7 @@ class AllController
         })->setName('all-pages');
     }
 
-    public function post($app)
+    public function viewPost($app)
     {
         $app->get('/post/{hyperlink}', function ($request, $response, $args) {
             $post = \PostQuery::create()->findOneByHyperlink($args['hyperlink']);
@@ -99,10 +99,12 @@ class AllController
             }
             // show three related posts
             $r_p = \PostQuery::create()->limit(3)->find();
-            return $this->view->render(
-                $response,
-                'view-post.php',
-                ['router'=>$this->router, 'post'=>$post, 'related_posts'=>$r_p , 'user'=>\User::current()]
+
+            // show comments for post
+            $comments = $post->getComments();
+            return $this->view->render($response, 'view-post.php',
+                ['router'=>$this->router, 'post'=>$post, 'comments'=>$comments,
+                'related_posts'=>$r_p , 'user'=>\User::current()]
             );
         })->setName('view-post');
     }
@@ -141,7 +143,7 @@ class AllController
         $controller->appPost($app);
         $controller->allPages($app);
 
-        $controller->post($app);
+        $controller->viewPost($app);
         $controller->profile($app);
     }
 }

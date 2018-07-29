@@ -1,7 +1,7 @@
 @import"https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700|Indie+Flower";
 @charset "UTF-8";
 .invisible {
-  display: none;
+  display: none !important;
 }
 
 .withripple {

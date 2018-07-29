@@ -31,7 +31,7 @@ function replaceLast($replace_this, $with_this, $original)
 function getCurrentDateTime()
 {
     $dt = new DateTime();
-    $dt->setTimezone(new DateTimeZone("Canada/Saskatchewan"));
+    $dt->setTimezone(new DateTimeZone("America/Chicago"));
     return $dt;
 }
 

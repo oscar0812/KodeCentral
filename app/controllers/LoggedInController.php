@@ -73,6 +73,7 @@ class LoggedInController
         });
     }
 
+    // show a list of the posts the current user has submitted
     public function userPosts($app)
     {
         $app->get('/my-posts', function ($request, $response, $args) {
@@ -84,6 +85,30 @@ class LoggedInController
               ['router'=>$this->router, 'user'=>$user, 'posts'=>$posts]
           );
         })->setName('user-posts');
+    }
+
+    public function postComment($app)
+    {
+        // when a user is trying to public a comment for a blog post
+        $app->post('/post/comment/{hyperlink}', function ($request, $response, $args) {
+            $text = $request->getParsedBody()['text'];
+
+            $post = \PostQuery::create()->findOneByHyperlink($args['hyperlink']);
+
+            if ($post == null || $text == "" || $text == null) {
+                // post doesnt exist, or blank comment
+                return $response->withJson(['success'=>false]);
+            }
+
+            $comment = new \Comment();
+            $comment->setText($text);
+            $comment->setUser(\User::current());
+            $comment->setPost($post);
+            $comment->setPostedTime(getCurrentDateTime());
+            $comment->save();
+
+            return $response->withJson(['success'=>true, 'text'=>$comment->getText()]);
+        })->setName('post-comment');
     }
 
     public function logOut($app)
@@ -101,6 +126,8 @@ class LoggedInController
             $controller->createPost($app);
             $controller->editPost($app);
             $controller->userPosts($app);
+            $controller->postComment($app);
+
             $controller->logOut($app);
         })->add(function ($request, $response, $next) {
             if (\User::current() != null) {

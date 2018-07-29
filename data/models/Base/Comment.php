@@ -2,7 +2,6 @@
 
 namespace Base;
 
-use \Comment as ChildComment;
 use \CommentQuery as ChildCommentQuery;
 use \Post as ChildPost;
 use \PostQuery as ChildPostQuery;
@@ -12,14 +11,11 @@ use \DateTime;
 use \Exception;
 use \PDO;
 use Map\CommentTableMap;
-use Map\PostTableMap;
-use Map\UserTableMap;
 use Propel\Runtime\Propel;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\ActiveRecord\ActiveRecordInterface;
 use Propel\Runtime\Collection\Collection;
-use Propel\Runtime\Collection\ObjectCollection;
 use Propel\Runtime\Connection\ConnectionInterface;
 use Propel\Runtime\Exception\BadMethodCallException;
 use Propel\Runtime\Exception\LogicException;
@@ -29,18 +25,18 @@ use Propel\Runtime\Parser\AbstractParser;
 use Propel\Runtime\Util\PropelDateTime;
 
 /**
- * Base class that represents a row from the 'user' table.
+ * Base class that represents a row from the 'comment' table.
  *
  *
  *
  * @package    propel.generator..Base
  */
-abstract class User implements ActiveRecordInterface
+abstract class Comment implements ActiveRecordInterface
 {
     /**
      * TableMap class name
      */
-    const TABLE_MAP = '\\Map\\UserTableMap';
+    const TABLE_MAP = '\\Map\\CommentTableMap';
 
 
     /**
@@ -77,44 +73,42 @@ abstract class User implements ActiveRecordInterface
     protected $id;
 
     /**
-     * The value for the username field.
+     * The value for the text field.
      *
      * @var        string
      */
-    protected $username;
+    protected $text;
 
     /**
-     * The value for the email field.
-     *
-     * @var        string
-     */
-    protected $email;
-
-    /**
-     * The value for the join_date field.
+     * The value for the posted_time field.
      *
      * @var        DateTime
      */
-    protected $join_date;
+    protected $posted_time;
 
     /**
-     * The value for the password field.
+     * The value for the user_id field.
      *
-     * @var        string
+     * @var        int
      */
-    protected $password;
+    protected $user_id;
 
     /**
-     * @var        ObjectCollection|ChildComment[] Collection to store aggregation of ChildComment objects.
+     * The value for the post_id field.
+     *
+     * @var        int
      */
-    protected $collComments;
-    protected $collCommentsPartial;
+    protected $post_id;
 
     /**
-     * @var        ObjectCollection|ChildPost[] Collection to store aggregation of ChildPost objects.
+     * @var        ChildUser
      */
-    protected $collPosts;
-    protected $collPostsPartial;
+    protected $aUser;
+
+    /**
+     * @var        ChildPost
+     */
+    protected $aPost;
 
     /**
      * Flag to prevent endless save loop, if this object is referenced
@@ -125,19 +119,7 @@ abstract class User implements ActiveRecordInterface
     protected $alreadyInSave = false;
 
     /**
-     * An array of objects scheduled for deletion.
-     * @var ObjectCollection|ChildComment[]
-     */
-    protected $commentsScheduledForDeletion = null;
-
-    /**
-     * An array of objects scheduled for deletion.
-     * @var ObjectCollection|ChildPost[]
-     */
-    protected $postsScheduledForDeletion = null;
-
-    /**
-     * Initializes internal state of Base\User object.
+     * Initializes internal state of Base\Comment object.
      */
     public function __construct()
     {
@@ -232,9 +214,9 @@ abstract class User implements ActiveRecordInterface
     }
 
     /**
-     * Compares this with another <code>User</code> instance.  If
-     * <code>obj</code> is an instance of <code>User</code>, delegates to
-     * <code>equals(User)</code>.  Otherwise, returns <code>false</code>.
+     * Compares this with another <code>Comment</code> instance.  If
+     * <code>obj</code> is an instance of <code>Comment</code>, delegates to
+     * <code>equals(Comment)</code>.  Otherwise, returns <code>false</code>.
      *
      * @param  mixed   $obj The object to compare to.
      * @return boolean Whether equal to the object specified.
@@ -300,7 +282,7 @@ abstract class User implements ActiveRecordInterface
      * @param string $name  The virtual column name
      * @param mixed  $value The value to give to the virtual column
      *
-     * @return $this|User The current object, for fluid interface
+     * @return $this|Comment The current object, for fluid interface
      */
     public function setVirtualColumn($name, $value)
     {
@@ -372,60 +354,60 @@ abstract class User implements ActiveRecordInterface
     }
 
     /**
-     * Get the [username] column value.
+     * Get the [text] column value.
      *
      * @return string
      */
-    public function getUsername()
+    public function getText()
     {
-        return $this->username;
+        return $this->text;
     }
 
     /**
-     * Get the [email] column value.
-     *
-     * @return string
-     */
-    public function getEmail()
-    {
-        return $this->email;
-    }
-
-    /**
-     * Get the [optionally formatted] temporal [join_date] column value.
+     * Get the [optionally formatted] temporal [posted_time] column value.
      *
      *
      * @param      string|null $format The date/time format string (either date()-style or strftime()-style).
      *                            If format is NULL, then the raw DateTime object will be returned.
      *
-     * @return string|DateTime Formatted date/time value as string or DateTime object (if format is NULL), NULL if column is NULL, and 0 if column value is 0000-00-00
+     * @return string|DateTime Formatted date/time value as string or DateTime object (if format is NULL), NULL if column is NULL, and 0 if column value is 0000-00-00 00:00:00
      *
      * @throws PropelException - if unable to parse/validate the date/time value.
      */
-    public function getJoinDate($format = NULL)
+    public function getPostedTime($format = NULL)
     {
         if ($format === null) {
-            return $this->join_date;
+            return $this->posted_time;
         } else {
-            return $this->join_date instanceof \DateTimeInterface ? $this->join_date->format($format) : null;
+            return $this->posted_time instanceof \DateTimeInterface ? $this->posted_time->format($format) : null;
         }
     }
 
     /**
-     * Get the [password] column value.
+     * Get the [user_id] column value.
      *
-     * @return string
+     * @return int
      */
-    public function getPassword()
+    public function getUserId()
     {
-        return $this->password;
+        return $this->user_id;
+    }
+
+    /**
+     * Get the [post_id] column value.
+     *
+     * @return int
+     */
+    public function getPostId()
+    {
+        return $this->post_id;
     }
 
     /**
      * Set the value of [id] column.
      *
      * @param int $v new value
-     * @return $this|\User The current object (for fluent API support)
+     * @return $this|\Comment The current object (for fluent API support)
      */
     public function setId($v)
     {
@@ -435,91 +417,99 @@ abstract class User implements ActiveRecordInterface
 
         if ($this->id !== $v) {
             $this->id = $v;
-            $this->modifiedColumns[UserTableMap::COL_ID] = true;
+            $this->modifiedColumns[CommentTableMap::COL_ID] = true;
         }
 
         return $this;
     } // setId()
 
     /**
-     * Set the value of [username] column.
+     * Set the value of [text] column.
      *
      * @param string $v new value
-     * @return $this|\User The current object (for fluent API support)
+     * @return $this|\Comment The current object (for fluent API support)
      */
-    public function setUsername($v)
+    public function setText($v)
     {
         if ($v !== null) {
             $v = (string) $v;
         }
 
-        if ($this->username !== $v) {
-            $this->username = $v;
-            $this->modifiedColumns[UserTableMap::COL_USERNAME] = true;
+        if ($this->text !== $v) {
+            $this->text = $v;
+            $this->modifiedColumns[CommentTableMap::COL_TEXT] = true;
         }
 
         return $this;
-    } // setUsername()
+    } // setText()
 
     /**
-     * Set the value of [email] column.
-     *
-     * @param string $v new value
-     * @return $this|\User The current object (for fluent API support)
-     */
-    public function setEmail($v)
-    {
-        if ($v !== null) {
-            $v = (string) $v;
-        }
-
-        if ($this->email !== $v) {
-            $this->email = $v;
-            $this->modifiedColumns[UserTableMap::COL_EMAIL] = true;
-        }
-
-        return $this;
-    } // setEmail()
-
-    /**
-     * Sets the value of [join_date] column to a normalized version of the date/time value specified.
+     * Sets the value of [posted_time] column to a normalized version of the date/time value specified.
      *
      * @param  mixed $v string, integer (timestamp), or \DateTimeInterface value.
      *               Empty strings are treated as NULL.
-     * @return $this|\User The current object (for fluent API support)
+     * @return $this|\Comment The current object (for fluent API support)
      */
-    public function setJoinDate($v)
+    public function setPostedTime($v)
     {
         $dt = PropelDateTime::newInstance($v, null, 'DateTime');
-        if ($this->join_date !== null || $dt !== null) {
-            if ($this->join_date === null || $dt === null || $dt->format("Y-m-d") !== $this->join_date->format("Y-m-d")) {
-                $this->join_date = $dt === null ? null : clone $dt;
-                $this->modifiedColumns[UserTableMap::COL_JOIN_DATE] = true;
+        if ($this->posted_time !== null || $dt !== null) {
+            if ($this->posted_time === null || $dt === null || $dt->format("Y-m-d H:i:s.u") !== $this->posted_time->format("Y-m-d H:i:s.u")) {
+                $this->posted_time = $dt === null ? null : clone $dt;
+                $this->modifiedColumns[CommentTableMap::COL_POSTED_TIME] = true;
             }
         } // if either are not null
 
         return $this;
-    } // setJoinDate()
+    } // setPostedTime()
 
     /**
-     * Set the value of [password] column.
+     * Set the value of [user_id] column.
      *
-     * @param string $v new value
-     * @return $this|\User The current object (for fluent API support)
+     * @param int $v new value
+     * @return $this|\Comment The current object (for fluent API support)
      */
-    public function setPassword($v)
+    public function setUserId($v)
     {
         if ($v !== null) {
-            $v = (string) $v;
+            $v = (int) $v;
         }
 
-        if ($this->password !== $v) {
-            $this->password = $v;
-            $this->modifiedColumns[UserTableMap::COL_PASSWORD] = true;
+        if ($this->user_id !== $v) {
+            $this->user_id = $v;
+            $this->modifiedColumns[CommentTableMap::COL_USER_ID] = true;
+        }
+
+        if ($this->aUser !== null && $this->aUser->getId() !== $v) {
+            $this->aUser = null;
         }
 
         return $this;
-    } // setPassword()
+    } // setUserId()
+
+    /**
+     * Set the value of [post_id] column.
+     *
+     * @param int $v new value
+     * @return $this|\Comment The current object (for fluent API support)
+     */
+    public function setPostId($v)
+    {
+        if ($v !== null) {
+            $v = (int) $v;
+        }
+
+        if ($this->post_id !== $v) {
+            $this->post_id = $v;
+            $this->modifiedColumns[CommentTableMap::COL_POST_ID] = true;
+        }
+
+        if ($this->aPost !== null && $this->aPost->getId() !== $v) {
+            $this->aPost = null;
+        }
+
+        return $this;
+    } // setPostId()
 
     /**
      * Indicates whether the columns in this object are only set to default values.
@@ -557,23 +547,23 @@ abstract class User implements ActiveRecordInterface
     {
         try {
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 0 + $startcol : UserTableMap::translateFieldName('Id', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 0 + $startcol : CommentTableMap::translateFieldName('Id', TableMap::TYPE_PHPNAME, $indexType)];
             $this->id = (null !== $col) ? (int) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 1 + $startcol : UserTableMap::translateFieldName('Username', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->username = (null !== $col) ? (string) $col : null;
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 1 + $startcol : CommentTableMap::translateFieldName('Text', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->text = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : UserTableMap::translateFieldName('Email', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->email = (null !== $col) ? (string) $col : null;
-
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : UserTableMap::translateFieldName('JoinDate', TableMap::TYPE_PHPNAME, $indexType)];
-            if ($col === '0000-00-00') {
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : CommentTableMap::translateFieldName('PostedTime', TableMap::TYPE_PHPNAME, $indexType)];
+            if ($col === '0000-00-00 00:00:00') {
                 $col = null;
             }
-            $this->join_date = (null !== $col) ? PropelDateTime::newInstance($col, null, 'DateTime') : null;
+            $this->posted_time = (null !== $col) ? PropelDateTime::newInstance($col, null, 'DateTime') : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : UserTableMap::translateFieldName('Password', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->password = (null !== $col) ? (string) $col : null;
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : CommentTableMap::translateFieldName('UserId', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->user_id = (null !== $col) ? (int) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : CommentTableMap::translateFieldName('PostId', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->post_id = (null !== $col) ? (int) $col : null;
             $this->resetModified();
 
             $this->setNew(false);
@@ -582,10 +572,10 @@ abstract class User implements ActiveRecordInterface
                 $this->ensureConsistency();
             }
 
-            return $startcol + 5; // 5 = UserTableMap::NUM_HYDRATE_COLUMNS.
+            return $startcol + 5; // 5 = CommentTableMap::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
-            throw new PropelException(sprintf('Error populating %s object', '\\User'), 0, $e);
+            throw new PropelException(sprintf('Error populating %s object', '\\Comment'), 0, $e);
         }
     }
 
@@ -604,6 +594,12 @@ abstract class User implements ActiveRecordInterface
      */
     public function ensureConsistency()
     {
+        if ($this->aUser !== null && $this->user_id !== $this->aUser->getId()) {
+            $this->aUser = null;
+        }
+        if ($this->aPost !== null && $this->post_id !== $this->aPost->getId()) {
+            $this->aPost = null;
+        }
     } // ensureConsistency
 
     /**
@@ -627,13 +623,13 @@ abstract class User implements ActiveRecordInterface
         }
 
         if ($con === null) {
-            $con = Propel::getServiceContainer()->getReadConnection(UserTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getReadConnection(CommentTableMap::DATABASE_NAME);
         }
 
         // We don't need to alter the object instance pool; we're just modifying this instance
         // already in the pool.
 
-        $dataFetcher = ChildUserQuery::create(null, $this->buildPkeyCriteria())->setFormatter(ModelCriteria::FORMAT_STATEMENT)->find($con);
+        $dataFetcher = ChildCommentQuery::create(null, $this->buildPkeyCriteria())->setFormatter(ModelCriteria::FORMAT_STATEMENT)->find($con);
         $row = $dataFetcher->fetch();
         $dataFetcher->close();
         if (!$row) {
@@ -643,10 +639,8 @@ abstract class User implements ActiveRecordInterface
 
         if ($deep) {  // also de-associate any related objects?
 
-            $this->collComments = null;
-
-            $this->collPosts = null;
-
+            $this->aUser = null;
+            $this->aPost = null;
         } // if (deep)
     }
 
@@ -656,8 +650,8 @@ abstract class User implements ActiveRecordInterface
      * @param      ConnectionInterface $con
      * @return void
      * @throws PropelException
-     * @see User::setDeleted()
-     * @see User::isDeleted()
+     * @see Comment::setDeleted()
+     * @see Comment::isDeleted()
      */
     public function delete(ConnectionInterface $con = null)
     {
@@ -666,11 +660,11 @@ abstract class User implements ActiveRecordInterface
         }
 
         if ($con === null) {
-            $con = Propel::getServiceContainer()->getWriteConnection(UserTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(CommentTableMap::DATABASE_NAME);
         }
 
         $con->transaction(function () use ($con) {
-            $deleteQuery = ChildUserQuery::create()
+            $deleteQuery = ChildCommentQuery::create()
                 ->filterByPrimaryKey($this->getPrimaryKey());
             $ret = $this->preDelete($con);
             if ($ret) {
@@ -705,7 +699,7 @@ abstract class User implements ActiveRecordInterface
         }
 
         if ($con === null) {
-            $con = Propel::getServiceContainer()->getWriteConnection(UserTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(CommentTableMap::DATABASE_NAME);
         }
 
         return $con->transaction(function () use ($con) {
@@ -724,7 +718,7 @@ abstract class User implements ActiveRecordInterface
                     $this->postUpdate($con);
                 }
                 $this->postSave($con);
-                UserTableMap::addInstanceToPool($this);
+                CommentTableMap::addInstanceToPool($this);
             } else {
                 $affectedRows = 0;
             }
@@ -750,6 +744,25 @@ abstract class User implements ActiveRecordInterface
         if (!$this->alreadyInSave) {
             $this->alreadyInSave = true;
 
+            // We call the save method on the following object(s) if they
+            // were passed to this object by their corresponding set
+            // method.  This object relates to these object(s) by a
+            // foreign key reference.
+
+            if ($this->aUser !== null) {
+                if ($this->aUser->isModified() || $this->aUser->isNew()) {
+                    $affectedRows += $this->aUser->save($con);
+                }
+                $this->setUser($this->aUser);
+            }
+
+            if ($this->aPost !== null) {
+                if ($this->aPost->isModified() || $this->aPost->isNew()) {
+                    $affectedRows += $this->aPost->save($con);
+                }
+                $this->setPost($this->aPost);
+            }
+
             if ($this->isNew() || $this->isModified()) {
                 // persist changes
                 if ($this->isNew()) {
@@ -759,40 +772,6 @@ abstract class User implements ActiveRecordInterface
                     $affectedRows += $this->doUpdate($con);
                 }
                 $this->resetModified();
-            }
-
-            if ($this->commentsScheduledForDeletion !== null) {
-                if (!$this->commentsScheduledForDeletion->isEmpty()) {
-                    \CommentQuery::create()
-                        ->filterByPrimaryKeys($this->commentsScheduledForDeletion->getPrimaryKeys(false))
-                        ->delete($con);
-                    $this->commentsScheduledForDeletion = null;
-                }
-            }
-
-            if ($this->collComments !== null) {
-                foreach ($this->collComments as $referrerFK) {
-                    if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
-                        $affectedRows += $referrerFK->save($con);
-                    }
-                }
-            }
-
-            if ($this->postsScheduledForDeletion !== null) {
-                if (!$this->postsScheduledForDeletion->isEmpty()) {
-                    \PostQuery::create()
-                        ->filterByPrimaryKeys($this->postsScheduledForDeletion->getPrimaryKeys(false))
-                        ->delete($con);
-                    $this->postsScheduledForDeletion = null;
-                }
-            }
-
-            if ($this->collPosts !== null) {
-                foreach ($this->collPosts as $referrerFK) {
-                    if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
-                        $affectedRows += $referrerFK->save($con);
-                    }
-                }
             }
 
             $this->alreadyInSave = false;
@@ -815,30 +794,30 @@ abstract class User implements ActiveRecordInterface
         $modifiedColumns = array();
         $index = 0;
 
-        $this->modifiedColumns[UserTableMap::COL_ID] = true;
+        $this->modifiedColumns[CommentTableMap::COL_ID] = true;
         if (null !== $this->id) {
-            throw new PropelException('Cannot insert a value for auto-increment primary key (' . UserTableMap::COL_ID . ')');
+            throw new PropelException('Cannot insert a value for auto-increment primary key (' . CommentTableMap::COL_ID . ')');
         }
 
          // check the columns in natural order for more readable SQL queries
-        if ($this->isColumnModified(UserTableMap::COL_ID)) {
+        if ($this->isColumnModified(CommentTableMap::COL_ID)) {
             $modifiedColumns[':p' . $index++]  = 'id';
         }
-        if ($this->isColumnModified(UserTableMap::COL_USERNAME)) {
-            $modifiedColumns[':p' . $index++]  = 'username';
+        if ($this->isColumnModified(CommentTableMap::COL_TEXT)) {
+            $modifiedColumns[':p' . $index++]  = 'text';
         }
-        if ($this->isColumnModified(UserTableMap::COL_EMAIL)) {
-            $modifiedColumns[':p' . $index++]  = 'email';
+        if ($this->isColumnModified(CommentTableMap::COL_POSTED_TIME)) {
+            $modifiedColumns[':p' . $index++]  = 'posted_time';
         }
-        if ($this->isColumnModified(UserTableMap::COL_JOIN_DATE)) {
-            $modifiedColumns[':p' . $index++]  = 'join_date';
+        if ($this->isColumnModified(CommentTableMap::COL_USER_ID)) {
+            $modifiedColumns[':p' . $index++]  = 'user_id';
         }
-        if ($this->isColumnModified(UserTableMap::COL_PASSWORD)) {
-            $modifiedColumns[':p' . $index++]  = 'password';
+        if ($this->isColumnModified(CommentTableMap::COL_POST_ID)) {
+            $modifiedColumns[':p' . $index++]  = 'post_id';
         }
 
         $sql = sprintf(
-            'INSERT INTO user (%s) VALUES (%s)',
+            'INSERT INTO comment (%s) VALUES (%s)',
             implode(', ', $modifiedColumns),
             implode(', ', array_keys($modifiedColumns))
         );
@@ -850,17 +829,17 @@ abstract class User implements ActiveRecordInterface
                     case 'id':
                         $stmt->bindValue($identifier, $this->id, PDO::PARAM_INT);
                         break;
-                    case 'username':
-                        $stmt->bindValue($identifier, $this->username, PDO::PARAM_STR);
+                    case 'text':
+                        $stmt->bindValue($identifier, $this->text, PDO::PARAM_STR);
                         break;
-                    case 'email':
-                        $stmt->bindValue($identifier, $this->email, PDO::PARAM_STR);
+                    case 'posted_time':
+                        $stmt->bindValue($identifier, $this->posted_time ? $this->posted_time->format("Y-m-d H:i:s.u") : null, PDO::PARAM_STR);
                         break;
-                    case 'join_date':
-                        $stmt->bindValue($identifier, $this->join_date ? $this->join_date->format("Y-m-d H:i:s.u") : null, PDO::PARAM_STR);
+                    case 'user_id':
+                        $stmt->bindValue($identifier, $this->user_id, PDO::PARAM_INT);
                         break;
-                    case 'password':
-                        $stmt->bindValue($identifier, $this->password, PDO::PARAM_STR);
+                    case 'post_id':
+                        $stmt->bindValue($identifier, $this->post_id, PDO::PARAM_INT);
                         break;
                 }
             }
@@ -908,7 +887,7 @@ abstract class User implements ActiveRecordInterface
      */
     public function getByName($name, $type = TableMap::TYPE_PHPNAME)
     {
-        $pos = UserTableMap::translateFieldName($name, $type, TableMap::TYPE_NUM);
+        $pos = CommentTableMap::translateFieldName($name, $type, TableMap::TYPE_NUM);
         $field = $this->getByPosition($pos);
 
         return $field;
@@ -928,16 +907,16 @@ abstract class User implements ActiveRecordInterface
                 return $this->getId();
                 break;
             case 1:
-                return $this->getUsername();
+                return $this->getText();
                 break;
             case 2:
-                return $this->getEmail();
+                return $this->getPostedTime();
                 break;
             case 3:
-                return $this->getJoinDate();
+                return $this->getUserId();
                 break;
             case 4:
-                return $this->getPassword();
+                return $this->getPostId();
                 break;
             default:
                 return null;
@@ -963,20 +942,20 @@ abstract class User implements ActiveRecordInterface
     public function toArray($keyType = TableMap::TYPE_PHPNAME, $includeLazyLoadColumns = true, $alreadyDumpedObjects = array(), $includeForeignObjects = false)
     {
 
-        if (isset($alreadyDumpedObjects['User'][$this->hashCode()])) {
+        if (isset($alreadyDumpedObjects['Comment'][$this->hashCode()])) {
             return '*RECURSION*';
         }
-        $alreadyDumpedObjects['User'][$this->hashCode()] = true;
-        $keys = UserTableMap::getFieldNames($keyType);
+        $alreadyDumpedObjects['Comment'][$this->hashCode()] = true;
+        $keys = CommentTableMap::getFieldNames($keyType);
         $result = array(
             $keys[0] => $this->getId(),
-            $keys[1] => $this->getUsername(),
-            $keys[2] => $this->getEmail(),
-            $keys[3] => $this->getJoinDate(),
-            $keys[4] => $this->getPassword(),
+            $keys[1] => $this->getText(),
+            $keys[2] => $this->getPostedTime(),
+            $keys[3] => $this->getUserId(),
+            $keys[4] => $this->getPostId(),
         );
-        if ($result[$keys[3]] instanceof \DateTimeInterface) {
-            $result[$keys[3]] = $result[$keys[3]]->format('c');
+        if ($result[$keys[2]] instanceof \DateTimeInterface) {
+            $result[$keys[2]] = $result[$keys[2]]->format('c');
         }
 
         $virtualColumns = $this->virtualColumns;
@@ -985,35 +964,35 @@ abstract class User implements ActiveRecordInterface
         }
 
         if ($includeForeignObjects) {
-            if (null !== $this->collComments) {
+            if (null !== $this->aUser) {
 
                 switch ($keyType) {
                     case TableMap::TYPE_CAMELNAME:
-                        $key = 'comments';
+                        $key = 'user';
                         break;
                     case TableMap::TYPE_FIELDNAME:
-                        $key = 'comments';
+                        $key = 'user';
                         break;
                     default:
-                        $key = 'Comments';
+                        $key = 'User';
                 }
 
-                $result[$key] = $this->collComments->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
+                $result[$key] = $this->aUser->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
             }
-            if (null !== $this->collPosts) {
+            if (null !== $this->aPost) {
 
                 switch ($keyType) {
                     case TableMap::TYPE_CAMELNAME:
-                        $key = 'posts';
+                        $key = 'post';
                         break;
                     case TableMap::TYPE_FIELDNAME:
-                        $key = 'posts';
+                        $key = 'post';
                         break;
                     default:
-                        $key = 'Posts';
+                        $key = 'Post';
                 }
 
-                $result[$key] = $this->collPosts->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
+                $result[$key] = $this->aPost->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
             }
         }
 
@@ -1029,11 +1008,11 @@ abstract class User implements ActiveRecordInterface
      *                one of the class type constants TableMap::TYPE_PHPNAME, TableMap::TYPE_CAMELNAME
      *                TableMap::TYPE_COLNAME, TableMap::TYPE_FIELDNAME, TableMap::TYPE_NUM.
      *                Defaults to TableMap::TYPE_PHPNAME.
-     * @return $this|\User
+     * @return $this|\Comment
      */
     public function setByName($name, $value, $type = TableMap::TYPE_PHPNAME)
     {
-        $pos = UserTableMap::translateFieldName($name, $type, TableMap::TYPE_NUM);
+        $pos = CommentTableMap::translateFieldName($name, $type, TableMap::TYPE_NUM);
 
         return $this->setByPosition($pos, $value);
     }
@@ -1044,7 +1023,7 @@ abstract class User implements ActiveRecordInterface
      *
      * @param  int $pos position in xml schema
      * @param  mixed $value field value
-     * @return $this|\User
+     * @return $this|\Comment
      */
     public function setByPosition($pos, $value)
     {
@@ -1053,16 +1032,16 @@ abstract class User implements ActiveRecordInterface
                 $this->setId($value);
                 break;
             case 1:
-                $this->setUsername($value);
+                $this->setText($value);
                 break;
             case 2:
-                $this->setEmail($value);
+                $this->setPostedTime($value);
                 break;
             case 3:
-                $this->setJoinDate($value);
+                $this->setUserId($value);
                 break;
             case 4:
-                $this->setPassword($value);
+                $this->setPostId($value);
                 break;
         } // switch()
 
@@ -1088,22 +1067,22 @@ abstract class User implements ActiveRecordInterface
      */
     public function fromArray($arr, $keyType = TableMap::TYPE_PHPNAME)
     {
-        $keys = UserTableMap::getFieldNames($keyType);
+        $keys = CommentTableMap::getFieldNames($keyType);
 
         if (array_key_exists($keys[0], $arr)) {
             $this->setId($arr[$keys[0]]);
         }
         if (array_key_exists($keys[1], $arr)) {
-            $this->setUsername($arr[$keys[1]]);
+            $this->setText($arr[$keys[1]]);
         }
         if (array_key_exists($keys[2], $arr)) {
-            $this->setEmail($arr[$keys[2]]);
+            $this->setPostedTime($arr[$keys[2]]);
         }
         if (array_key_exists($keys[3], $arr)) {
-            $this->setJoinDate($arr[$keys[3]]);
+            $this->setUserId($arr[$keys[3]]);
         }
         if (array_key_exists($keys[4], $arr)) {
-            $this->setPassword($arr[$keys[4]]);
+            $this->setPostId($arr[$keys[4]]);
         }
     }
 
@@ -1124,7 +1103,7 @@ abstract class User implements ActiveRecordInterface
      * @param string $data The source data to import from
      * @param string $keyType The type of keys the array uses.
      *
-     * @return $this|\User The current object, for fluid interface
+     * @return $this|\Comment The current object, for fluid interface
      */
     public function importFrom($parser, $data, $keyType = TableMap::TYPE_PHPNAME)
     {
@@ -1144,22 +1123,22 @@ abstract class User implements ActiveRecordInterface
      */
     public function buildCriteria()
     {
-        $criteria = new Criteria(UserTableMap::DATABASE_NAME);
+        $criteria = new Criteria(CommentTableMap::DATABASE_NAME);
 
-        if ($this->isColumnModified(UserTableMap::COL_ID)) {
-            $criteria->add(UserTableMap::COL_ID, $this->id);
+        if ($this->isColumnModified(CommentTableMap::COL_ID)) {
+            $criteria->add(CommentTableMap::COL_ID, $this->id);
         }
-        if ($this->isColumnModified(UserTableMap::COL_USERNAME)) {
-            $criteria->add(UserTableMap::COL_USERNAME, $this->username);
+        if ($this->isColumnModified(CommentTableMap::COL_TEXT)) {
+            $criteria->add(CommentTableMap::COL_TEXT, $this->text);
         }
-        if ($this->isColumnModified(UserTableMap::COL_EMAIL)) {
-            $criteria->add(UserTableMap::COL_EMAIL, $this->email);
+        if ($this->isColumnModified(CommentTableMap::COL_POSTED_TIME)) {
+            $criteria->add(CommentTableMap::COL_POSTED_TIME, $this->posted_time);
         }
-        if ($this->isColumnModified(UserTableMap::COL_JOIN_DATE)) {
-            $criteria->add(UserTableMap::COL_JOIN_DATE, $this->join_date);
+        if ($this->isColumnModified(CommentTableMap::COL_USER_ID)) {
+            $criteria->add(CommentTableMap::COL_USER_ID, $this->user_id);
         }
-        if ($this->isColumnModified(UserTableMap::COL_PASSWORD)) {
-            $criteria->add(UserTableMap::COL_PASSWORD, $this->password);
+        if ($this->isColumnModified(CommentTableMap::COL_POST_ID)) {
+            $criteria->add(CommentTableMap::COL_POST_ID, $this->post_id);
         }
 
         return $criteria;
@@ -1177,8 +1156,8 @@ abstract class User implements ActiveRecordInterface
      */
     public function buildPkeyCriteria()
     {
-        $criteria = ChildUserQuery::create();
-        $criteria->add(UserTableMap::COL_ID, $this->id);
+        $criteria = ChildCommentQuery::create();
+        $criteria->add(CommentTableMap::COL_ID, $this->id);
 
         return $criteria;
     }
@@ -1240,37 +1219,17 @@ abstract class User implements ActiveRecordInterface
      * If desired, this method can also make copies of all associated (fkey referrers)
      * objects.
      *
-     * @param      object $copyObj An object of \User (or compatible) type.
+     * @param      object $copyObj An object of \Comment (or compatible) type.
      * @param      boolean $deepCopy Whether to also copy all rows that refer (by fkey) to the current row.
      * @param      boolean $makeNew Whether to reset autoincrement PKs and make the object new.
      * @throws PropelException
      */
     public function copyInto($copyObj, $deepCopy = false, $makeNew = true)
     {
-        $copyObj->setUsername($this->getUsername());
-        $copyObj->setEmail($this->getEmail());
-        $copyObj->setJoinDate($this->getJoinDate());
-        $copyObj->setPassword($this->getPassword());
-
-        if ($deepCopy) {
-            // important: temporarily setNew(false) because this affects the behavior of
-            // the getter/setter methods for fkey referrer objects.
-            $copyObj->setNew(false);
-
-            foreach ($this->getComments() as $relObj) {
-                if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
-                    $copyObj->addComment($relObj->copy($deepCopy));
-                }
-            }
-
-            foreach ($this->getPosts() as $relObj) {
-                if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
-                    $copyObj->addPost($relObj->copy($deepCopy));
-                }
-            }
-
-        } // if ($deepCopy)
-
+        $copyObj->setText($this->getText());
+        $copyObj->setPostedTime($this->getPostedTime());
+        $copyObj->setUserId($this->getUserId());
+        $copyObj->setPostId($this->getPostId());
         if ($makeNew) {
             $copyObj->setNew(true);
             $copyObj->setId(NULL); // this is a auto-increment column, so set to default value
@@ -1286,7 +1245,7 @@ abstract class User implements ActiveRecordInterface
      * objects.
      *
      * @param  boolean $deepCopy Whether to also copy all rows that refer (by fkey) to the current row.
-     * @return \User Clone of current object.
+     * @return \Comment Clone of current object.
      * @throws PropelException
      */
     public function copy($deepCopy = false)
@@ -1299,500 +1258,106 @@ abstract class User implements ActiveRecordInterface
         return $copyObj;
     }
 
-
     /**
-     * Initializes a collection based on the name of a relation.
-     * Avoids crafting an 'init[$relationName]s' method name
-     * that wouldn't work when StandardEnglishPluralizer is used.
+     * Declares an association between this object and a ChildUser object.
      *
-     * @param      string $relationName The name of the relation to initialize
-     * @return void
-     */
-    public function initRelation($relationName)
-    {
-        if ('Comment' == $relationName) {
-            $this->initComments();
-            return;
-        }
-        if ('Post' == $relationName) {
-            $this->initPosts();
-            return;
-        }
-    }
-
-    /**
-     * Clears out the collComments collection
-     *
-     * This does not modify the database; however, it will remove any associated objects, causing
-     * them to be refetched by subsequent calls to accessor method.
-     *
-     * @return void
-     * @see        addComments()
-     */
-    public function clearComments()
-    {
-        $this->collComments = null; // important to set this to NULL since that means it is uninitialized
-    }
-
-    /**
-     * Reset is the collComments collection loaded partially.
-     */
-    public function resetPartialComments($v = true)
-    {
-        $this->collCommentsPartial = $v;
-    }
-
-    /**
-     * Initializes the collComments collection.
-     *
-     * By default this just sets the collComments collection to an empty array (like clearcollComments());
-     * however, you may wish to override this method in your stub class to provide setting appropriate
-     * to your application -- for example, setting the initial array to the values stored in database.
-     *
-     * @param      boolean $overrideExisting If set to true, the method call initializes
-     *                                        the collection even if it is not empty
-     *
-     * @return void
-     */
-    public function initComments($overrideExisting = true)
-    {
-        if (null !== $this->collComments && !$overrideExisting) {
-            return;
-        }
-
-        $collectionClassName = CommentTableMap::getTableMap()->getCollectionClassName();
-
-        $this->collComments = new $collectionClassName;
-        $this->collComments->setModel('\Comment');
-    }
-
-    /**
-     * Gets an array of ChildComment objects which contain a foreign key that references this object.
-     *
-     * If the $criteria is not null, it is used to always fetch the results from the database.
-     * Otherwise the results are fetched from the database the first time, then cached.
-     * Next time the same method is called without $criteria, the cached collection is returned.
-     * If this ChildUser is new, it will return
-     * an empty collection or the current collection; the criteria is ignored on a new object.
-     *
-     * @param      Criteria $criteria optional Criteria object to narrow the query
-     * @param      ConnectionInterface $con optional connection object
-     * @return ObjectCollection|ChildComment[] List of ChildComment objects
+     * @param  ChildUser $v
+     * @return $this|\Comment The current object (for fluent API support)
      * @throws PropelException
      */
-    public function getComments(Criteria $criteria = null, ConnectionInterface $con = null)
+    public function setUser(ChildUser $v = null)
     {
-        $partial = $this->collCommentsPartial && !$this->isNew();
-        if (null === $this->collComments || null !== $criteria  || $partial) {
-            if ($this->isNew() && null === $this->collComments) {
-                // return empty collection
-                $this->initComments();
-            } else {
-                $collComments = ChildCommentQuery::create(null, $criteria)
-                    ->filterByUser($this)
-                    ->find($con);
-
-                if (null !== $criteria) {
-                    if (false !== $this->collCommentsPartial && count($collComments)) {
-                        $this->initComments(false);
-
-                        foreach ($collComments as $obj) {
-                            if (false == $this->collComments->contains($obj)) {
-                                $this->collComments->append($obj);
-                            }
-                        }
-
-                        $this->collCommentsPartial = true;
-                    }
-
-                    return $collComments;
-                }
-
-                if ($partial && $this->collComments) {
-                    foreach ($this->collComments as $obj) {
-                        if ($obj->isNew()) {
-                            $collComments[] = $obj;
-                        }
-                    }
-                }
-
-                $this->collComments = $collComments;
-                $this->collCommentsPartial = false;
-            }
+        if ($v === null) {
+            $this->setUserId(NULL);
+        } else {
+            $this->setUserId($v->getId());
         }
 
-        return $this->collComments;
-    }
+        $this->aUser = $v;
 
-    /**
-     * Sets a collection of ChildComment objects related by a one-to-many relationship
-     * to the current object.
-     * It will also schedule objects for deletion based on a diff between old objects (aka persisted)
-     * and new objects from the given Propel collection.
-     *
-     * @param      Collection $comments A Propel collection.
-     * @param      ConnectionInterface $con Optional connection object
-     * @return $this|ChildUser The current object (for fluent API support)
-     */
-    public function setComments(Collection $comments, ConnectionInterface $con = null)
-    {
-        /** @var ChildComment[] $commentsToDelete */
-        $commentsToDelete = $this->getComments(new Criteria(), $con)->diff($comments);
-
-
-        $this->commentsScheduledForDeletion = $commentsToDelete;
-
-        foreach ($commentsToDelete as $commentRemoved) {
-            $commentRemoved->setUser(null);
+        // Add binding for other direction of this n:n relationship.
+        // If this object has already been added to the ChildUser object, it will not be re-added.
+        if ($v !== null) {
+            $v->addComment($this);
         }
 
-        $this->collComments = null;
-        foreach ($comments as $comment) {
-            $this->addComment($comment);
-        }
-
-        $this->collComments = $comments;
-        $this->collCommentsPartial = false;
 
         return $this;
     }
 
+
     /**
-     * Returns the number of related Comment objects.
+     * Get the associated ChildUser object
      *
-     * @param      Criteria $criteria
-     * @param      boolean $distinct
-     * @param      ConnectionInterface $con
-     * @return int             Count of related Comment objects.
+     * @param  ConnectionInterface $con Optional Connection object.
+     * @return ChildUser The associated ChildUser object.
      * @throws PropelException
      */
-    public function countComments(Criteria $criteria = null, $distinct = false, ConnectionInterface $con = null)
+    public function getUser(ConnectionInterface $con = null)
     {
-        $partial = $this->collCommentsPartial && !$this->isNew();
-        if (null === $this->collComments || null !== $criteria || $partial) {
-            if ($this->isNew() && null === $this->collComments) {
-                return 0;
-            }
-
-            if ($partial && !$criteria) {
-                return count($this->getComments());
-            }
-
-            $query = ChildCommentQuery::create(null, $criteria);
-            if ($distinct) {
-                $query->distinct();
-            }
-
-            return $query
-                ->filterByUser($this)
-                ->count($con);
+        if ($this->aUser === null && ($this->user_id != 0)) {
+            $this->aUser = ChildUserQuery::create()->findPk($this->user_id, $con);
+            /* The following can be used additionally to
+                guarantee the related object contains a reference
+                to this object.  This level of coupling may, however, be
+                undesirable since it could result in an only partially populated collection
+                in the referenced object.
+                $this->aUser->addComments($this);
+             */
         }
 
-        return count($this->collComments);
+        return $this->aUser;
     }
 
     /**
-     * Method called to associate a ChildComment object to this object
-     * through the ChildComment foreign key attribute.
+     * Declares an association between this object and a ChildPost object.
      *
-     * @param  ChildComment $l ChildComment
-     * @return $this|\User The current object (for fluent API support)
-     */
-    public function addComment(ChildComment $l)
-    {
-        if ($this->collComments === null) {
-            $this->initComments();
-            $this->collCommentsPartial = true;
-        }
-
-        if (!$this->collComments->contains($l)) {
-            $this->doAddComment($l);
-
-            if ($this->commentsScheduledForDeletion and $this->commentsScheduledForDeletion->contains($l)) {
-                $this->commentsScheduledForDeletion->remove($this->commentsScheduledForDeletion->search($l));
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @param ChildComment $comment The ChildComment object to add.
-     */
-    protected function doAddComment(ChildComment $comment)
-    {
-        $this->collComments[]= $comment;
-        $comment->setUser($this);
-    }
-
-    /**
-     * @param  ChildComment $comment The ChildComment object to remove.
-     * @return $this|ChildUser The current object (for fluent API support)
-     */
-    public function removeComment(ChildComment $comment)
-    {
-        if ($this->getComments()->contains($comment)) {
-            $pos = $this->collComments->search($comment);
-            $this->collComments->remove($pos);
-            if (null === $this->commentsScheduledForDeletion) {
-                $this->commentsScheduledForDeletion = clone $this->collComments;
-                $this->commentsScheduledForDeletion->clear();
-            }
-            $this->commentsScheduledForDeletion[]= clone $comment;
-            $comment->setUser(null);
-        }
-
-        return $this;
-    }
-
-
-    /**
-     * If this collection has already been initialized with
-     * an identical criteria, it returns the collection.
-     * Otherwise if this User is new, it will return
-     * an empty collection; or if this User has previously
-     * been saved, it will retrieve related Comments from storage.
-     *
-     * This method is protected by default in order to keep the public
-     * api reasonable.  You can provide public methods for those you
-     * actually need in User.
-     *
-     * @param      Criteria $criteria optional Criteria object to narrow the query
-     * @param      ConnectionInterface $con optional connection object
-     * @param      string $joinBehavior optional join type to use (defaults to Criteria::LEFT_JOIN)
-     * @return ObjectCollection|ChildComment[] List of ChildComment objects
-     */
-    public function getCommentsJoinPost(Criteria $criteria = null, ConnectionInterface $con = null, $joinBehavior = Criteria::LEFT_JOIN)
-    {
-        $query = ChildCommentQuery::create(null, $criteria);
-        $query->joinWith('Post', $joinBehavior);
-
-        return $this->getComments($query, $con);
-    }
-
-    /**
-     * Clears out the collPosts collection
-     *
-     * This does not modify the database; however, it will remove any associated objects, causing
-     * them to be refetched by subsequent calls to accessor method.
-     *
-     * @return void
-     * @see        addPosts()
-     */
-    public function clearPosts()
-    {
-        $this->collPosts = null; // important to set this to NULL since that means it is uninitialized
-    }
-
-    /**
-     * Reset is the collPosts collection loaded partially.
-     */
-    public function resetPartialPosts($v = true)
-    {
-        $this->collPostsPartial = $v;
-    }
-
-    /**
-     * Initializes the collPosts collection.
-     *
-     * By default this just sets the collPosts collection to an empty array (like clearcollPosts());
-     * however, you may wish to override this method in your stub class to provide setting appropriate
-     * to your application -- for example, setting the initial array to the values stored in database.
-     *
-     * @param      boolean $overrideExisting If set to true, the method call initializes
-     *                                        the collection even if it is not empty
-     *
-     * @return void
-     */
-    public function initPosts($overrideExisting = true)
-    {
-        if (null !== $this->collPosts && !$overrideExisting) {
-            return;
-        }
-
-        $collectionClassName = PostTableMap::getTableMap()->getCollectionClassName();
-
-        $this->collPosts = new $collectionClassName;
-        $this->collPosts->setModel('\Post');
-    }
-
-    /**
-     * Gets an array of ChildPost objects which contain a foreign key that references this object.
-     *
-     * If the $criteria is not null, it is used to always fetch the results from the database.
-     * Otherwise the results are fetched from the database the first time, then cached.
-     * Next time the same method is called without $criteria, the cached collection is returned.
-     * If this ChildUser is new, it will return
-     * an empty collection or the current collection; the criteria is ignored on a new object.
-     *
-     * @param      Criteria $criteria optional Criteria object to narrow the query
-     * @param      ConnectionInterface $con optional connection object
-     * @return ObjectCollection|ChildPost[] List of ChildPost objects
+     * @param  ChildPost $v
+     * @return $this|\Comment The current object (for fluent API support)
      * @throws PropelException
      */
-    public function getPosts(Criteria $criteria = null, ConnectionInterface $con = null)
+    public function setPost(ChildPost $v = null)
     {
-        $partial = $this->collPostsPartial && !$this->isNew();
-        if (null === $this->collPosts || null !== $criteria  || $partial) {
-            if ($this->isNew() && null === $this->collPosts) {
-                // return empty collection
-                $this->initPosts();
-            } else {
-                $collPosts = ChildPostQuery::create(null, $criteria)
-                    ->filterByUser($this)
-                    ->find($con);
-
-                if (null !== $criteria) {
-                    if (false !== $this->collPostsPartial && count($collPosts)) {
-                        $this->initPosts(false);
-
-                        foreach ($collPosts as $obj) {
-                            if (false == $this->collPosts->contains($obj)) {
-                                $this->collPosts->append($obj);
-                            }
-                        }
-
-                        $this->collPostsPartial = true;
-                    }
-
-                    return $collPosts;
-                }
-
-                if ($partial && $this->collPosts) {
-                    foreach ($this->collPosts as $obj) {
-                        if ($obj->isNew()) {
-                            $collPosts[] = $obj;
-                        }
-                    }
-                }
-
-                $this->collPosts = $collPosts;
-                $this->collPostsPartial = false;
-            }
+        if ($v === null) {
+            $this->setPostId(NULL);
+        } else {
+            $this->setPostId($v->getId());
         }
 
-        return $this->collPosts;
-    }
+        $this->aPost = $v;
 
-    /**
-     * Sets a collection of ChildPost objects related by a one-to-many relationship
-     * to the current object.
-     * It will also schedule objects for deletion based on a diff between old objects (aka persisted)
-     * and new objects from the given Propel collection.
-     *
-     * @param      Collection $posts A Propel collection.
-     * @param      ConnectionInterface $con Optional connection object
-     * @return $this|ChildUser The current object (for fluent API support)
-     */
-    public function setPosts(Collection $posts, ConnectionInterface $con = null)
-    {
-        /** @var ChildPost[] $postsToDelete */
-        $postsToDelete = $this->getPosts(new Criteria(), $con)->diff($posts);
-
-
-        $this->postsScheduledForDeletion = $postsToDelete;
-
-        foreach ($postsToDelete as $postRemoved) {
-            $postRemoved->setUser(null);
+        // Add binding for other direction of this n:n relationship.
+        // If this object has already been added to the ChildPost object, it will not be re-added.
+        if ($v !== null) {
+            $v->addComment($this);
         }
 
-        $this->collPosts = null;
-        foreach ($posts as $post) {
-            $this->addPost($post);
-        }
-
-        $this->collPosts = $posts;
-        $this->collPostsPartial = false;
 
         return $this;
     }
 
+
     /**
-     * Returns the number of related Post objects.
+     * Get the associated ChildPost object
      *
-     * @param      Criteria $criteria
-     * @param      boolean $distinct
-     * @param      ConnectionInterface $con
-     * @return int             Count of related Post objects.
+     * @param  ConnectionInterface $con Optional Connection object.
+     * @return ChildPost The associated ChildPost object.
      * @throws PropelException
      */
-    public function countPosts(Criteria $criteria = null, $distinct = false, ConnectionInterface $con = null)
+    public function getPost(ConnectionInterface $con = null)
     {
-        $partial = $this->collPostsPartial && !$this->isNew();
-        if (null === $this->collPosts || null !== $criteria || $partial) {
-            if ($this->isNew() && null === $this->collPosts) {
-                return 0;
-            }
-
-            if ($partial && !$criteria) {
-                return count($this->getPosts());
-            }
-
-            $query = ChildPostQuery::create(null, $criteria);
-            if ($distinct) {
-                $query->distinct();
-            }
-
-            return $query
-                ->filterByUser($this)
-                ->count($con);
+        if ($this->aPost === null && ($this->post_id != 0)) {
+            $this->aPost = ChildPostQuery::create()->findPk($this->post_id, $con);
+            /* The following can be used additionally to
+                guarantee the related object contains a reference
+                to this object.  This level of coupling may, however, be
+                undesirable since it could result in an only partially populated collection
+                in the referenced object.
+                $this->aPost->addComments($this);
+             */
         }
 
-        return count($this->collPosts);
-    }
-
-    /**
-     * Method called to associate a ChildPost object to this object
-     * through the ChildPost foreign key attribute.
-     *
-     * @param  ChildPost $l ChildPost
-     * @return $this|\User The current object (for fluent API support)
-     */
-    public function addPost(ChildPost $l)
-    {
-        if ($this->collPosts === null) {
-            $this->initPosts();
-            $this->collPostsPartial = true;
-        }
-
-        if (!$this->collPosts->contains($l)) {
-            $this->doAddPost($l);
-
-            if ($this->postsScheduledForDeletion and $this->postsScheduledForDeletion->contains($l)) {
-                $this->postsScheduledForDeletion->remove($this->postsScheduledForDeletion->search($l));
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @param ChildPost $post The ChildPost object to add.
-     */
-    protected function doAddPost(ChildPost $post)
-    {
-        $this->collPosts[]= $post;
-        $post->setUser($this);
-    }
-
-    /**
-     * @param  ChildPost $post The ChildPost object to remove.
-     * @return $this|ChildUser The current object (for fluent API support)
-     */
-    public function removePost(ChildPost $post)
-    {
-        if ($this->getPosts()->contains($post)) {
-            $pos = $this->collPosts->search($post);
-            $this->collPosts->remove($pos);
-            if (null === $this->postsScheduledForDeletion) {
-                $this->postsScheduledForDeletion = clone $this->collPosts;
-                $this->postsScheduledForDeletion->clear();
-            }
-            $this->postsScheduledForDeletion[]= clone $post;
-            $post->setUser(null);
-        }
-
-        return $this;
+        return $this->aPost;
     }
 
     /**
@@ -1802,11 +1367,17 @@ abstract class User implements ActiveRecordInterface
      */
     public function clear()
     {
+        if (null !== $this->aUser) {
+            $this->aUser->removeComment($this);
+        }
+        if (null !== $this->aPost) {
+            $this->aPost->removeComment($this);
+        }
         $this->id = null;
-        $this->username = null;
-        $this->email = null;
-        $this->join_date = null;
-        $this->password = null;
+        $this->text = null;
+        $this->posted_time = null;
+        $this->user_id = null;
+        $this->post_id = null;
         $this->alreadyInSave = false;
         $this->clearAllReferences();
         $this->resetModified();
@@ -1825,20 +1396,10 @@ abstract class User implements ActiveRecordInterface
     public function clearAllReferences($deep = false)
     {
         if ($deep) {
-            if ($this->collComments) {
-                foreach ($this->collComments as $o) {
-                    $o->clearAllReferences($deep);
-                }
-            }
-            if ($this->collPosts) {
-                foreach ($this->collPosts as $o) {
-                    $o->clearAllReferences($deep);
-                }
-            }
         } // if ($deep)
 
-        $this->collComments = null;
-        $this->collPosts = null;
+        $this->aUser = null;
+        $this->aPost = null;
     }
 
     /**
@@ -1848,7 +1409,7 @@ abstract class User implements ActiveRecordInterface
      */
     public function __toString()
     {
-        return (string) $this->exportTo(UserTableMap::DEFAULT_STRING_FORMAT);
+        return (string) $this->exportTo(CommentTableMap::DEFAULT_STRING_FORMAT);
     }
 
     /**

@@ -171,6 +171,13 @@ class PostTableMap extends TableMap
     1 => ':id',
   ),
 ), null, null, null, false);
+        $this->addRelation('Comment', '\\Comment', RelationMap::ONE_TO_MANY, array (
+  0 =>
+  array (
+    0 => ':post_id',
+    1 => ':id',
+  ),
+), null, null, 'Comments', false);
         $this->addRelation('PostCategory', '\\PostCategory', RelationMap::ONE_TO_MANY, array (
   0 =>
   array (

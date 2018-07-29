@@ -36,10 +36,9 @@
           <div class="col-lg-8">
             <div class="card animated fadeInLeftTiny animation-delay-5">
               <div class="card-body card-body-big">
-                <h1 class="no-mt"><?=$post->getTitle()?>
-                </h1>
+                <h1 class="no-mt"><?=$post->getTitle()?></h1>
 
-                <div class="mb-4">
+                <div class="mb-4" id="user-info">
                   <img src="<?=$home?>assets/img/demo/avatar50.jpg" alt="..." class="img-circle mr-1"> by
                   <?php $username = $post->getUser()->getUsername();?>
                   <a href="<?=$router->pathFor('user-profile', ['username'=>$username])?>"><?=$username?></a> in
@@ -50,11 +49,9 @@
                     <i class="zmdi zmdi-time mr-05 color-info"></i>
                     <span class="color-medium-dark"><?=$post->getPostedDate()->format('F d, Y')?></span>
                   </span>
-                  <span class="ml-1">
-                    <i class="zmdi zmdi-comments color-royal mr-05"></i> 25</span>
                   <?php if($user!= null && $post->getUser() == $user) { ?>
-                  <span class="ml-1">
-                    <a href="<?=$router->pathFor('edit-post', ['hyperlink'=>$post->getHyperlink()])?>" class="btn-circle btn-circle-danger">
+                  <span class="ml-1 d-none d-sm-inline">
+                    <a href="<?=$router->pathFor('edit-post', ['hyperlink'=>$post->getHyperlink()])?>">
                       <i class="fa fa-pencil"> Edit</i>
                     </a>
                   <?php } ?>
@@ -65,6 +62,51 @@
                 <!-- post text ends here -->
               </div>
             </div>
+
+            <h2 class="right-line no-mt">Comments (<?=$comments->count()?>)</h2>
+
+            <div class="card animated fadeInLeftTiny animation-delay-5">
+              <div class="card-body" id="comment-body">
+
+                <div class="invisible" id="comment-template">
+                  <div class="ms-icon-feature-icon">
+                    <img src="<?=$home?>assets/img/demo/avatar50.jpg" alt="..." class="img-circle mr-1">
+                  </div>
+                  <div class="ms-icon-feature-content">
+                    <a href="#">username</a>
+                    <p>Text</p>
+                  </div>
+                </div>
+
+                <?php foreach ($comments as $comment) { ?>
+                  <div class="ms-icon-feature">
+                    <div class="ms-icon-feature-icon">
+                      <img src="<?=$home?>assets/img/demo/avatar50.jpg" alt="..." class="img-circle mr-1">
+                    </div>
+                    <div class="ms-icon-feature-content">
+                      <?php $username = $comment->getUser()->getUsername();?>
+                      <a href="<?=$router->pathFor('user-profile', ['username'=>$username])?>"><?=$username?>
+                        <?php if($comment->getUser() == $user) echo " (You)"?>
+                      </a>
+                      <p><?=$comment->getText()?></p>
+                    </div>
+                  </div>
+                <?php }?>
+
+                <?php if($user == null) { ?>
+                <a href="<?=$router->pathFor('user-login-form')?>" class="btn btn-block btn-md btn-raised btn-primary">Sign in to post a comment</a>
+                <?php } else { ?>
+                <form action="<?=$router->pathFor('post-comment', ['hyperlink'=>$post->getHyperlink()])?>" method="POST" id="comment-form">
+                  <div class="form-group row justify-content-end">
+                    <textarea name="text" class="form-control" rows="2" placeholder="Your comment here.."></textarea>
+                    <button type="submit" class="btn btn-raised btn-primary">Submit</button>
+                  </div>
+                </form>
+                <?php }?>
+
+              </div>
+            </div>
+
           </div>
           <div class="col-lg-4">
             <div class="card card-primary animated fadeInUp animation-delay-7">
@@ -239,7 +281,6 @@
           </div>
         </div>
         <h2 class="right-line mt-6">Related Posts</h2>
-
         <div class="row">
           <?php foreach ($related_posts as $post) { ?>
             <div class="col-md-4 masonry-item">
@@ -273,9 +314,40 @@
     <script src="<?=$home?>assets/plugins/quill/js/highlight.min.js"></script>
     <script>hljs.initHighlightingOnLoad();</script>
     <script type="text/javascript">
-      // wrap .ql-syntax inside div class="ql-editor" and wrap that in div class="ql-snow"
-      // in order to show quill syntax highlighting
-      //$('.ql-syntax').wrap($('<div class="ql-snow">')).wrap($('<div class="ql-editor">'));
+      $(function(){
+        $('#comment-form').on('submit', function(e){
+          ajaxForm(e.target, function(data) {
+            // comment is being posted
+            if(data['success']){
+              info = $('#user-info');
+              // get the template
+              template = $('#comment-template').clone().
+                addClass('ms-icon-feature').removeClass('invisible');
+
+              // pfp and name are the same as the user signed in, so get them
+              // from the post contect
+              pfp = template.find('.ms-icon-feature-icon>img').
+                attr('src', info.find('img').attr('src'));
+
+              new_name = template.find('.ms-icon-feature-content>a');
+              current_name = info.find('a').eq(0);
+
+              new_name.attr('href', current_name.attr('href')).
+                text(current_name.text() +" (You)");
+
+              // set the comment text
+              template.find('.ms-icon-feature-content>p').text(data['text']);
+
+              // clear the textarea
+              $('textarea[name="text"]').val('');
+
+              // add the comment to the comment section
+              $('#comment-body').prepend(template);
+            }
+          });
+          return false;
+        });
+      });
     </script>
   </body>
 </html>
