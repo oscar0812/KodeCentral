@@ -6,6 +6,8 @@ use \Category as ChildCategory;
 use \CategoryQuery as ChildCategoryQuery;
 use \Comment as ChildComment;
 use \CommentQuery as ChildCommentQuery;
+use \Library as ChildLibrary;
+use \LibraryQuery as ChildLibraryQuery;
 use \Post as ChildPost;
 use \PostCategory as ChildPostCategory;
 use \PostCategoryQuery as ChildPostCategoryQuery;
@@ -116,9 +118,21 @@ abstract class Post implements ActiveRecordInterface
     protected $posted_by_user_id;
 
     /**
+     * The value for the library_id field.
+     *
+     * @var        int
+     */
+    protected $library_id;
+
+    /**
      * @var        ChildUser
      */
     protected $apostedByUser;
+
+    /**
+     * @var        ChildLibrary
+     */
+    protected $aLibrary;
 
     /**
      * @var        ObjectCollection|ChildComment[] Collection to store aggregation of ChildComment objects.
@@ -464,6 +478,16 @@ abstract class Post implements ActiveRecordInterface
     }
 
     /**
+     * Get the [library_id] column value.
+     *
+     * @return int
+     */
+    public function getLibraryId()
+    {
+        return $this->library_id;
+    }
+
+    /**
      * Set the value of [id] column.
      *
      * @param int $v new value
@@ -588,6 +612,30 @@ abstract class Post implements ActiveRecordInterface
     } // setPostedByUserId()
 
     /**
+     * Set the value of [library_id] column.
+     *
+     * @param int $v new value
+     * @return $this|\Post The current object (for fluent API support)
+     */
+    public function setLibraryId($v)
+    {
+        if ($v !== null) {
+            $v = (int) $v;
+        }
+
+        if ($this->library_id !== $v) {
+            $this->library_id = $v;
+            $this->modifiedColumns[PostTableMap::COL_LIBRARY_ID] = true;
+        }
+
+        if ($this->aLibrary !== null && $this->aLibrary->getId() !== $v) {
+            $this->aLibrary = null;
+        }
+
+        return $this;
+    } // setLibraryId()
+
+    /**
      * Indicates whether the columns in this object are only set to default values.
      *
      * This method can be used in conjunction with isModified() to indicate whether an object is both
@@ -643,6 +691,9 @@ abstract class Post implements ActiveRecordInterface
 
             $col = $row[TableMap::TYPE_NUM == $indexType ? 5 + $startcol : PostTableMap::translateFieldName('PostedByUserId', TableMap::TYPE_PHPNAME, $indexType)];
             $this->posted_by_user_id = (null !== $col) ? (int) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 6 + $startcol : PostTableMap::translateFieldName('LibraryId', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->library_id = (null !== $col) ? (int) $col : null;
             $this->resetModified();
 
             $this->setNew(false);
@@ -651,7 +702,7 @@ abstract class Post implements ActiveRecordInterface
                 $this->ensureConsistency();
             }
 
-            return $startcol + 6; // 6 = PostTableMap::NUM_HYDRATE_COLUMNS.
+            return $startcol + 7; // 7 = PostTableMap::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
             throw new PropelException(sprintf('Error populating %s object', '\\Post'), 0, $e);
@@ -675,6 +726,9 @@ abstract class Post implements ActiveRecordInterface
     {
         if ($this->apostedByUser !== null && $this->posted_by_user_id !== $this->apostedByUser->getId()) {
             $this->apostedByUser = null;
+        }
+        if ($this->aLibrary !== null && $this->library_id !== $this->aLibrary->getId()) {
+            $this->aLibrary = null;
         }
     } // ensureConsistency
 
@@ -716,6 +770,7 @@ abstract class Post implements ActiveRecordInterface
         if ($deep) {  // also de-associate any related objects?
 
             $this->apostedByUser = null;
+            $this->aLibrary = null;
             $this->collComments = null;
 
             $this->collPostCategories = null;
@@ -836,6 +891,13 @@ abstract class Post implements ActiveRecordInterface
                 $this->setpostedByUser($this->apostedByUser);
             }
 
+            if ($this->aLibrary !== null) {
+                if ($this->aLibrary->isModified() || $this->aLibrary->isNew()) {
+                    $affectedRows += $this->aLibrary->save($con);
+                }
+                $this->setLibrary($this->aLibrary);
+            }
+
             if ($this->isNew() || $this->isModified()) {
                 // persist changes
                 if ($this->isNew()) {
@@ -954,6 +1016,9 @@ abstract class Post implements ActiveRecordInterface
         if ($this->isColumnModified(PostTableMap::COL_POSTED_BY_USER_ID)) {
             $modifiedColumns[':p' . $index++]  = 'posted_by_user_id';
         }
+        if ($this->isColumnModified(PostTableMap::COL_LIBRARY_ID)) {
+            $modifiedColumns[':p' . $index++]  = 'library_id';
+        }
 
         $sql = sprintf(
             'INSERT INTO post (%s) VALUES (%s)',
@@ -982,6 +1047,9 @@ abstract class Post implements ActiveRecordInterface
                         break;
                     case 'posted_by_user_id':
                         $stmt->bindValue($identifier, $this->posted_by_user_id, PDO::PARAM_INT);
+                        break;
+                    case 'library_id':
+                        $stmt->bindValue($identifier, $this->library_id, PDO::PARAM_INT);
                         break;
                 }
             }
@@ -1063,6 +1131,9 @@ abstract class Post implements ActiveRecordInterface
             case 5:
                 return $this->getPostedByUserId();
                 break;
+            case 6:
+                return $this->getLibraryId();
+                break;
             default:
                 return null;
                 break;
@@ -1099,6 +1170,7 @@ abstract class Post implements ActiveRecordInterface
             $keys[3] => $this->getText(),
             $keys[4] => $this->getPostedDate(),
             $keys[5] => $this->getPostedByUserId(),
+            $keys[6] => $this->getLibraryId(),
         );
         if ($result[$keys[4]] instanceof \DateTimeInterface) {
             $result[$keys[4]] = $result[$keys[4]]->format('c');
@@ -1124,6 +1196,21 @@ abstract class Post implements ActiveRecordInterface
                 }
 
                 $result[$key] = $this->apostedByUser->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
+            }
+            if (null !== $this->aLibrary) {
+
+                switch ($keyType) {
+                    case TableMap::TYPE_CAMELNAME:
+                        $key = 'library';
+                        break;
+                    case TableMap::TYPE_FIELDNAME:
+                        $key = 'library';
+                        break;
+                    default:
+                        $key = 'Library';
+                }
+
+                $result[$key] = $this->aLibrary->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
             }
             if (null !== $this->collComments) {
 
@@ -1207,6 +1294,9 @@ abstract class Post implements ActiveRecordInterface
             case 5:
                 $this->setPostedByUserId($value);
                 break;
+            case 6:
+                $this->setLibraryId($value);
+                break;
         } // switch()
 
         return $this;
@@ -1250,6 +1340,9 @@ abstract class Post implements ActiveRecordInterface
         }
         if (array_key_exists($keys[5], $arr)) {
             $this->setPostedByUserId($arr[$keys[5]]);
+        }
+        if (array_key_exists($keys[6], $arr)) {
+            $this->setLibraryId($arr[$keys[6]]);
         }
     }
 
@@ -1309,6 +1402,9 @@ abstract class Post implements ActiveRecordInterface
         }
         if ($this->isColumnModified(PostTableMap::COL_POSTED_BY_USER_ID)) {
             $criteria->add(PostTableMap::COL_POSTED_BY_USER_ID, $this->posted_by_user_id);
+        }
+        if ($this->isColumnModified(PostTableMap::COL_LIBRARY_ID)) {
+            $criteria->add(PostTableMap::COL_LIBRARY_ID, $this->library_id);
         }
 
         return $criteria;
@@ -1401,6 +1497,7 @@ abstract class Post implements ActiveRecordInterface
         $copyObj->setText($this->getText());
         $copyObj->setPostedDate($this->getPostedDate());
         $copyObj->setPostedByUserId($this->getPostedByUserId());
+        $copyObj->setLibraryId($this->getLibraryId());
 
         if ($deepCopy) {
             // important: temporarily setNew(false) because this affects the behavior of
@@ -1498,6 +1595,57 @@ abstract class Post implements ActiveRecordInterface
         }
 
         return $this->apostedByUser;
+    }
+
+    /**
+     * Declares an association between this object and a ChildLibrary object.
+     *
+     * @param  ChildLibrary $v
+     * @return $this|\Post The current object (for fluent API support)
+     * @throws PropelException
+     */
+    public function setLibrary(ChildLibrary $v = null)
+    {
+        if ($v === null) {
+            $this->setLibraryId(NULL);
+        } else {
+            $this->setLibraryId($v->getId());
+        }
+
+        $this->aLibrary = $v;
+
+        // Add binding for other direction of this n:n relationship.
+        // If this object has already been added to the ChildLibrary object, it will not be re-added.
+        if ($v !== null) {
+            $v->addPost($this);
+        }
+
+
+        return $this;
+    }
+
+
+    /**
+     * Get the associated ChildLibrary object
+     *
+     * @param  ConnectionInterface $con Optional Connection object.
+     * @return ChildLibrary The associated ChildLibrary object.
+     * @throws PropelException
+     */
+    public function getLibrary(ConnectionInterface $con = null)
+    {
+        if ($this->aLibrary === null && ($this->library_id != 0)) {
+            $this->aLibrary = ChildLibraryQuery::create()->findPk($this->library_id, $con);
+            /* The following can be used additionally to
+                guarantee the related object contains a reference
+                to this object.  This level of coupling may, however, be
+                undesirable since it could result in an only partially populated collection
+                in the referenced object.
+                $this->aLibrary->addPosts($this);
+             */
+        }
+
+        return $this->aLibrary;
     }
 
 
@@ -2277,12 +2425,16 @@ abstract class Post implements ActiveRecordInterface
         if (null !== $this->apostedByUser) {
             $this->apostedByUser->removePost($this);
         }
+        if (null !== $this->aLibrary) {
+            $this->aLibrary->removePost($this);
+        }
         $this->id = null;
         $this->title = null;
         $this->hyperlink = null;
         $this->text = null;
         $this->posted_date = null;
         $this->posted_by_user_id = null;
+        $this->library_id = null;
         $this->alreadyInSave = false;
         $this->clearAllReferences();
         $this->resetModified();
@@ -2322,6 +2474,7 @@ abstract class Post implements ActiveRecordInterface
         $this->collPostCategories = null;
         $this->collCategories = null;
         $this->apostedByUser = null;
+        $this->aLibrary = null;
     }
 
     /**

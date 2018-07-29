@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+  <?php $home = replaceLast('index.php/', '', $router->pathFor('home'));?>
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,14 +9,14 @@
     <meta name="theme-color" content="#333">
     <title>Kode Central | <?=$title?></title>
     <meta name="description" content="Material Style Theme">
-    <link rel="shortcut icon" href="assets/img/favicon.png?v=3">
+    <link rel="shortcut icon" href="<?=$home?>assets/img/favicon.png?v=3">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="assets/css/preload.min.css">
-    <link rel="stylesheet" href="assets/css/plugins.min.css">
-    <link rel="stylesheet" href="assets/css/style.blue-600.min.css">
+    <link rel="stylesheet" href="<?=$home?>assets/css/preload.min.css">
+    <link rel="stylesheet" href="<?=$home?>assets/css/plugins.min.css">
+    <link rel="stylesheet" href="<?=$home?>assets/css/style.blue-600.min.css">
     <!--[if lt IE 9]>
-        <script src="assets/js/html5shiv.min.js"></script>
-        <script src="assets/js/respond.min.js"></script>
+        <script src="<?=$home?>assets/js/html5shiv.min.js"></script>
+        <script src="<?=$home?>assets/js/respond.min.js"></script>
     <![endif]-->
   </head>
   <body>
@@ -30,7 +31,7 @@
     <div class="ms-site-container">
       <?php require_once('templates/navbar.php')?>
       <div class="container">
-        <h1 class="right-line mb-4">My Posts</h1>
+        <h1 class="right-line mb-4"><?=$title?></h1>
         <div class="row">
           <div class="col-md-9">
             <?php foreach ($posts as $post) { ?>
@@ -38,7 +39,7 @@
                 <table class="table table-no-border vertical-center">
                   <tr>
                     <td class="d-none d-sm-block">
-                      <img src="assets/img/demo/products/m1.png" alt=""> </td>
+                      <img src="<?=$home?>assets/img/demo/products/m1.png" alt=""> </td>
                     <td>
                       <h4 class=""><?=$post->getTitle()?></h4>
                     </td>
@@ -89,7 +90,7 @@
     </div>
     <!-- ms-site-container -->
     <?php require_once('templates/slidebar.php')?>
-    <script src="assets/js/plugins.min.js"></script>
-    <script src="assets/js/app.min.js"></script>
+    <script src="<?=$home?>assets/js/plugins.min.js"></script>
+    <script src="<?=$home?>assets/js/app.min.js"></script>
   </body>
 </html>

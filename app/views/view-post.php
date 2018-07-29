@@ -34,6 +34,13 @@
       <div class="container">
         <div class="row">
           <div class="col-lg-8">
+            <ol class="breadcrumb">
+
+              <li class="breadcrumb-item"><a href="<?=$router->pathFor('home')?>">Home</a></li>
+              <li class="breadcrumb-item"><a href="<?=$router->pathFor('library', ['name'=>$lib_name])?>"><?=$lib_name?></a></li>
+              <li class="breadcrumb-item active" aria-current="page">Data</li>
+
+            </ol>
             <div class="card animated fadeInLeftTiny animation-delay-5">
               <div class="card-body card-body-big">
                 <h1 class="no-mt"><?=$post->getTitle()?></h1>

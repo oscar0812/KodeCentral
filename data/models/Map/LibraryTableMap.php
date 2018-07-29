@@ -2,8 +2,8 @@
 
 namespace Map;
 
-use \Post;
-use \PostQuery;
+use \Library;
+use \LibraryQuery;
 use Propel\Runtime\Propel;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\InstancePoolTrait;
@@ -16,7 +16,7 @@ use Propel\Runtime\Map\TableMapTrait;
 
 
 /**
- * This class defines the structure of the 'post' table.
+ * This class defines the structure of the 'library' table.
  *
  *
  *
@@ -26,7 +26,7 @@ use Propel\Runtime\Map\TableMapTrait;
  * (i.e. if it's a text column type).
  *
  */
-class PostTableMap extends TableMap
+class LibraryTableMap extends TableMap
 {
     use InstancePoolTrait;
     use TableMapTrait;
@@ -34,7 +34,7 @@ class PostTableMap extends TableMap
     /**
      * The (dot-path) name of this class
      */
-    const CLASS_NAME = '.Map.PostTableMap';
+    const CLASS_NAME = '.Map.LibraryTableMap';
 
     /**
      * The default database name for this class
@@ -44,22 +44,22 @@ class PostTableMap extends TableMap
     /**
      * The table name for this class
      */
-    const TABLE_NAME = 'post';
+    const TABLE_NAME = 'library';
 
     /**
      * The related Propel class for this table
      */
-    const OM_CLASS = '\\Post';
+    const OM_CLASS = '\\Library';
 
     /**
      * A class that can be returned by this tableMap
      */
-    const CLASS_DEFAULT = 'Post';
+    const CLASS_DEFAULT = 'Library';
 
     /**
      * The total number of columns
      */
-    const NUM_COLUMNS = 7;
+    const NUM_COLUMNS = 2;
 
     /**
      * The number of lazy-loaded columns
@@ -69,42 +69,17 @@ class PostTableMap extends TableMap
     /**
      * The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS)
      */
-    const NUM_HYDRATE_COLUMNS = 7;
+    const NUM_HYDRATE_COLUMNS = 2;
 
     /**
      * the column name for the id field
      */
-    const COL_ID = 'post.id';
+    const COL_ID = 'library.id';
 
     /**
-     * the column name for the title field
+     * the column name for the name field
      */
-    const COL_TITLE = 'post.title';
-
-    /**
-     * the column name for the hyperlink field
-     */
-    const COL_HYPERLINK = 'post.hyperlink';
-
-    /**
-     * the column name for the text field
-     */
-    const COL_TEXT = 'post.text';
-
-    /**
-     * the column name for the posted_date field
-     */
-    const COL_POSTED_DATE = 'post.posted_date';
-
-    /**
-     * the column name for the posted_by_user_id field
-     */
-    const COL_POSTED_BY_USER_ID = 'post.posted_by_user_id';
-
-    /**
-     * the column name for the library_id field
-     */
-    const COL_LIBRARY_ID = 'post.library_id';
+    const COL_NAME = 'library.name';
 
     /**
      * The default string format for model objects of the related table
@@ -118,11 +93,11 @@ class PostTableMap extends TableMap
      * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        self::TYPE_PHPNAME       => array('Id', 'Title', 'Hyperlink', 'Text', 'PostedDate', 'PostedByUserId', 'LibraryId', ),
-        self::TYPE_CAMELNAME     => array('id', 'title', 'hyperlink', 'text', 'postedDate', 'postedByUserId', 'libraryId', ),
-        self::TYPE_COLNAME       => array(PostTableMap::COL_ID, PostTableMap::COL_TITLE, PostTableMap::COL_HYPERLINK, PostTableMap::COL_TEXT, PostTableMap::COL_POSTED_DATE, PostTableMap::COL_POSTED_BY_USER_ID, PostTableMap::COL_LIBRARY_ID, ),
-        self::TYPE_FIELDNAME     => array('id', 'title', 'hyperlink', 'text', 'posted_date', 'posted_by_user_id', 'library_id', ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, )
+        self::TYPE_PHPNAME       => array('Id', 'Name', ),
+        self::TYPE_CAMELNAME     => array('id', 'name', ),
+        self::TYPE_COLNAME       => array(LibraryTableMap::COL_ID, LibraryTableMap::COL_NAME, ),
+        self::TYPE_FIELDNAME     => array('id', 'name', ),
+        self::TYPE_NUM           => array(0, 1, )
     );
 
     /**
@@ -132,11 +107,11 @@ class PostTableMap extends TableMap
      * e.g. self::$fieldKeys[self::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        self::TYPE_PHPNAME       => array('Id' => 0, 'Title' => 1, 'Hyperlink' => 2, 'Text' => 3, 'PostedDate' => 4, 'PostedByUserId' => 5, 'LibraryId' => 6, ),
-        self::TYPE_CAMELNAME     => array('id' => 0, 'title' => 1, 'hyperlink' => 2, 'text' => 3, 'postedDate' => 4, 'postedByUserId' => 5, 'libraryId' => 6, ),
-        self::TYPE_COLNAME       => array(PostTableMap::COL_ID => 0, PostTableMap::COL_TITLE => 1, PostTableMap::COL_HYPERLINK => 2, PostTableMap::COL_TEXT => 3, PostTableMap::COL_POSTED_DATE => 4, PostTableMap::COL_POSTED_BY_USER_ID => 5, PostTableMap::COL_LIBRARY_ID => 6, ),
-        self::TYPE_FIELDNAME     => array('id' => 0, 'title' => 1, 'hyperlink' => 2, 'text' => 3, 'posted_date' => 4, 'posted_by_user_id' => 5, 'library_id' => 6, ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, )
+        self::TYPE_PHPNAME       => array('Id' => 0, 'Name' => 1, ),
+        self::TYPE_CAMELNAME     => array('id' => 0, 'name' => 1, ),
+        self::TYPE_COLNAME       => array(LibraryTableMap::COL_ID => 0, LibraryTableMap::COL_NAME => 1, ),
+        self::TYPE_FIELDNAME     => array('id' => 0, 'name' => 1, ),
+        self::TYPE_NUM           => array(0, 1, )
     );
 
     /**
@@ -149,20 +124,15 @@ class PostTableMap extends TableMap
     public function initialize()
     {
         // attributes
-        $this->setName('post');
-        $this->setPhpName('Post');
+        $this->setName('library');
+        $this->setPhpName('Library');
         $this->setIdentifierQuoting(false);
-        $this->setClassName('\\Post');
+        $this->setClassName('\\Library');
         $this->setPackage('');
         $this->setUseIdGenerator(true);
         // columns
         $this->addPrimaryKey('id', 'Id', 'INTEGER', true, null, null);
-        $this->addColumn('title', 'Title', 'VARCHAR', true, 128, null);
-        $this->addColumn('hyperlink', 'Hyperlink', 'VARCHAR', true, 128, null);
-        $this->addColumn('text', 'Text', 'VARCHAR', true, 32768, null);
-        $this->addColumn('posted_date', 'PostedDate', 'DATE', true, null, null);
-        $this->addForeignKey('posted_by_user_id', 'PostedByUserId', 'INTEGER', 'user', 'id', true, null, null);
-        $this->addForeignKey('library_id', 'LibraryId', 'INTEGER', 'library', 'id', true, null, null);
+        $this->addColumn('name', 'Name', 'VARCHAR', true, 128, null);
     } // initialize()
 
     /**
@@ -170,35 +140,13 @@ class PostTableMap extends TableMap
      */
     public function buildRelations()
     {
-        $this->addRelation('postedByUser', '\\User', RelationMap::MANY_TO_ONE, array (
-  0 =>
-  array (
-    0 => ':posted_by_user_id',
-    1 => ':id',
-  ),
-), null, null, null, false);
-        $this->addRelation('Library', '\\Library', RelationMap::MANY_TO_ONE, array (
+        $this->addRelation('Post', '\\Post', RelationMap::ONE_TO_MANY, array (
   0 =>
   array (
     0 => ':library_id',
     1 => ':id',
   ),
-), null, null, null, false);
-        $this->addRelation('Comment', '\\Comment', RelationMap::ONE_TO_MANY, array (
-  0 =>
-  array (
-    0 => ':post_id',
-    1 => ':id',
-  ),
-), null, null, 'Comments', false);
-        $this->addRelation('PostCategory', '\\PostCategory', RelationMap::ONE_TO_MANY, array (
-  0 =>
-  array (
-    0 => ':post_id',
-    1 => ':id',
-  ),
-), null, null, 'PostCategories', false);
-        $this->addRelation('Category', '\\Category', RelationMap::MANY_TO_MANY, array(), null, null, 'Categories');
+), null, null, 'Posts', false);
     } // buildRelations()
 
     /**
@@ -258,7 +206,7 @@ class PostTableMap extends TableMap
      */
     public static function getOMClass($withPrefix = true)
     {
-        return $withPrefix ? PostTableMap::CLASS_DEFAULT : PostTableMap::OM_CLASS;
+        return $withPrefix ? LibraryTableMap::CLASS_DEFAULT : LibraryTableMap::OM_CLASS;
     }
 
     /**
@@ -272,22 +220,22 @@ class PostTableMap extends TableMap
      *
      * @throws PropelException Any exceptions caught during processing will be
      *                         rethrown wrapped into a PropelException.
-     * @return array           (Post object, last column rank)
+     * @return array           (Library object, last column rank)
      */
     public static function populateObject($row, $offset = 0, $indexType = TableMap::TYPE_NUM)
     {
-        $key = PostTableMap::getPrimaryKeyHashFromRow($row, $offset, $indexType);
-        if (null !== ($obj = PostTableMap::getInstanceFromPool($key))) {
+        $key = LibraryTableMap::getPrimaryKeyHashFromRow($row, $offset, $indexType);
+        if (null !== ($obj = LibraryTableMap::getInstanceFromPool($key))) {
             // We no longer rehydrate the object, since this can cause data loss.
             // See http://www.propelorm.org/ticket/509
             // $obj->hydrate($row, $offset, true); // rehydrate
-            $col = $offset + PostTableMap::NUM_HYDRATE_COLUMNS;
+            $col = $offset + LibraryTableMap::NUM_HYDRATE_COLUMNS;
         } else {
-            $cls = PostTableMap::OM_CLASS;
-            /** @var Post $obj */
+            $cls = LibraryTableMap::OM_CLASS;
+            /** @var Library $obj */
             $obj = new $cls();
             $col = $obj->hydrate($row, $offset, false, $indexType);
-            PostTableMap::addInstanceToPool($obj, $key);
+            LibraryTableMap::addInstanceToPool($obj, $key);
         }
 
         return array($obj, $col);
@@ -310,18 +258,18 @@ class PostTableMap extends TableMap
         $cls = static::getOMClass(false);
         // populate the object(s)
         while ($row = $dataFetcher->fetch()) {
-            $key = PostTableMap::getPrimaryKeyHashFromRow($row, 0, $dataFetcher->getIndexType());
-            if (null !== ($obj = PostTableMap::getInstanceFromPool($key))) {
+            $key = LibraryTableMap::getPrimaryKeyHashFromRow($row, 0, $dataFetcher->getIndexType());
+            if (null !== ($obj = LibraryTableMap::getInstanceFromPool($key))) {
                 // We no longer rehydrate the object, since this can cause data loss.
                 // See http://www.propelorm.org/ticket/509
                 // $obj->hydrate($row, 0, true); // rehydrate
                 $results[] = $obj;
             } else {
-                /** @var Post $obj */
+                /** @var Library $obj */
                 $obj = new $cls();
                 $obj->hydrate($row);
                 $results[] = $obj;
-                PostTableMap::addInstanceToPool($obj, $key);
+                LibraryTableMap::addInstanceToPool($obj, $key);
             } // if key exists
         }
 
@@ -342,21 +290,11 @@ class PostTableMap extends TableMap
     public static function addSelectColumns(Criteria $criteria, $alias = null)
     {
         if (null === $alias) {
-            $criteria->addSelectColumn(PostTableMap::COL_ID);
-            $criteria->addSelectColumn(PostTableMap::COL_TITLE);
-            $criteria->addSelectColumn(PostTableMap::COL_HYPERLINK);
-            $criteria->addSelectColumn(PostTableMap::COL_TEXT);
-            $criteria->addSelectColumn(PostTableMap::COL_POSTED_DATE);
-            $criteria->addSelectColumn(PostTableMap::COL_POSTED_BY_USER_ID);
-            $criteria->addSelectColumn(PostTableMap::COL_LIBRARY_ID);
+            $criteria->addSelectColumn(LibraryTableMap::COL_ID);
+            $criteria->addSelectColumn(LibraryTableMap::COL_NAME);
         } else {
             $criteria->addSelectColumn($alias . '.id');
-            $criteria->addSelectColumn($alias . '.title');
-            $criteria->addSelectColumn($alias . '.hyperlink');
-            $criteria->addSelectColumn($alias . '.text');
-            $criteria->addSelectColumn($alias . '.posted_date');
-            $criteria->addSelectColumn($alias . '.posted_by_user_id');
-            $criteria->addSelectColumn($alias . '.library_id');
+            $criteria->addSelectColumn($alias . '.name');
         }
     }
 
@@ -369,7 +307,7 @@ class PostTableMap extends TableMap
      */
     public static function getTableMap()
     {
-        return Propel::getServiceContainer()->getDatabaseMap(PostTableMap::DATABASE_NAME)->getTable(PostTableMap::TABLE_NAME);
+        return Propel::getServiceContainer()->getDatabaseMap(LibraryTableMap::DATABASE_NAME)->getTable(LibraryTableMap::TABLE_NAME);
     }
 
     /**
@@ -377,16 +315,16 @@ class PostTableMap extends TableMap
      */
     public static function buildTableMap()
     {
-        $dbMap = Propel::getServiceContainer()->getDatabaseMap(PostTableMap::DATABASE_NAME);
-        if (!$dbMap->hasTable(PostTableMap::TABLE_NAME)) {
-            $dbMap->addTableObject(new PostTableMap());
+        $dbMap = Propel::getServiceContainer()->getDatabaseMap(LibraryTableMap::DATABASE_NAME);
+        if (!$dbMap->hasTable(LibraryTableMap::TABLE_NAME)) {
+            $dbMap->addTableObject(new LibraryTableMap());
         }
     }
 
     /**
-     * Performs a DELETE on the database, given a Post or Criteria object OR a primary key value.
+     * Performs a DELETE on the database, given a Library or Criteria object OR a primary key value.
      *
-     * @param mixed               $values Criteria or Post object or primary key or array of primary keys
+     * @param mixed               $values Criteria or Library object or primary key or array of primary keys
      *              which is used to create the DELETE statement
      * @param  ConnectionInterface $con the connection to use
      * @return int             The number of affected rows (if supported by underlying database driver).  This includes CASCADE-related rows
@@ -397,27 +335,27 @@ class PostTableMap extends TableMap
      public static function doDelete($values, ConnectionInterface $con = null)
      {
         if (null === $con) {
-            $con = Propel::getServiceContainer()->getWriteConnection(PostTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(LibraryTableMap::DATABASE_NAME);
         }
 
         if ($values instanceof Criteria) {
             // rename for clarity
             $criteria = $values;
-        } elseif ($values instanceof \Post) { // it's a model object
+        } elseif ($values instanceof \Library) { // it's a model object
             // create criteria based on pk values
             $criteria = $values->buildPkeyCriteria();
         } else { // it's a primary key, or an array of pks
-            $criteria = new Criteria(PostTableMap::DATABASE_NAME);
-            $criteria->add(PostTableMap::COL_ID, (array) $values, Criteria::IN);
+            $criteria = new Criteria(LibraryTableMap::DATABASE_NAME);
+            $criteria->add(LibraryTableMap::COL_ID, (array) $values, Criteria::IN);
         }
 
-        $query = PostQuery::create()->mergeWith($criteria);
+        $query = LibraryQuery::create()->mergeWith($criteria);
 
         if ($values instanceof Criteria) {
-            PostTableMap::clearInstancePool();
+            LibraryTableMap::clearInstancePool();
         } elseif (!is_object($values)) { // it's a primary key, or an array of pks
             foreach ((array) $values as $singleval) {
-                PostTableMap::removeInstanceFromPool($singleval);
+                LibraryTableMap::removeInstanceFromPool($singleval);
             }
         }
 
@@ -425,20 +363,20 @@ class PostTableMap extends TableMap
     }
 
     /**
-     * Deletes all rows from the post table.
+     * Deletes all rows from the library table.
      *
      * @param ConnectionInterface $con the connection to use
      * @return int The number of affected rows (if supported by underlying database driver).
      */
     public static function doDeleteAll(ConnectionInterface $con = null)
     {
-        return PostQuery::create()->doDeleteAll($con);
+        return LibraryQuery::create()->doDeleteAll($con);
     }
 
     /**
-     * Performs an INSERT on the database, given a Post or Criteria object.
+     * Performs an INSERT on the database, given a Library or Criteria object.
      *
-     * @param mixed               $criteria Criteria or Post object containing data that is used to create the INSERT statement.
+     * @param mixed               $criteria Criteria or Library object containing data that is used to create the INSERT statement.
      * @param ConnectionInterface $con the ConnectionInterface connection to use
      * @return mixed           The new primary key.
      * @throws PropelException Any exceptions caught during processing will be
@@ -447,22 +385,22 @@ class PostTableMap extends TableMap
     public static function doInsert($criteria, ConnectionInterface $con = null)
     {
         if (null === $con) {
-            $con = Propel::getServiceContainer()->getWriteConnection(PostTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(LibraryTableMap::DATABASE_NAME);
         }
 
         if ($criteria instanceof Criteria) {
             $criteria = clone $criteria; // rename for clarity
         } else {
-            $criteria = $criteria->buildCriteria(); // build Criteria from Post object
+            $criteria = $criteria->buildCriteria(); // build Criteria from Library object
         }
 
-        if ($criteria->containsKey(PostTableMap::COL_ID) && $criteria->keyContainsValue(PostTableMap::COL_ID) ) {
-            throw new PropelException('Cannot insert a value for auto-increment primary key ('.PostTableMap::COL_ID.')');
+        if ($criteria->containsKey(LibraryTableMap::COL_ID) && $criteria->keyContainsValue(LibraryTableMap::COL_ID) ) {
+            throw new PropelException('Cannot insert a value for auto-increment primary key ('.LibraryTableMap::COL_ID.')');
         }
 
 
         // Set the correct dbName
-        $query = PostQuery::create()->mergeWith($criteria);
+        $query = LibraryQuery::create()->mergeWith($criteria);
 
         // use transaction because $criteria could contain info
         // for more than one table (I guess, conceivably)
@@ -471,7 +409,7 @@ class PostTableMap extends TableMap
         });
     }
 
-} // PostTableMap
+} // LibraryTableMap
 // This is the static code needed to register the TableMap for this table with the main Propel class.
 //
-PostTableMap::buildTableMap();
+LibraryTableMap::buildTableMap();

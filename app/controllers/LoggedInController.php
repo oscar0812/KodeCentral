@@ -82,7 +82,7 @@ class LoggedInController
             return $this->view->render(
             $response,
               'post-list.php',
-              ['router'=>$this->router, 'user'=>$user, 'posts'=>$posts, 'title'=>$user->getUsername().' posts']
+              ['router'=>$this->router, 'user'=>$user, 'posts'=>$posts, 'title'=>'Your posts']
           );
         })->setName('user-posts');
     }
