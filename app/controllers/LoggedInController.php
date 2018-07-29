@@ -102,7 +102,7 @@ class LoggedInController
 
             $comment = new \Comment();
             $comment->setText($text);
-            $comment->setPostedByUser(\User::current());
+            $comment->setUser(\User::current());
             $comment->setPost($post);
             $comment->setPostedTime(getCurrentDateTime());
             $comment->save();
