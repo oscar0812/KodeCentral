@@ -41,7 +41,8 @@
                 <div class="mb-4" id="user-info">
                   <img src="<?=$home?>assets/img/demo/avatar50.jpg" alt="..." class="img-circle mr-1"> by
                   <?php $username = $post->getUser()->getUsername();?>
-                  <a href="<?=$router->pathFor('user-profile', ['username'=>$username])?>"><?=$username?></a> in
+                  <a href="<?=$router->pathFor('user-profile', ['username'=>$username])?>">
+                  <?=$post->getUser() == $user?"You":$username?></a> in
                   <?php foreach ($post->getCategories() as $category) { ?>
                   <a href="javascript:void(0)" class="ms-tag ms-tag-info"><?=$category->getName()?></a>
                   <?php } ?>
