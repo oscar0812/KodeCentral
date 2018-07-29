@@ -38,21 +38,21 @@ class User extends BaseUser
     // log user in (save a session for it)
     public function logIn()
     {
-        session_start_safe();
+        \App\Utils\SessionManager::sessionStart();
         $_SESSION['user_id'] = $this->getId();
     }
 
     // log user out (remove session)
     public static function logOut()
     {
-        session_start_safe();
+        \App\Utils\SessionManager::sessionStart();
         unset($_SESSION['user_id']);
     }
 
     // return user that is currently logged in, null if no user logged in
     public static function current()
     {
-        session_start_safe();
+        \App\Utils\SessionManager::sessionStart();
         if (isset($_SESSION['user_id'])) {
             return UserQuery::create()->findPk($_SESSION['user_id']);
         }

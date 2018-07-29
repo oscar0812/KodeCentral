@@ -12,13 +12,6 @@ function copyright()
     return "Copyright © 2018. All Rights Reserved.";
 }
 
-function session_start_safe()
-{
-    if (!isset($_SESSION)) {
-        session_start();
-    }
-}
-
 function replaceFirst($replace_this, $with_this, $original)
 {
     $pos = strpos($original, $replace_this);
