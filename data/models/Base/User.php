@@ -1639,7 +1639,7 @@ abstract class User implements ActiveRecordInterface
                 $this->initPosts();
             } else {
                 $collPosts = ChildPostQuery::create(null, $criteria)
-                    ->filterByUser($this)
+                    ->filterBypostedByUser($this)
                     ->find($con);
 
                 if (null !== $criteria) {
@@ -1693,7 +1693,7 @@ abstract class User implements ActiveRecordInterface
         $this->postsScheduledForDeletion = $postsToDelete;
 
         foreach ($postsToDelete as $postRemoved) {
-            $postRemoved->setUser(null);
+            $postRemoved->setpostedByUser(null);
         }
 
         $this->collPosts = null;
@@ -1734,7 +1734,7 @@ abstract class User implements ActiveRecordInterface
             }
 
             return $query
-                ->filterByUser($this)
+                ->filterBypostedByUser($this)
                 ->count($con);
         }
 
@@ -1772,7 +1772,7 @@ abstract class User implements ActiveRecordInterface
     protected function doAddPost(ChildPost $post)
     {
         $this->collPosts[]= $post;
-        $post->setUser($this);
+        $post->setpostedByUser($this);
     }
 
     /**
@@ -1789,7 +1789,7 @@ abstract class User implements ActiveRecordInterface
                 $this->postsScheduledForDeletion->clear();
             }
             $this->postsScheduledForDeletion[]= clone $post;
-            $post->setUser(null);
+            $post->setpostedByUser(null);
         }
 
         return $this;

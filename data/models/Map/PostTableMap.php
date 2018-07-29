@@ -164,7 +164,7 @@ class PostTableMap extends TableMap
      */
     public function buildRelations()
     {
-        $this->addRelation('User', '\\User', RelationMap::MANY_TO_ONE, array (
+        $this->addRelation('postedByUser', '\\User', RelationMap::MANY_TO_ONE, array (
   0 =>
   array (
     0 => ':posted_by_user_id',

@@ -59,7 +59,7 @@ class Post extends BasePost
         }
 
         $post->setText(preg_replace('/&nbsp;/', ' ', $data['text']));
-        $post->setUser(\User::current());
+        $post->setPostedByUser(\User::current());
         $post->setPostedDate(getCurrentDate());
 
         // replace whitespace with 1 space

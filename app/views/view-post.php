@@ -40,9 +40,9 @@
 
                 <div class="mb-4" id="user-info">
                   <img src="<?=$home?>assets/img/demo/avatar50.jpg" alt="..." class="img-circle mr-1"> by
-                  <?php $username = $post->getUser()->getUsername();?>
+                  <?php $username = $post->getPostedByUser()->getUsername();?>
                   <a href="<?=$router->pathFor('user-profile', ['username'=>$username])?>">
-                  <?=$post->getUser() == $user?"You":$username?></a> in
+                  <?=$post->getPostedByUser() == $user?"You":$username?></a> in
                   <?php foreach ($post->getCategories() as $category) { ?>
                   <a href="javascript:void(0)" class="ms-tag ms-tag-info"><?=$category->getName()?></a>
                   <?php } ?>
@@ -50,7 +50,7 @@
                     <i class="zmdi zmdi-time mr-05 color-info"></i>
                     <span class="color-medium-dark"><?=$post->getPostedDate()->format('F d, Y')?></span>
                   </span>
-                  <?php if($user!= null && $post->getUser() == $user) { ?>
+                  <?php if($user!= null && $post->getPostedByUser() == $user) { ?>
                   <span class="ml-1 d-none d-sm-inline">
                     <a href="<?=$router->pathFor('edit-post', ['hyperlink'=>$post->getHyperlink()])?>">
                       <i class="fa fa-pencil"> Edit</i>

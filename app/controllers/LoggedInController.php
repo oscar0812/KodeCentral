@@ -35,7 +35,7 @@ class LoggedInController
         $app->get('/edit-post/{hyperlink}', function ($request, $response, $args) {
             $post = \PostQuery::create()->findOneByHyperlink($args['hyperlink']);
             $user = \User::current();
-            if ($post == null || $post->getUser() != $user) {
+            if ($post == null || $post->getPostedByUser() != $user) {
                 // invalid post, or trying to edit something not yours, 404
                 throw new \Slim\Exception\NotFoundException($request, $response);
             }
@@ -56,7 +56,7 @@ class LoggedInController
         $app->post('/edit-post/{hyperlink}', function ($request, $response, $args) {
             $post = \PostQuery::create()->findOneByHyperlink($args['hyperlink']);
 
-            if ($post == null || $post->getUser() != \User::current()) {
+            if ($post == null || $post->getPostedByUser() != \User::current()) {
                 return $response->withJson(['success'=>false]);
             }
             $link = $post->getHyperlink();
@@ -78,11 +78,11 @@ class LoggedInController
     {
         $app->get('/my-posts', function ($request, $response, $args) {
             $user = \User::current();
-            $posts = \PostQuery::create()->filterByUser($user)->orderByPostedDate('desc')->find();
+            $posts = \PostQuery::create()->filterByPostedByUser($user)->orderByPostedDate('desc')->find();
             return $this->view->render(
             $response,
               'post-list.php',
-              ['router'=>$this->router, 'user'=>$user, 'posts'=>$posts]
+              ['router'=>$this->router, 'user'=>$user, 'posts'=>$posts, 'title'=>$user->getUsername().' posts']
           );
         })->setName('user-posts');
     }
@@ -102,7 +102,7 @@ class LoggedInController
 
             $comment = new \Comment();
             $comment->setText($text);
-            $comment->setUser(\User::current());
+            $comment->setPostedByUser(\User::current());
             $comment->setPost($post);
             $comment->setPostedTime(getCurrentDateTime());
             $comment->save();

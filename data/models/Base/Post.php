@@ -118,7 +118,7 @@ abstract class Post implements ActiveRecordInterface
     /**
      * @var        ChildUser
      */
-    protected $aUser;
+    protected $apostedByUser;
 
     /**
      * @var        ObjectCollection|ChildComment[] Collection to store aggregation of ChildComment objects.
@@ -580,8 +580,8 @@ abstract class Post implements ActiveRecordInterface
             $this->modifiedColumns[PostTableMap::COL_POSTED_BY_USER_ID] = true;
         }
 
-        if ($this->aUser !== null && $this->aUser->getId() !== $v) {
-            $this->aUser = null;
+        if ($this->apostedByUser !== null && $this->apostedByUser->getId() !== $v) {
+            $this->apostedByUser = null;
         }
 
         return $this;
@@ -673,8 +673,8 @@ abstract class Post implements ActiveRecordInterface
      */
     public function ensureConsistency()
     {
-        if ($this->aUser !== null && $this->posted_by_user_id !== $this->aUser->getId()) {
-            $this->aUser = null;
+        if ($this->apostedByUser !== null && $this->posted_by_user_id !== $this->apostedByUser->getId()) {
+            $this->apostedByUser = null;
         }
     } // ensureConsistency
 
@@ -715,7 +715,7 @@ abstract class Post implements ActiveRecordInterface
 
         if ($deep) {  // also de-associate any related objects?
 
-            $this->aUser = null;
+            $this->apostedByUser = null;
             $this->collComments = null;
 
             $this->collPostCategories = null;
@@ -829,11 +829,11 @@ abstract class Post implements ActiveRecordInterface
             // method.  This object relates to these object(s) by a
             // foreign key reference.
 
-            if ($this->aUser !== null) {
-                if ($this->aUser->isModified() || $this->aUser->isNew()) {
-                    $affectedRows += $this->aUser->save($con);
+            if ($this->apostedByUser !== null) {
+                if ($this->apostedByUser->isModified() || $this->apostedByUser->isNew()) {
+                    $affectedRows += $this->apostedByUser->save($con);
                 }
-                $this->setUser($this->aUser);
+                $this->setpostedByUser($this->apostedByUser);
             }
 
             if ($this->isNew() || $this->isModified()) {
@@ -1110,7 +1110,7 @@ abstract class Post implements ActiveRecordInterface
         }
 
         if ($includeForeignObjects) {
-            if (null !== $this->aUser) {
+            if (null !== $this->apostedByUser) {
 
                 switch ($keyType) {
                     case TableMap::TYPE_CAMELNAME:
@@ -1120,10 +1120,10 @@ abstract class Post implements ActiveRecordInterface
                         $key = 'user';
                         break;
                     default:
-                        $key = 'User';
+                        $key = 'postedByUser';
                 }
 
-                $result[$key] = $this->aUser->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
+                $result[$key] = $this->apostedByUser->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
             }
             if (null !== $this->collComments) {
 
@@ -1456,7 +1456,7 @@ abstract class Post implements ActiveRecordInterface
      * @return $this|\Post The current object (for fluent API support)
      * @throws PropelException
      */
-    public function setUser(ChildUser $v = null)
+    public function setpostedByUser(ChildUser $v = null)
     {
         if ($v === null) {
             $this->setPostedByUserId(NULL);
@@ -1464,7 +1464,7 @@ abstract class Post implements ActiveRecordInterface
             $this->setPostedByUserId($v->getId());
         }
 
-        $this->aUser = $v;
+        $this->apostedByUser = $v;
 
         // Add binding for other direction of this n:n relationship.
         // If this object has already been added to the ChildUser object, it will not be re-added.
@@ -1484,20 +1484,20 @@ abstract class Post implements ActiveRecordInterface
      * @return ChildUser The associated ChildUser object.
      * @throws PropelException
      */
-    public function getUser(ConnectionInterface $con = null)
+    public function getpostedByUser(ConnectionInterface $con = null)
     {
-        if ($this->aUser === null && ($this->posted_by_user_id != 0)) {
-            $this->aUser = ChildUserQuery::create()->findPk($this->posted_by_user_id, $con);
+        if ($this->apostedByUser === null && ($this->posted_by_user_id != 0)) {
+            $this->apostedByUser = ChildUserQuery::create()->findPk($this->posted_by_user_id, $con);
             /* The following can be used additionally to
                 guarantee the related object contains a reference
                 to this object.  This level of coupling may, however, be
                 undesirable since it could result in an only partially populated collection
                 in the referenced object.
-                $this->aUser->addPosts($this);
+                $this->apostedByUser->addPosts($this);
              */
         }
 
-        return $this->aUser;
+        return $this->apostedByUser;
     }
 
 
@@ -2274,8 +2274,8 @@ abstract class Post implements ActiveRecordInterface
      */
     public function clear()
     {
-        if (null !== $this->aUser) {
-            $this->aUser->removePost($this);
+        if (null !== $this->apostedByUser) {
+            $this->apostedByUser->removePost($this);
         }
         $this->id = null;
         $this->title = null;
@@ -2321,7 +2321,7 @@ abstract class Post implements ActiveRecordInterface
         $this->collComments = null;
         $this->collPostCategories = null;
         $this->collCategories = null;
-        $this->aUser = null;
+        $this->apostedByUser = null;
     }
 
     /**

@@ -36,7 +36,7 @@
     <column name="text" phpName="Text" type="VARCHAR" size="32768" required="true"/>
     <column name="posted_date" phpName="PostedDate" type="DATE" required="true"/>
     <column name="posted_by_user_id" phpName="PostedByUserId" type="INTEGER" required="true"/>
-    <foreign-key foreignTable="user" name="post_ibfk_2">
+    <foreign-key foreignTable="user" name="post_ibfk_2" phpName="postedByUser">
       <reference local="posted_by_user_id" foreign="id"/>
     </foreign-key>
     <index name="posted_by_user_id">

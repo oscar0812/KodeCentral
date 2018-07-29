@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="theme-color" content="#333">
-    <title>Kode Central</title>
+    <title>Kode Central | <?=$title?></title>
     <meta name="description" content="Material Style Theme">
     <link rel="shortcut icon" href="assets/img/favicon.png?v=3">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -50,10 +50,6 @@
                       data-url="<?=$router->pathFor('view-post', ['hyperlink'=>$post->getHyperlink()])?>">
                         <i class="zmdi zmdi-eye"></i> View</button>
                     </td>
-                    <td>
-                      <button class="btn btn-danger">
-                        <i class="zmdi zmdi-delete"></i></button>
-                    </td>
                   </tr>
                 </table>
               </div>
@@ -63,7 +59,7 @@
           <div class="col-md-3">
             <div class="card card-info">
               <div class="card-header">
-                <i class="fa fa-list-alt" aria-hidden="true"></i> Summary</div>
+                <i class="fa fa-list-alt" aria-hidden="true"></i> Info</div>
               <div class="card-body">
                 <ul class="list-unstyled">
                   <li>
