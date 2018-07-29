@@ -8,7 +8,7 @@
           <i class="zmdi zmdi-account"></i> <?=$name?></a>
 
         <?php if($c_user != null) { ?>
-          <a href="<?=$router->pathFor('user-logout')?>" class="withripple">
+          <a id="slidebar-logout" href="<?=$router->pathFor('user-logout')?>" class="withripple">
             <i class="fa fa-sign-out"></i> Log out</a>
         <?php } ?>
       </div>

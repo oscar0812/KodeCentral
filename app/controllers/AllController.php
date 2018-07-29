@@ -100,8 +100,10 @@ class AllController
             // show three related posts
             $r_p = \PostQuery::create()->limit(3)->find();
 
-            // show comments for post
-            $comments = $post->getComments();
+            // show comments for post (newest ones first)
+            $comments = \CommentQuery::create()->
+              filterByPost($post)->orderByPostedTime('desc');
+              
             return $this->view->render($response, 'view-post.php',
                 ['router'=>$this->router, 'post'=>$post, 'comments'=>$comments,
                 'related_posts'=>$r_p , 'user'=>\User::current()]

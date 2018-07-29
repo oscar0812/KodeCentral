@@ -13,6 +13,12 @@ class LoggedOutController
         $app->group('/account', function () use ($app) {
             // show the login, register, forgot password forms
             $app->get('', function ($request, $response, $args) {
+                // record where the user came from to send him back
+                $prev_route = getPrevRoute($request);
+                if ($prev_route != null) {
+                    setcookie("prev_route", $route = getPrevRoute($request), time() + (86400 * 30), "/");
+                }
+
                 return $this->view->render(
                 $response,
                 'page-login_register.php',
@@ -36,6 +42,11 @@ class LoggedOutController
 
             // info is complete, now check if correct (TODO: make sure to use validation)
             $app->post('/credentials', function ($request, $response, $args) {
+                $route = null;
+                if (isset($_COOKIE['prev_route'])) {
+                    $route = $_COOKIE['prev_route'];
+                }
+
                 $post = $request->getParsedBody();
                 if (isset($post['Login'])) {
                     // trying to log in
@@ -45,9 +56,12 @@ class LoggedOutController
                         return $response->withJSON(['success'=>false]);
                     }
                     $user->logIn();
+                    if ($route == null) {
+                        $route = $this->router->pathFor('user-profile', ['username'=>$user->getUsername()]);
+                    }
+                    setcookie('prev_route', '', time() - 3600);
                     return $response->withJSON(['success'=>true,
-                    'redirect_link'=>
-                    $this->router->pathFor('user-profile', ['username'=>$user->getUsername()])]);
+                    'redirect_link'=> $route]);
                 } elseif (isset($post['Register'])) {
                     // trying to make new account
                     $user = new \User();
