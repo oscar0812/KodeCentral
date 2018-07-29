@@ -34,13 +34,6 @@
       <div class="container">
         <div class="row">
           <div class="col-lg-8">
-            <ol class="breadcrumb">
-
-              <li class="breadcrumb-item"><a href="<?=$router->pathFor('home')?>">Home</a></li>
-              <li class="breadcrumb-item"><a href="<?=$router->pathFor('library', ['name'=>$lib_name])?>"><?=$lib_name?></a></li>
-              <li class="breadcrumb-item active" aria-current="page">Data</li>
-
-            </ol>
             <div class="card animated fadeInLeftTiny animation-delay-5">
               <div class="card-body card-body-big">
                 <h1 class="no-mt"><?=$post->getTitle()?></h1>
@@ -49,7 +42,7 @@
                   <img src="<?=$home?>assets/img/demo/avatar50.jpg" alt="..." class="img-circle mr-1"> by
                   <?php $username = $post->getPostedByUser()->getUsername();?>
                   <a href="<?=$router->pathFor('user-profile', ['username'=>$username])?>">
-                  <?=$post->getPostedByUser() == $user?"You":$username?></a> in
+                  <?=$post->getPostedByUser() == $user?$username." (You)":$username?></a> in
                   <?php foreach ($post->getCategories() as $category) { ?>
                   <a href="javascript:void(0)" class="ms-tag ms-tag-info"><?=$category->getName()?></a>
                   <?php } ?>
@@ -117,10 +110,18 @@
 
           </div>
           <div class="col-lg-4">
+            <ol class="breadcrumb">
+
+              <li class="breadcrumb-item"><a href="<?=$router->pathFor('home')?>">Home</a></li>
+              <li class="breadcrumb-item"><a href="<?=$router->pathFor('library', ['name'=>$lib_name])?>"><?=$lib_name?></a></li>
+              <li class="breadcrumb-item active" aria-current="page"><?=$post->getTitle()?></li>
+
+            </ol>
             <div class="card card-primary animated fadeInUp animation-delay-7">
               <div class="card-header">
                 <h3 class="card-title">
-                  <i class="zmdi zmdi-apps"></i> Navigation</h3>
+                  <i class="zmdi zmdi-apps"></i> Navigation
+                </h3>
               </div>
               <div class="card-tabs">
                 <ul class="nav nav-tabs nav-tabs-transparent indicator-primary nav-tabs-full nav-tabs-4" role="tablist">
@@ -341,7 +342,7 @@
               current_name = info.find('a').eq(0);
 
               new_name.attr('href', current_name.attr('href')).
-                text(current_name.text() +" (You)");
+                text(current_name.text());
 
               // set the comment text
               template.find('.ms-icon-feature-content>p').text(data['text']);
