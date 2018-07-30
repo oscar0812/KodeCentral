@@ -224,10 +224,8 @@
               categories: categories
             },
             url: "",
-            dataType: "text",
+            dataType: "json",
             success: function(data) {
-              console.log(data);
-              return false;
 
               if(data['success']){
                 if(typeof data['redirect'] != 'undefined'){

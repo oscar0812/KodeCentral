@@ -69,7 +69,7 @@ class LoggedInController
             }
 
             $post->save();
-            $json = ['success'=>true, 'text'=>'Post successfully updated!', 'post'=>$post->toArray(), 'in'=>$request->getParsedBody()];
+            $json = ['success'=>true, 'text'=>'Post successfully updated!'];
             if ($post->getHyperlink() != $link) {
                 // link changed, redirect to avoid errors
                 $json['redirect'] =

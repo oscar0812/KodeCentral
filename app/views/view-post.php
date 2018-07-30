@@ -64,7 +64,11 @@
               </div>
             </div>
 
-            <h2 class="right-line no-mt">Comments (<?=$comments->count()?>)</h2>
+            <h2 class="right-line no-mt">Comments (<?=$comments->count()?>)
+              <?php if($comments->count() > 0) { ?>
+              <a href="#" id="show-hide-comments" class="color-info"><i class="zmdi zmdi-eye-off"></i></a>
+              <?php }?>
+            </h2>
 
             <div class="card animated fadeInLeftTiny animation-delay-5">
               <div class="card-body" id="comment-body">
@@ -324,7 +328,37 @@
     <script>hljs.initHighlightingOnLoad();</script>
     <script type="text/javascript">
       $(function(){
+        comments = $('#comment-body');
+
+        $('#show-hide-comments').on('click', function(){
+          icon = $(this).find('.zmdi');
+          animationDone = 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd onanimationend animationend';
+          commentBlock = comments.parent();
+          if(icon.hasClass('zmdi-eye')){
+
+            commentBlock.removeClass('invisible');
+            commentBlock.removeClass('fadeOutRight');
+
+            commentBlock.addClass('fadeInLeftTiny').one(animationDone, function(){
+              // clicking to show comments
+              icon.removeClass('zmdi-eye');
+              icon.addClass('zmdi-eye-off');
+            });
+          } else{
+            // clicking to hide comments
+            commentBlock.removeClass('fadeInLeftTiny');
+
+            commentBlock.addClass('fadeOutRight').one(animationDone, function(){
+              $(this).addClass('invisible');
+              icon.removeClass('zmdi-eye-off');
+              icon.addClass('zmdi-eye');
+            });
+          }
+          return false;
+        });
+
         $('#comment-form').on('submit', function(e){
+
           ajaxForm(e.target, function(data) {
             // comment is being posted
             if(data['success']){
@@ -351,7 +385,7 @@
               $('textarea[name="text"]').val('');
 
               // add the comment to the comment section
-              $('#comment-body').prepend(template);
+              comments.prepend(template);
             }
           });
           return false;
