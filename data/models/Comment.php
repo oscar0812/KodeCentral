@@ -19,5 +19,6 @@ class Comment extends BaseComment
         if ($text == '') {
             $text = null;
         }
+        parent::setText($text);
     }
 }

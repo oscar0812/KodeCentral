@@ -18,22 +18,25 @@ class Post extends BasePost
     public function setText($text)
     {
         if ($text == '') {
-            $this->setText(null);
+            $text = null;
         }
+        parent::setText($text);
     }
 
     public function setTitle($text)
     {
         if ($text == '') {
-            $this->setTitle(null);
+            $text = null;
         }
+        parent::setTitle($text);
     }
 
     public function setHyperlink($text)
     {
         if ($text == '') {
-            $this->setHyperlink(null);
+            $text = null;
         }
+        parent::setHyperlink($text);
     }
 
     public function categoriesString()

@@ -14,5 +14,11 @@ use Base\Category as BaseCategory;
  */
 class Category extends BaseCategory
 {
-
+    public function setName($text)
+    {
+        if ($text == '') {
+            $text = null;
+        }
+        parent::setName($text);
+    }
 }

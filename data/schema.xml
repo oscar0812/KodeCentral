@@ -42,6 +42,9 @@
     <vendor type="mysql">
       <parameter name="Engine" value="InnoDB"/>
     </vendor>
+    <behavior name="validate">
+      <parameter name="rule1" value="{column: name, validator: NotNull}"/>
+    </behavior>
   </table>
   <table name="post" idMethod="native" phpName="Post">
     <column name="id" phpName="Id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>

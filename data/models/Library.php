@@ -14,5 +14,11 @@ use Base\Library as BaseLibrary;
  */
 class Library extends BaseLibrary
 {
-
+    public function setName($text)
+    {
+        if ($text == '') {
+            $text = null;
+        }
+        parent::setName($text);
+    }
 }

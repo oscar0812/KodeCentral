@@ -62,11 +62,14 @@ class LoggedInController
             }
             $link = $post->getHyperlink();
             $post = \Post::fromPostRequest($request->getParsedBody(), $post);
+            $post->setText($request->getParsedBody()['text']);
+
             if (!$post->validate()) {
                 return $response->withJSON(['success'=>false]);
             }
+
             $post->save();
-            $json = ['success'=>true, 'text'=>'Post successfully updated!'];
+            $json = ['success'=>true, 'text'=>'Post successfully updated!', 'post'=>$post->toArray(), 'in'=>$request->getParsedBody()];
             if ($post->getHyperlink() != $link) {
                 // link changed, redirect to avoid errors
                 $json['redirect'] =
