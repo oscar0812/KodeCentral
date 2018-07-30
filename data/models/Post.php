@@ -52,7 +52,11 @@ class Post extends BasePost
     public function getSummary()
     {
         // post text has html tags, take them off before sub stringing
-        return substr(strip_tags($this->getText()), 0, 60).'...';
+        $text = substr(strip_tags($this->getText()), 0, 60);
+        if (strlen($text) == 60) {
+            return $text.'...';
+        }
+        return $text;
     }
 
     public function setUniqueHyperlink($link = null)
