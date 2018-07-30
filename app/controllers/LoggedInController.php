@@ -20,9 +20,11 @@ class LoggedInController
         })->setName('create-post');
 
         // post information coming in, new post is being created
-        // TODO: validate post
         $app->post('/create-post', function ($request, $response, $args) {
             $post = \Post::fromPostRequest($request->getParsedBody());
+            if (!$post->validate()) {
+                return $response->withJSON(['success'=>false]);
+            }
             $post->save();
             return $response->withJson(['success'=>true,
             'redirect'=>$this->router->pathFor('view-post', ['hyperlink'=>$post->getHyperlink()])]);
@@ -52,7 +54,6 @@ class LoggedInController
         })->setName('edit-post');
 
         // post information coming in, post is being edited
-        // TODO: validate post
         $app->post('/edit-post/{hyperlink}', function ($request, $response, $args) {
             $post = \PostQuery::create()->findOneByHyperlink($args['hyperlink']);
 
@@ -61,6 +62,9 @@ class LoggedInController
             }
             $link = $post->getHyperlink();
             $post = \Post::fromPostRequest($request->getParsedBody(), $post);
+            if (!$post->validate()) {
+                return $response->withJSON(['success'=>false]);
+            }
             $post->save();
             $json = ['success'=>true, 'text'=>'Post successfully updated!'];
             if ($post->getHyperlink() != $link) {

@@ -40,7 +40,7 @@ class LoggedOutController
                 echo ($info== null)?"true":"false";
             });
 
-            // info is complete, now check if correct (TODO: make sure to use validation)
+            // info is complete, now check if correct
             $app->post('/credentials', function ($request, $response, $args) {
                 $route = null;
                 if (isset($_COOKIE['prev_route'])) {
@@ -70,6 +70,9 @@ class LoggedOutController
                     }
                     $user->setJoinDate(getCurrentDate());
                     // validate here
+                    if (!$user->validate()) {
+                        return $response->withJSON(['success'=>false]);
+                    }
                     $user->save();
                     return $response->withJSON(['success'=>true]);
                 } elseif (isset($post['Forgot'])) {

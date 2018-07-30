@@ -6,6 +6,9 @@
     <vendor type="mysql">
       <parameter name="Engine" value="InnoDB"/>
     </vendor>
+    <behavior name="validate">
+      <parameter name="rule1" value="{column: name, validator: NotNull}"/>
+    </behavior>
   </table>
   <table name="comment" idMethod="native" phpName="Comment">
     <column name="id" phpName="Id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
@@ -28,6 +31,10 @@
     <vendor type="mysql">
       <parameter name="Engine" value="InnoDB"/>
     </vendor>
+    <behavior name="validate">
+      <parameter name="rule1" value="{column: text, validator: NotNull}"/>
+      <parameter name="rule2" value="{column: posted_time, validator: NotNull}"/>
+    </behavior>
   </table>
   <table name="library" idMethod="native" phpName="Library">
     <column name="id" phpName="Id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
@@ -59,6 +66,12 @@
     <vendor type="mysql">
       <parameter name="Engine" value="InnoDB"/>
     </vendor>
+    <behavior name="validate">
+      <parameter name="rule1" value="{column: title, validator: NotNull}"/>
+      <parameter name="rule2" value="{column: hyperlink, validator: NotNull}"/>
+      <parameter name="rule3" value="{column: text, validator: NotNull}"/>
+      <parameter name="rule4" value="{column: posted_date, validator: NotNull}"/>
+    </behavior>
   </table>
   <table name="post_category" idMethod="native" phpName="PostCategory" isCrossRef="true">
     <column name="post_id" phpName="PostId" type="INTEGER" primaryKey="true" required="true"/>
@@ -91,5 +104,16 @@
     <vendor type="mysql">
       <parameter name="Engine" value="InnoDB"/>
     </vendor>
+    <behavior name="validate">
+      <parameter name="rule1" value="{column: username, validator: NotNull}"/>
+
+      <parameter name="rule2" value="{column: email, validator: NotNull}"/>
+      <parameter name="rule3" value="{column: email, validator: Email}"/>
+      <parameter name="rule4" value="{column: email, validator: Unique}"/>
+
+      <parameter name="rule5" value="{column: password, validator: NotNull}"/>
+
+      <parameter name="rule6" value="{column: join_date, validator: NotNull}"/>
+    </behavior>
   </table>
 </database>

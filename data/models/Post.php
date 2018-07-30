@@ -14,6 +14,28 @@ use Base\Post as BasePost;
  */
 class Post extends BasePost
 {
+    // set nulls when empty strings for validation
+    public function setText($text)
+    {
+        if ($text == '') {
+            $this->setText(null);
+        }
+    }
+
+    public function setTitle($text)
+    {
+        if ($text == '') {
+            $this->setTitle(null);
+        }
+    }
+
+    public function setHyperlink($text)
+    {
+        if ($text == '') {
+            $this->setHyperlink(null);
+        }
+    }
+
     public function categoriesString()
     {
         $str = "";

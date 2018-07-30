@@ -14,5 +14,10 @@ use Base\Comment as BaseComment;
  */
 class Comment extends BaseComment
 {
-
+    public function setText($text)
+    {
+        if ($text == '') {
+            $text = null;
+        }
+    }
 }

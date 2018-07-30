@@ -175,6 +175,19 @@ class UserTableMap extends TableMap
     } // buildRelations()
 
     /**
+     *
+     * Gets the list of behaviors registered for this table
+     *
+     * @return array Associative array (name => parameters) of behaviors
+     */
+    public function getBehaviors()
+    {
+        return array(
+            'validate' => array('rule1' => array ('column' => 'username','validator' => 'NotNull',), 'rule2' => array ('column' => 'email','validator' => 'NotNull',), 'rule3' => array ('column' => 'email','validator' => 'Email',), 'rule4' => array ('column' => 'email','validator' => 'Unique',), 'rule5' => array ('column' => 'password','validator' => 'NotNull',), 'rule6' => array ('column' => 'join_date','validator' => 'NotNull',), ),
+        );
+    } // getBehaviors()
+
+    /**
      * Retrieves a string version of the primary key from the DB resultset row that can be used to uniquely identify a row in this table.
      *
      * For tables with a single-column primary key, that simple pkey value will be returned.  For tables with
