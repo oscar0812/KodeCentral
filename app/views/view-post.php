@@ -51,7 +51,7 @@
                     <span class="color-medium-dark"><?=$post->getPostedDate()->format('F d, Y')?></span>
                   </span>
                   <?php if($user!= null && $post->getPostedByUser() == $user) { ?>
-                  <span class="ml-1 d-none d-sm-inline">
+                  <span class="ml-1">
                     <a href="<?=$router->pathFor('edit-post', ['hyperlink'=>$post->getHyperlink()])?>">
                       <i class="fa fa-pencil"> Edit</i>
                     </a>
