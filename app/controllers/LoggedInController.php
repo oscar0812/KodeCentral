@@ -21,7 +21,11 @@ class LoggedInController
 
         // post information coming in, new post is being created
         $app->post('/create-post', function ($request, $response, $args) {
-            $post = \Post::fromPostRequest($request->getParsedBody());
+            $params = $request->getParsedBody();
+            if (!isset($params['categories'])) {
+                return $response->withJSON(['success'=>false]);
+            }
+            $post = \Post::fromPostRequest($params);
             if (!$post->validate()) {
                 return $response->withJSON(['success'=>false]);
             }

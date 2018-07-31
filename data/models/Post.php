@@ -108,6 +108,9 @@ class Post extends BasePost
 
         $post->setCategories($categories);
 
+        // TODO: set real library from input
+        $post->setLibraryId(1);
+
         return $post;
     }
 }
