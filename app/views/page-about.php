@@ -253,7 +253,7 @@
               <div class="col-lg-4 col-md-6">
                 <div class="card card-flat mt-4 card-info wow zoomInUp">
                   <div class="ms-hero-bg-info ms-hero-img-city">
-                    <img src="assets/img/demo/avatar2.jpg" alt="..." class="img-avatar-circle"> </div>
+                    <img src="assets/img/demo/avatar1.jpg" alt="..." class="img-avatar-circle"> </div>
                   <div class="card-body pt-6 text-center">
                     <h3 class="color-info">Charlie Durant</h3>
                     <p>Lorem ipsum dolor sit amet, consectetur alter adipisicing elit. Facilis, natuse inse voluptates officia repudiandae beatae magni es magnam autem molestias.</p>
@@ -272,7 +272,7 @@
               <div class="col-lg-4 col-md-6">
                 <div class="card card-flat mt-4 card-warning wow zoomInUp">
                   <div class="ms-hero-bg-warning ms-hero-img-city">
-                    <img src="assets/img/demo/avatar3.jpg" alt="..." class="img-avatar-circle"> </div>
+                    <img src="assets/img/demo/avatar1.jpg" alt="..." class="img-avatar-circle"> </div>
                   <div class="card-body pt-6 text-center">
                     <h3 class="color-warning">Joan Fawert</h3>
                     <p>Lorem ipsum dolor sit amet, consectetur alter adipisicing elit. Facilis, natuse inse voluptates officia repudiandae beatae magni es magnam autem molestias.</p>

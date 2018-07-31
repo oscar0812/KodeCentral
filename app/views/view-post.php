@@ -39,7 +39,7 @@
                 <h1 class="no-mt"><?=$post->getTitle()?></h1>
 
                 <div class="mb-4" id="user-info">
-                  <img src="<?=$home?>assets/img/demo/avatar50.jpg" alt="..." class="img-circle mr-1"> by
+                  <img src="<?=$home?>assets/img/demo/avatar10.jpg" alt="..." class="img-circle mr-1"> by
                   <?php $username = $post->getPostedByUser()->getUsername();?>
                   <a href="<?=$router->pathFor('user-profile', ['username'=>$username])?>">
                   <?=$post->getPostedByUser() == $user?$username." (You)":$username?></a> in
@@ -75,7 +75,7 @@
 
                 <div class="invisible" id="comment-template">
                   <div class="ms-icon-feature-icon">
-                    <img src="<?=$home?>assets/img/demo/avatar50.jpg" alt="..." class="img-circle mr-1">
+                    <img src="<?=$home?>assets/img/demo/avatar10.jpg" alt="..." class="img-circle mr-1">
                   </div>
                   <div class="ms-icon-feature-content">
                     <a href="#">username</a>
@@ -86,7 +86,7 @@
                 <?php foreach ($comments as $comment) { ?>
                   <div class="ms-icon-feature">
                     <div class="ms-icon-feature-icon">
-                      <img src="<?=$home?>assets/img/demo/avatar50.jpg" alt="..." class="img-circle mr-1">
+                      <img src="<?=$home?>assets/img/demo/avatar10.jpg" alt="..." class="img-circle mr-1">
                     </div>
                     <div class="ms-icon-feature-content">
                       <?php $username = $comment->getUser()->getUsername();?>

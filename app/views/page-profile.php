@@ -70,7 +70,7 @@
                     <div class="ms-media-list">
                       <div class="media mb-2">
                         <a class="mr-3" href="#">
-                          <img class="media-object" src="<?=$home?>assets/img/demo/avatar6.jpg"> </a>
+                          <img class="media-object" src="<?=$home?>assets/img/demo/avatar1.jpg"> </a>
                         <div class="media-body">
                           <h4 class="mt-0 mb-0 color-warning">Maria Sharaphova</h4>
                           <a href="mailto:joe@example.com?subject=feedback">maria.sha@example.com</a>
@@ -90,7 +90,7 @@
                       <div class="media mb-2">
                         <div class="media-left media-middle">
                           <a class="mr-3" href="#">
-                            <img class="media-object" src="<?=$home?>assets/img/demo/avatar3.jpg"> </a>
+                            <img class="media-object" src="<?=$home?>assets/img/demo/avatar1.jpg"> </a>
                         </div>
                         <div class="media-body">
                           <h4 class="mt-0 mb-0 color-warning">Rafael Nadal</h4>
@@ -111,7 +111,7 @@
                       <div class="media mb-2">
                         <div class="media-left media-middle">
                           <a class="mr-3" href="#">
-                            <img class="media-object" src="<?=$home?>assets/img/demo/avatar5.jpg"> </a>
+                            <img class="media-object" src="<?=$home?>assets/img/demo/avatar1.jpg"> </a>
                         </div>
                         <div class="media-body">
                           <h4 class="mt-0 mb-0 color-warning">Roger Federer</h4>
@@ -194,7 +194,7 @@
                         <span>March</span>
                       </time>
                       <i class="ms-timeline-point bg-royal"></i>
-                      <img src="<?=$home?>assets/img/demo/avatar6.jpg" class="ms-timeline-point-img"> </div>
+                      <img src="<?=$home?>assets/img/demo/avatar1.jpg" class="ms-timeline-point-img"> </div>
                     <div class="card card-royal">
                       <div class="card-header">
                         <h3 class="card-title">Card Title</h3>
@@ -264,7 +264,7 @@
                         <span>February</span>
                       </time>
                       <i class="ms-timeline-point bg-warning"></i>
-                      <img src="<?=$home?>assets/img/demo/avatar2.jpg" class="ms-timeline-point-img"> </div>
+                      <img src="<?=$home?>assets/img/demo/avatar1.jpg" class="ms-timeline-point-img"> </div>
                     <div class="card card-warning">
                       <div class="card-header">
                         <h3 class="card-title">Card Title</h3>
@@ -308,7 +308,7 @@
                         <span>January</span>
                       </time>
                       <i class="ms-timeline-point bg-info"></i>
-                      <img src="<?=$home?>assets/img/demo/avatar3.jpg" class="ms-timeline-point-img"> </div>
+                      <img src="<?=$home?>assets/img/demo/avatar1.jpg" class="ms-timeline-point-img"> </div>
                     <div class="card card-info">
                       <div class="card-header">
                         <h3 class="card-title">Card Title</h3>
