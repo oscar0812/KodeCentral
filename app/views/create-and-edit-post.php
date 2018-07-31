@@ -178,6 +178,14 @@
       preload.remove();
 
       $(function() {
+        function shake(element) {
+          animation = 'animated shake';
+          animationDone = 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd onanimationend animationend';
+
+          element.addClass(animation).one(animationDone, function(){
+            $(this).removeClass(animation)
+          });
+        }
         $('#create-form').on('submit', function(e) {
           title = $('#title').val();
           root = $(quill.root).clone();
@@ -185,7 +193,12 @@
           categories = $('#categories-select').val();
 
           if (title.trim() == "") {
-            $('#title').focus();
+            shake($('#title').parent());
+            return false;
+          }
+
+          if(categories.length == 0){
+            shake($('#categories-select').parent());
             return false;
           }
 
@@ -193,7 +206,7 @@
           empty_text = "<p><br></p>";
 
           if (html == empty_text || html == "") {
-            $(quill.root).focus();
+            shake($(quill.root));
             return false;
           }
 
