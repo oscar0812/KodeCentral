@@ -15,9 +15,9 @@
     <link rel="stylesheet" href="<?=$home?>assets/css/preload.min.css">
     <link rel="stylesheet" href="<?=$home?>assets/css/plugins.min.css">
     <link rel="stylesheet" href="<?=$home?>assets/css/style.blue-600.min.css">
-    <link rel="stylesheet" href="<?=$home?>assets/plugins/quill/css/katex.min.css" />
-    <link rel="stylesheet" href="<?=$home?>assets/plugins/quill/css/monokai-sublime.min.css" />
-    <link rel="stylesheet" href="<?=$home?>assets/plugins/quill/css/quill.snow.css" />
+    <link rel="stylesheet" href="<?=$home?>assets/css/katex.min.css" />
+    <link rel="stylesheet" href="<?=$home?>assets/css/monokai-sublime.min.css" />
+    <link rel="stylesheet" href="<?=$home?>assets/css/quill.snow.css" />
     <!--[if lt IE 9]>
         <script src="<?=$home?>assets/js/html5shiv.min.js"></script>
         <script src="<?=$home?>assets/js/respond.min.js"></script>
@@ -149,9 +149,9 @@
     <script src="<?=$home?>assets/js/plugins.min.js"></script>
     <script src="<?=$home?>assets/js/app.min.js"></script>
 
-    <script src="<?=$home?>assets/plugins/quill/js/katex.min.js"></script>
-    <script src="<?=$home?>assets/plugins/quill/js/highlight.min.js"></script>
-    <script src="<?=$home?>assets/plugins/quill/js/quill.min.js"></script>
+    <script src="<?=$home?>assets/js/katex.min.js"></script>
+    <script src="<?=$home?>assets/js/highlight.min.js"></script>
+    <script src="<?=$home?>assets/js/quill.min.js"></script>
 
     <script>
       var quill = new Quill('#editor-container', {

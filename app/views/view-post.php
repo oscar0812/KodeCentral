@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="<?=$home?>assets/css/preload.min.css">
     <link rel="stylesheet" href="<?=$home?>assets/css/plugins.min.css">
     <link rel="stylesheet" href="<?=$home?>assets/css/style.blue-600.min.css">
-    <link rel="stylesheet" href="<?=$home?>assets/plugins/quill/css/monokai-sublime.min.css">
+    <link rel="stylesheet" href="<?=$home?>assets/css/monokai-sublime.min.css">
     <!--[if lt IE 9]>
         <script src="<?=$home?>assets/js/html5shiv.min.js"></script>
         <script src="<?=$home?>assets/js/respond.min.js"></script>
@@ -39,7 +39,7 @@
                 <h1 class="no-mt"><?=$post->getTitle()?></h1>
 
                 <div class="mb-4" id="user-info">
-                  <img src="<?=$home?>assets/img/demo/avatar10.jpg" alt="..." class="img-circle mr-1"> by
+                  <img src="<?=$home?>assets/img/demo/avatar50.jpg" alt="..." class="img-circle mr-1"> by
                   <?php $username = $post->getPostedByUser()->getUsername();?>
                   <a href="<?=$router->pathFor('user-profile', ['username'=>$username])?>">
                   <?=$post->getPostedByUser() == $user?$username." (You)":$username?></a> in
@@ -75,7 +75,7 @@
 
                 <div class="invisible" id="comment-template">
                   <div class="ms-icon-feature-icon">
-                    <img src="<?=$home?>assets/img/demo/avatar10.jpg" alt="..." class="img-circle mr-1">
+                    <img src="<?=$home?>assets/img/demo/avatar50.jpg" alt="..." class="img-circle mr-1">
                   </div>
                   <div class="ms-icon-feature-content">
                     <a href="#">username</a>
@@ -86,7 +86,7 @@
                 <?php foreach ($comments as $comment) { ?>
                   <div class="ms-icon-feature">
                     <div class="ms-icon-feature-icon">
-                      <img src="<?=$home?>assets/img/demo/avatar10.jpg" alt="..." class="img-circle mr-1">
+                      <img src="<?=$home?>assets/img/demo/avatar50.jpg" alt="..." class="img-circle mr-1">
                     </div>
                     <div class="ms-icon-feature-content">
                       <?php $username = $comment->getUser()->getUsername();?>
@@ -324,7 +324,7 @@
     <?php require_once('templates/slidebar.php')?>
     <script src="<?=$home?>assets/js/plugins.min.js"></script>
     <script src="<?=$home?>assets/js/app.min.js"></script>
-    <script src="<?=$home?>assets/plugins/quill/js/highlight.min.js"></script>
+    <script src="<?=$home?>assets/js/highlight.min.js"></script>
     <script>hljs.initHighlightingOnLoad();</script>
     <script type="text/javascript">
       $(function(){

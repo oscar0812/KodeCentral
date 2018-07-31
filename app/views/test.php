@@ -27,11 +27,11 @@
 <link type="application/atom+xml" rel="alternate" href="https://quilljs.com/feed.xml" title="Quill - Your powerful rich text editor" />
 
 
-<link rel="stylesheet" href="<?=$home?>assets/plugins/quill/css/katex.min.css" />
+<link rel="stylesheet" href="<?=$home?>assets/css/katex.min.css" />
 
-<link rel="stylesheet" href="<?=$home?>assets/plugins/quill/css/monokai-sublime.min.css" />
+<link rel="stylesheet" href="<?=$home?>assets/css/monokai-sublime.min.css" />
 
-<link rel="stylesheet" href="<?=$home?>assets/plugins/quill/css/quill.snow.css" />
+<link rel="stylesheet" href="<?=$home?>assets/css/quill.snow.css" />
 
 <style>
   body > #standalone-container {
@@ -97,11 +97,11 @@
 </div>
 
 
-<script src="<?=$home?>assets/plugins/quill/js/katex.min.js"></script>
+<script src="<?=$home?>assets/js/katex.min.js"></script>
 
-<script src="<?=$home?>assets/plugins/quill/js/highlight.min.js"></script>
+<script src="<?=$home?>assets/js/highlight.min.js"></script>
 
-<script src="<?=$home?>assets/plugins/quill/js/quill.min.js"></script>
+<script src="<?=$home?>assets/js/quill.min.js"></script>
 
 <script>
   var quill = new Quill('#editor-container', {
