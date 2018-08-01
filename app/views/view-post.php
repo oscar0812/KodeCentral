@@ -373,10 +373,9 @@
                 attr('src', info.find('img').attr('src'));
 
               new_name = template.find('.ms-icon-feature-content>a');
-              current_name = info.find('a').eq(0);
 
-              new_name.attr('href', current_name.attr('href')).
-                text(current_name.text());
+              new_name.attr('href', data['link']).
+                text(data['username']);
 
               // set the comment text
               template.find('.ms-icon-feature-content>p').text(data['text']);

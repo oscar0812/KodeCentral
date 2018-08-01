@@ -111,14 +111,21 @@ class LoggedInController
                 return $response->withJson(['success'=>false]);
             }
 
+            $user = \User::current();
+            $user_link = $this->router->pathFor('user-profile',
+            ['username'=>$user->getUsername()]);
+
             $comment = new \Comment();
             $comment->setText($text);
-            $comment->setUser(\User::current());
+            $comment->setUser($user);
             $comment->setPost($post);
             $comment->setPostedTime(getCurrentDateTime());
             $comment->save();
 
-            return $response->withJson(['success'=>true, 'text'=>$comment->getText()]);
+            return $response->withJson(['success'=>true,
+            'text'=>$comment->getText(),
+            'link'=>$user_link,
+            'username'=>$user->getUsername().' (You)']);
         })->setName('post-comment');
     }
 
