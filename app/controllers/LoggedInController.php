@@ -162,7 +162,7 @@ class LoggedInController
           $controller->logOut($app);
         })->add(function ($request, $response, $next) {
             $user = \User::current();
-            if ($user != null && $user->isSuper()) {
+            if ($user != null) {
                 // signed in, show them what they want
                 return $next($request, $response);
             } else {
