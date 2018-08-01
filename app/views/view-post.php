@@ -9,7 +9,7 @@
     <meta name="theme-color" content="#333">
     <title>Kode Central | <?=$post->getTitle()?></title>
     <meta name="description" content="Kode Central, a place for programmers">
-    <link rel="shortcut icon" href="<?=$home?>assets/img/favicon.png?v=3">
+    <link rel="shortcut icon" href="<?=$home?>assets/img/favicon.ico">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="<?=$home?>assets/css/preload.min.css">
     <link rel="stylesheet" href="<?=$home?>assets/css/plugins.min.css">
