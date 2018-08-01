@@ -139,16 +139,30 @@ class LoggedInController
 
     public static function setUpRouting($app)
     {
+        // 2 middleware, first has all ability, 2nd can only post comments and
+        // log out
         $controller = new LoggedInController();
         $app->group('', function () use ($controller, $app) {
             $controller->createPost($app);
             $controller->editPost($app);
             $controller->userPosts($app);
-            $controller->postComment($app);
-
-            $controller->logOut($app);
         })->add(function ($request, $response, $next) {
-            if (\User::current() != null) {
+            $user = \User::current();
+            if ($user != null && $user->isSuper()) {
+                // signed in and super user, show them what they want
+                return $next($request, $response);
+            } else {
+                // not signed in, redirect to home page
+                return $response->withRedirect($this->router->pathFor('user-login-form'));
+            }
+        });
+
+        $app->group('', function () use ($controller, $app) {
+          $controller->postComment($app);
+          $controller->logOut($app);
+        })->add(function ($request, $response, $next) {
+            $user = \User::current();
+            if ($user != null && $user->isSuper()) {
                 // signed in, show them what they want
                 return $next($request, $response);
             } else {
@@ -156,5 +170,6 @@ class LoggedInController
                 return $response->withRedirect($this->router->pathFor('user-login-form'));
             }
         });
+
     }
 }

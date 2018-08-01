@@ -117,6 +117,14 @@ abstract class User implements ActiveRecordInterface
     protected $password;
 
     /**
+     * The value for the is_super field.
+     *
+     * Note: this column has a database default value of: false
+     * @var        boolean
+     */
+    protected $is_super;
+
+    /**
      * @var        ObjectCollection|ChildComment[] Collection to store aggregation of ChildComment objects.
      */
     protected $collComments;
@@ -166,10 +174,23 @@ abstract class User implements ActiveRecordInterface
     protected $postsScheduledForDeletion = null;
 
     /**
+     * Applies default values to this object.
+     * This method should be called from the object's constructor (or
+     * equivalent initialization method).
+     * @see __construct()
+     */
+    public function applyDefaultValues()
+    {
+        $this->is_super = false;
+    }
+
+    /**
      * Initializes internal state of Base\User object.
+     * @see applyDefaults()
      */
     public function __construct()
     {
+        $this->applyDefaultValues();
     }
 
     /**
@@ -451,6 +472,26 @@ abstract class User implements ActiveRecordInterface
     }
 
     /**
+     * Get the [is_super] column value.
+     *
+     * @return boolean
+     */
+    public function getIsSuper()
+    {
+        return $this->is_super;
+    }
+
+    /**
+     * Get the [is_super] column value.
+     *
+     * @return boolean
+     */
+    public function isSuper()
+    {
+        return $this->getIsSuper();
+    }
+
+    /**
      * Set the value of [id] column.
      *
      * @param int $v new value
@@ -551,6 +592,34 @@ abstract class User implements ActiveRecordInterface
     } // setPassword()
 
     /**
+     * Sets the value of the [is_super] column.
+     * Non-boolean arguments are converted using the following rules:
+     *   * 1, '1', 'true',  'on',  and 'yes' are converted to boolean true
+     *   * 0, '0', 'false', 'off', and 'no'  are converted to boolean false
+     * Check on string values is case insensitive (so 'FaLsE' is seen as 'false').
+     *
+     * @param  boolean|integer|string $v The new value
+     * @return $this|\User The current object (for fluent API support)
+     */
+    public function setIsSuper($v)
+    {
+        if ($v !== null) {
+            if (is_string($v)) {
+                $v = in_array(strtolower($v), array('false', 'off', '-', 'no', 'n', '0', '')) ? false : true;
+            } else {
+                $v = (boolean) $v;
+            }
+        }
+
+        if ($this->is_super !== $v) {
+            $this->is_super = $v;
+            $this->modifiedColumns[UserTableMap::COL_IS_SUPER] = true;
+        }
+
+        return $this;
+    } // setIsSuper()
+
+    /**
      * Indicates whether the columns in this object are only set to default values.
      *
      * This method can be used in conjunction with isModified() to indicate whether an object is both
@@ -560,6 +629,10 @@ abstract class User implements ActiveRecordInterface
      */
     public function hasOnlyDefaultValues()
     {
+            if ($this->is_super !== false) {
+                return false;
+            }
+
         // otherwise, everything was equal, so return TRUE
         return true;
     } // hasOnlyDefaultValues()
@@ -603,6 +676,9 @@ abstract class User implements ActiveRecordInterface
 
             $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : UserTableMap::translateFieldName('Password', TableMap::TYPE_PHPNAME, $indexType)];
             $this->password = (null !== $col) ? (string) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 5 + $startcol : UserTableMap::translateFieldName('IsSuper', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->is_super = (null !== $col) ? (boolean) $col : null;
             $this->resetModified();
 
             $this->setNew(false);
@@ -611,7 +687,7 @@ abstract class User implements ActiveRecordInterface
                 $this->ensureConsistency();
             }
 
-            return $startcol + 5; // 5 = UserTableMap::NUM_HYDRATE_COLUMNS.
+            return $startcol + 6; // 6 = UserTableMap::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
             throw new PropelException(sprintf('Error populating %s object', '\\User'), 0, $e);
@@ -865,6 +941,9 @@ abstract class User implements ActiveRecordInterface
         if ($this->isColumnModified(UserTableMap::COL_PASSWORD)) {
             $modifiedColumns[':p' . $index++]  = 'password';
         }
+        if ($this->isColumnModified(UserTableMap::COL_IS_SUPER)) {
+            $modifiedColumns[':p' . $index++]  = 'is_super';
+        }
 
         $sql = sprintf(
             'INSERT INTO user (%s) VALUES (%s)',
@@ -890,6 +969,9 @@ abstract class User implements ActiveRecordInterface
                         break;
                     case 'password':
                         $stmt->bindValue($identifier, $this->password, PDO::PARAM_STR);
+                        break;
+                    case 'is_super':
+                        $stmt->bindValue($identifier, (int) $this->is_super, PDO::PARAM_INT);
                         break;
                 }
             }
@@ -968,6 +1050,9 @@ abstract class User implements ActiveRecordInterface
             case 4:
                 return $this->getPassword();
                 break;
+            case 5:
+                return $this->getIsSuper();
+                break;
             default:
                 return null;
                 break;
@@ -1003,6 +1088,7 @@ abstract class User implements ActiveRecordInterface
             $keys[2] => $this->getEmail(),
             $keys[3] => $this->getJoinDate(),
             $keys[4] => $this->getPassword(),
+            $keys[5] => $this->getIsSuper(),
         );
         if ($result[$keys[3]] instanceof \DateTimeInterface) {
             $result[$keys[3]] = $result[$keys[3]]->format('c');
@@ -1093,6 +1179,9 @@ abstract class User implements ActiveRecordInterface
             case 4:
                 $this->setPassword($value);
                 break;
+            case 5:
+                $this->setIsSuper($value);
+                break;
         } // switch()
 
         return $this;
@@ -1133,6 +1222,9 @@ abstract class User implements ActiveRecordInterface
         }
         if (array_key_exists($keys[4], $arr)) {
             $this->setPassword($arr[$keys[4]]);
+        }
+        if (array_key_exists($keys[5], $arr)) {
+            $this->setIsSuper($arr[$keys[5]]);
         }
     }
 
@@ -1189,6 +1281,9 @@ abstract class User implements ActiveRecordInterface
         }
         if ($this->isColumnModified(UserTableMap::COL_PASSWORD)) {
             $criteria->add(UserTableMap::COL_PASSWORD, $this->password);
+        }
+        if ($this->isColumnModified(UserTableMap::COL_IS_SUPER)) {
+            $criteria->add(UserTableMap::COL_IS_SUPER, $this->is_super);
         }
 
         return $criteria;
@@ -1280,6 +1375,7 @@ abstract class User implements ActiveRecordInterface
         $copyObj->setEmail($this->getEmail());
         $copyObj->setJoinDate($this->getJoinDate());
         $copyObj->setPassword($this->getPassword());
+        $copyObj->setIsSuper($this->getIsSuper());
 
         if ($deepCopy) {
             // important: temporarily setNew(false) because this affects the behavior of
@@ -1861,8 +1957,10 @@ abstract class User implements ActiveRecordInterface
         $this->email = null;
         $this->join_date = null;
         $this->password = null;
+        $this->is_super = null;
         $this->alreadyInSave = false;
         $this->clearAllReferences();
+        $this->applyDefaultValues();
         $this->resetModified();
         $this->setNew(true);
         $this->setDeleted(false);
