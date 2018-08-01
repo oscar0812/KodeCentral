@@ -23,11 +23,11 @@ class LoggedInController
         $app->post('/create-post', function ($request, $response, $args) {
             $params = $request->getParsedBody();
             if (!isset($params['categories'])) {
-                return $response->withJSON(['success'=>false]);
+                return $response->withJSON(['success'=>false, 'text'=>'No categories']);
             }
             $post = \Post::fromPostRequest($params);
             if (!$post->validate()) {
-                return $response->withJSON(['success'=>false]);
+                return $response->withJSON(['success'=>false, 'text'=>'Error!']);
             }
             $post->save();
             return $response->withJson(['success'=>true,
@@ -69,7 +69,7 @@ class LoggedInController
             $post->setText($request->getParsedBody()['text']);
 
             if (!$post->validate()) {
-                return $response->withJSON(['success'=>false]);
+                return $response->withJSON(['success'=>false, 'text'=>'Error!']);
             }
 
             $post->save();

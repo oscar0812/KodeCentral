@@ -122,13 +122,14 @@
 
                 <div class="form-group row">
                   <div class="col-lg-10">
+                    <?php if(!$editing) { ?>
                     <button type="submit" class="btn btn-raised btn-primary">Submit</button>
-                    <a href="<?=$router->pathFor('user-profile', ['username'=>$user->getUsername()])?>" class="btn btn-danger"> cancel </a>
-                    <?php if ($editing) {
-        ?>
+                    <?php } ?>
+                    <button <?php if(!$editing) { ?>id="save-button" <?php } ?> type="submit" class="btn btn-raised btn-success">Save</button>
+                    <?php if ($editing) { ?>
                     <a href="<?=$router->pathFor('view-post', ['hyperlink'=>$post->getHyperlink()])?>" class="btn btn-success"> view </a>
-                    <?php
-    } ?>
+                    <?php } ?>
+                    <a href="<?=$router->pathFor('user-profile', ['username'=>$user->getUsername()])?>" class="btn btn-danger"> cancel </a>
                   </div>
                 </div>
                 <div class="form-group row">
@@ -148,6 +149,8 @@
     <?php require_once('templates/slidebar.php')?>
     <script src="<?=$home?>assets/js/plugins.min.js"></script>
     <script src="<?=$home?>assets/js/app.min.js"></script>
+
+    <script src="<?=$home?>assets/js/js-cookie.js"></script>
 
     <script src="<?=$home?>assets/js/katex.min.js"></script>
     <script src="<?=$home?>assets/js/highlight.min.js"></script>
@@ -178,6 +181,23 @@
       preload.remove();
 
       $(function() {
+        response = $('#submit-response');
+
+        // if cookie was set, then user saved
+        if(typeof Cookies.get(window.location.href) != 'undefined') {
+          $(quill.root).html(Cookies.get(window.location.href));
+        }
+
+        // save a cookie with the text if save button is clicked
+        $('#save-button').on('click', function(){
+          Cookies.set(window.location.href, $(quill.root).html(), { expires: 1 });
+
+          response.removeClass('invisible').
+              removeClass('text-danger').addClass('text-success');
+          response.text('Text saved!');
+          return false;
+        });
+
         function shake(element) {
           animation = 'animated shake';
           animationDone = 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd onanimationend animationend';
@@ -211,7 +231,6 @@
           }
 
           // show the user that something is happening
-          response = $('#submit-response');
           response.removeClass('invisible').
               removeClass('text-danger').addClass('text-success');
           response.text('Loading...');
@@ -241,6 +260,8 @@
             success: function(data) {
 
               if(data['success']){
+                // submitted, so stop saving the current text state
+                Cookies.remove(window.location.href);
                 if(typeof data['redirect'] != 'undefined'){
                   // if the logic is to redirect, then do it
                   window.location.href = data['redirect'];
