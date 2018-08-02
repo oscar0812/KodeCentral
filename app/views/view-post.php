@@ -39,7 +39,7 @@
                 <h1 class="no-mt"><?=$post->getTitle()?></h1>
 
                 <div class="mb-4" id="user-info">
-                  <img src="<?=$home?>assets/img/demo/avatar50.jpg" alt="..." class="img-circle mr-1"> by
+                  <img src="<?=$user->getPfp($home)?>" alt="..." class="img-circle mr-1 avatar-50-50"> by
                   <?php $username = $post->getPostedByUser()->getUsername();?>
                   <a href="<?=$router->pathFor('user-profile', ['username'=>$username])?>">
                   <?=$post->getPostedByUser() == $user?$username." (You)":$username?></a> in
@@ -75,7 +75,7 @@
 
                 <div class="invisible" id="comment-template">
                   <div class="ms-icon-feature-icon">
-                    <img src="<?=$home?>assets/img/demo/avatar50.jpg" alt="..." class="img-circle mr-1">
+                    <img src="<?=$home?>assets/img/demo/avatar50.jpg" alt="..." class="img-circle mr-1 avatar-50-50">
                   </div>
                   <div class="ms-icon-feature-content">
                     <a href="#">username</a>
@@ -86,7 +86,7 @@
                 <?php foreach ($comments as $comment) { ?>
                   <div class="ms-icon-feature">
                     <div class="ms-icon-feature-icon">
-                      <img src="<?=$home?>assets/img/demo/avatar50.jpg" alt="..." class="img-circle mr-1">
+                      <img src="<?=$comment->getUser()->getPfp($home)?>" alt="..." class="img-circle mr-1 avatar-50-50">
                     </div>
                     <div class="ms-icon-feature-content">
                       <?php $username = $comment->getUser()->getUsername();?>
@@ -367,10 +367,8 @@
               template = $('#comment-template').clone().
                 addClass('ms-icon-feature').removeClass('invisible');
 
-              // pfp and name are the same as the user signed in, so get them
-              // from the post contect
               pfp = template.find('.ms-icon-feature-icon>img').
-                attr('src', info.find('img').attr('src'));
+                attr('src', data['pfp']);
 
               new_name = template.find('.ms-icon-feature-content>a');
 

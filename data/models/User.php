@@ -69,4 +69,13 @@ class User extends BaseUser
         }
         return parent::setByName($name, $str, $type);
     }
+
+    public function getPfp($home)
+    {
+        $pfp = $this->getProfilePicture();
+        if ($pfp == "") {
+            return $home."assets/img/demo/avatar1.jpg";
+        }
+        return $pfp;
+    }
 }

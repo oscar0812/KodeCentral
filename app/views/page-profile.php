@@ -39,7 +39,7 @@
                   <div class="ms-hero-bg-primary ms-hero-img-coffee">
                     <h3 class="color-white index-1 text-center no-m pt-4"><?=$user->getUsername()?></h3>
                     <div class="color-medium index-1 text-center np-m">@<?=$user->getUsername()?></div>
-                    <img src="<?=$home?>assets/img/demo/avatar1.jpg" alt="..." class="img-avatar-circle"> </div>
+                    <img src="<?=$user->getPfp($home)?>" alt="..." class="img-avatar-circle"> </div>
                   <div class="card-body pt-4 text-center">
                     <h3 class="color-primary">Bio</h3>
                     <p>Lorem ipsum dolor sit amet, consectetur alter adipisicing elit. Facilis, natuse inse voluptates officia repudiandae beatae magni es magnam autem molestias.</p>
@@ -56,8 +56,9 @@
                 </div>
               </div>
               <div class="col-lg-12 col-md-12 order-md-3 order-lg-2">
-                <a href="javascript:void(0)" class="btn btn-warning btn-raised btn-block animated fadeInUp animation-delay-12">
-                  <i class="zmdi zmdi-edit"></i> Edit Profile</a>
+                <button type="button" class="btn btn-warning btn-raised btn-block animated fadeInUp animation-delay-12" data-toggle="modal" data-target="#profile-modal">
+                  <i class="zmdi zmdi-edit"> Edit Profile</i>
+                </button>
                 <a href="<?=$router->pathFor('user-logout')?>" class="btn btn-danger btn-raised btn-block animated fadeInUp animation-delay-12">
                   <i class="fa fa-sign-out"></i> Log Out</a>
               </div>
@@ -327,8 +328,8 @@
                       <div class="ms-hero-bg-primary ms-hero-img-coffee">
                         <h3 class="color-white index-1 text-center no-m pt-4">Victoria Smith</h3>
                         <div class="color-medium index-1 text-center np-m">@vic_smith</div>
-                        <img src="<?=$home?>assets/img/demo/avatar1.jpg" alt="..." class="img-avatar-circle"> </div>
-                      <div class="card-body pt-4 text-center">
+                        <img src="<?=$user->getPfp($home)?>" alt="..." class="img-avatar-circle"> </div>
+                        <div class="card-body pt-4 text-center">
                         <h3 class="color-primary">Bio</h3>
                         <p>Lorem ipsum dolor sit amet, consectetur alter adipisicing elit. Facilis, natuse inse voluptates officia repudiandae beatae magni es magnam autem molestias.</p>
                         <a href="javascript:void(0)" class="btn-circle btn-circle-raised btn-circle-xs mt-1 mr-1 no-mr-md btn-facebook">
@@ -350,11 +351,53 @@
         </div>
       </div>
       <!-- container -->
+
+      <!-- Modal -->
+      <div class="modal" id="profile-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog modal-lg animated zoomIn animated-3x" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h3 class="modal-title color-primary" id="myModalLabel">Modal title</h3>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="zmdi zmdi-close"></i></span></button>
+            </div>
+            <div class="modal-body container">
+              <form class="form-horizontal" autocomplete="off" method="post" action="<?=$router->pathFor('user-pfp')?>" enctype="multipart/form-data" id="pfpForm">
+                <fieldset>
+                  <div class="form-group row justify-content-start">
+                    <div class="col-lg-10 col-md-8 col-sm-8">
+                      <input type="text" readonly="" class="form-control" placeholder="Browse...">
+                      <input type="file" multiple="" accept="image/*" name="pfpUpload" id="pfpUpload">
+                    </div>
+                    <div class="col-lg-2 col-md-4 col-sm-4">
+                      <button type="submit" class="btn btn-raised btn-primary">Submit</button>
+                    </div>
+                  </div>
+                </fieldset>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+              <button type="button" class="btn  btn-primary">Save changes</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <?php require_once('templates/footer.php')?>
     </div>
     <?php require_once('templates/slidebar.php')?>
     <!-- ms-site-container -->
     <script src="<?=$home?>assets/js/plugins.min.js"></script>
     <script src="<?=$home?>assets/js/app.min.js"></script>
+    <script type="text/javascript">
+      $(function(){
+        $('#pfpForm').on('submit', function(e){
+          ajaxForm(e.target, function(data){
+            console.log(data);
+          });
+          return false;
+        })
+      })
+    </script>
   </body>
 </html>

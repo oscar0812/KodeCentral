@@ -112,8 +112,7 @@ class LoggedInController
             }
 
             $user = \User::current();
-            $user_link = $this->router->pathFor('user-profile',
-            ['username'=>$user->getUsername()]);
+            $user_link = $this->router->pathFor('user-profile', ['username'=>$user->getUsername()]);
 
             $comment = new \Comment();
             $comment->setText($text);
@@ -124,9 +123,28 @@ class LoggedInController
 
             return $response->withJson(['success'=>true,
             'text'=>$comment->getText(),
-            'link'=>$user_link,
+            'link'=>$user_link, 'pfp'=>$user->getPfp($this->router->pathFor('home')),
             'username'=>$user->getUsername().' (You)']);
         })->setName('post-comment');
+    }
+
+    // user is trying to change profile picture
+    public function uploadPfp($app)
+    {
+        // trying to upload a pfp
+        $app->post('/pfp', function ($request, $response) {
+            $user = \User::current();
+            // call ImageUpload which returns an array with flags and data
+            $arr = \App\Utils\ImageUpload::uploadPfp($user, $this->router->pathFor('home'));
+
+            if ($arr['success']) {
+                // successfully uploaded image, so set the path as the
+                // users pfp url in db
+                $user->setProfilePicture($arr['path']);
+                $user->save();
+            }
+            return $response->withJson($arr);
+        })->setName('user-pfp');
     }
 
     public function logOut($app)
@@ -158,8 +176,9 @@ class LoggedInController
         });
 
         $app->group('', function () use ($controller, $app) {
-          $controller->postComment($app);
-          $controller->logOut($app);
+            $controller->postComment($app);
+            $controller->logOut($app);
+            $controller->uploadPfp($app);
         })->add(function ($request, $response, $next) {
             $user = \User::current();
             if ($user != null) {
@@ -170,6 +189,5 @@ class LoggedInController
                 return $response->withRedirect($this->router->pathFor('user-login-form'));
             }
         });
-
     }
 }
