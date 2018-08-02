@@ -40,13 +40,13 @@
                   <tr>
                     <td class="d-none d-sm-block">
                       <img src="<?=$home?>assets/img/default_pfp.png" class="avatar-50-50" alt=""> </td>
-                    <td>
+                    <td style="width: 33%">
                       <h4 class=""><?=$post->getTitle()?></h4>
                     </td>
-                    <td>
+                    <td style="width: 33%">
                       <span class="color-info"><?=$post->getPostedDate()->format('F d,Y')?></span>
                     </td>
-                    <td>
+                    <td style="width: 33%">
                       <button class="btn btn-success"
                       data-url="<?=$router->pathFor('view-post', ['hyperlink'=>$post->getHyperlink()])?>">
                         <i class="zmdi zmdi-eye"></i> View</button>

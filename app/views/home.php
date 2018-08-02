@@ -38,7 +38,7 @@
             <a href="<?=$router->pathFor('user-login-form')?>" class="btn btn-raised btn-warning animated fadeInUp animation-delay-10">
               <i class="zmdi zmdi-accounts"></i> Become a member</a>
             <a href="<?=$router->pathFor('contact-us')?>" class="btn btn-raised btn-info animated fadeInUp animation-delay-10">
-              <i class="zmdi zmdi-email"></i> Concact us</a>
+              <i class="zmdi zmdi-email"></i> Contact us</a>
           </div>
         </div>
       </div>
@@ -97,34 +97,28 @@
               </div>
             </div>
           </div>
-          <div class="col-md-9">
-            <div class="row" id="Container">
-              <?php foreach($posts as $post) {?>
-              <div class="col-md-4 col-sm-6 mix <?=$post->categoriesString()?>">
-                <div class="card width-auto">
-                  <figure class="ms-thumbnail">
-                    <img src="assets/img/port1.jpg" alt="" class="img-fluid">
-                    <figcaption class="ms-thumbnail-caption text-center">
-                      <div class="ms-thumbnail-caption-content">
-                        <h4 class="ms-thumbnail-caption-title mb-2"><?=$post->getTitle()?></h4>
-                        <a href="<?=$router->pathFor('view-post', ['hyperlink'=>$post->getHyperlink()])?>" class="btn-circle btn-circle-raised btn-circle-xs mr-1 btn-circle-white color-info">
-                          <i class="zmdi zmdi-eye"></i>
-                        </a>
-                        <a href="javascript:void(0)" class="btn-circle btn-circle-raised btn-circle-xs ml-1 mr-1 btn-circle-white color-danger">
-                          <i class="zmdi zmdi-favorite"></i>
-                        </a>
-                      </div>
-                    </figcaption>
-                  </figure>
-                  <div class="card-body overflow-hidden text-center portfolio-item-caption d-none">
-                    <h3 class="color-primary no-mt"><?=$post->getTitle()?></h3>
-                    <p><?=$post->getSummary()?></p>
-                  </div>
-                </div>
+          <div class="col-md-9" id="Container">
+            <?php foreach ($posts as $post) { ?>
+              <div class="card mb-1 mix <?=$post->categoriesString()?>">
+                <table class="table table-no-border vertical-center">
+                  <tr>
+                    <td class="d-none d-sm-block">
+                      <img src="assets/img/default_pfp.png" class="avatar-50-50" alt=""> </td>
+                    <td style="width: 33%">
+                      <h4 class=""><?=$post->getTitle()?></h4>
+                    </td>
+                    <td style="width: 33%">
+                      <span class="color-info"><?=$post->getPostedDate()->format('F d,Y')?></span>
+                    </td>
+                    <td style="width: 33%">
+                      <button class="btn btn-success"
+                      data-url="<?=$router->pathFor('view-post', ['hyperlink'=>$post->getHyperlink()])?>">
+                        <i class="zmdi zmdi-eye"></i> View</button>
+                    </td>
+                  </tr>
+                </table>
               </div>
-              <!-- item -->
-             <?php } ?>
-            </div>
+            <?php }?>
           </div>
         </div>
       </div>

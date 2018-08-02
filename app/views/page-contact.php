@@ -57,7 +57,7 @@
                     <div class="form-group row">
                       <label for="textArea" class="col-lg-2 control-label">Message</label>
                       <div class="col-lg-9">
-                        <textarea class="form-control" rows="3" id="textArea" placeholder="Yout message..."></textarea>
+                        <textarea class="form-control" rows="3" id="textArea" placeholder="Your message..."></textarea>
                       </div>
                     </div>
                     <div class="form-group row justify-content-end">
