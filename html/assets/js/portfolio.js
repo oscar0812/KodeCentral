@@ -11,7 +11,5 @@ $(function() {
     $(".portfolio-item-caption").removeClass("d-none")
   }), $("#portHide").click(function() {
     $(".portfolio-item-caption").addClass("d-none")
-  }), $("#port-show").click(function() {
-    this.checked ? $(".portfolio-item-caption").removeClass("d-none") : $(".portfolio-item-caption").addClass("d-none")
   })
 });

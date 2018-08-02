@@ -81,7 +81,7 @@
                       <h4 class=""><?=$post->getTitle()?></h4>
                     </td>
                     <td style="width: 33%">
-                      <span class="color-info"><?=$post->getPostedDate()->format('F d,Y')?></span>
+                      <span class="color-info"><?=$post->getPostedDate()->format('F d, Y')?></span>
                     </td>
                     <td style="width: 33%">
                       <button class="btn btn-success"
