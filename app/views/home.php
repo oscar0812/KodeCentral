@@ -67,33 +67,6 @@
 
                   </div>
                 </form>
-                <h4 class="mt-2 color-primary no-mb">Columns</h4>
-              </div>
-              <ul class="nav nav-tabs nav-tabs-transparent indicator-primary nav-tabs-full nav-tabs-4" role="tablist">
-                <li class="nav-item">
-                  <a id="Cols1" class="nav-link withoutripple" href="#home7" aria-controls="home7" role="tab" data-toggle="tab">1</a>
-                </li>
-                <li class="nav-item">
-                  <a id="Cols2" class="nav-link withoutripple" href="#profile7" aria-controls="profile7" role="tab" data-toggle="tab">2</span>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a id="Cols3" class="nav-link active withoutripple" href="#messages7" aria-controls="messages7" role="tab" data-toggle="tab">3</a>
-                </li>
-                <li class="nav-item">
-                  <a id="Cols4" class="nav-link withoutripple" href="#settings7" aria-controls="settings7" role="tab" data-toggle="tab">4</a>
-                </li>
-              </ul>
-              <div class="card-body pr-0">
-                <form class="form-horizontal">
-                  <div class="form-group no-mt">
-                    <h4 class="no-m color-primary mb-2">Descriptions</h4>
-                    <div class="togglebutton">
-                      <label>
-                        <input id="port-show" type="checkbox"> Show description </label>
-                    </div>
-                  </div>
-                </form>
               </div>
             </div>
           </div>
