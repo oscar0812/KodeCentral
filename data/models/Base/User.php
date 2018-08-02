@@ -103,11 +103,11 @@ abstract class User implements ActiveRecordInterface
     protected $email;
 
     /**
-     * The value for the profilepicture field.
+     * The value for the profile_picture field.
      *
      * @var        string
      */
-    protected $profilepicture;
+    protected $profile_picture;
 
     /**
      * The value for the join_date field.
@@ -449,13 +449,13 @@ abstract class User implements ActiveRecordInterface
     }
 
     /**
-     * Get the [profilepicture] column value.
+     * Get the [profile_picture] column value.
      *
      * @return string
      */
     public function getProfilepicture()
     {
-        return $this->profilepicture;
+        return $this->profile_picture;
     }
 
     /**
@@ -569,7 +569,7 @@ abstract class User implements ActiveRecordInterface
     } // setEmail()
 
     /**
-     * Set the value of [profilepicture] column.
+     * Set the value of [profile_picture] column.
      *
      * @param string $v new value
      * @return $this|\User The current object (for fluent API support)
@@ -580,9 +580,9 @@ abstract class User implements ActiveRecordInterface
             $v = (string) $v;
         }
 
-        if ($this->profilepicture !== $v) {
-            $this->profilepicture = $v;
-            $this->modifiedColumns[UserTableMap::COL_PROFILEPICTURE] = true;
+        if ($this->profile_picture !== $v) {
+            $this->profile_picture = $v;
+            $this->modifiedColumns[UserTableMap::COL_PROFILE_PICTURE] = true;
         }
 
         return $this;
@@ -706,7 +706,7 @@ abstract class User implements ActiveRecordInterface
             $this->email = (null !== $col) ? (string) $col : null;
 
             $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : UserTableMap::translateFieldName('Profilepicture', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->profilepicture = (null !== $col) ? (string) $col : null;
+            $this->profile_picture = (null !== $col) ? (string) $col : null;
 
             $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : UserTableMap::translateFieldName('JoinDate', TableMap::TYPE_PHPNAME, $indexType)];
             if ($col === '0000-00-00') {
@@ -975,8 +975,8 @@ abstract class User implements ActiveRecordInterface
         if ($this->isColumnModified(UserTableMap::COL_EMAIL)) {
             $modifiedColumns[':p' . $index++]  = 'email';
         }
-        if ($this->isColumnModified(UserTableMap::COL_PROFILEPICTURE)) {
-            $modifiedColumns[':p' . $index++]  = 'profilePicture';
+        if ($this->isColumnModified(UserTableMap::COL_PROFILE_PICTURE)) {
+            $modifiedColumns[':p' . $index++]  = 'profile_picture';
         }
         if ($this->isColumnModified(UserTableMap::COL_JOIN_DATE)) {
             $modifiedColumns[':p' . $index++]  = 'join_date';
@@ -1007,8 +1007,8 @@ abstract class User implements ActiveRecordInterface
                     case 'email':
                         $stmt->bindValue($identifier, $this->email, PDO::PARAM_STR);
                         break;
-                    case 'profilePicture':
-                        $stmt->bindValue($identifier, $this->profilepicture, PDO::PARAM_STR);
+                    case 'profile_picture':
+                        $stmt->bindValue($identifier, $this->profile_picture, PDO::PARAM_STR);
                         break;
                     case 'join_date':
                         $stmt->bindValue($identifier, $this->join_date ? $this->join_date->format("Y-m-d H:i:s.u") : null, PDO::PARAM_STR);
@@ -1332,8 +1332,8 @@ abstract class User implements ActiveRecordInterface
         if ($this->isColumnModified(UserTableMap::COL_EMAIL)) {
             $criteria->add(UserTableMap::COL_EMAIL, $this->email);
         }
-        if ($this->isColumnModified(UserTableMap::COL_PROFILEPICTURE)) {
-            $criteria->add(UserTableMap::COL_PROFILEPICTURE, $this->profilepicture);
+        if ($this->isColumnModified(UserTableMap::COL_PROFILE_PICTURE)) {
+            $criteria->add(UserTableMap::COL_PROFILE_PICTURE, $this->profile_picture);
         }
         if ($this->isColumnModified(UserTableMap::COL_JOIN_DATE)) {
             $criteria->add(UserTableMap::COL_JOIN_DATE, $this->join_date);
@@ -2015,7 +2015,7 @@ abstract class User implements ActiveRecordInterface
         $this->id = null;
         $this->username = null;
         $this->email = null;
-        $this->profilepicture = null;
+        $this->profile_picture = null;
         $this->join_date = null;
         $this->password = null;
         $this->is_super = null;

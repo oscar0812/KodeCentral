@@ -134,6 +134,7 @@ CREATE TABLE `user` (
   `id` int(11) NOT NULL,
   `username` varchar(64) NOT NULL,
   `email` varchar(128) NOT NULL,
+  `profile_picture` varchar(128) NOT NULL,
   `join_date` date NOT NULL,
   `password` varchar(256) NOT NULL,
   `is_super` tinyint(1) NOT NULL DEFAULT '0'

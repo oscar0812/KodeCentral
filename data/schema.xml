@@ -96,7 +96,7 @@
     <column name="id" phpName="Id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
     <column name="username" phpName="Username" type="VARCHAR" size="64" required="true"/>
     <column name="email" phpName="Email" type="VARCHAR" size="128" required="true"/>
-    <column name="profilePicture" phpName="Profilepicture" type="VARCHAR" size="128" required="true"/>
+    <column name="profile_picture" phpName="Profilepicture" type="VARCHAR" size="128" required="true"/>
     <column name="join_date" phpName="JoinDate" type="DATE" required="true"/>
     <column name="password" phpName="Password" type="VARCHAR" size="256" required="true"/>
     <column name="is_super" phpName="IsSuper" type="BOOLEAN" size="1" required="true" defaultValue="false"/>
