@@ -103,7 +103,7 @@
               <div class="col-md-4 col-sm-6 mix <?=$post->categoriesString()?>">
                 <div class="card width-auto">
                   <figure class="ms-thumbnail">
-                    <img src="assets/img/demo/port1.jpg" alt="" class="img-fluid">
+                    <img src="assets/img/port1.jpg" alt="" class="img-fluid">
                     <figcaption class="ms-thumbnail-caption text-center">
                       <div class="ms-thumbnail-caption-content">
                         <h4 class="ms-thumbnail-caption-title mb-2"><?=$post->getTitle()?></h4>

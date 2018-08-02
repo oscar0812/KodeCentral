@@ -75,7 +75,7 @@
 
                 <div class="invisible" id="comment-template">
                   <div class="ms-icon-feature-icon">
-                    <img src="<?=$home?>assets/img/demo/avatar50.jpg" alt="..." class="img-circle mr-1 avatar-50-50">
+                    <img src="<?=$home?>assets/img/default_pfp.png" alt="..." class="img-circle mr-1 avatar-50-50">
                   </div>
                   <div class="ms-icon-feature-content">
                     <a href="#">username</a>
@@ -158,7 +158,7 @@
                       <div class="media mb-2">
                         <div class="media-left media-middle">
                           <a href="#">
-                            <img class="d-flex mr-3 media-object media-object-circle" src="<?=$home?>assets/img/demo/p75.jpg" alt="..."> </a>
+                            <img class="d-flex mr-3 media-object media-object-circle" src="<?=$home?>assets/img/default_pfp.png" alt="..."> </a>
                         </div>
                         <div class="media-body">
                           <a href="javascript:void(0)" class="media-heading">Lorem ipsum dolor sit amet in consectetur adipisicing</a>
@@ -175,7 +175,7 @@
                       <div class="media mb-2">
                         <div class="media-left media-middle">
                           <a href="#">
-                            <img class="d-flex mr-3 media-object media-object-circle" src="<?=$home?>assets/img/demo/p75.jpg" alt="..."> </a>
+                            <img class="d-flex mr-3 media-object media-object-circle" src="<?=$home?>assets/img/default_pfp.png" alt="..."> </a>
                         </div>
                         <div class="media-body">
                           <a href="javascript:void(0)" class="media-heading">Nemo enim ipsam voluptatem quia voluptas sit aspernatur</a>
@@ -192,7 +192,7 @@
                       <div class="media">
                         <div class="media-left media-middle">
                           <a href="#">
-                            <img class="d-flex mr-3 media-object media-object-circle" src="<?=$home?>assets/img/demo/p75.jpg" alt="..."> </a>
+                            <img class="d-flex mr-3 media-object media-object-circle" src="<?=$home?>assets/img/default_pfp.png" alt="..."> </a>
                         </div>
                         <div class="media-body">
                           <a href="javascript:void(0)" class="media-heading">inventore veritatis et vitae quasi architecto beatae </a>
@@ -299,7 +299,7 @@
             <div class="col-md-4 masonry-item">
               <article class="card mb-4">
                 <figure class="ms-thumbnail ms-thumbnail-left">
-                  <img src="<?=$home?>assets/img/demo/post1.jpg" alt="" class="img-fluid">
+                  <img src="<?=$home?>assets/img/default_pfp.png" alt="" class="img-fluid">
                   <figcaption class="ms-thumbnail-caption text-center">
                     <div class="ms-thumbnail-caption-content">
                       <h4 class="ms-thumbnail-caption-title mb-2"><?=$post->getTitle()?></h4>

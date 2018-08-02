@@ -37,9 +37,9 @@
             <p class="lead lead-lg animated bounceInDown animation-delay-7">Create amazing things</p>
           </div>
           <div class="img-browser-container mt-6">
-            <img src="assets/img/demo/safariBig1.png" alt="" class="img-fluid center-block index-1 img-browser animated slideInUp">
-            <img src="assets/img/demo/safariBig3.png" alt="" class="img-fluid center-block img-browser img-browser-left img-browser-left">
-            <img src="assets/img/demo/safariBig2.png" alt="" class="img-fluid center-block img-browser img-browser-right img-browser-right"> </div>
+            <img src="assets/img/default_pfp.png" alt="" class="img-fluid center-block index-1 img-browser animated slideInUp">
+            <img src="assets/img/default_pfp.png" alt="" class="img-fluid center-block img-browser img-browser-left img-browser-left">
+            <img src="assets/img/default_pfp.png" alt="" class="img-fluid center-block img-browser img-browser-right img-browser-right"> </div>
         </div>
       </div>
       <div class="ms-hero-img-beach ms-hero-bg-info ms-bg-fixed pt-2 pb-2">
@@ -97,9 +97,9 @@
           <div class="row">
             <div class="col-md-5 text-center mt-6">
               <div class="img-phone-container">
-                <img class="img-fluid wow zoomInDown animation-delay-3 index-1" src="assets/img/demo/pixel1.png">
-                <img class="img-fluid wow img-phone-left" src="assets/img/demo/pixel3.png">
-                <img class="img-fluid wow img-phone-right" src="assets/img/demo/pixel2.png"> </div>
+                <img class="img-fluid wow zoomInDown animation-delay-3 index-1" src="assets/img/default_pfp.png>
+                <img class="img-fluid wow img-phone-left" src="assets/img/default_pfp.png>
+                <img class="img-fluid wow img-phone-right" src="assets/img/default_pfp.png> </div>
             </div>
             <div class="col-md-7 mt-4">
               <div class="color-white ml-4">

@@ -74,7 +74,7 @@ class User extends BaseUser
     {
         $pfp = $this->getProfilePicture();
         if ($pfp == "") {
-            return $home."assets/img/demo/avatar1.jpg";
+            return $home."assets/img/default_pfp.png";
         }
         return $pfp;
     }

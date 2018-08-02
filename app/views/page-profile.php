@@ -71,7 +71,7 @@
                     <div class="ms-media-list">
                       <div class="media mb-2">
                         <a class="mr-3" href="#">
-                          <img class="media-object" src="<?=$home?>assets/img/demo/avatar1.jpg"> </a>
+                          <img class="media-object" src="<?=$home?>assets/img/default_pfp.png"> </a>
                         <div class="media-body">
                           <h4 class="mt-0 mb-0 color-warning">Maria Sharaphova</h4>
                           <a href="mailto:joe@example.com?subject=feedback">maria.sha@example.com</a>
@@ -91,7 +91,7 @@
                       <div class="media mb-2">
                         <div class="media-left media-middle">
                           <a class="mr-3" href="#">
-                            <img class="media-object" src="<?=$home?>assets/img/demo/avatar1.jpg"> </a>
+                            <img class="media-object" src="<?=$home?>assets/img/default_pfp.png"> </a>
                         </div>
                         <div class="media-body">
                           <h4 class="mt-0 mb-0 color-warning">Rafael Nadal</h4>
@@ -112,7 +112,7 @@
                       <div class="media mb-2">
                         <div class="media-left media-middle">
                           <a class="mr-3" href="#">
-                            <img class="media-object" src="<?=$home?>assets/img/demo/avatar1.jpg"> </a>
+                            <img class="media-object" src="<?=$home?>assets/img/default_pfp.png"> </a>
                         </div>
                         <div class="media-body">
                           <h4 class="mt-0 mb-0 color-warning">Roger Federer</h4>
@@ -195,7 +195,7 @@
                         <span>March</span>
                       </time>
                       <i class="ms-timeline-point bg-royal"></i>
-                      <img src="<?=$home?>assets/img/demo/avatar1.jpg" class="ms-timeline-point-img"> </div>
+                      <img src="<?=$home?>assets/img/default_pfp.png" class="ms-timeline-point-img"> </div>
                     <div class="card card-royal">
                       <div class="card-header">
                         <h3 class="card-title">Card Title</h3>
@@ -203,7 +203,7 @@
                       <div class="card-body">
                         <div class="row">
                           <div class="col-sm-4">
-                            <img src="<?=$home?>assets/img/demo/office1.jpg" alt="" class="img-fluid"> </div>
+                            <img src="<?=$home?>assets/img/default_pfp.png" alt="" class="img-fluid"> </div>
                           <div class="col-sm-8">
                             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laborum, praesentium, quam! Quia fugiat aperiam.</p>
                             <p>Perspiciatis soluta voluptate dolore officiis libero repellat cupiditate explicabo atque facere aliquam.</p>
@@ -265,7 +265,7 @@
                         <span>February</span>
                       </time>
                       <i class="ms-timeline-point bg-warning"></i>
-                      <img src="<?=$home?>assets/img/demo/avatar1.jpg" class="ms-timeline-point-img"> </div>
+                      <img src="<?=$home?>assets/img/default_pfp.png" class="ms-timeline-point-img"> </div>
                     <div class="card card-warning">
                       <div class="card-header">
                         <h3 class="card-title">Card Title</h3>
@@ -274,11 +274,11 @@
                         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nam, nulla recusandae blanditiis architecto soluta culpa obcaecati quis earum atque consequuntur.</p>
                         <div class="row">
                           <div class="col-sm-4">
-                            <img src="<?=$home?>assets/img/demo/office2.jpg" alt="" class="img-fluid"> </div>
+                            <img src="<?=$home?>assets/img/default_pfp.png" alt="" class="img-fluid"> </div>
                           <div class="col-sm-4">
-                            <img src="<?=$home?>assets/img/demo/office3.jpg" alt="" class="img-fluid"> </div>
+                            <img src="<?=$home?>assets/img/default_pfp.png" alt="" class="img-fluid"> </div>
                           <div class="col-sm-4">
-                            <img src="<?=$home?>assets/img/demo/office4.jpg" alt="" class="img-fluid"> </div>
+                            <img src="<?=$home?>assets/img/default_pfp.png" alt="" class="img-fluid"> </div>
                         </div>
                         <br>
                         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis, ipsum voluptates eius placeat dolorum reprehenderit ducimus accusamus magni aspernatur at dolore assumenda quae suscipit enim veritatis obcaecati molestias laudantium
@@ -309,7 +309,7 @@
                         <span>January</span>
                       </time>
                       <i class="ms-timeline-point bg-info"></i>
-                      <img src="<?=$home?>assets/img/demo/avatar1.jpg" class="ms-timeline-point-img"> </div>
+                      <img src="<?=$home?>assets/img/default_pfp.png" class="ms-timeline-point-img"> </div>
                     <div class="card card-info">
                       <div class="card-header">
                         <h3 class="card-title">Card Title</h3>

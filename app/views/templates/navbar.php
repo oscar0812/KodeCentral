@@ -2,7 +2,7 @@
   <div class="container container-full">
     <div class="navbar-header">
       <a class="navbar-brand" href="<?=$router->pathFor('home')?>">
-        <!-- <img src="assets/img/demo/logo-navbar.png" alt=""> -->
+        <!-- <img src="assets/img/default_pfp.png" alt=""> -->
         <span class="ms-logo ms-logo-sm">KC</span>
         <span class="ms-title">Kode
           <strong>Cental</strong>

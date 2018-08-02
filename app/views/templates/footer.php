@@ -61,7 +61,7 @@
               <div class="media">
                 <div class="media-left media-middle">
                   <a href="<?=$router->pathFor('view-post', ['hyperlink'=>$post->getHyperlink()])?>">
-                    <img class="media-object media-object-circle" src="<?=$home?>assets/img/demo/p75.jpg" alt="..."> </a>
+                    <img class="media-object media-object-circle" src="<?=$home?>assets/img/default_pfp.png" alt="..."> </a>
                 </div>
                 <div class="media-body">
                   <h4 class="media-heading">
