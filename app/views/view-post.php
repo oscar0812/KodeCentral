@@ -39,7 +39,7 @@
                 <h1 class="no-mt"><?=$post->getTitle()?></h1>
 
                 <div class="mb-4" id="user-info">
-                  <img src="<?=$user->getPfp($home)?>" alt="..." class="img-circle mr-1 avatar-50-50"> by
+                  <img src="<?=$post->getPostedByUser()->getPfp($home)?>" alt="..." class="img-circle mr-1 avatar-50-50"> by
                   <?php $username = $post->getPostedByUser()->getUsername();?>
                   <a href="<?=$router->pathFor('user-profile', ['username'=>$username])?>">
                   <?=$post->getPostedByUser() == $user?$username." (You)":$username?></a> in
