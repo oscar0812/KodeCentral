@@ -28,7 +28,7 @@
       </div>
     </header>
     <ul class="ms-slidebar-menu" id="slidebar-menu" role="tablist" aria-multiselectable="true">
-      <?php if($c_user != null ) { ?>
+      <?php if($c_user != null && $c_user->isSuper()) { ?>
       <li class="card" role="tab">
         <a class="collapsed" role="button" data-toggle="collapse" href="#sc1" aria-expanded="false" aria-controls="sc1">
           <i class="zmdi zmdi-comment"></i> Posts </a>
