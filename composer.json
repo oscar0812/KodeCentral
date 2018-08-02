@@ -1,7 +1,6 @@
 {
   "require": {
     "propel/propel": "~2.0@dev",
-    "rych/phpass": "3.0.*@beta",
     "phpmailer/phpmailer": "^6.0",
     "league/oauth2-client": "^2.2",
     "slim/slim": "^3.9",

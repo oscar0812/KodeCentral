@@ -22,7 +22,8 @@ class User extends BaseUser
     public function save(ConnectionInterface $con = null)
     {
         // hash password
-        $password = PHPassLib\Hash\BCrypt::hash(parent::getPassword());
+        $options = ['cost' => 11];
+        $password = password_hash($this->getPassword(), PASSWORD_BCRYPT, $options);
         // store the Hash
         parent::setPassword($password);
 
@@ -32,7 +33,7 @@ class User extends BaseUser
     // returns true if $password => hashed($password)
     public function verifyPassword($password)
     {
-        return PHPassLib\Hash\BCrypt::verify($password, $this->getPassword());
+        return password_verify($password, $this->getPassword());
     }
 
     // log user in (save a session for it)
