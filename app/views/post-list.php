@@ -39,7 +39,7 @@
                 <table class="table table-no-border vertical-center">
                   <tr>
                     <td class="d-none d-sm-block">
-                      <img src="<?=$home?>assets/img/default_pfp.png" alt=""> </td>
+                      <img src="<?=$home?>assets/img/default_pfp.png" class="avatar-50-50" alt=""> </td>
                     <td>
                       <h4 class=""><?=$post->getTitle()?></h4>
                     </td>
