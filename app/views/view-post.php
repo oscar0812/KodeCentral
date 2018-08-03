@@ -39,8 +39,11 @@
                 <h1 class="no-mt"><?=$post->getTitle()?></h1>
 
                 <div class="mb-4" id="user-info">
-                  <img src="<?=$post->getPostedByUser()->getPfp($home)?>" alt="..." class="img-circle mr-1 avatar-50-50"> by
                   <?php $username = $post->getPostedByUser()->getUsername();?>
+                  <a href="<?=$router->pathFor('user-profile', ['username'=>$username])?>" class="btn-circle mr-2">
+                    <img src="<?=$post->getPostedByUser()->getPfp($home)?>" alt="..." class="img-circle mr-1 avatar-50-50">
+                    <?=$post->getPostedByUser()->getBadge()?>
+                  </a> by
                   <a href="<?=$router->pathFor('user-profile', ['username'=>$username])?>">
                   <?=$post->getPostedByUser() == $user?$username." (You)":$username?></a> in
                   <?php foreach ($post->getCategories() as $category) { ?>
@@ -75,10 +78,13 @@
 
                 <div class="invisible" id="comment-template">
                   <div class="ms-icon-feature-icon">
-                    <img src="<?=$home?>assets/img/default_pfp.png" alt="..." class="img-circle mr-1 avatar-50-50">
+                    <a href="<?=$router->pathFor('user-profile', ['username'=>$user->getUsername()])?>" class="btn-circle mr-2">
+                      <img src="<?=$user->getPfp($home)?>" alt="..." class="img-circle mr-1 avatar-50-50">
+                      <?=$user->getBadge()?>
+                    </a>
                   </div>
                   <div class="ms-icon-feature-content">
-                    <a href="#">username</a>
+                    <a href="<?=$router->pathFor('user-profile', ['username'=>$user->getUsername()])?>"><?=$user->getUsername()?> (You)</a>
                     <p>Text</p>
                   </div>
                 </div>
@@ -86,7 +92,10 @@
                 <?php foreach ($comments as $comment) { ?>
                   <div class="ms-icon-feature">
                     <div class="ms-icon-feature-icon">
-                      <img src="<?=$comment->getUser()->getPfp($home)?>" alt="..." class="img-circle mr-1 avatar-50-50">
+                      <a href="<?=$router->pathFor('user-profile', ['username'=>$comment->getUser()->getUsername()])?>" class="btn-circle mr-2">
+                        <img src="<?=$comment->getUser()->getPfp($home)?>" alt="..." class="img-circle mr-1 avatar-50-50">
+                        <?=$comment->getUser()->getBadge()?>
+                      </a>
                     </div>
                     <div class="ms-icon-feature-content">
                       <?php $username = $comment->getUser()->getUsername();?>
@@ -366,14 +375,6 @@
               // get the template
               template = $('#comment-template').clone().
                 addClass('ms-icon-feature').removeClass('invisible');
-
-              pfp = template.find('.ms-icon-feature-icon>img').
-                attr('src', data['pfp']);
-
-              new_name = template.find('.ms-icon-feature-content>a');
-
-              new_name.attr('href', data['link']).
-                text(data['username']);
 
               // set the comment text
               template.find('.ms-icon-feature-content>p').text(data['text']);

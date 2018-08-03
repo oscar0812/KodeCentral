@@ -79,4 +79,25 @@ class User extends BaseUser
         }
         return $pfp;
     }
+
+    public function getBadge()
+    {
+        // if not a super user, no badge
+        if(!$this->isSuper()){
+          return '';
+        }
+
+        $posts = $this->getPosts()->count();
+        $color = 'info';
+        $icon = 'code';
+        if($posts > 100){
+          $color = 'royal';
+          $icon = '8tracks';
+        } elseif($posts > 50){
+          $color = 'danger';
+          $icon = 'star';
+        }
+
+        return '<span class="badge-pill badge-pill-'.$color.' zmdi zmdi-'.$icon.'"></span>';
+    }
 }

@@ -37,9 +37,10 @@
               <div class="col-lg-12 col-md-6 order-md-1">
                 <div class="card animated fadeInUp animation-delay-7">
                   <div class="ms-hero-bg-primary ms-hero-img-coffee">
-                    <h3 class="color-white index-1 text-center no-m pt-4"><?=$user->getUsername()?></h3>
+                    <h3 class="color-white index-1 text-center no-m pt-4">Status: <i class="badge-pill badge-pill-pink zmdi zmdi-star"></i></h3>
                     <div class="color-medium index-1 text-center np-m">@<?=$user->getUsername()?></div>
-                    <img src="<?=$user->getPfp($home)?>" alt="..." class="img-avatar-circle"> </div>
+                    <img id="pfp" src="<?=$user->getPfp($home)?>" alt="..." class="img-avatar-circle">
+                  </div>
                   <div class="card-body pt-4 text-center">
                     <h3 class="color-primary">Bio</h3>
                     <p>Lorem ipsum dolor sit amet, consectetur alter adipisicing elit. Facilis, natuse inse voluptates officia repudiandae beatae magni es magnam autem molestias.</p>
@@ -357,7 +358,7 @@
         <div class="modal-dialog modal-lg animated zoomIn animated-3x" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h3 class="modal-title color-primary" id="myModalLabel">Modal title</h3>
+              <h3 class="modal-title color-primary" id="myModalLabel">Change profile settings</h3>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="zmdi zmdi-close"></i></span></button>
             </div>
             <div class="modal-body container">
@@ -365,7 +366,7 @@
                 <fieldset>
                   <div class="form-group row justify-content-start">
                     <div class="col-lg-10 col-md-8 col-sm-8">
-                      <input type="text" readonly="" class="form-control" placeholder="Browse...">
+                      <input type="text" readonly="" class="form-control" placeholder="Upload new profile picture...">
                       <input type="file" multiple="" accept="image/*" name="pfpUpload" id="pfpUpload">
                     </div>
                     <div class="col-lg-2 col-md-4 col-sm-4">
@@ -389,11 +390,19 @@
     <!-- ms-site-container -->
     <script src="<?=$home?>assets/js/plugins.min.js"></script>
     <script src="<?=$home?>assets/js/app.min.js"></script>
+
+    <script src="<?=$home?>assets/js/component-snackbar.js"></script>
+
     <script type="text/javascript">
       $(function(){
         $('#pfpForm').on('submit', function(e){
           ajaxForm(e.target, function(data){
-            console.log(data);
+            if(data['success']){
+              $('#pfp').attr('src', data['path'] + '?' + (new Date).getTime());
+              Snackbar.show({actionTextColor: '#00ff00', text: 'Profile picture changed'});
+            } else{
+              Snackbar.show({actionTextColor: '#ff0000', text: 'Error while changing profile picture'});
+            }
           });
           return false;
         })

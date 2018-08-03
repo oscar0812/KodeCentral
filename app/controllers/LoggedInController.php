@@ -122,9 +122,7 @@ class LoggedInController
             $comment->save();
 
             return $response->withJson(['success'=>true,
-            'text'=>$comment->getText(),
-            'link'=>$user_link, 'pfp'=>$user->getPfp($this->router->pathFor('home')),
-            'username'=>$user->getUsername().' (You)']);
+            'text'=>$comment->getText()]);
         })->setName('post-comment');
     }
 

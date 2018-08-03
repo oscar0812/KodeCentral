@@ -97,9 +97,9 @@
           <div class="row">
             <div class="col-md-5 text-center mt-6">
               <div class="img-phone-container">
-                <img class="img-fluid wow zoomInDown animation-delay-3 index-1" src="assets/img/default_pfp.png>
-                <img class="img-fluid wow img-phone-left" src="assets/img/default_pfp.png>
-                <img class="img-fluid wow img-phone-right" src="assets/img/default_pfp.png> </div>
+                <img class="img-fluid wow zoomInDown animation-delay-3 index-1" src="assets/img/default_pfp.png">
+                <img class="img-fluid wow img-phone-left" src="assets/img/default_pfp.png">
+                <img class="img-fluid wow img-phone-right" src="assets/img/default_pfp.png"> </div>
             </div>
             <div class="col-md-7 mt-4">
               <div class="color-white ml-4">
