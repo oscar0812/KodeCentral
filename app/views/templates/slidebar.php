@@ -8,7 +8,7 @@
           <i class="zmdi zmdi-account"></i> <?=$name?></a>
 
         <?php if($c_user != null) { ?>
-          <a id="slidebar-logout" href="<?=$router->pathFor('user-logout')?>" class="withripple">
+          <a href="<?=$router->pathFor('user-logout')?>" class="withripple refresh-logout">
             <i class="fa fa-sign-out"></i> Log out</a>
         <?php } ?>
       </div>
@@ -39,12 +39,14 @@
           <li>
             <a href="<?=$router->pathFor('create-post')?>">Create New</a>
           </li>
-          <li>
-            <a href="home-landing.php">My Favorites</a>
-          </li>
         </ul>
       </li>
-      <?php } ?>
+    <?php } else { ?>
+      <li>
+        <a class="link" href="#">
+          <i class="zmdi zmdi-home"></i> My Favorites</a>
+      </li>
+    <?php } ?>
       <li>
         <a class="link" href="<?=$router->pathFor('home')?>">
           <i class="zmdi zmdi-home"></i> Home</a>
@@ -60,10 +62,6 @@
       <li>
         <a class="link" href="<?=$router->pathFor('faq')?>">
           <i class="zmdi zmdi-help"></i> FAQ</a>
-      </li>
-      <li>
-        <a class="link" href="<?=$router->pathFor('user-login-form')?>">
-          <i class="zmdi zmdi-lock"></i> Login</a>
       </li>
       <li>
         <a class="link" href="<?=$router->pathFor('contact-us')?>">
