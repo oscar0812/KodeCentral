@@ -11,8 +11,8 @@
     </div>
     <div class="collapse navbar-collapse" id="ms-navbar">
       <ul class="navbar-nav">
-        <?php $user = \User::current();?>
-        <?php if($user != null) { ?>
+        <?php $c_user = \User::current();?>
+        <?php if($c_user != null) { ?>
         <li class="nav-item dropdown">
           <a href="#" class="nav-link dropdown-toggle animated fadeIn animation-delay-7" data-toggle="dropdown" data-hover="dropdown" role="button" aria-haspopup="true" aria-expanded="false" data-name="page">Account
             <i class="zmdi zmdi-chevron-down"></i>
@@ -40,7 +40,7 @@
           <a href="<?=$router->pathFor('user-login-form')?>" class="nav-link">Log in</a>
         </li>
       <?php } ?>
-        <?php if($user != null && $user->isSuper()) { ?>
+        <?php if($c_user != null && $c_user->isSuper()) { ?>
         <li class="nav-item dropdown">
           <a href="#" class="nav-link dropdown-toggle animated fadeIn animation-delay-7" data-toggle="dropdown" data-hover="dropdown" role="button" aria-haspopup="true" aria-expanded="false" data-name="page">Posts
             <i class="zmdi zmdi-chevron-down"></i>

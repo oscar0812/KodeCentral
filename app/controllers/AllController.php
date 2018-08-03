@@ -145,6 +145,7 @@ class AllController
             if ($current != null && $current->getId() == $user->getId()) {
                 $visiting = false;
             }
+
             return $this->view->render(
               $response,
                 'page-profile.php',
