@@ -37,7 +37,7 @@
               <div class="col-lg-12 col-md-6 order-md-1">
                 <div class="card animated fadeInUp animation-delay-7">
                   <div class="ms-hero-bg-primary ms-hero-img-coffee">
-                    <h3 class="color-white index-1 text-center no-m pt-4">Status: <i class="badge-pill badge-pill-pink zmdi zmdi-star"></i></h3>
+                    <h3 class="color-white index-1 text-center no-m pt-4">Status: <?=$user->getBadge()?></h3>
                     <div class="color-medium index-1 text-center np-m">@<?=$user->getUsername()?></div>
                     <img id="pfp" src="<?=$user->getPfp($home)?>" alt="..." class="img-avatar-circle">
                   </div>

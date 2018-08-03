@@ -21,7 +21,7 @@
           <ul class="dropdown-menu">
 
             <li>
-              <a class="dropdown-item dropdown-link" href="<?=$router->pathFor('user-posts')?>">Profile</a>
+              <a class="dropdown-item dropdown-link" href="<?=$router->pathFor('user-profile', ['username'=>$user->getUsername()])?>">Profile</a>
             </li>
 
             <li>
@@ -39,7 +39,7 @@
         <li class="nav-item">
           <a href="<?=$router->pathFor('user-login-form')?>" class="nav-link">Log in</a>
         </li>
-        <? } ?>
+      <?php } ?>
         <?php if($user != null && $user->isSuper()) { ?>
         <li class="nav-item dropdown">
           <a href="#" class="nav-link dropdown-toggle animated fadeIn animation-delay-7" data-toggle="dropdown" data-hover="dropdown" role="button" aria-haspopup="true" aria-expanded="false" data-name="page">Posts
