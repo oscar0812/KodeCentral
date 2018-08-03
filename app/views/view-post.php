@@ -76,6 +76,7 @@
             <div class="card animated fadeInLeftTiny animation-delay-5">
               <div class="card-body" id="comment-body">
 
+                <?php if(isset($user) && $user!= null) { ?>
                 <div class="invisible" id="comment-template">
                   <div class="ms-icon-feature-icon">
                     <a href="<?=$router->pathFor('user-profile', ['username'=>$user->getUsername()])?>" class="btn-circle mr-2">
@@ -88,6 +89,7 @@
                     <p>Text</p>
                   </div>
                 </div>
+              <?php }?>
 
                 <?php foreach ($comments as $comment) { ?>
                   <div class="ms-icon-feature">
