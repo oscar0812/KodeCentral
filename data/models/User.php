@@ -24,8 +24,9 @@ class User extends BaseUser
         // hash password
         $options = ['cost' => 11];
         $password = password_hash($this->getPassword(), PASSWORD_BCRYPT, $options);
+
         // store the Hash
-        parent::setPassword($password);
+        parent::setPassword(substr($password, 0, 60));
 
         parent::save();
     }
@@ -33,7 +34,7 @@ class User extends BaseUser
     // returns true if $password => hashed($password)
     public function verifyPassword($password)
     {
-        return password_verify($password, $this->getPassword());
+        return password_verify($password, substr($this->getPassword(), 0, 60));
     }
 
     // log user in (save a session for it)
