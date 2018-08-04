@@ -4,6 +4,10 @@
   display: none !important;
 }
 
+[data-url] {
+  cursor: pointer !important;
+}
+
 .avatar-50-50 {
   height: 50px !important;
   width: 50px !important;

@@ -118,3 +118,44 @@
 
 </body>
 </html>
+
+
+<div class="card mb-1 mix category-Beginner category-Bots category-Desktop" style="display: inline-block;" data-bound="">
+  <table class="table table-no-border vertical-center">
+    <tbody><tr>
+      <td class="d-none d-sm-block">
+        <img src="assets/img/default_pfp.png" class="avatar-50-50" alt=""> </td>
+        <td style="width: 33%">
+          <h4 class="">Telegram Bot With Java</h4>
+        </td>
+        <td style="width: 33%">
+          <span class="color-info">August 01, 2018</span>
+        </td>
+        <td style="width: 33%">
+          <button class="btn btn-success" data-url="/kode_central/html/post/telegram-bot-with-java">
+            <i class="zmdi zmdi-eye"></i> View</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+</div>
+
+<div class="card mb-1 mix category-Beginner category-Bots category-Desktop">
+  <table class="table table-no-border vertical-center">
+    <tbody><tr>
+      <td class="d-none d-sm-block">
+        <img src="assets/img/default_pfp.png" class="avatar-50-50" alt=""> </td>
+        <td style="width: 33%">
+          <h4 class="">Telegram Bot With Java</h4>
+        </td>
+        <td style="width: 33%">
+          <span class="color-info">August 01, 2018</span>
+        </td>
+        <td style="width: 33%">
+          <button class="btn btn-success" data-url="/kode_central/html/post/telegram-bot-with-java">
+            <i class="zmdi zmdi-eye"></i> View</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>

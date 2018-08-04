@@ -72,27 +72,26 @@
           </div>
           <div class="col-md-9" id="Container">
             <?php foreach ($posts as $post) { ?>
-              <div class="card mb-1 mix <?=$post->categoriesString()?>">
-                <table class="table table-no-border vertical-center">
-                  <tr>
-                    <td class="d-none d-sm-block">
-                      <img src="assets/img/default_pfp.png" class="avatar-50-50" alt=""> </td>
-                    <td style="width: 33%">
-                      <h4 class=""><?=$post->getTitle()?></h4>
-                    </td>
-                    <td style="width: 33%">
-                      <span class="color-info"><?=$post->getPostedDate()->format('F d, Y')?></span>
-                    </td>
-                    <td style="width: 33%">
-                      <button class="btn btn-success"
-                      data-url="<?=$router->pathFor('view-post', ['hyperlink'=>$post->getHyperlink()])?>">
-                        <i class="zmdi zmdi-eye"></i> View</button>
-                    </td>
-                  </tr>
+              <div class="card mb-1 mix <?=$post->categoriesString()?> col-md-11" data-url="<?=$router->pathFor('view-post', ['hyperlink'=>$post->getHyperlink()])?>">
+                <table class="table table-responsive table-no-border vertical-center">
+                  <tbody>
+                    <tr>
+                      <td class="d-none d-sm-block">
+                        <img src="assets/img/default_pfp.png" class="avatar-50-50" alt="">
+                      </td>
+                      <td style="width: 66%">
+                        <h4 class=""><?=$post->getTitle()?></h4>
+                      </td>
+                      <td style="width: 33%">
+                        <span class="color-info"><?=$post->getPostedDate()->format('F d, Y')?></span>
+                      </td>
+                    </tr>
+                  </tbody>
                 </table>
               </div>
-            <?php }?>
-          </div>
+              <!-- item -->
+             <?php } ?>
+           </div>
         </div>
       </div>
       <!-- container-fluid -->
