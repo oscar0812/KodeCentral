@@ -7,12 +7,15 @@ use \CommentQuery as ChildCommentQuery;
 use \Post as ChildPost;
 use \PostQuery as ChildPostQuery;
 use \User as ChildUser;
+use \UserFavorite as ChildUserFavorite;
+use \UserFavoriteQuery as ChildUserFavoriteQuery;
 use \UserQuery as ChildUserQuery;
 use \DateTime;
 use \Exception;
 use \PDO;
 use Map\CommentTableMap;
 use Map\PostTableMap;
+use Map\UserFavoriteTableMap;
 use Map\UserTableMap;
 use Propel\Runtime\Propel;
 use Propel\Runtime\ActiveQuery\Criteria;
@@ -144,6 +147,22 @@ abstract class User implements ActiveRecordInterface
     protected $collPostsPartial;
 
     /**
+     * @var        ObjectCollection|ChildUserFavorite[] Collection to store aggregation of ChildUserFavorite objects.
+     */
+    protected $collUserFavorites;
+    protected $collUserFavoritesPartial;
+
+    /**
+     * @var        ObjectCollection|ChildPost[] Cross Collection to store aggregation of ChildPost objects.
+     */
+    protected $collfavoritePosts;
+
+    /**
+     * @var bool
+     */
+    protected $collfavoritePostsPartial;
+
+    /**
      * Flag to prevent endless save loop, if this object is referenced
      * by another object which falls in this transaction.
      *
@@ -170,6 +189,12 @@ abstract class User implements ActiveRecordInterface
 
     /**
      * An array of objects scheduled for deletion.
+     * @var ObjectCollection|ChildPost[]
+     */
+    protected $favoritePostsScheduledForDeletion = null;
+
+    /**
+     * An array of objects scheduled for deletion.
      * @var ObjectCollection|ChildComment[]
      */
     protected $commentsScheduledForDeletion = null;
@@ -179,6 +204,12 @@ abstract class User implements ActiveRecordInterface
      * @var ObjectCollection|ChildPost[]
      */
     protected $postsScheduledForDeletion = null;
+
+    /**
+     * An array of objects scheduled for deletion.
+     * @var ObjectCollection|ChildUserFavorite[]
+     */
+    protected $userFavoritesScheduledForDeletion = null;
 
     /**
      * Applies default values to this object.
@@ -792,6 +823,9 @@ abstract class User implements ActiveRecordInterface
 
             $this->collPosts = null;
 
+            $this->collUserFavorites = null;
+
+            $this->collfavoritePosts = null;
         } // if (deep)
     }
 
@@ -906,6 +940,35 @@ abstract class User implements ActiveRecordInterface
                 $this->resetModified();
             }
 
+            if ($this->favoritePostsScheduledForDeletion !== null) {
+                if (!$this->favoritePostsScheduledForDeletion->isEmpty()) {
+                    $pks = array();
+                    foreach ($this->favoritePostsScheduledForDeletion as $entry) {
+                        $entryPk = [];
+
+                        $entryPk[0] = $this->getId();
+                        $entryPk[1] = $entry->getId();
+                        $pks[] = $entryPk;
+                    }
+
+                    \UserFavoriteQuery::create()
+                        ->filterByPrimaryKeys($pks)
+                        ->delete($con);
+
+                    $this->favoritePostsScheduledForDeletion = null;
+                }
+
+            }
+
+            if ($this->collfavoritePosts) {
+                foreach ($this->collfavoritePosts as $favoritePost) {
+                    if (!$favoritePost->isDeleted() && ($favoritePost->isNew() || $favoritePost->isModified())) {
+                        $favoritePost->save($con);
+                    }
+                }
+            }
+
+
             if ($this->commentsScheduledForDeletion !== null) {
                 if (!$this->commentsScheduledForDeletion->isEmpty()) {
                     \CommentQuery::create()
@@ -934,6 +997,23 @@ abstract class User implements ActiveRecordInterface
 
             if ($this->collPosts !== null) {
                 foreach ($this->collPosts as $referrerFK) {
+                    if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
+                        $affectedRows += $referrerFK->save($con);
+                    }
+                }
+            }
+
+            if ($this->userFavoritesScheduledForDeletion !== null) {
+                if (!$this->userFavoritesScheduledForDeletion->isEmpty()) {
+                    \UserFavoriteQuery::create()
+                        ->filterByPrimaryKeys($this->userFavoritesScheduledForDeletion->getPrimaryKeys(false))
+                        ->delete($con);
+                    $this->userFavoritesScheduledForDeletion = null;
+                }
+            }
+
+            if ($this->collUserFavorites !== null) {
+                foreach ($this->collUserFavorites as $referrerFK) {
                     if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
                         $affectedRows += $referrerFK->save($con);
                     }
@@ -1179,6 +1259,21 @@ abstract class User implements ActiveRecordInterface
                 }
 
                 $result[$key] = $this->collPosts->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
+            }
+            if (null !== $this->collUserFavorites) {
+
+                switch ($keyType) {
+                    case TableMap::TYPE_CAMELNAME:
+                        $key = 'userFavorites';
+                        break;
+                    case TableMap::TYPE_FIELDNAME:
+                        $key = 'user_favorites';
+                        break;
+                    default:
+                        $key = 'UserFavorites';
+                }
+
+                $result[$key] = $this->collUserFavorites->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
             }
         }
 
@@ -1454,6 +1549,12 @@ abstract class User implements ActiveRecordInterface
                 }
             }
 
+            foreach ($this->getUserFavorites() as $relObj) {
+                if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
+                    $copyObj->addUserFavorite($relObj->copy($deepCopy));
+                }
+            }
+
         } // if ($deepCopy)
 
         if ($makeNew) {
@@ -1501,6 +1602,10 @@ abstract class User implements ActiveRecordInterface
         }
         if ('Post' == $relationName) {
             $this->initPosts();
+            return;
+        }
+        if ('UserFavorite' == $relationName) {
+            $this->initUserFavorites();
             return;
         }
     }
@@ -2006,6 +2111,502 @@ abstract class User implements ActiveRecordInterface
     }
 
     /**
+     * Clears out the collUserFavorites collection
+     *
+     * This does not modify the database; however, it will remove any associated objects, causing
+     * them to be refetched by subsequent calls to accessor method.
+     *
+     * @return void
+     * @see        addUserFavorites()
+     */
+    public function clearUserFavorites()
+    {
+        $this->collUserFavorites = null; // important to set this to NULL since that means it is uninitialized
+    }
+
+    /**
+     * Reset is the collUserFavorites collection loaded partially.
+     */
+    public function resetPartialUserFavorites($v = true)
+    {
+        $this->collUserFavoritesPartial = $v;
+    }
+
+    /**
+     * Initializes the collUserFavorites collection.
+     *
+     * By default this just sets the collUserFavorites collection to an empty array (like clearcollUserFavorites());
+     * however, you may wish to override this method in your stub class to provide setting appropriate
+     * to your application -- for example, setting the initial array to the values stored in database.
+     *
+     * @param      boolean $overrideExisting If set to true, the method call initializes
+     *                                        the collection even if it is not empty
+     *
+     * @return void
+     */
+    public function initUserFavorites($overrideExisting = true)
+    {
+        if (null !== $this->collUserFavorites && !$overrideExisting) {
+            return;
+        }
+
+        $collectionClassName = UserFavoriteTableMap::getTableMap()->getCollectionClassName();
+
+        $this->collUserFavorites = new $collectionClassName;
+        $this->collUserFavorites->setModel('\UserFavorite');
+    }
+
+    /**
+     * Gets an array of ChildUserFavorite objects which contain a foreign key that references this object.
+     *
+     * If the $criteria is not null, it is used to always fetch the results from the database.
+     * Otherwise the results are fetched from the database the first time, then cached.
+     * Next time the same method is called without $criteria, the cached collection is returned.
+     * If this ChildUser is new, it will return
+     * an empty collection or the current collection; the criteria is ignored on a new object.
+     *
+     * @param      Criteria $criteria optional Criteria object to narrow the query
+     * @param      ConnectionInterface $con optional connection object
+     * @return ObjectCollection|ChildUserFavorite[] List of ChildUserFavorite objects
+     * @throws PropelException
+     */
+    public function getUserFavorites(Criteria $criteria = null, ConnectionInterface $con = null)
+    {
+        $partial = $this->collUserFavoritesPartial && !$this->isNew();
+        if (null === $this->collUserFavorites || null !== $criteria  || $partial) {
+            if ($this->isNew() && null === $this->collUserFavorites) {
+                // return empty collection
+                $this->initUserFavorites();
+            } else {
+                $collUserFavorites = ChildUserFavoriteQuery::create(null, $criteria)
+                    ->filterByfavoriteUser($this)
+                    ->find($con);
+
+                if (null !== $criteria) {
+                    if (false !== $this->collUserFavoritesPartial && count($collUserFavorites)) {
+                        $this->initUserFavorites(false);
+
+                        foreach ($collUserFavorites as $obj) {
+                            if (false == $this->collUserFavorites->contains($obj)) {
+                                $this->collUserFavorites->append($obj);
+                            }
+                        }
+
+                        $this->collUserFavoritesPartial = true;
+                    }
+
+                    return $collUserFavorites;
+                }
+
+                if ($partial && $this->collUserFavorites) {
+                    foreach ($this->collUserFavorites as $obj) {
+                        if ($obj->isNew()) {
+                            $collUserFavorites[] = $obj;
+                        }
+                    }
+                }
+
+                $this->collUserFavorites = $collUserFavorites;
+                $this->collUserFavoritesPartial = false;
+            }
+        }
+
+        return $this->collUserFavorites;
+    }
+
+    /**
+     * Sets a collection of ChildUserFavorite objects related by a one-to-many relationship
+     * to the current object.
+     * It will also schedule objects for deletion based on a diff between old objects (aka persisted)
+     * and new objects from the given Propel collection.
+     *
+     * @param      Collection $userFavorites A Propel collection.
+     * @param      ConnectionInterface $con Optional connection object
+     * @return $this|ChildUser The current object (for fluent API support)
+     */
+    public function setUserFavorites(Collection $userFavorites, ConnectionInterface $con = null)
+    {
+        /** @var ChildUserFavorite[] $userFavoritesToDelete */
+        $userFavoritesToDelete = $this->getUserFavorites(new Criteria(), $con)->diff($userFavorites);
+
+
+        //since at least one column in the foreign key is at the same time a PK
+        //we can not just set a PK to NULL in the lines below. We have to store
+        //a backup of all values, so we are able to manipulate these items based on the onDelete value later.
+        $this->userFavoritesScheduledForDeletion = clone $userFavoritesToDelete;
+
+        foreach ($userFavoritesToDelete as $userFavoriteRemoved) {
+            $userFavoriteRemoved->setfavoriteUser(null);
+        }
+
+        $this->collUserFavorites = null;
+        foreach ($userFavorites as $userFavorite) {
+            $this->addUserFavorite($userFavorite);
+        }
+
+        $this->collUserFavorites = $userFavorites;
+        $this->collUserFavoritesPartial = false;
+
+        return $this;
+    }
+
+    /**
+     * Returns the number of related UserFavorite objects.
+     *
+     * @param      Criteria $criteria
+     * @param      boolean $distinct
+     * @param      ConnectionInterface $con
+     * @return int             Count of related UserFavorite objects.
+     * @throws PropelException
+     */
+    public function countUserFavorites(Criteria $criteria = null, $distinct = false, ConnectionInterface $con = null)
+    {
+        $partial = $this->collUserFavoritesPartial && !$this->isNew();
+        if (null === $this->collUserFavorites || null !== $criteria || $partial) {
+            if ($this->isNew() && null === $this->collUserFavorites) {
+                return 0;
+            }
+
+            if ($partial && !$criteria) {
+                return count($this->getUserFavorites());
+            }
+
+            $query = ChildUserFavoriteQuery::create(null, $criteria);
+            if ($distinct) {
+                $query->distinct();
+            }
+
+            return $query
+                ->filterByfavoriteUser($this)
+                ->count($con);
+        }
+
+        return count($this->collUserFavorites);
+    }
+
+    /**
+     * Method called to associate a ChildUserFavorite object to this object
+     * through the ChildUserFavorite foreign key attribute.
+     *
+     * @param  ChildUserFavorite $l ChildUserFavorite
+     * @return $this|\User The current object (for fluent API support)
+     */
+    public function addUserFavorite(ChildUserFavorite $l)
+    {
+        if ($this->collUserFavorites === null) {
+            $this->initUserFavorites();
+            $this->collUserFavoritesPartial = true;
+        }
+
+        if (!$this->collUserFavorites->contains($l)) {
+            $this->doAddUserFavorite($l);
+
+            if ($this->userFavoritesScheduledForDeletion and $this->userFavoritesScheduledForDeletion->contains($l)) {
+                $this->userFavoritesScheduledForDeletion->remove($this->userFavoritesScheduledForDeletion->search($l));
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param ChildUserFavorite $userFavorite The ChildUserFavorite object to add.
+     */
+    protected function doAddUserFavorite(ChildUserFavorite $userFavorite)
+    {
+        $this->collUserFavorites[]= $userFavorite;
+        $userFavorite->setfavoriteUser($this);
+    }
+
+    /**
+     * @param  ChildUserFavorite $userFavorite The ChildUserFavorite object to remove.
+     * @return $this|ChildUser The current object (for fluent API support)
+     */
+    public function removeUserFavorite(ChildUserFavorite $userFavorite)
+    {
+        if ($this->getUserFavorites()->contains($userFavorite)) {
+            $pos = $this->collUserFavorites->search($userFavorite);
+            $this->collUserFavorites->remove($pos);
+            if (null === $this->userFavoritesScheduledForDeletion) {
+                $this->userFavoritesScheduledForDeletion = clone $this->collUserFavorites;
+                $this->userFavoritesScheduledForDeletion->clear();
+            }
+            $this->userFavoritesScheduledForDeletion[]= clone $userFavorite;
+            $userFavorite->setfavoriteUser(null);
+        }
+
+        return $this;
+    }
+
+
+    /**
+     * If this collection has already been initialized with
+     * an identical criteria, it returns the collection.
+     * Otherwise if this User is new, it will return
+     * an empty collection; or if this User has previously
+     * been saved, it will retrieve related UserFavorites from storage.
+     *
+     * This method is protected by default in order to keep the public
+     * api reasonable.  You can provide public methods for those you
+     * actually need in User.
+     *
+     * @param      Criteria $criteria optional Criteria object to narrow the query
+     * @param      ConnectionInterface $con optional connection object
+     * @param      string $joinBehavior optional join type to use (defaults to Criteria::LEFT_JOIN)
+     * @return ObjectCollection|ChildUserFavorite[] List of ChildUserFavorite objects
+     */
+    public function getUserFavoritesJoinfavoritePost(Criteria $criteria = null, ConnectionInterface $con = null, $joinBehavior = Criteria::LEFT_JOIN)
+    {
+        $query = ChildUserFavoriteQuery::create(null, $criteria);
+        $query->joinWith('favoritePost', $joinBehavior);
+
+        return $this->getUserFavorites($query, $con);
+    }
+
+    /**
+     * Clears out the collfavoritePosts collection
+     *
+     * This does not modify the database; however, it will remove any associated objects, causing
+     * them to be refetched by subsequent calls to accessor method.
+     *
+     * @return void
+     * @see        addfavoritePosts()
+     */
+    public function clearfavoritePosts()
+    {
+        $this->collfavoritePosts = null; // important to set this to NULL since that means it is uninitialized
+    }
+
+    /**
+     * Initializes the collfavoritePosts crossRef collection.
+     *
+     * By default this just sets the collfavoritePosts collection to an empty collection (like clearfavoritePosts());
+     * however, you may wish to override this method in your stub class to provide setting appropriate
+     * to your application -- for example, setting the initial array to the values stored in database.
+     *
+     * @return void
+     */
+    public function initfavoritePosts()
+    {
+        $collectionClassName = UserFavoriteTableMap::getTableMap()->getCollectionClassName();
+
+        $this->collfavoritePosts = new $collectionClassName;
+        $this->collfavoritePostsPartial = true;
+        $this->collfavoritePosts->setModel('\Post');
+    }
+
+    /**
+     * Checks if the collfavoritePosts collection is loaded.
+     *
+     * @return bool
+     */
+    public function isfavoritePostsLoaded()
+    {
+        return null !== $this->collfavoritePosts;
+    }
+
+    /**
+     * Gets a collection of ChildPost objects related by a many-to-many relationship
+     * to the current object by way of the user_favorite cross-reference table.
+     *
+     * If the $criteria is not null, it is used to always fetch the results from the database.
+     * Otherwise the results are fetched from the database the first time, then cached.
+     * Next time the same method is called without $criteria, the cached collection is returned.
+     * If this ChildUser is new, it will return
+     * an empty collection or the current collection; the criteria is ignored on a new object.
+     *
+     * @param      Criteria $criteria Optional query object to filter the query
+     * @param      ConnectionInterface $con Optional connection object
+     *
+     * @return ObjectCollection|ChildPost[] List of ChildPost objects
+     */
+    public function getfavoritePosts(Criteria $criteria = null, ConnectionInterface $con = null)
+    {
+        $partial = $this->collfavoritePostsPartial && !$this->isNew();
+        if (null === $this->collfavoritePosts || null !== $criteria || $partial) {
+            if ($this->isNew()) {
+                // return empty collection
+                if (null === $this->collfavoritePosts) {
+                    $this->initfavoritePosts();
+                }
+            } else {
+
+                $query = ChildPostQuery::create(null, $criteria)
+                    ->filterByfavoriteUser($this);
+                $collfavoritePosts = $query->find($con);
+                if (null !== $criteria) {
+                    return $collfavoritePosts;
+                }
+
+                if ($partial && $this->collfavoritePosts) {
+                    //make sure that already added objects gets added to the list of the database.
+                    foreach ($this->collfavoritePosts as $obj) {
+                        if (!$collfavoritePosts->contains($obj)) {
+                            $collfavoritePosts[] = $obj;
+                        }
+                    }
+                }
+
+                $this->collfavoritePosts = $collfavoritePosts;
+                $this->collfavoritePostsPartial = false;
+            }
+        }
+
+        return $this->collfavoritePosts;
+    }
+
+    /**
+     * Sets a collection of Post objects related by a many-to-many relationship
+     * to the current object by way of the user_favorite cross-reference table.
+     * It will also schedule objects for deletion based on a diff between old objects (aka persisted)
+     * and new objects from the given Propel collection.
+     *
+     * @param  Collection $favoritePosts A Propel collection.
+     * @param  ConnectionInterface $con Optional connection object
+     * @return $this|ChildUser The current object (for fluent API support)
+     */
+    public function setfavoritePosts(Collection $favoritePosts, ConnectionInterface $con = null)
+    {
+        $this->clearfavoritePosts();
+        $currentfavoritePosts = $this->getfavoritePosts();
+
+        $favoritePostsScheduledForDeletion = $currentfavoritePosts->diff($favoritePosts);
+
+        foreach ($favoritePostsScheduledForDeletion as $toDelete) {
+            $this->removefavoritePost($toDelete);
+        }
+
+        foreach ($favoritePosts as $favoritePost) {
+            if (!$currentfavoritePosts->contains($favoritePost)) {
+                $this->doAddfavoritePost($favoritePost);
+            }
+        }
+
+        $this->collfavoritePostsPartial = false;
+        $this->collfavoritePosts = $favoritePosts;
+
+        return $this;
+    }
+
+    /**
+     * Gets the number of Post objects related by a many-to-many relationship
+     * to the current object by way of the user_favorite cross-reference table.
+     *
+     * @param      Criteria $criteria Optional query object to filter the query
+     * @param      boolean $distinct Set to true to force count distinct
+     * @param      ConnectionInterface $con Optional connection object
+     *
+     * @return int the number of related Post objects
+     */
+    public function countfavoritePosts(Criteria $criteria = null, $distinct = false, ConnectionInterface $con = null)
+    {
+        $partial = $this->collfavoritePostsPartial && !$this->isNew();
+        if (null === $this->collfavoritePosts || null !== $criteria || $partial) {
+            if ($this->isNew() && null === $this->collfavoritePosts) {
+                return 0;
+            } else {
+
+                if ($partial && !$criteria) {
+                    return count($this->getfavoritePosts());
+                }
+
+                $query = ChildPostQuery::create(null, $criteria);
+                if ($distinct) {
+                    $query->distinct();
+                }
+
+                return $query
+                    ->filterByfavoriteUser($this)
+                    ->count($con);
+            }
+        } else {
+            return count($this->collfavoritePosts);
+        }
+    }
+
+    /**
+     * Associate a ChildPost to this object
+     * through the user_favorite cross reference table.
+     *
+     * @param ChildPost $favoritePost
+     * @return ChildUser The current object (for fluent API support)
+     */
+    public function addfavoritePost(ChildPost $favoritePost)
+    {
+        if ($this->collfavoritePosts === null) {
+            $this->initFavoritePosts();
+        }
+
+        if (!$this->getFavoritePosts()->contains($favoritePost)) {
+            // only add it if the **same** object is not already associated
+            $this->collfavoritePosts->push($favoritePost);
+            $this->doAddFavoritePost($favoritePost);
+        }
+
+        return $this;
+    }
+
+    /**
+     *
+     * @param ChildPost $favoritePost
+     */
+    protected function doAddfavoritePost(ChildPost $favoritePost)
+    {
+        $userFavorite = new ChildUserFavorite();
+
+        $userFavorite->setfavoritePost($favoritePost);
+
+        $userFavorite->setfavoriteUser($this);
+
+        $this->addUserFavorite($userFavorite);
+
+        // set the back reference to this object directly as using provided method either results
+        // in endless loop or in multiple relations
+        if (!$favoritePost->isfavoriteUsersLoaded()) {
+            $favoritePost->initfavoriteUsers();
+            $favoritePost->getfavoriteUsers()->push($this);
+        } elseif (!$favoritePost->getfavoriteUsers()->contains($this)) {
+            $favoritePost->getfavoriteUsers()->push($this);
+        }
+
+    }
+
+    /**
+     * Remove favoritePost of this object
+     * through the user_favorite cross reference table.
+     *
+     * @param ChildPost $favoritePost
+     * @return ChildUser The current object (for fluent API support)
+     */
+    public function removefavoritePost(ChildPost $favoritePost)
+    {
+        if ($this->getfavoritePosts()->contains($favoritePost)) {
+            $userFavorite = new ChildUserFavorite();
+            $userFavorite->setfavoritePost($favoritePost);
+            if ($favoritePost->isfavoriteUsersLoaded()) {
+                //remove the back reference if available
+                $favoritePost->getfavoriteUsers()->removeObject($this);
+            }
+
+            $userFavorite->setfavoriteUser($this);
+            $this->removeUserFavorite(clone $userFavorite);
+            $userFavorite->clear();
+
+            $this->collfavoritePosts->remove($this->collfavoritePosts->search($favoritePost));
+
+            if (null === $this->favoritePostsScheduledForDeletion) {
+                $this->favoritePostsScheduledForDeletion = clone $this->collfavoritePosts;
+                $this->favoritePostsScheduledForDeletion->clear();
+            }
+
+            $this->favoritePostsScheduledForDeletion->push($favoritePost);
+        }
+
+
+        return $this;
+    }
+
+    /**
      * Clears the current object, sets all attributes to their default values and removes
      * outgoing references as well as back-references (from other objects to this one. Results probably in a database
      * change of those foreign objects when you call `save` there).
@@ -2048,10 +2649,22 @@ abstract class User implements ActiveRecordInterface
                     $o->clearAllReferences($deep);
                 }
             }
+            if ($this->collUserFavorites) {
+                foreach ($this->collUserFavorites as $o) {
+                    $o->clearAllReferences($deep);
+                }
+            }
+            if ($this->collfavoritePosts) {
+                foreach ($this->collfavoritePosts as $o) {
+                    $o->clearAllReferences($deep);
+                }
+            }
         } // if ($deep)
 
         $this->collComments = null;
         $this->collPosts = null;
+        $this->collUserFavorites = null;
+        $this->collfavoritePosts = null;
     }
 
     /**
@@ -2122,6 +2735,15 @@ abstract class User implements ActiveRecordInterface
             }
             if (null !== $this->collPosts) {
                 foreach ($this->collPosts as $referrerFK) {
+                    if (method_exists($referrerFK, 'validate')) {
+                        if (!$referrerFK->validate($validator)) {
+                            $failureMap->addAll($referrerFK->getValidationFailures());
+                        }
+                    }
+                }
+            }
+            if (null !== $this->collUserFavorites) {
+                foreach ($this->collUserFavorites as $referrerFK) {
                     if (method_exists($referrerFK, 'validate')) {
                         if (!$referrerFK->validate($validator)) {
                             $failureMap->addAll($referrerFK->getValidationFailures());

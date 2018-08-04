@@ -184,6 +184,14 @@ class UserTableMap extends TableMap
     1 => ':id',
   ),
 ), null, null, 'Posts', false);
+        $this->addRelation('UserFavorite', '\\UserFavorite', RelationMap::ONE_TO_MANY, array (
+  0 =>
+  array (
+    0 => ':user_id',
+    1 => ':id',
+  ),
+), null, null, 'UserFavorites', false);
+        $this->addRelation('favoritePost', '\\Post', RelationMap::MANY_TO_MANY, array(), null, null, 'favoritePosts');
     } // buildRelations()
 
     /**

@@ -121,4 +121,20 @@
       <parameter name="rule6" value="{column: join_date, validator: NotNull}"/>
     </behavior>
   </table>
+  <table name="user_favorite" idMethod="native" phpName="UserFavorite" isCrossRef="true">
+    <column name="user_id" phpName="UserId" type="INTEGER" primaryKey="true" required="true"/>
+    <column name="post_id" phpName="PostId" type="INTEGER" primaryKey="true" required="true"/>
+    <foreign-key foreignTable="post" name="user_favorite_ibfk_1" phpName="favoritePost">
+      <reference local="post_id" foreign="id"/>
+    </foreign-key>
+    <foreign-key foreignTable="user" name="user_favorite_ibfk_2" phpName="favoriteUser">
+      <reference local="user_id" foreign="id"/>
+    </foreign-key>
+    <index name="post_id">
+      <index-column name="post_id"/>
+    </index>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
 </database>
