@@ -138,6 +138,11 @@
             </div>
           </div>
           <div class="col-lg-8">
+            <h1>WEBSITE IS STILL UNDER CONSTRUCTION</h1>
+          </div>
+          <!--
+          <div class="col-lg-8">
+
             <div class="row">
               <div class="col-sm-4">
                 <div class="card card-info card-body overflow-hidden text-center wow zoomInUp animation-delay-2">
@@ -349,6 +354,7 @@
               </div>
             </div>
           </div>
+          -->
         </div>
       </div>
       <!-- container -->
