@@ -15,7 +15,10 @@ class LoggedInController
             return $this->view->render(
           $response,
             'post-list.php',
-            ['router'=>$this->router, 'user'=>$user, 'posts'=>$user->getFavoritePosts(), 'title'=>'Your favorites']
+            ['router'=>$this->router, 'user'=>$user,
+            'posts'=>$user->getFavoritePosts(), 'title'=>'Your favorites',
+            'favorites'=>true
+          ]
         );
         })->setName('user-favorites');
 

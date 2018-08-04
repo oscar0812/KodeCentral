@@ -25,7 +25,7 @@
             </li>
 
             <li>
-              <a class="dropdown-item dropdown-link" href="#">Favorites</a>
+              <a class="dropdown-item dropdown-link" href="<?=$router->pathFor('user-favorites')?>">Favorites</a>
             </li>
 
             <li>
