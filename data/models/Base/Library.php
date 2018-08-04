@@ -1331,10 +1331,10 @@ abstract class Library implements ActiveRecordInterface
      * @param      string $joinBehavior optional join type to use (defaults to Criteria::LEFT_JOIN)
      * @return ObjectCollection|ChildPost[] List of ChildPost objects
      */
-    public function getPostsJoinpostedByUser(Criteria $criteria = null, ConnectionInterface $con = null, $joinBehavior = Criteria::LEFT_JOIN)
+    public function getPostsJoinPostedByUser(Criteria $criteria = null, ConnectionInterface $con = null, $joinBehavior = Criteria::LEFT_JOIN)
     {
         $query = ChildPostQuery::create(null, $criteria);
-        $query->joinWith('postedByUser', $joinBehavior);
+        $query->joinWith('PostedByUser', $joinBehavior);
 
         return $this->getPosts($query, $con);
     }

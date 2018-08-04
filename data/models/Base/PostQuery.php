@@ -44,15 +44,15 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildPostQuery rightJoinWith($relation) Adds a RIGHT JOIN clause and with to the query
  * @method     ChildPostQuery innerJoinWith($relation) Adds a INNER JOIN clause and with to the query
  *
- * @method     ChildPostQuery leftJoinpostedByUser($relationAlias = null) Adds a LEFT JOIN clause to the query using the postedByUser relation
- * @method     ChildPostQuery rightJoinpostedByUser($relationAlias = null) Adds a RIGHT JOIN clause to the query using the postedByUser relation
- * @method     ChildPostQuery innerJoinpostedByUser($relationAlias = null) Adds a INNER JOIN clause to the query using the postedByUser relation
+ * @method     ChildPostQuery leftJoinPostedByUser($relationAlias = null) Adds a LEFT JOIN clause to the query using the PostedByUser relation
+ * @method     ChildPostQuery rightJoinPostedByUser($relationAlias = null) Adds a RIGHT JOIN clause to the query using the PostedByUser relation
+ * @method     ChildPostQuery innerJoinPostedByUser($relationAlias = null) Adds a INNER JOIN clause to the query using the PostedByUser relation
  *
- * @method     ChildPostQuery joinWithpostedByUser($joinType = Criteria::INNER_JOIN) Adds a join clause and with to the query using the postedByUser relation
+ * @method     ChildPostQuery joinWithPostedByUser($joinType = Criteria::INNER_JOIN) Adds a join clause and with to the query using the PostedByUser relation
  *
- * @method     ChildPostQuery leftJoinWithpostedByUser() Adds a LEFT JOIN clause and with to the query using the postedByUser relation
- * @method     ChildPostQuery rightJoinWithpostedByUser() Adds a RIGHT JOIN clause and with to the query using the postedByUser relation
- * @method     ChildPostQuery innerJoinWithpostedByUser() Adds a INNER JOIN clause and with to the query using the postedByUser relation
+ * @method     ChildPostQuery leftJoinWithPostedByUser() Adds a LEFT JOIN clause and with to the query using the PostedByUser relation
+ * @method     ChildPostQuery rightJoinWithPostedByUser() Adds a RIGHT JOIN clause and with to the query using the PostedByUser relation
+ * @method     ChildPostQuery innerJoinWithPostedByUser() Adds a INNER JOIN clause and with to the query using the PostedByUser relation
  *
  * @method     ChildPostQuery leftJoinLibrary($relationAlias = null) Adds a LEFT JOIN clause to the query using the Library relation
  * @method     ChildPostQuery rightJoinLibrary($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Library relation
@@ -483,7 +483,7 @@ abstract class PostQuery extends ModelCriteria
      * $query->filterByPostedByUserId(array('min' => 12)); // WHERE posted_by_user_id > 12
      * </code>
      *
-     * @see       filterBypostedByUser()
+     * @see       filterByPostedByUser()
      *
      * @param     mixed $postedByUserId The value to use as filter.
      *              Use scalar values for equality.
@@ -569,7 +569,7 @@ abstract class PostQuery extends ModelCriteria
      *
      * @return ChildPostQuery The current query, for fluid interface
      */
-    public function filterBypostedByUser($user, $comparison = null)
+    public function filterByPostedByUser($user, $comparison = null)
     {
         if ($user instanceof \User) {
             return $this
@@ -582,22 +582,22 @@ abstract class PostQuery extends ModelCriteria
             return $this
                 ->addUsingAlias(PostTableMap::COL_POSTED_BY_USER_ID, $user->toKeyValue('PrimaryKey', 'Id'), $comparison);
         } else {
-            throw new PropelException('filterBypostedByUser() only accepts arguments of type \User or Collection');
+            throw new PropelException('filterByPostedByUser() only accepts arguments of type \User or Collection');
         }
     }
 
     /**
-     * Adds a JOIN clause to the query using the postedByUser relation
+     * Adds a JOIN clause to the query using the PostedByUser relation
      *
      * @param     string $relationAlias optional alias for the relation
      * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
      *
      * @return $this|ChildPostQuery The current query, for fluid interface
      */
-    public function joinpostedByUser($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    public function joinPostedByUser($relationAlias = null, $joinType = Criteria::INNER_JOIN)
     {
         $tableMap = $this->getTableMap();
-        $relationMap = $tableMap->getRelation('postedByUser');
+        $relationMap = $tableMap->getRelation('PostedByUser');
 
         // create a ModelJoin object for this join
         $join = new ModelJoin();
@@ -612,14 +612,14 @@ abstract class PostQuery extends ModelCriteria
             $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
             $this->addJoinObject($join, $relationAlias);
         } else {
-            $this->addJoinObject($join, 'postedByUser');
+            $this->addJoinObject($join, 'PostedByUser');
         }
 
         return $this;
     }
 
     /**
-     * Use the postedByUser relation User object
+     * Use the PostedByUser relation User object
      *
      * @see useQuery()
      *
@@ -629,11 +629,11 @@ abstract class PostQuery extends ModelCriteria
      *
      * @return \UserQuery A secondary query class using the current class as primary query
      */
-    public function usepostedByUserQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    public function usePostedByUserQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
     {
         return $this
-            ->joinpostedByUser($relationAlias, $joinType)
-            ->useQuery($relationAlias ? $relationAlias : 'postedByUser', '\UserQuery');
+            ->joinPostedByUser($relationAlias, $joinType)
+            ->useQuery($relationAlias ? $relationAlias : 'PostedByUser', '\UserQuery');
     }
 
     /**
@@ -958,11 +958,11 @@ abstract class PostQuery extends ModelCriteria
      *
      * @return ChildPostQuery The current query, for fluid interface
      */
-    public function filterByfavoriteUser($user, $comparison = Criteria::EQUAL)
+    public function filterByFavoriteUser($user, $comparison = Criteria::EQUAL)
     {
         return $this
             ->useUserFavoriteQuery()
-            ->filterByfavoriteUser($user, $comparison)
+            ->filterByFavoriteUser($user, $comparison)
             ->endUse();
     }
 

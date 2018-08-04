@@ -141,14 +141,14 @@ class UserFavoriteTableMap extends TableMap
      */
     public function buildRelations()
     {
-        $this->addRelation('favoritePost', '\\Post', RelationMap::MANY_TO_ONE, array (
+        $this->addRelation('FavoritePost', '\\Post', RelationMap::MANY_TO_ONE, array (
   0 =>
   array (
     0 => ':post_id',
     1 => ':id',
   ),
 ), null, null, null, false);
-        $this->addRelation('favoriteUser', '\\User', RelationMap::MANY_TO_ONE, array (
+        $this->addRelation('FavoriteUser', '\\User', RelationMap::MANY_TO_ONE, array (
   0 =>
   array (
     0 => ':user_id',

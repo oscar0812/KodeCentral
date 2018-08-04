@@ -72,19 +72,25 @@
           </div>
           <div class="col-md-9" id="Container">
             <?php foreach ($posts as $post) { ?>
-              <div class="card mb-1 mix <?=$post->categoriesString()?> col-sm-12" data-url="<?=$router->pathFor('view-post', ['hyperlink'=>$post->getHyperlink()])?>">
+              <div class="card post-card mb-1 mix <?=$post->categoriesString()?> col-sm-12" data-url="<?=$router->pathFor('view-post', ['hyperlink'=>$post->getHyperlink()])?>">
                 <table class="table table-responsive table-no-border vertical-center">
                   <tbody>
                     <tr>
                       <td class="d-none d-sm-block">
                         <img src="assets/img/default_pfp.png" class="avatar-50-50" alt="">
                       </td>
-                      <td style="width: 66%">
+                      <td style="width: 60%">
                         <h4 class=""><?=$post->getTitle()?></h4>
                       </td>
-                      <td style="width: 33%">
+                      <td style="width: 30%">
                         <span class="color-info"><?=$post->getPostedDate()->format('F d, Y')?></span>
                       </td>
+                      <?php if(isset($user) && $user!= null) { ?>
+                      <td style="width: 10%">
+                        <button class="btn btn-warning child-click favorite" data-fav-url="<?=$router->pathFor('user-favorites')?>" data-post-link="<?=$post->getHyperlink()?>">
+                          <i class="zmdi zmdi-star<?php if(!$user->hasPostInFavorites($post))echo "-outline";?> child-click"></i><div class="ripple-container"></div></button>
+                      </td>
+                      <?php } ?>
                     </tr>
                   </tbody>
                 </table>
@@ -101,5 +107,52 @@
     <script src="assets/js/plugins.min.js"></script>
     <script src="assets/js/app.min.js"></script>
     <script src="assets/js/portfolio.js"></script>
+    <script src="assets/js/component-snackbar.js"></script>
+    <script type="text/javascript">
+      $(function(){
+        $('.post-card .favorite').on('click', function(){
+          icon = $(this).find('.zmdi');
+          url = $(this).data('fav-url');
+          post = $(this).data('post-link')
+
+          $.ajax({
+            type: "POST",
+            data: {
+              post: post
+            },
+            url: url,
+            dataType: "json",
+            success: function(data) {
+
+              if(!data['success'])
+                return;
+
+              snack_text = 'Added post to favorites!';
+              if(data['status'] == 'removed'){
+                icon.addClass('zmdi-star-outline');
+                icon.removeClass('zmdi-star');
+
+                snack_text = 'Removed post from favorites!'
+              } else if(data['status'] == 'added'){
+                icon.addClass('zmdi-star');
+                icon.removeClass('zmdi-star-outline');
+              }
+
+              Snackbar.show({
+                text: snack_text,
+                actionText: 'View',
+                onActionClick: function(element) {
+                  window.location.href = url;
+                }
+              });
+
+          }
+
+          });
+
+          return false;
+        });
+      });
+    </script>
   </body>
 </html>

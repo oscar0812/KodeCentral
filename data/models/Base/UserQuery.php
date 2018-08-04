@@ -733,11 +733,11 @@ abstract class UserQuery extends ModelCriteria
      *
      * @return ChildUserQuery The current query, for fluid interface
      */
-    public function filterByfavoritePost($post, $comparison = Criteria::EQUAL)
+    public function filterByFavoritePost($post, $comparison = Criteria::EQUAL)
     {
         return $this
             ->useUserFavoriteQuery()
-            ->filterByfavoritePost($post, $comparison)
+            ->filterByFavoritePost($post, $comparison)
             ->endUse();
     }
 

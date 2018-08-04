@@ -170,7 +170,7 @@ class PostTableMap extends TableMap
      */
     public function buildRelations()
     {
-        $this->addRelation('postedByUser', '\\User', RelationMap::MANY_TO_ONE, array (
+        $this->addRelation('PostedByUser', '\\User', RelationMap::MANY_TO_ONE, array (
   0 =>
   array (
     0 => ':posted_by_user_id',
@@ -206,7 +206,7 @@ class PostTableMap extends TableMap
   ),
 ), null, null, 'UserFavorites', false);
         $this->addRelation('Category', '\\Category', RelationMap::MANY_TO_MANY, array(), null, null, 'Categories');
-        $this->addRelation('favoriteUser', '\\User', RelationMap::MANY_TO_MANY, array(), null, null, 'favoriteUsers');
+        $this->addRelation('FavoriteUser', '\\User', RelationMap::MANY_TO_MANY, array(), null, null, 'FavoriteUsers');
     } // buildRelations()
 
     /**

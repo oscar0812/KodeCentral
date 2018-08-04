@@ -16,7 +16,8 @@ class AllController
                 'home.php',
                 ['router'=>$this->router,
                 'posts'=>\PostQuery::create()->orderByPostedDate('desc')->find(),
-                'all_categories'=>\CategoryQuery::create()->find()]
+                'all_categories'=>\CategoryQuery::create()->find(),
+                'user'=>\User::current()]
             );
         })->setName('home');
     }

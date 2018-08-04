@@ -54,7 +54,7 @@
     <column name="posted_date" phpName="PostedDate" type="DATE" required="true"/>
     <column name="posted_by_user_id" phpName="PostedByUserId" type="INTEGER" required="true"/>
     <column name="library_id" phpName="LibraryId" type="INTEGER" required="true"/>
-    <foreign-key foreignTable="user" name="post_ibfk_2" phpName="postedByUser">
+    <foreign-key foreignTable="user" name="post_ibfk_2" phpName="PostedByUser">
       <reference local="posted_by_user_id" foreign="id"/>
     </foreign-key>
     <foreign-key foreignTable="library" name="post_ibfk_3">
@@ -124,10 +124,10 @@
   <table name="user_favorite" idMethod="native" phpName="UserFavorite" isCrossRef="true">
     <column name="user_id" phpName="UserId" type="INTEGER" primaryKey="true" required="true"/>
     <column name="post_id" phpName="PostId" type="INTEGER" primaryKey="true" required="true"/>
-    <foreign-key foreignTable="post" name="user_favorite_ibfk_1" phpName="favoritePost">
+    <foreign-key foreignTable="post" name="user_favorite_ibfk_1" phpName="FavoritePost">
       <reference local="post_id" foreign="id"/>
     </foreign-key>
-    <foreign-key foreignTable="user" name="user_favorite_ibfk_2" phpName="favoriteUser">
+    <foreign-key foreignTable="user" name="user_favorite_ibfk_2" phpName="FavoriteUser">
       <reference local="user_id" foreign="id"/>
     </foreign-key>
     <index name="post_id">

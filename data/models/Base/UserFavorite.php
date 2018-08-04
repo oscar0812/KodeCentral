@@ -80,12 +80,12 @@ abstract class UserFavorite implements ActiveRecordInterface
     /**
      * @var        ChildPost
      */
-    protected $afavoritePost;
+    protected $aFavoritePost;
 
     /**
      * @var        ChildUser
      */
-    protected $afavoriteUser;
+    protected $aFavoriteUser;
 
     /**
      * Flag to prevent endless save loop, if this object is referenced
@@ -357,8 +357,8 @@ abstract class UserFavorite implements ActiveRecordInterface
             $this->modifiedColumns[UserFavoriteTableMap::COL_USER_ID] = true;
         }
 
-        if ($this->afavoriteUser !== null && $this->afavoriteUser->getId() !== $v) {
-            $this->afavoriteUser = null;
+        if ($this->aFavoriteUser !== null && $this->aFavoriteUser->getId() !== $v) {
+            $this->aFavoriteUser = null;
         }
 
         return $this;
@@ -381,8 +381,8 @@ abstract class UserFavorite implements ActiveRecordInterface
             $this->modifiedColumns[UserFavoriteTableMap::COL_POST_ID] = true;
         }
 
-        if ($this->afavoritePost !== null && $this->afavoritePost->getId() !== $v) {
-            $this->afavoritePost = null;
+        if ($this->aFavoritePost !== null && $this->aFavoritePost->getId() !== $v) {
+            $this->aFavoritePost = null;
         }
 
         return $this;
@@ -459,11 +459,11 @@ abstract class UserFavorite implements ActiveRecordInterface
      */
     public function ensureConsistency()
     {
-        if ($this->afavoriteUser !== null && $this->user_id !== $this->afavoriteUser->getId()) {
-            $this->afavoriteUser = null;
+        if ($this->aFavoriteUser !== null && $this->user_id !== $this->aFavoriteUser->getId()) {
+            $this->aFavoriteUser = null;
         }
-        if ($this->afavoritePost !== null && $this->post_id !== $this->afavoritePost->getId()) {
-            $this->afavoritePost = null;
+        if ($this->aFavoritePost !== null && $this->post_id !== $this->aFavoritePost->getId()) {
+            $this->aFavoritePost = null;
         }
     } // ensureConsistency
 
@@ -504,8 +504,8 @@ abstract class UserFavorite implements ActiveRecordInterface
 
         if ($deep) {  // also de-associate any related objects?
 
-            $this->afavoritePost = null;
-            $this->afavoriteUser = null;
+            $this->aFavoritePost = null;
+            $this->aFavoriteUser = null;
         } // if (deep)
     }
 
@@ -614,18 +614,18 @@ abstract class UserFavorite implements ActiveRecordInterface
             // method.  This object relates to these object(s) by a
             // foreign key reference.
 
-            if ($this->afavoritePost !== null) {
-                if ($this->afavoritePost->isModified() || $this->afavoritePost->isNew()) {
-                    $affectedRows += $this->afavoritePost->save($con);
+            if ($this->aFavoritePost !== null) {
+                if ($this->aFavoritePost->isModified() || $this->aFavoritePost->isNew()) {
+                    $affectedRows += $this->aFavoritePost->save($con);
                 }
-                $this->setfavoritePost($this->afavoritePost);
+                $this->setFavoritePost($this->aFavoritePost);
             }
 
-            if ($this->afavoriteUser !== null) {
-                if ($this->afavoriteUser->isModified() || $this->afavoriteUser->isNew()) {
-                    $affectedRows += $this->afavoriteUser->save($con);
+            if ($this->aFavoriteUser !== null) {
+                if ($this->aFavoriteUser->isModified() || $this->aFavoriteUser->isNew()) {
+                    $affectedRows += $this->aFavoriteUser->save($con);
                 }
-                $this->setfavoriteUser($this->afavoriteUser);
+                $this->setFavoriteUser($this->aFavoriteUser);
             }
 
             if ($this->isNew() || $this->isModified()) {
@@ -784,7 +784,7 @@ abstract class UserFavorite implements ActiveRecordInterface
         }
 
         if ($includeForeignObjects) {
-            if (null !== $this->afavoritePost) {
+            if (null !== $this->aFavoritePost) {
 
                 switch ($keyType) {
                     case TableMap::TYPE_CAMELNAME:
@@ -794,12 +794,12 @@ abstract class UserFavorite implements ActiveRecordInterface
                         $key = 'post';
                         break;
                     default:
-                        $key = 'favoritePost';
+                        $key = 'FavoritePost';
                 }
 
-                $result[$key] = $this->afavoritePost->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
+                $result[$key] = $this->aFavoritePost->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
             }
-            if (null !== $this->afavoriteUser) {
+            if (null !== $this->aFavoriteUser) {
 
                 switch ($keyType) {
                     case TableMap::TYPE_CAMELNAME:
@@ -809,10 +809,10 @@ abstract class UserFavorite implements ActiveRecordInterface
                         $key = 'user';
                         break;
                     default:
-                        $key = 'favoriteUser';
+                        $key = 'FavoriteUser';
                 }
 
-                $result[$key] = $this->afavoriteUser->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
+                $result[$key] = $this->aFavoriteUser->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
             }
         }
 
@@ -971,14 +971,14 @@ abstract class UserFavorite implements ActiveRecordInterface
         $primaryKeyFKs = [];
 
         //relation user_favorite_ibfk_1 to table post
-        if ($this->afavoritePost && $hash = spl_object_hash($this->afavoritePost)) {
+        if ($this->aFavoritePost && $hash = spl_object_hash($this->aFavoritePost)) {
             $primaryKeyFKs[] = $hash;
         } else {
             $validPrimaryKeyFKs = false;
         }
 
         //relation user_favorite_ibfk_2 to table user
-        if ($this->afavoriteUser && $hash = spl_object_hash($this->afavoriteUser)) {
+        if ($this->aFavoriteUser && $hash = spl_object_hash($this->aFavoriteUser)) {
             $primaryKeyFKs[] = $hash;
         } else {
             $validPrimaryKeyFKs = false;
@@ -1077,7 +1077,7 @@ abstract class UserFavorite implements ActiveRecordInterface
      * @return $this|\UserFavorite The current object (for fluent API support)
      * @throws PropelException
      */
-    public function setfavoritePost(ChildPost $v = null)
+    public function setFavoritePost(ChildPost $v = null)
     {
         if ($v === null) {
             $this->setPostId(NULL);
@@ -1085,7 +1085,7 @@ abstract class UserFavorite implements ActiveRecordInterface
             $this->setPostId($v->getId());
         }
 
-        $this->afavoritePost = $v;
+        $this->aFavoritePost = $v;
 
         // Add binding for other direction of this n:n relationship.
         // If this object has already been added to the ChildPost object, it will not be re-added.
@@ -1105,20 +1105,20 @@ abstract class UserFavorite implements ActiveRecordInterface
      * @return ChildPost The associated ChildPost object.
      * @throws PropelException
      */
-    public function getfavoritePost(ConnectionInterface $con = null)
+    public function getFavoritePost(ConnectionInterface $con = null)
     {
-        if ($this->afavoritePost === null && ($this->post_id != 0)) {
-            $this->afavoritePost = ChildPostQuery::create()->findPk($this->post_id, $con);
+        if ($this->aFavoritePost === null && ($this->post_id != 0)) {
+            $this->aFavoritePost = ChildPostQuery::create()->findPk($this->post_id, $con);
             /* The following can be used additionally to
                 guarantee the related object contains a reference
                 to this object.  This level of coupling may, however, be
                 undesirable since it could result in an only partially populated collection
                 in the referenced object.
-                $this->afavoritePost->addUserFavorites($this);
+                $this->aFavoritePost->addUserFavorites($this);
              */
         }
 
-        return $this->afavoritePost;
+        return $this->aFavoritePost;
     }
 
     /**
@@ -1128,7 +1128,7 @@ abstract class UserFavorite implements ActiveRecordInterface
      * @return $this|\UserFavorite The current object (for fluent API support)
      * @throws PropelException
      */
-    public function setfavoriteUser(ChildUser $v = null)
+    public function setFavoriteUser(ChildUser $v = null)
     {
         if ($v === null) {
             $this->setUserId(NULL);
@@ -1136,7 +1136,7 @@ abstract class UserFavorite implements ActiveRecordInterface
             $this->setUserId($v->getId());
         }
 
-        $this->afavoriteUser = $v;
+        $this->aFavoriteUser = $v;
 
         // Add binding for other direction of this n:n relationship.
         // If this object has already been added to the ChildUser object, it will not be re-added.
@@ -1156,20 +1156,20 @@ abstract class UserFavorite implements ActiveRecordInterface
      * @return ChildUser The associated ChildUser object.
      * @throws PropelException
      */
-    public function getfavoriteUser(ConnectionInterface $con = null)
+    public function getFavoriteUser(ConnectionInterface $con = null)
     {
-        if ($this->afavoriteUser === null && ($this->user_id != 0)) {
-            $this->afavoriteUser = ChildUserQuery::create()->findPk($this->user_id, $con);
+        if ($this->aFavoriteUser === null && ($this->user_id != 0)) {
+            $this->aFavoriteUser = ChildUserQuery::create()->findPk($this->user_id, $con);
             /* The following can be used additionally to
                 guarantee the related object contains a reference
                 to this object.  This level of coupling may, however, be
                 undesirable since it could result in an only partially populated collection
                 in the referenced object.
-                $this->afavoriteUser->addUserFavorites($this);
+                $this->aFavoriteUser->addUserFavorites($this);
              */
         }
 
-        return $this->afavoriteUser;
+        return $this->aFavoriteUser;
     }
 
     /**
@@ -1179,11 +1179,11 @@ abstract class UserFavorite implements ActiveRecordInterface
      */
     public function clear()
     {
-        if (null !== $this->afavoritePost) {
-            $this->afavoritePost->removeUserFavorite($this);
+        if (null !== $this->aFavoritePost) {
+            $this->aFavoritePost->removeUserFavorite($this);
         }
-        if (null !== $this->afavoriteUser) {
-            $this->afavoriteUser->removeUserFavorite($this);
+        if (null !== $this->aFavoriteUser) {
+            $this->aFavoriteUser->removeUserFavorite($this);
         }
         $this->user_id = null;
         $this->post_id = null;
@@ -1207,8 +1207,8 @@ abstract class UserFavorite implements ActiveRecordInterface
         if ($deep) {
         } // if ($deep)
 
-        $this->afavoritePost = null;
-        $this->afavoriteUser = null;
+        $this->aFavoritePost = null;
+        $this->aFavoriteUser = null;
     }
 
     /**

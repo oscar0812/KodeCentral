@@ -37,6 +37,12 @@ class User extends BaseUser
         return password_verify($password, substr((string)$this->getPassword(), 0, 60));
     }
 
+    public function hasPostInFavorites($post)
+    {
+        $row = \UserFavoriteQuery::create()->filterByFavoriteUser($this)->filterByFavoritePost($post);
+        return $row->find()->count() > 0;
+    }
+
     // log user in (save a session for it)
     public function logIn()
     {
@@ -84,19 +90,19 @@ class User extends BaseUser
     public function getBadge()
     {
         // if not a super user, no badge
-        if(!$this->isSuper()){
-          return '';
+        if (!$this->isSuper()) {
+            return '';
         }
 
         $posts = $this->getPosts()->count();
         $color = 'info';
         $icon = 'code';
-        if($posts > 100){
-          $color = 'royal';
-          $icon = '8tracks';
-        } elseif($posts > 50){
-          $color = 'danger';
-          $icon = 'star';
+        if ($posts > 100) {
+            $color = 'royal';
+            $icon = '8tracks';
+        } elseif ($posts > 50) {
+            $color = 'danger';
+            $icon = 'star';
         }
 
         return '<span class="badge-pill badge-pill-'.$color.' zmdi zmdi-'.$icon.'"></span>';

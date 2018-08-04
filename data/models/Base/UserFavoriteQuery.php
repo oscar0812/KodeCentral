@@ -34,25 +34,25 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildUserFavoriteQuery rightJoinWith($relation) Adds a RIGHT JOIN clause and with to the query
  * @method     ChildUserFavoriteQuery innerJoinWith($relation) Adds a INNER JOIN clause and with to the query
  *
- * @method     ChildUserFavoriteQuery leftJoinfavoritePost($relationAlias = null) Adds a LEFT JOIN clause to the query using the favoritePost relation
- * @method     ChildUserFavoriteQuery rightJoinfavoritePost($relationAlias = null) Adds a RIGHT JOIN clause to the query using the favoritePost relation
- * @method     ChildUserFavoriteQuery innerJoinfavoritePost($relationAlias = null) Adds a INNER JOIN clause to the query using the favoritePost relation
+ * @method     ChildUserFavoriteQuery leftJoinFavoritePost($relationAlias = null) Adds a LEFT JOIN clause to the query using the FavoritePost relation
+ * @method     ChildUserFavoriteQuery rightJoinFavoritePost($relationAlias = null) Adds a RIGHT JOIN clause to the query using the FavoritePost relation
+ * @method     ChildUserFavoriteQuery innerJoinFavoritePost($relationAlias = null) Adds a INNER JOIN clause to the query using the FavoritePost relation
  *
- * @method     ChildUserFavoriteQuery joinWithfavoritePost($joinType = Criteria::INNER_JOIN) Adds a join clause and with to the query using the favoritePost relation
+ * @method     ChildUserFavoriteQuery joinWithFavoritePost($joinType = Criteria::INNER_JOIN) Adds a join clause and with to the query using the FavoritePost relation
  *
- * @method     ChildUserFavoriteQuery leftJoinWithfavoritePost() Adds a LEFT JOIN clause and with to the query using the favoritePost relation
- * @method     ChildUserFavoriteQuery rightJoinWithfavoritePost() Adds a RIGHT JOIN clause and with to the query using the favoritePost relation
- * @method     ChildUserFavoriteQuery innerJoinWithfavoritePost() Adds a INNER JOIN clause and with to the query using the favoritePost relation
+ * @method     ChildUserFavoriteQuery leftJoinWithFavoritePost() Adds a LEFT JOIN clause and with to the query using the FavoritePost relation
+ * @method     ChildUserFavoriteQuery rightJoinWithFavoritePost() Adds a RIGHT JOIN clause and with to the query using the FavoritePost relation
+ * @method     ChildUserFavoriteQuery innerJoinWithFavoritePost() Adds a INNER JOIN clause and with to the query using the FavoritePost relation
  *
- * @method     ChildUserFavoriteQuery leftJoinfavoriteUser($relationAlias = null) Adds a LEFT JOIN clause to the query using the favoriteUser relation
- * @method     ChildUserFavoriteQuery rightJoinfavoriteUser($relationAlias = null) Adds a RIGHT JOIN clause to the query using the favoriteUser relation
- * @method     ChildUserFavoriteQuery innerJoinfavoriteUser($relationAlias = null) Adds a INNER JOIN clause to the query using the favoriteUser relation
+ * @method     ChildUserFavoriteQuery leftJoinFavoriteUser($relationAlias = null) Adds a LEFT JOIN clause to the query using the FavoriteUser relation
+ * @method     ChildUserFavoriteQuery rightJoinFavoriteUser($relationAlias = null) Adds a RIGHT JOIN clause to the query using the FavoriteUser relation
+ * @method     ChildUserFavoriteQuery innerJoinFavoriteUser($relationAlias = null) Adds a INNER JOIN clause to the query using the FavoriteUser relation
  *
- * @method     ChildUserFavoriteQuery joinWithfavoriteUser($joinType = Criteria::INNER_JOIN) Adds a join clause and with to the query using the favoriteUser relation
+ * @method     ChildUserFavoriteQuery joinWithFavoriteUser($joinType = Criteria::INNER_JOIN) Adds a join clause and with to the query using the FavoriteUser relation
  *
- * @method     ChildUserFavoriteQuery leftJoinWithfavoriteUser() Adds a LEFT JOIN clause and with to the query using the favoriteUser relation
- * @method     ChildUserFavoriteQuery rightJoinWithfavoriteUser() Adds a RIGHT JOIN clause and with to the query using the favoriteUser relation
- * @method     ChildUserFavoriteQuery innerJoinWithfavoriteUser() Adds a INNER JOIN clause and with to the query using the favoriteUser relation
+ * @method     ChildUserFavoriteQuery leftJoinWithFavoriteUser() Adds a LEFT JOIN clause and with to the query using the FavoriteUser relation
+ * @method     ChildUserFavoriteQuery rightJoinWithFavoriteUser() Adds a RIGHT JOIN clause and with to the query using the FavoriteUser relation
+ * @method     ChildUserFavoriteQuery innerJoinWithFavoriteUser() Adds a INNER JOIN clause and with to the query using the FavoriteUser relation
  *
  * @method     \PostQuery|\UserQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
  *
@@ -281,7 +281,7 @@ abstract class UserFavoriteQuery extends ModelCriteria
      * $query->filterByUserId(array('min' => 12)); // WHERE user_id > 12
      * </code>
      *
-     * @see       filterByfavoriteUser()
+     * @see       filterByFavoriteUser()
      *
      * @param     mixed $userId The value to use as filter.
      *              Use scalar values for equality.
@@ -324,7 +324,7 @@ abstract class UserFavoriteQuery extends ModelCriteria
      * $query->filterByPostId(array('min' => 12)); // WHERE post_id > 12
      * </code>
      *
-     * @see       filterByfavoritePost()
+     * @see       filterByFavoritePost()
      *
      * @param     mixed $postId The value to use as filter.
      *              Use scalar values for equality.
@@ -367,7 +367,7 @@ abstract class UserFavoriteQuery extends ModelCriteria
      *
      * @return ChildUserFavoriteQuery The current query, for fluid interface
      */
-    public function filterByfavoritePost($post, $comparison = null)
+    public function filterByFavoritePost($post, $comparison = null)
     {
         if ($post instanceof \Post) {
             return $this
@@ -380,22 +380,22 @@ abstract class UserFavoriteQuery extends ModelCriteria
             return $this
                 ->addUsingAlias(UserFavoriteTableMap::COL_POST_ID, $post->toKeyValue('PrimaryKey', 'Id'), $comparison);
         } else {
-            throw new PropelException('filterByfavoritePost() only accepts arguments of type \Post or Collection');
+            throw new PropelException('filterByFavoritePost() only accepts arguments of type \Post or Collection');
         }
     }
 
     /**
-     * Adds a JOIN clause to the query using the favoritePost relation
+     * Adds a JOIN clause to the query using the FavoritePost relation
      *
      * @param     string $relationAlias optional alias for the relation
      * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
      *
      * @return $this|ChildUserFavoriteQuery The current query, for fluid interface
      */
-    public function joinfavoritePost($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    public function joinFavoritePost($relationAlias = null, $joinType = Criteria::INNER_JOIN)
     {
         $tableMap = $this->getTableMap();
-        $relationMap = $tableMap->getRelation('favoritePost');
+        $relationMap = $tableMap->getRelation('FavoritePost');
 
         // create a ModelJoin object for this join
         $join = new ModelJoin();
@@ -410,14 +410,14 @@ abstract class UserFavoriteQuery extends ModelCriteria
             $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
             $this->addJoinObject($join, $relationAlias);
         } else {
-            $this->addJoinObject($join, 'favoritePost');
+            $this->addJoinObject($join, 'FavoritePost');
         }
 
         return $this;
     }
 
     /**
-     * Use the favoritePost relation Post object
+     * Use the FavoritePost relation Post object
      *
      * @see useQuery()
      *
@@ -427,11 +427,11 @@ abstract class UserFavoriteQuery extends ModelCriteria
      *
      * @return \PostQuery A secondary query class using the current class as primary query
      */
-    public function usefavoritePostQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    public function useFavoritePostQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
     {
         return $this
-            ->joinfavoritePost($relationAlias, $joinType)
-            ->useQuery($relationAlias ? $relationAlias : 'favoritePost', '\PostQuery');
+            ->joinFavoritePost($relationAlias, $joinType)
+            ->useQuery($relationAlias ? $relationAlias : 'FavoritePost', '\PostQuery');
     }
 
     /**
@@ -444,7 +444,7 @@ abstract class UserFavoriteQuery extends ModelCriteria
      *
      * @return ChildUserFavoriteQuery The current query, for fluid interface
      */
-    public function filterByfavoriteUser($user, $comparison = null)
+    public function filterByFavoriteUser($user, $comparison = null)
     {
         if ($user instanceof \User) {
             return $this
@@ -457,22 +457,22 @@ abstract class UserFavoriteQuery extends ModelCriteria
             return $this
                 ->addUsingAlias(UserFavoriteTableMap::COL_USER_ID, $user->toKeyValue('PrimaryKey', 'Id'), $comparison);
         } else {
-            throw new PropelException('filterByfavoriteUser() only accepts arguments of type \User or Collection');
+            throw new PropelException('filterByFavoriteUser() only accepts arguments of type \User or Collection');
         }
     }
 
     /**
-     * Adds a JOIN clause to the query using the favoriteUser relation
+     * Adds a JOIN clause to the query using the FavoriteUser relation
      *
      * @param     string $relationAlias optional alias for the relation
      * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
      *
      * @return $this|ChildUserFavoriteQuery The current query, for fluid interface
      */
-    public function joinfavoriteUser($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    public function joinFavoriteUser($relationAlias = null, $joinType = Criteria::INNER_JOIN)
     {
         $tableMap = $this->getTableMap();
-        $relationMap = $tableMap->getRelation('favoriteUser');
+        $relationMap = $tableMap->getRelation('FavoriteUser');
 
         // create a ModelJoin object for this join
         $join = new ModelJoin();
@@ -487,14 +487,14 @@ abstract class UserFavoriteQuery extends ModelCriteria
             $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
             $this->addJoinObject($join, $relationAlias);
         } else {
-            $this->addJoinObject($join, 'favoriteUser');
+            $this->addJoinObject($join, 'FavoriteUser');
         }
 
         return $this;
     }
 
     /**
-     * Use the favoriteUser relation User object
+     * Use the FavoriteUser relation User object
      *
      * @see useQuery()
      *
@@ -504,11 +504,11 @@ abstract class UserFavoriteQuery extends ModelCriteria
      *
      * @return \UserQuery A secondary query class using the current class as primary query
      */
-    public function usefavoriteUserQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    public function useFavoriteUserQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
     {
         return $this
-            ->joinfavoriteUser($relationAlias, $joinType)
-            ->useQuery($relationAlias ? $relationAlias : 'favoriteUser', '\UserQuery');
+            ->joinFavoriteUser($relationAlias, $joinType)
+            ->useQuery($relationAlias ? $relationAlias : 'FavoriteUser', '\UserQuery');
     }
 
     /**

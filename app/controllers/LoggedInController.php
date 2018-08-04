@@ -8,6 +8,39 @@ use Slim\Exception\NotFoundException;
 // User needs to be signed in to access this group
 class LoggedInController
 {
+    public function favorites($app)
+    {
+        $app->get('/favorites', function ($request, $response, $args) {
+            $user = \User::current();
+            return $this->view->render(
+          $response,
+            'post-list.php',
+            ['router'=>$this->router, 'user'=>$user, 'posts'=>$user->getFavoritePosts(), 'title'=>'Your favorites']
+        );
+        })->setName('user-favorites');
+
+        // trying to remove or add a post from favorites
+        $app->post('/favorites', function ($request, $response, $args) {
+            $user = \User::current();
+            $params = $request->getParsedBody();
+
+            $post = \PostQuery::create()->findOneByHyperlink($params['post']);
+            if ($post == null) {
+                return $response->withJson(['success'=>false]);
+            }
+
+            if ($user->hasPostInFavorites($post)) {
+                $user->removeFavoritePost($post);
+                $user->save();
+                return $response->withJson(['success'=>true, 'status'=>'removed']);
+            } else {
+                $user->addFavoritePost($post);
+                $user->save();
+                return $response->withJson(['success'=>true, 'status'=>'added']);
+            }
+        });
+    }
+
     public function createPost($app)
     {
         // show view to create a new post
@@ -159,6 +192,7 @@ class LoggedInController
         // log out
         $controller = new LoggedInController();
         $app->group('', function () use ($controller, $app) {
+            $controller->favorites($app);
             $controller->createPost($app);
             $controller->editPost($app);
             $controller->userPosts($app);

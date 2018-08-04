@@ -140,7 +140,7 @@ abstract class Post implements ActiveRecordInterface
     /**
      * @var        ChildUser
      */
-    protected $apostedByUser;
+    protected $aPostedByUser;
 
     /**
      * @var        ChildLibrary
@@ -178,12 +178,12 @@ abstract class Post implements ActiveRecordInterface
     /**
      * @var        ObjectCollection|ChildUser[] Cross Collection to store aggregation of ChildUser objects.
      */
-    protected $collfavoriteUsers;
+    protected $collFavoriteUsers;
 
     /**
      * @var bool
      */
-    protected $collfavoriteUsersPartial;
+    protected $collFavoriteUsersPartial;
 
     /**
      * Flag to prevent endless save loop, if this object is referenced
@@ -662,8 +662,8 @@ abstract class Post implements ActiveRecordInterface
             $this->modifiedColumns[PostTableMap::COL_POSTED_BY_USER_ID] = true;
         }
 
-        if ($this->apostedByUser !== null && $this->apostedByUser->getId() !== $v) {
-            $this->apostedByUser = null;
+        if ($this->aPostedByUser !== null && $this->aPostedByUser->getId() !== $v) {
+            $this->aPostedByUser = null;
         }
 
         return $this;
@@ -782,8 +782,8 @@ abstract class Post implements ActiveRecordInterface
      */
     public function ensureConsistency()
     {
-        if ($this->apostedByUser !== null && $this->posted_by_user_id !== $this->apostedByUser->getId()) {
-            $this->apostedByUser = null;
+        if ($this->aPostedByUser !== null && $this->posted_by_user_id !== $this->aPostedByUser->getId()) {
+            $this->aPostedByUser = null;
         }
         if ($this->aLibrary !== null && $this->library_id !== $this->aLibrary->getId()) {
             $this->aLibrary = null;
@@ -827,7 +827,7 @@ abstract class Post implements ActiveRecordInterface
 
         if ($deep) {  // also de-associate any related objects?
 
-            $this->apostedByUser = null;
+            $this->aPostedByUser = null;
             $this->aLibrary = null;
             $this->collComments = null;
 
@@ -836,7 +836,7 @@ abstract class Post implements ActiveRecordInterface
             $this->collUserFavorites = null;
 
             $this->collCategories = null;
-            $this->collfavoriteUsers = null;
+            $this->collFavoriteUsers = null;
         } // if (deep)
     }
 
@@ -945,11 +945,11 @@ abstract class Post implements ActiveRecordInterface
             // method.  This object relates to these object(s) by a
             // foreign key reference.
 
-            if ($this->apostedByUser !== null) {
-                if ($this->apostedByUser->isModified() || $this->apostedByUser->isNew()) {
-                    $affectedRows += $this->apostedByUser->save($con);
+            if ($this->aPostedByUser !== null) {
+                if ($this->aPostedByUser->isModified() || $this->aPostedByUser->isNew()) {
+                    $affectedRows += $this->aPostedByUser->save($con);
                 }
-                $this->setpostedByUser($this->apostedByUser);
+                $this->setPostedByUser($this->aPostedByUser);
             }
 
             if ($this->aLibrary !== null) {
@@ -1019,8 +1019,8 @@ abstract class Post implements ActiveRecordInterface
 
             }
 
-            if ($this->collfavoriteUsers) {
-                foreach ($this->collfavoriteUsers as $favoriteUser) {
+            if ($this->collFavoriteUsers) {
+                foreach ($this->collFavoriteUsers as $favoriteUser) {
                     if (!$favoriteUser->isDeleted() && ($favoriteUser->isNew() || $favoriteUser->isModified())) {
                         $favoriteUser->save($con);
                     }
@@ -1289,7 +1289,7 @@ abstract class Post implements ActiveRecordInterface
         }
 
         if ($includeForeignObjects) {
-            if (null !== $this->apostedByUser) {
+            if (null !== $this->aPostedByUser) {
 
                 switch ($keyType) {
                     case TableMap::TYPE_CAMELNAME:
@@ -1299,10 +1299,10 @@ abstract class Post implements ActiveRecordInterface
                         $key = 'user';
                         break;
                     default:
-                        $key = 'postedByUser';
+                        $key = 'PostedByUser';
                 }
 
-                $result[$key] = $this->apostedByUser->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
+                $result[$key] = $this->aPostedByUser->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
             }
             if (null !== $this->aLibrary) {
 
@@ -1681,7 +1681,7 @@ abstract class Post implements ActiveRecordInterface
      * @return $this|\Post The current object (for fluent API support)
      * @throws PropelException
      */
-    public function setpostedByUser(ChildUser $v = null)
+    public function setPostedByUser(ChildUser $v = null)
     {
         if ($v === null) {
             $this->setPostedByUserId(NULL);
@@ -1689,7 +1689,7 @@ abstract class Post implements ActiveRecordInterface
             $this->setPostedByUserId($v->getId());
         }
 
-        $this->apostedByUser = $v;
+        $this->aPostedByUser = $v;
 
         // Add binding for other direction of this n:n relationship.
         // If this object has already been added to the ChildUser object, it will not be re-added.
@@ -1709,20 +1709,20 @@ abstract class Post implements ActiveRecordInterface
      * @return ChildUser The associated ChildUser object.
      * @throws PropelException
      */
-    public function getpostedByUser(ConnectionInterface $con = null)
+    public function getPostedByUser(ConnectionInterface $con = null)
     {
-        if ($this->apostedByUser === null && ($this->posted_by_user_id != 0)) {
-            $this->apostedByUser = ChildUserQuery::create()->findPk($this->posted_by_user_id, $con);
+        if ($this->aPostedByUser === null && ($this->posted_by_user_id != 0)) {
+            $this->aPostedByUser = ChildUserQuery::create()->findPk($this->posted_by_user_id, $con);
             /* The following can be used additionally to
                 guarantee the related object contains a reference
                 to this object.  This level of coupling may, however, be
                 undesirable since it could result in an only partially populated collection
                 in the referenced object.
-                $this->apostedByUser->addPosts($this);
+                $this->aPostedByUser->addPosts($this);
              */
         }
 
-        return $this->apostedByUser;
+        return $this->aPostedByUser;
     }
 
     /**
@@ -2373,7 +2373,7 @@ abstract class Post implements ActiveRecordInterface
                 $this->initUserFavorites();
             } else {
                 $collUserFavorites = ChildUserFavoriteQuery::create(null, $criteria)
-                    ->filterByfavoritePost($this)
+                    ->filterByFavoritePost($this)
                     ->find($con);
 
                 if (null !== $criteria) {
@@ -2430,7 +2430,7 @@ abstract class Post implements ActiveRecordInterface
         $this->userFavoritesScheduledForDeletion = clone $userFavoritesToDelete;
 
         foreach ($userFavoritesToDelete as $userFavoriteRemoved) {
-            $userFavoriteRemoved->setfavoritePost(null);
+            $userFavoriteRemoved->setFavoritePost(null);
         }
 
         $this->collUserFavorites = null;
@@ -2471,7 +2471,7 @@ abstract class Post implements ActiveRecordInterface
             }
 
             return $query
-                ->filterByfavoritePost($this)
+                ->filterByFavoritePost($this)
                 ->count($con);
         }
 
@@ -2509,7 +2509,7 @@ abstract class Post implements ActiveRecordInterface
     protected function doAddUserFavorite(ChildUserFavorite $userFavorite)
     {
         $this->collUserFavorites[]= $userFavorite;
-        $userFavorite->setfavoritePost($this);
+        $userFavorite->setFavoritePost($this);
     }
 
     /**
@@ -2526,7 +2526,7 @@ abstract class Post implements ActiveRecordInterface
                 $this->userFavoritesScheduledForDeletion->clear();
             }
             $this->userFavoritesScheduledForDeletion[]= clone $userFavorite;
-            $userFavorite->setfavoritePost(null);
+            $userFavorite->setFavoritePost(null);
         }
 
         return $this;
@@ -2549,10 +2549,10 @@ abstract class Post implements ActiveRecordInterface
      * @param      string $joinBehavior optional join type to use (defaults to Criteria::LEFT_JOIN)
      * @return ObjectCollection|ChildUserFavorite[] List of ChildUserFavorite objects
      */
-    public function getUserFavoritesJoinfavoriteUser(Criteria $criteria = null, ConnectionInterface $con = null, $joinBehavior = Criteria::LEFT_JOIN)
+    public function getUserFavoritesJoinFavoriteUser(Criteria $criteria = null, ConnectionInterface $con = null, $joinBehavior = Criteria::LEFT_JOIN)
     {
         $query = ChildUserFavoriteQuery::create(null, $criteria);
-        $query->joinWith('favoriteUser', $joinBehavior);
+        $query->joinWith('FavoriteUser', $joinBehavior);
 
         return $this->getUserFavorites($query, $con);
     }
@@ -2801,45 +2801,45 @@ abstract class Post implements ActiveRecordInterface
     }
 
     /**
-     * Clears out the collfavoriteUsers collection
+     * Clears out the collFavoriteUsers collection
      *
      * This does not modify the database; however, it will remove any associated objects, causing
      * them to be refetched by subsequent calls to accessor method.
      *
      * @return void
-     * @see        addfavoriteUsers()
+     * @see        addFavoriteUsers()
      */
-    public function clearfavoriteUsers()
+    public function clearFavoriteUsers()
     {
-        $this->collfavoriteUsers = null; // important to set this to NULL since that means it is uninitialized
+        $this->collFavoriteUsers = null; // important to set this to NULL since that means it is uninitialized
     }
 
     /**
-     * Initializes the collfavoriteUsers crossRef collection.
+     * Initializes the collFavoriteUsers crossRef collection.
      *
-     * By default this just sets the collfavoriteUsers collection to an empty collection (like clearfavoriteUsers());
+     * By default this just sets the collFavoriteUsers collection to an empty collection (like clearFavoriteUsers());
      * however, you may wish to override this method in your stub class to provide setting appropriate
      * to your application -- for example, setting the initial array to the values stored in database.
      *
      * @return void
      */
-    public function initfavoriteUsers()
+    public function initFavoriteUsers()
     {
         $collectionClassName = UserFavoriteTableMap::getTableMap()->getCollectionClassName();
 
-        $this->collfavoriteUsers = new $collectionClassName;
-        $this->collfavoriteUsersPartial = true;
-        $this->collfavoriteUsers->setModel('\User');
+        $this->collFavoriteUsers = new $collectionClassName;
+        $this->collFavoriteUsersPartial = true;
+        $this->collFavoriteUsers->setModel('\User');
     }
 
     /**
-     * Checks if the collfavoriteUsers collection is loaded.
+     * Checks if the collFavoriteUsers collection is loaded.
      *
      * @return bool
      */
-    public function isfavoriteUsersLoaded()
+    public function isFavoriteUsersLoaded()
     {
-        return null !== $this->collfavoriteUsers;
+        return null !== $this->collFavoriteUsers;
     }
 
     /**
@@ -2857,39 +2857,39 @@ abstract class Post implements ActiveRecordInterface
      *
      * @return ObjectCollection|ChildUser[] List of ChildUser objects
      */
-    public function getfavoriteUsers(Criteria $criteria = null, ConnectionInterface $con = null)
+    public function getFavoriteUsers(Criteria $criteria = null, ConnectionInterface $con = null)
     {
-        $partial = $this->collfavoriteUsersPartial && !$this->isNew();
-        if (null === $this->collfavoriteUsers || null !== $criteria || $partial) {
+        $partial = $this->collFavoriteUsersPartial && !$this->isNew();
+        if (null === $this->collFavoriteUsers || null !== $criteria || $partial) {
             if ($this->isNew()) {
                 // return empty collection
-                if (null === $this->collfavoriteUsers) {
-                    $this->initfavoriteUsers();
+                if (null === $this->collFavoriteUsers) {
+                    $this->initFavoriteUsers();
                 }
             } else {
 
                 $query = ChildUserQuery::create(null, $criteria)
-                    ->filterByfavoritePost($this);
-                $collfavoriteUsers = $query->find($con);
+                    ->filterByFavoritePost($this);
+                $collFavoriteUsers = $query->find($con);
                 if (null !== $criteria) {
-                    return $collfavoriteUsers;
+                    return $collFavoriteUsers;
                 }
 
-                if ($partial && $this->collfavoriteUsers) {
+                if ($partial && $this->collFavoriteUsers) {
                     //make sure that already added objects gets added to the list of the database.
-                    foreach ($this->collfavoriteUsers as $obj) {
-                        if (!$collfavoriteUsers->contains($obj)) {
-                            $collfavoriteUsers[] = $obj;
+                    foreach ($this->collFavoriteUsers as $obj) {
+                        if (!$collFavoriteUsers->contains($obj)) {
+                            $collFavoriteUsers[] = $obj;
                         }
                     }
                 }
 
-                $this->collfavoriteUsers = $collfavoriteUsers;
-                $this->collfavoriteUsersPartial = false;
+                $this->collFavoriteUsers = $collFavoriteUsers;
+                $this->collFavoriteUsersPartial = false;
             }
         }
 
-        return $this->collfavoriteUsers;
+        return $this->collFavoriteUsers;
     }
 
     /**
@@ -2902,25 +2902,25 @@ abstract class Post implements ActiveRecordInterface
      * @param  ConnectionInterface $con Optional connection object
      * @return $this|ChildPost The current object (for fluent API support)
      */
-    public function setfavoriteUsers(Collection $favoriteUsers, ConnectionInterface $con = null)
+    public function setFavoriteUsers(Collection $favoriteUsers, ConnectionInterface $con = null)
     {
-        $this->clearfavoriteUsers();
-        $currentfavoriteUsers = $this->getfavoriteUsers();
+        $this->clearFavoriteUsers();
+        $currentFavoriteUsers = $this->getFavoriteUsers();
 
-        $favoriteUsersScheduledForDeletion = $currentfavoriteUsers->diff($favoriteUsers);
+        $favoriteUsersScheduledForDeletion = $currentFavoriteUsers->diff($favoriteUsers);
 
         foreach ($favoriteUsersScheduledForDeletion as $toDelete) {
-            $this->removefavoriteUser($toDelete);
+            $this->removeFavoriteUser($toDelete);
         }
 
         foreach ($favoriteUsers as $favoriteUser) {
-            if (!$currentfavoriteUsers->contains($favoriteUser)) {
-                $this->doAddfavoriteUser($favoriteUser);
+            if (!$currentFavoriteUsers->contains($favoriteUser)) {
+                $this->doAddFavoriteUser($favoriteUser);
             }
         }
 
-        $this->collfavoriteUsersPartial = false;
-        $this->collfavoriteUsers = $favoriteUsers;
+        $this->collFavoriteUsersPartial = false;
+        $this->collFavoriteUsers = $favoriteUsers;
 
         return $this;
     }
@@ -2935,16 +2935,16 @@ abstract class Post implements ActiveRecordInterface
      *
      * @return int the number of related User objects
      */
-    public function countfavoriteUsers(Criteria $criteria = null, $distinct = false, ConnectionInterface $con = null)
+    public function countFavoriteUsers(Criteria $criteria = null, $distinct = false, ConnectionInterface $con = null)
     {
-        $partial = $this->collfavoriteUsersPartial && !$this->isNew();
-        if (null === $this->collfavoriteUsers || null !== $criteria || $partial) {
-            if ($this->isNew() && null === $this->collfavoriteUsers) {
+        $partial = $this->collFavoriteUsersPartial && !$this->isNew();
+        if (null === $this->collFavoriteUsers || null !== $criteria || $partial) {
+            if ($this->isNew() && null === $this->collFavoriteUsers) {
                 return 0;
             } else {
 
                 if ($partial && !$criteria) {
-                    return count($this->getfavoriteUsers());
+                    return count($this->getFavoriteUsers());
                 }
 
                 $query = ChildUserQuery::create(null, $criteria);
@@ -2953,11 +2953,11 @@ abstract class Post implements ActiveRecordInterface
                 }
 
                 return $query
-                    ->filterByfavoritePost($this)
+                    ->filterByFavoritePost($this)
                     ->count($con);
             }
         } else {
-            return count($this->collfavoriteUsers);
+            return count($this->collFavoriteUsers);
         }
     }
 
@@ -2968,15 +2968,15 @@ abstract class Post implements ActiveRecordInterface
      * @param ChildUser $favoriteUser
      * @return ChildPost The current object (for fluent API support)
      */
-    public function addfavoriteUser(ChildUser $favoriteUser)
+    public function addFavoriteUser(ChildUser $favoriteUser)
     {
-        if ($this->collfavoriteUsers === null) {
+        if ($this->collFavoriteUsers === null) {
             $this->initFavoriteUsers();
         }
 
         if (!$this->getFavoriteUsers()->contains($favoriteUser)) {
             // only add it if the **same** object is not already associated
-            $this->collfavoriteUsers->push($favoriteUser);
+            $this->collFavoriteUsers->push($favoriteUser);
             $this->doAddFavoriteUser($favoriteUser);
         }
 
@@ -2987,23 +2987,23 @@ abstract class Post implements ActiveRecordInterface
      *
      * @param ChildUser $favoriteUser
      */
-    protected function doAddfavoriteUser(ChildUser $favoriteUser)
+    protected function doAddFavoriteUser(ChildUser $favoriteUser)
     {
         $userFavorite = new ChildUserFavorite();
 
-        $userFavorite->setfavoriteUser($favoriteUser);
+        $userFavorite->setFavoriteUser($favoriteUser);
 
-        $userFavorite->setfavoritePost($this);
+        $userFavorite->setFavoritePost($this);
 
         $this->addUserFavorite($userFavorite);
 
         // set the back reference to this object directly as using provided method either results
         // in endless loop or in multiple relations
-        if (!$favoriteUser->isfavoritePostsLoaded()) {
-            $favoriteUser->initfavoritePosts();
-            $favoriteUser->getfavoritePosts()->push($this);
-        } elseif (!$favoriteUser->getfavoritePosts()->contains($this)) {
-            $favoriteUser->getfavoritePosts()->push($this);
+        if (!$favoriteUser->isFavoritePostsLoaded()) {
+            $favoriteUser->initFavoritePosts();
+            $favoriteUser->getFavoritePosts()->push($this);
+        } elseif (!$favoriteUser->getFavoritePosts()->contains($this)) {
+            $favoriteUser->getFavoritePosts()->push($this);
         }
 
     }
@@ -3015,24 +3015,24 @@ abstract class Post implements ActiveRecordInterface
      * @param ChildUser $favoriteUser
      * @return ChildPost The current object (for fluent API support)
      */
-    public function removefavoriteUser(ChildUser $favoriteUser)
+    public function removeFavoriteUser(ChildUser $favoriteUser)
     {
-        if ($this->getfavoriteUsers()->contains($favoriteUser)) {
+        if ($this->getFavoriteUsers()->contains($favoriteUser)) {
             $userFavorite = new ChildUserFavorite();
-            $userFavorite->setfavoriteUser($favoriteUser);
-            if ($favoriteUser->isfavoritePostsLoaded()) {
+            $userFavorite->setFavoriteUser($favoriteUser);
+            if ($favoriteUser->isFavoritePostsLoaded()) {
                 //remove the back reference if available
-                $favoriteUser->getfavoritePosts()->removeObject($this);
+                $favoriteUser->getFavoritePosts()->removeObject($this);
             }
 
-            $userFavorite->setfavoritePost($this);
+            $userFavorite->setFavoritePost($this);
             $this->removeUserFavorite(clone $userFavorite);
             $userFavorite->clear();
 
-            $this->collfavoriteUsers->remove($this->collfavoriteUsers->search($favoriteUser));
+            $this->collFavoriteUsers->remove($this->collFavoriteUsers->search($favoriteUser));
 
             if (null === $this->favoriteUsersScheduledForDeletion) {
-                $this->favoriteUsersScheduledForDeletion = clone $this->collfavoriteUsers;
+                $this->favoriteUsersScheduledForDeletion = clone $this->collFavoriteUsers;
                 $this->favoriteUsersScheduledForDeletion->clear();
             }
 
@@ -3050,8 +3050,8 @@ abstract class Post implements ActiveRecordInterface
      */
     public function clear()
     {
-        if (null !== $this->apostedByUser) {
-            $this->apostedByUser->removePost($this);
+        if (null !== $this->aPostedByUser) {
+            $this->aPostedByUser->removePost($this);
         }
         if (null !== $this->aLibrary) {
             $this->aLibrary->removePost($this);
@@ -3101,8 +3101,8 @@ abstract class Post implements ActiveRecordInterface
                     $o->clearAllReferences($deep);
                 }
             }
-            if ($this->collfavoriteUsers) {
-                foreach ($this->collfavoriteUsers as $o) {
+            if ($this->collFavoriteUsers) {
+                foreach ($this->collFavoriteUsers as $o) {
                     $o->clearAllReferences($deep);
                 }
             }
@@ -3112,8 +3112,8 @@ abstract class Post implements ActiveRecordInterface
         $this->collPostCategories = null;
         $this->collUserFavorites = null;
         $this->collCategories = null;
-        $this->collfavoriteUsers = null;
-        $this->apostedByUser = null;
+        $this->collFavoriteUsers = null;
+        $this->aPostedByUser = null;
         $this->aLibrary = null;
     }
 
@@ -3172,9 +3172,9 @@ abstract class Post implements ActiveRecordInterface
             // foreign key reference.
 
             // If validate() method exists, the validate-behavior is configured for related object
-            if (method_exists($this->apostedByUser, 'validate')) {
-                if (!$this->apostedByUser->validate($validator)) {
-                    $failureMap->addAll($this->apostedByUser->getValidationFailures());
+            if (method_exists($this->aPostedByUser, 'validate')) {
+                if (!$this->aPostedByUser->validate($validator)) {
+                    $failureMap->addAll($this->aPostedByUser->getValidationFailures());
                 }
             }
             // If validate() method exists, the validate-behavior is configured for related object
