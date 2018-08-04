@@ -35,7 +35,7 @@
         <div class="row">
           <div class="col-md-9">
             <?php foreach ($posts as $post) { ?>
-              <div class="card mb-1 mix <?=$post->categoriesString()?> col-md-11" data-url="<?=$router->pathFor('view-post', ['hyperlink'=>$post->getHyperlink()])?>">
+              <div class="card mb-1 mix <?=$post->categoriesString()?> col-sm-12" data-url="<?=$router->pathFor('view-post', ['hyperlink'=>$post->getHyperlink()])?>">
                 <table class="table table-responsive table-no-border vertical-center">
                   <tbody>
                     <tr>
