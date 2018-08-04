@@ -34,7 +34,7 @@ class User extends BaseUser
     // returns true if $password => hashed($password)
     public function verifyPassword($password)
     {
-        return password_verify($password, substr($this->getPassword(), 0, 60));
+        return password_verify($password, substr((string)$this->getPassword(), 0, 60));
     }
 
     // log user in (save a session for it)
