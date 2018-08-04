@@ -21,7 +21,7 @@
           <ul class="dropdown-menu">
 
             <li>
-              <a class="dropdown-item dropdown-link" href="<?=$router->pathFor('user-profile', ['username'=>$user->getUsername()])?>">Profile</a>
+              <a class="dropdown-item dropdown-link" href="<?=$router->pathFor('user-profile', ['username'=>$c_user->getUsername()])?>">Profile</a>
             </li>
 
             <li>
@@ -29,7 +29,7 @@
             </li>
 
             <li>
-              <a class="dropdown-item dropdown-link refresh-logout" href="#">Log Out</a>
+              <a class="dropdown-item dropdown-link refresh-logout" href="<?=$router->pathFor('user-logout')?>">Log Out</a>
             </li>
 
           </ul>
