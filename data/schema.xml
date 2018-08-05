@@ -98,7 +98,7 @@
     <column name="email" phpName="Email" type="VARCHAR" size="128" required="true"/>
     <column name="profile_picture" phpName="Profilepicture" type="VARCHAR" size="128" required="true"/>
     <column name="join_date" phpName="JoinDate" type="DATE" required="true"/>
-    <column name="password" phpName="Password" type="VARCHAR" size="256" required="true"/>
+    <column name="password" phpName="Password" type="CHAR" size="60" required="true"/>
     <column name="is_super" phpName="IsSuper" type="BOOLEAN" size="1" required="true" defaultValue="false"/>
     <unique name="username">
       <unique-column name="username"/>

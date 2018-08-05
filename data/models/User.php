@@ -18,23 +18,20 @@ use Propel\Runtime\Map\TableMap;
 
 class User extends BaseUser
 {
-    // hash the password before saving
-    public function save(ConnectionInterface $con = null)
+    public function setPassword($password)
     {
         // hash password
         $options = ['cost' => 11];
         $password = password_hash($this->getPassword(), PASSWORD_BCRYPT, $options);
 
         // store the Hash
-        parent::setPassword(substr($password, 0, 60));
-
-        parent::save();
+        parent::setPassword($password);
     }
 
     // returns true if $password => hashed($password)
     public function verifyPassword($password)
     {
-        return password_verify($password, substr((string)$this->getPassword(), 0, 60));
+        return password_verify($password, $this->getPassword());
     }
 
     public function hasPostInFavorites($post)
@@ -46,21 +43,21 @@ class User extends BaseUser
     // log user in (save a session for it)
     public function logIn()
     {
-        \App\Utils\SessionManager::sessionStart();
+        session_start_safe();
         $_SESSION['user_id'] = $this->getId();
     }
 
     // log user out (remove session)
     public static function logOut()
     {
-        \App\Utils\SessionManager::sessionStart();
+        session_start_safe();
         unset($_SESSION['user_id']);
     }
 
     // return user that is currently logged in, null if no user logged in
     public static function current()
     {
-        \App\Utils\SessionManager::sessionStart();
+        session_start_safe();
         if (isset($_SESSION['user_id'])) {
             return UserQuery::create()->findPk($_SESSION['user_id']);
         }

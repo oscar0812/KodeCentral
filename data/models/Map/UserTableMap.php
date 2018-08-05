@@ -161,7 +161,7 @@ class UserTableMap extends TableMap
         $this->addColumn('email', 'Email', 'VARCHAR', true, 128, null);
         $this->addColumn('profile_picture', 'Profilepicture', 'VARCHAR', true, 128, null);
         $this->addColumn('join_date', 'JoinDate', 'DATE', true, null, null);
-        $this->addColumn('password', 'Password', 'VARCHAR', true, 256, null);
+        $this->addColumn('password', 'Password', 'CHAR', true, 60, null);
         $this->addColumn('is_super', 'IsSuper', 'BOOLEAN', true, 1, false);
     } // initialize()
 
