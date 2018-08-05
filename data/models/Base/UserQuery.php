@@ -26,6 +26,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildUserQuery orderByProfilepicture($order = Criteria::ASC) Order by the profile_picture column
  * @method     ChildUserQuery orderByJoinDate($order = Criteria::ASC) Order by the join_date column
  * @method     ChildUserQuery orderByPassword($order = Criteria::ASC) Order by the password column
+ * @method     ChildUserQuery orderByBio($order = Criteria::ASC) Order by the bio column
  * @method     ChildUserQuery orderByIsSuper($order = Criteria::ASC) Order by the is_super column
  *
  * @method     ChildUserQuery groupById() Group by the id column
@@ -34,6 +35,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildUserQuery groupByProfilepicture() Group by the profile_picture column
  * @method     ChildUserQuery groupByJoinDate() Group by the join_date column
  * @method     ChildUserQuery groupByPassword() Group by the password column
+ * @method     ChildUserQuery groupByBio() Group by the bio column
  * @method     ChildUserQuery groupByIsSuper() Group by the is_super column
  *
  * @method     ChildUserQuery leftJoin($relation) Adds a LEFT JOIN clause to the query
@@ -85,6 +87,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildUser findOneByProfilepicture(string $profile_picture) Return the first ChildUser filtered by the profile_picture column
  * @method     ChildUser findOneByJoinDate(string $join_date) Return the first ChildUser filtered by the join_date column
  * @method     ChildUser findOneByPassword(string $password) Return the first ChildUser filtered by the password column
+ * @method     ChildUser findOneByBio(string $bio) Return the first ChildUser filtered by the bio column
  * @method     ChildUser findOneByIsSuper(boolean $is_super) Return the first ChildUser filtered by the is_super column *
 
  * @method     ChildUser requirePk($key, ConnectionInterface $con = null) Return the ChildUser by primary key and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
@@ -96,6 +99,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildUser requireOneByProfilepicture(string $profile_picture) Return the first ChildUser filtered by the profile_picture column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildUser requireOneByJoinDate(string $join_date) Return the first ChildUser filtered by the join_date column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildUser requireOneByPassword(string $password) Return the first ChildUser filtered by the password column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildUser requireOneByBio(string $bio) Return the first ChildUser filtered by the bio column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildUser requireOneByIsSuper(boolean $is_super) Return the first ChildUser filtered by the is_super column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  *
  * @method     ChildUser[]|ObjectCollection find(ConnectionInterface $con = null) Return ChildUser objects based on current ModelCriteria
@@ -105,6 +109,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildUser[]|ObjectCollection findByProfilepicture(string $profile_picture) Return ChildUser objects filtered by the profile_picture column
  * @method     ChildUser[]|ObjectCollection findByJoinDate(string $join_date) Return ChildUser objects filtered by the join_date column
  * @method     ChildUser[]|ObjectCollection findByPassword(string $password) Return ChildUser objects filtered by the password column
+ * @method     ChildUser[]|ObjectCollection findByBio(string $bio) Return ChildUser objects filtered by the bio column
  * @method     ChildUser[]|ObjectCollection findByIsSuper(boolean $is_super) Return ChildUser objects filtered by the is_super column
  * @method     ChildUser[]|\Propel\Runtime\Util\PropelModelPager paginate($page = 1, $maxPerPage = 10, ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
  *
@@ -204,7 +209,7 @@ abstract class UserQuery extends ModelCriteria
      */
     protected function findPkSimple($key, ConnectionInterface $con)
     {
-        $sql = 'SELECT id, username, email, profile_picture, join_date, password, is_super FROM user WHERE id = :p0';
+        $sql = 'SELECT id, username, email, profile_picture, join_date, password, bio, is_super FROM user WHERE id = :p0';
         try {
             $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
@@ -476,6 +481,31 @@ abstract class UserQuery extends ModelCriteria
         }
 
         return $this->addUsingAlias(UserTableMap::COL_PASSWORD, $password, $comparison);
+    }
+
+    /**
+     * Filter the query on the bio column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByBio('fooValue');   // WHERE bio = 'fooValue'
+     * $query->filterByBio('%fooValue%', Criteria::LIKE); // WHERE bio LIKE '%fooValue%'
+     * </code>
+     *
+     * @param     string $bio The value to use as filter.
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildUserQuery The current query, for fluid interface
+     */
+    public function filterByBio($bio = null, $comparison = null)
+    {
+        if (null === $comparison) {
+            if (is_array($bio)) {
+                $comparison = Criteria::IN;
+            }
+        }
+
+        return $this->addUsingAlias(UserTableMap::COL_BIO, $bio, $comparison);
     }
 
     /**

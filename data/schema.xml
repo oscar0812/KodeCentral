@@ -99,6 +99,7 @@
     <column name="profile_picture" phpName="Profilepicture" type="VARCHAR" size="128" required="true"/>
     <column name="join_date" phpName="JoinDate" type="DATE" required="true"/>
     <column name="password" phpName="Password" type="CHAR" size="60" required="true"/>
+    <column name="bio" phpName="Bio" type="CHAR" size="128" required="true"/>
     <column name="is_super" phpName="IsSuper" type="BOOLEAN" size="1" required="true" defaultValue="false"/>
     <unique name="username">
       <unique-column name="username"/>
@@ -118,7 +119,9 @@
 
       <parameter name="rule5" value="{column: password, validator: NotNull}"/>
 
-      <parameter name="rule6" value="{column: join_date, validator: NotNull}"/>
+      <parameter name="rule6" value="{column: bio, validator: NotNull}"/>
+
+      <parameter name="rule7" value="{column: join_date, validator: NotNull}"/>
     </behavior>
   </table>
   <table name="user_favorite" idMethod="native" phpName="UserFavorite" isCrossRef="true">

@@ -162,23 +162,41 @@ class LoggedInController
         })->setName('post-comment');
     }
 
-    // user is trying to change profile picture
-    public function uploadPfp($app)
+    // user is trying to change profile information
+    public function changeProfileInfo($app)
     {
-        // trying to upload a pfp
-        $app->post('/pfp', function ($request, $response) {
+        $app->post('/profile-info', function ($request, $response) {
+            $params = $request->getParsedBody();
             $user = \User::current();
-            // call ImageUpload which returns an array with flags and data
-            $arr = \App\Utils\ImageUpload::uploadPfp($user, $this->router->pathFor('home'));
 
-            if ($arr['success']) {
-                // successfully uploaded image, so set the path as the
-                // users pfp url in db
-                $user->setProfilePicture($arr['path']);
-                $user->save();
+            $arr = array();
+
+            if ($params['file-text'] != '') {
+                // call ImageUpload which returns an array with flags and data
+                $arr = \App\Utils\ImageUpload::uploadPfp($user, $this->router->pathFor('home'));
+
+                if ($arr['success']) {
+                    // successfully uploaded image, so set the path as the
+                    // users pfp url in db
+                    $user->setProfilePicture($arr['path']);
+                    $user->save();
+                } else {
+                    // an error occured, return the array
+                    return $response->withJson($arr);
+                }
             }
+
+            if ($params['bio'] =='') {
+                return $response->withJson(['success'=>false, 'msg'=>'Bio can\'t be empty']);
+            }
+
+            $user->setBio($params['bio']);
+            $user->save();
+            $arr['success'] = true;
+            $arr['bio'] = $user->getBio();
+
             return $response->withJson($arr);
-        })->setName('user-pfp');
+        })->setName('user-profile-info');
     }
 
     public function logOut($app)
@@ -213,7 +231,7 @@ class LoggedInController
         $app->group('', function () use ($controller, $app) {
             $controller->postComment($app);
             $controller->logOut($app);
-            $controller->uploadPfp($app);
+            $controller->changeProfileInfo($app);
         })->add(function ($request, $response, $next) {
             $user = \User::current();
             if ($user != null) {

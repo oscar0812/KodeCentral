@@ -84,6 +84,15 @@ class User extends BaseUser
         return $pfp;
     }
 
+    public function getBio()
+    {
+        $bio = parent::getBio();
+        if ($bio == '') {
+            return 'Nothng about me...';
+        }
+        return $bio;
+    }
+
     public function getBadge()
     {
         // if not a super user, no badge
@@ -94,10 +103,10 @@ class User extends BaseUser
         $posts = $this->getPosts()->count();
         $color = 'info';
         $icon = 'code';
-        if ($posts > 100) {
+        if ($posts > 20) {
             $color = 'royal';
             $icon = '8tracks';
-        } elseif ($posts > 50) {
+        } elseif ($posts > 5) {
             $color = 'danger';
             $icon = 'star';
         }

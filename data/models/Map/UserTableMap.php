@@ -59,7 +59,7 @@ class UserTableMap extends TableMap
     /**
      * The total number of columns
      */
-    const NUM_COLUMNS = 7;
+    const NUM_COLUMNS = 8;
 
     /**
      * The number of lazy-loaded columns
@@ -69,7 +69,7 @@ class UserTableMap extends TableMap
     /**
      * The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS)
      */
-    const NUM_HYDRATE_COLUMNS = 7;
+    const NUM_HYDRATE_COLUMNS = 8;
 
     /**
      * the column name for the id field
@@ -102,6 +102,11 @@ class UserTableMap extends TableMap
     const COL_PASSWORD = 'user.password';
 
     /**
+     * the column name for the bio field
+     */
+    const COL_BIO = 'user.bio';
+
+    /**
      * the column name for the is_super field
      */
     const COL_IS_SUPER = 'user.is_super';
@@ -118,11 +123,11 @@ class UserTableMap extends TableMap
      * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        self::TYPE_PHPNAME       => array('Id', 'Username', 'Email', 'Profilepicture', 'JoinDate', 'Password', 'IsSuper', ),
-        self::TYPE_CAMELNAME     => array('id', 'username', 'email', 'profilepicture', 'joinDate', 'password', 'isSuper', ),
-        self::TYPE_COLNAME       => array(UserTableMap::COL_ID, UserTableMap::COL_USERNAME, UserTableMap::COL_EMAIL, UserTableMap::COL_PROFILE_PICTURE, UserTableMap::COL_JOIN_DATE, UserTableMap::COL_PASSWORD, UserTableMap::COL_IS_SUPER, ),
-        self::TYPE_FIELDNAME     => array('id', 'username', 'email', 'profile_picture', 'join_date', 'password', 'is_super', ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, )
+        self::TYPE_PHPNAME       => array('Id', 'Username', 'Email', 'Profilepicture', 'JoinDate', 'Password', 'Bio', 'IsSuper', ),
+        self::TYPE_CAMELNAME     => array('id', 'username', 'email', 'profilepicture', 'joinDate', 'password', 'bio', 'isSuper', ),
+        self::TYPE_COLNAME       => array(UserTableMap::COL_ID, UserTableMap::COL_USERNAME, UserTableMap::COL_EMAIL, UserTableMap::COL_PROFILE_PICTURE, UserTableMap::COL_JOIN_DATE, UserTableMap::COL_PASSWORD, UserTableMap::COL_BIO, UserTableMap::COL_IS_SUPER, ),
+        self::TYPE_FIELDNAME     => array('id', 'username', 'email', 'profile_picture', 'join_date', 'password', 'bio', 'is_super', ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, )
     );
 
     /**
@@ -132,11 +137,11 @@ class UserTableMap extends TableMap
      * e.g. self::$fieldKeys[self::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        self::TYPE_PHPNAME       => array('Id' => 0, 'Username' => 1, 'Email' => 2, 'Profilepicture' => 3, 'JoinDate' => 4, 'Password' => 5, 'IsSuper' => 6, ),
-        self::TYPE_CAMELNAME     => array('id' => 0, 'username' => 1, 'email' => 2, 'profilepicture' => 3, 'joinDate' => 4, 'password' => 5, 'isSuper' => 6, ),
-        self::TYPE_COLNAME       => array(UserTableMap::COL_ID => 0, UserTableMap::COL_USERNAME => 1, UserTableMap::COL_EMAIL => 2, UserTableMap::COL_PROFILE_PICTURE => 3, UserTableMap::COL_JOIN_DATE => 4, UserTableMap::COL_PASSWORD => 5, UserTableMap::COL_IS_SUPER => 6, ),
-        self::TYPE_FIELDNAME     => array('id' => 0, 'username' => 1, 'email' => 2, 'profile_picture' => 3, 'join_date' => 4, 'password' => 5, 'is_super' => 6, ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, )
+        self::TYPE_PHPNAME       => array('Id' => 0, 'Username' => 1, 'Email' => 2, 'Profilepicture' => 3, 'JoinDate' => 4, 'Password' => 5, 'Bio' => 6, 'IsSuper' => 7, ),
+        self::TYPE_CAMELNAME     => array('id' => 0, 'username' => 1, 'email' => 2, 'profilepicture' => 3, 'joinDate' => 4, 'password' => 5, 'bio' => 6, 'isSuper' => 7, ),
+        self::TYPE_COLNAME       => array(UserTableMap::COL_ID => 0, UserTableMap::COL_USERNAME => 1, UserTableMap::COL_EMAIL => 2, UserTableMap::COL_PROFILE_PICTURE => 3, UserTableMap::COL_JOIN_DATE => 4, UserTableMap::COL_PASSWORD => 5, UserTableMap::COL_BIO => 6, UserTableMap::COL_IS_SUPER => 7, ),
+        self::TYPE_FIELDNAME     => array('id' => 0, 'username' => 1, 'email' => 2, 'profile_picture' => 3, 'join_date' => 4, 'password' => 5, 'bio' => 6, 'is_super' => 7, ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, )
     );
 
     /**
@@ -162,6 +167,7 @@ class UserTableMap extends TableMap
         $this->addColumn('profile_picture', 'Profilepicture', 'VARCHAR', true, 128, null);
         $this->addColumn('join_date', 'JoinDate', 'DATE', true, null, null);
         $this->addColumn('password', 'Password', 'CHAR', true, 60, null);
+        $this->addColumn('bio', 'Bio', 'CHAR', true, 128, null);
         $this->addColumn('is_super', 'IsSuper', 'BOOLEAN', true, 1, false);
     } // initialize()
 
@@ -203,7 +209,7 @@ class UserTableMap extends TableMap
     public function getBehaviors()
     {
         return array(
-            'validate' => array('rule1' => array ('column' => 'username','validator' => 'NotNull',), 'rule2' => array ('column' => 'email','validator' => 'NotNull',), 'rule3' => array ('column' => 'email','validator' => 'Email',), 'rule4' => array ('column' => 'email','validator' => 'Unique',), 'rule5' => array ('column' => 'password','validator' => 'NotNull',), 'rule6' => array ('column' => 'join_date','validator' => 'NotNull',), ),
+            'validate' => array('rule1' => array ('column' => 'username','validator' => 'NotNull',), 'rule2' => array ('column' => 'email','validator' => 'NotNull',), 'rule3' => array ('column' => 'email','validator' => 'Email',), 'rule4' => array ('column' => 'email','validator' => 'Unique',), 'rule5' => array ('column' => 'password','validator' => 'NotNull',), 'rule6' => array ('column' => 'bio','validator' => 'NotNull',), 'rule7' => array ('column' => 'join_date','validator' => 'NotNull',), ),
         );
     } // getBehaviors()
 
@@ -354,6 +360,7 @@ class UserTableMap extends TableMap
             $criteria->addSelectColumn(UserTableMap::COL_PROFILE_PICTURE);
             $criteria->addSelectColumn(UserTableMap::COL_JOIN_DATE);
             $criteria->addSelectColumn(UserTableMap::COL_PASSWORD);
+            $criteria->addSelectColumn(UserTableMap::COL_BIO);
             $criteria->addSelectColumn(UserTableMap::COL_IS_SUPER);
         } else {
             $criteria->addSelectColumn($alias . '.id');
@@ -362,6 +369,7 @@ class UserTableMap extends TableMap
             $criteria->addSelectColumn($alias . '.profile_picture');
             $criteria->addSelectColumn($alias . '.join_date');
             $criteria->addSelectColumn($alias . '.password');
+            $criteria->addSelectColumn($alias . '.bio');
             $criteria->addSelectColumn($alias . '.is_super');
         }
     }

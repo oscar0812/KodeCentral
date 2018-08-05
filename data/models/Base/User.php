@@ -127,6 +127,13 @@ abstract class User implements ActiveRecordInterface
     protected $password;
 
     /**
+     * The value for the bio field.
+     *
+     * @var        string
+     */
+    protected $bio;
+
+    /**
      * The value for the is_super field.
      *
      * Note: this column has a database default value of: false
@@ -520,6 +527,16 @@ abstract class User implements ActiveRecordInterface
     }
 
     /**
+     * Get the [bio] column value.
+     *
+     * @return string
+     */
+    public function getBio()
+    {
+        return $this->bio;
+    }
+
+    /**
      * Get the [is_super] column value.
      *
      * @return boolean
@@ -660,6 +677,26 @@ abstract class User implements ActiveRecordInterface
     } // setPassword()
 
     /**
+     * Set the value of [bio] column.
+     *
+     * @param string $v new value
+     * @return $this|\User The current object (for fluent API support)
+     */
+    public function setBio($v)
+    {
+        if ($v !== null) {
+            $v = (string) $v;
+        }
+
+        if ($this->bio !== $v) {
+            $this->bio = $v;
+            $this->modifiedColumns[UserTableMap::COL_BIO] = true;
+        }
+
+        return $this;
+    } // setBio()
+
+    /**
      * Sets the value of the [is_super] column.
      * Non-boolean arguments are converted using the following rules:
      *   * 1, '1', 'true',  'on',  and 'yes' are converted to boolean true
@@ -748,7 +785,10 @@ abstract class User implements ActiveRecordInterface
             $col = $row[TableMap::TYPE_NUM == $indexType ? 5 + $startcol : UserTableMap::translateFieldName('Password', TableMap::TYPE_PHPNAME, $indexType)];
             $this->password = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 6 + $startcol : UserTableMap::translateFieldName('IsSuper', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 6 + $startcol : UserTableMap::translateFieldName('Bio', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->bio = (null !== $col) ? (string) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 7 + $startcol : UserTableMap::translateFieldName('IsSuper', TableMap::TYPE_PHPNAME, $indexType)];
             $this->is_super = (null !== $col) ? (boolean) $col : null;
             $this->resetModified();
 
@@ -758,7 +798,7 @@ abstract class User implements ActiveRecordInterface
                 $this->ensureConsistency();
             }
 
-            return $startcol + 7; // 7 = UserTableMap::NUM_HYDRATE_COLUMNS.
+            return $startcol + 8; // 8 = UserTableMap::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
             throw new PropelException(sprintf('Error populating %s object', '\\User'), 0, $e);
@@ -1064,6 +1104,9 @@ abstract class User implements ActiveRecordInterface
         if ($this->isColumnModified(UserTableMap::COL_PASSWORD)) {
             $modifiedColumns[':p' . $index++]  = 'password';
         }
+        if ($this->isColumnModified(UserTableMap::COL_BIO)) {
+            $modifiedColumns[':p' . $index++]  = 'bio';
+        }
         if ($this->isColumnModified(UserTableMap::COL_IS_SUPER)) {
             $modifiedColumns[':p' . $index++]  = 'is_super';
         }
@@ -1095,6 +1138,9 @@ abstract class User implements ActiveRecordInterface
                         break;
                     case 'password':
                         $stmt->bindValue($identifier, $this->password, PDO::PARAM_STR);
+                        break;
+                    case 'bio':
+                        $stmt->bindValue($identifier, $this->bio, PDO::PARAM_STR);
                         break;
                     case 'is_super':
                         $stmt->bindValue($identifier, (int) $this->is_super, PDO::PARAM_INT);
@@ -1180,6 +1226,9 @@ abstract class User implements ActiveRecordInterface
                 return $this->getPassword();
                 break;
             case 6:
+                return $this->getBio();
+                break;
+            case 7:
                 return $this->getIsSuper();
                 break;
             default:
@@ -1218,7 +1267,8 @@ abstract class User implements ActiveRecordInterface
             $keys[3] => $this->getProfilepicture(),
             $keys[4] => $this->getJoinDate(),
             $keys[5] => $this->getPassword(),
-            $keys[6] => $this->getIsSuper(),
+            $keys[6] => $this->getBio(),
+            $keys[7] => $this->getIsSuper(),
         );
         if ($result[$keys[4]] instanceof \DateTimeInterface) {
             $result[$keys[4]] = $result[$keys[4]]->format('c');
@@ -1328,6 +1378,9 @@ abstract class User implements ActiveRecordInterface
                 $this->setPassword($value);
                 break;
             case 6:
+                $this->setBio($value);
+                break;
+            case 7:
                 $this->setIsSuper($value);
                 break;
         } // switch()
@@ -1375,7 +1428,10 @@ abstract class User implements ActiveRecordInterface
             $this->setPassword($arr[$keys[5]]);
         }
         if (array_key_exists($keys[6], $arr)) {
-            $this->setIsSuper($arr[$keys[6]]);
+            $this->setBio($arr[$keys[6]]);
+        }
+        if (array_key_exists($keys[7], $arr)) {
+            $this->setIsSuper($arr[$keys[7]]);
         }
     }
 
@@ -1435,6 +1491,9 @@ abstract class User implements ActiveRecordInterface
         }
         if ($this->isColumnModified(UserTableMap::COL_PASSWORD)) {
             $criteria->add(UserTableMap::COL_PASSWORD, $this->password);
+        }
+        if ($this->isColumnModified(UserTableMap::COL_BIO)) {
+            $criteria->add(UserTableMap::COL_BIO, $this->bio);
         }
         if ($this->isColumnModified(UserTableMap::COL_IS_SUPER)) {
             $criteria->add(UserTableMap::COL_IS_SUPER, $this->is_super);
@@ -1530,6 +1589,7 @@ abstract class User implements ActiveRecordInterface
         $copyObj->setProfilepicture($this->getProfilepicture());
         $copyObj->setJoinDate($this->getJoinDate());
         $copyObj->setPassword($this->getPassword());
+        $copyObj->setBio($this->getBio());
         $copyObj->setIsSuper($this->getIsSuper());
 
         if ($deepCopy) {
@@ -2619,6 +2679,7 @@ abstract class User implements ActiveRecordInterface
         $this->profile_picture = null;
         $this->join_date = null;
         $this->password = null;
+        $this->bio = null;
         $this->is_super = null;
         $this->alreadyInSave = false;
         $this->clearAllReferences();
@@ -2692,6 +2753,7 @@ abstract class User implements ActiveRecordInterface
         $metadata->addPropertyConstraint('email', new Email());
         $metadata->addPropertyConstraint('email', new Unique());
         $metadata->addPropertyConstraint('password', new NotNull());
+        $metadata->addPropertyConstraint('bio', new NotNull());
         $metadata->addPropertyConstraint('join_date', new NotNull());
     }
 
