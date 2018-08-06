@@ -45,13 +45,12 @@ $(function() {
         // append to #positon-select as: First-> Beginning of library,
         // Second + -> after title
         append_select.append($('<option>').text("In the beginning"));
-        append_select.selectpicker('refresh');
 
         // list of posts under this library
         $.each(data, function(i, title){
           append_select.append($('<option>').text("After "+title).val(title));
-          append_select.selectpicker('refresh');
         });
+        append_select.selectpicker('refresh');
         // select the first option
         append_select[0].selectedIndex = 0;
       }
