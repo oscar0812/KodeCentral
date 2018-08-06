@@ -22,11 +22,47 @@ $(quill.root).html(preload.html());
 preload.remove();
 
 $(function() {
+  // choosing a library
+  $('#library-select').on('change', function() {
+    name = $(this).val();
+    url = $(this).data('posts-url');
+
+    append_select = $('#position-select');
+
+    // remove all previously set options
+    append_select.find('option').remove();
+
+    // go and fetch the posts for this library and put them in #position-select
+    $.ajax({
+      type: "POST",
+      data: {
+        library: name
+      },
+      url: url,
+      dataType: "json",
+      success: function(data) {
+        console.log(data);
+        // append to #positon-select as: First-> Beginning of library,
+        // Second + -> after title
+        append_select.append($('<option>').text("In the beginning"));
+        append_select.selectpicker('refresh');
+
+        // list of posts under this library
+        $.each(data, function(i, title){
+          append_select.append($('<option>').text("After "+title).val(title));
+          append_select.selectpicker('refresh');
+        });
+        // select the first option
+        append_select[0].selectedIndex = 0;
+      }
+    });
+  });
+
   // creating a new library
-  $('#library-form').on('submit', function(e){
-    ajaxForm(e.target, function(data){
+  $('#library-form').on('submit', function(e) {
+    ajaxForm(e.target, function(data) {
       lib_dropdown = $('#library-select');
-      if(data['success']) {
+      if (data['success']) {
         // append a new library, then choose it and refresh the dropdown
         lib_dropdown.append($('<option>').text(data['msg']).val(data['msg']));
         lib_dropdown.val(data['msg']);
@@ -35,9 +71,9 @@ $(function() {
 
         Snackbar.show({
           actionTextColor: '#00ff00',
-          text: "Successfully created library \""+data['msg']+"\""
+          text: "Successfully created library \"" + data['msg'] + "\""
         });
-      } else{
+      } else {
         Snackbar.show({
           actionTextColor: '#ff0000',
           text: data['msg']

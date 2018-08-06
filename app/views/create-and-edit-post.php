@@ -80,7 +80,7 @@
                     <span>Library</span>
                     <div class="input-group">
                       <?php $c_lib = $editing?$post->getLibrary():null;?>
-                      <select id="library-select" class="selectpicker form-control" data-dropup-auto="false">
+                      <select id="library-select" class="selectpicker form-control" data-dropup-auto="false" data-posts-url="<?=$router->pathFor('ajax-lib-posts')?>">
                           <?php
                           foreach ($all_libraries as $lib) {
                             $selected = false;
@@ -99,6 +99,7 @@
                     <span>Position</span>
                     <div class="input-group">
                       <?php $c_lib = $editing?$post->getLibrary():null;?>
+
                       <select id="position-select" class="selectpicker form-control" data-dropup-auto="false">
 
                       </select>

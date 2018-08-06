@@ -75,6 +75,20 @@ class LoggedInController
             return $response->withJson(['success'=>true, 'msg'=>$lib->getName()]);
         })->setName('create-lib');
 
+        // get all the posts for a library (to figure out the position)
+        $app->post('/ajax-lib-posts', function ($request, $response, $args) {
+            $params = $request->getParsedBody();
+            $lib = \LibraryQuery::create()->findOneByName($params['library']);
+            if ($lib == null) {
+                return $response->withJson([]);
+            }
+
+            $posts = \PostQuery::create()->orderByLibraryIndex()->findByLibrary($lib)->toArray();
+
+            // only return the title for security purposes
+            return $response->withJson(array_column($posts, 'Title'));
+        })->setName('ajax-lib-posts');
+
         // post information coming in, new post is being created
         $app->post('/create-post', function ($request, $response, $args) {
             $params = $request->getParsedBody();
