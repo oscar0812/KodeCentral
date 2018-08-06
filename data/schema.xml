@@ -58,6 +58,7 @@
     <column name="posted_date" phpName="PostedDate" type="DATE" required="true"/>
     <column name="posted_by_user_id" phpName="PostedByUserId" type="INTEGER" required="true"/>
     <column name="library_id" phpName="LibraryId" type="INTEGER" required="true"/>
+    <column name="library_index" phpName="LibraryIndex" type="INTEGER" required="true"/>
     <foreign-key foreignTable="user" name="post_ibfk_2" phpName="PostedByUser">
       <reference local="posted_by_user_id" foreign="id"/>
     </foreign-key>

@@ -27,6 +27,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildPostQuery orderByPostedDate($order = Criteria::ASC) Order by the posted_date column
  * @method     ChildPostQuery orderByPostedByUserId($order = Criteria::ASC) Order by the posted_by_user_id column
  * @method     ChildPostQuery orderByLibraryId($order = Criteria::ASC) Order by the library_id column
+ * @method     ChildPostQuery orderByLibraryIndex($order = Criteria::ASC) Order by the library_index column
  *
  * @method     ChildPostQuery groupById() Group by the id column
  * @method     ChildPostQuery groupByTitle() Group by the title column
@@ -35,6 +36,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildPostQuery groupByPostedDate() Group by the posted_date column
  * @method     ChildPostQuery groupByPostedByUserId() Group by the posted_by_user_id column
  * @method     ChildPostQuery groupByLibraryId() Group by the library_id column
+ * @method     ChildPostQuery groupByLibraryIndex() Group by the library_index column
  *
  * @method     ChildPostQuery leftJoin($relation) Adds a LEFT JOIN clause to the query
  * @method     ChildPostQuery rightJoin($relation) Adds a RIGHT JOIN clause to the query
@@ -105,7 +107,8 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildPost findOneByText(string $text) Return the first ChildPost filtered by the text column
  * @method     ChildPost findOneByPostedDate(string $posted_date) Return the first ChildPost filtered by the posted_date column
  * @method     ChildPost findOneByPostedByUserId(int $posted_by_user_id) Return the first ChildPost filtered by the posted_by_user_id column
- * @method     ChildPost findOneByLibraryId(int $library_id) Return the first ChildPost filtered by the library_id column *
+ * @method     ChildPost findOneByLibraryId(int $library_id) Return the first ChildPost filtered by the library_id column
+ * @method     ChildPost findOneByLibraryIndex(int $library_index) Return the first ChildPost filtered by the library_index column *
 
  * @method     ChildPost requirePk($key, ConnectionInterface $con = null) Return the ChildPost by primary key and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildPost requireOne(ConnectionInterface $con = null) Return the first ChildPost matching the query and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
@@ -117,6 +120,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildPost requireOneByPostedDate(string $posted_date) Return the first ChildPost filtered by the posted_date column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildPost requireOneByPostedByUserId(int $posted_by_user_id) Return the first ChildPost filtered by the posted_by_user_id column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildPost requireOneByLibraryId(int $library_id) Return the first ChildPost filtered by the library_id column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildPost requireOneByLibraryIndex(int $library_index) Return the first ChildPost filtered by the library_index column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  *
  * @method     ChildPost[]|ObjectCollection find(ConnectionInterface $con = null) Return ChildPost objects based on current ModelCriteria
  * @method     ChildPost[]|ObjectCollection findById(int $id) Return ChildPost objects filtered by the id column
@@ -126,6 +130,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildPost[]|ObjectCollection findByPostedDate(string $posted_date) Return ChildPost objects filtered by the posted_date column
  * @method     ChildPost[]|ObjectCollection findByPostedByUserId(int $posted_by_user_id) Return ChildPost objects filtered by the posted_by_user_id column
  * @method     ChildPost[]|ObjectCollection findByLibraryId(int $library_id) Return ChildPost objects filtered by the library_id column
+ * @method     ChildPost[]|ObjectCollection findByLibraryIndex(int $library_index) Return ChildPost objects filtered by the library_index column
  * @method     ChildPost[]|\Propel\Runtime\Util\PropelModelPager paginate($page = 1, $maxPerPage = 10, ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
  *
  */
@@ -224,7 +229,7 @@ abstract class PostQuery extends ModelCriteria
      */
     protected function findPkSimple($key, ConnectionInterface $con)
     {
-        $sql = 'SELECT id, title, hyperlink, text, posted_date, posted_by_user_id, library_id FROM post WHERE id = :p0';
+        $sql = 'SELECT id, title, hyperlink, text, posted_date, posted_by_user_id, library_id, library_index FROM post WHERE id = :p0';
         try {
             $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
@@ -557,6 +562,47 @@ abstract class PostQuery extends ModelCriteria
         }
 
         return $this->addUsingAlias(PostTableMap::COL_LIBRARY_ID, $libraryId, $comparison);
+    }
+
+    /**
+     * Filter the query on the library_index column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByLibraryIndex(1234); // WHERE library_index = 1234
+     * $query->filterByLibraryIndex(array(12, 34)); // WHERE library_index IN (12, 34)
+     * $query->filterByLibraryIndex(array('min' => 12)); // WHERE library_index > 12
+     * </code>
+     *
+     * @param     mixed $libraryIndex The value to use as filter.
+     *              Use scalar values for equality.
+     *              Use array values for in_array() equivalent.
+     *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildPostQuery The current query, for fluid interface
+     */
+    public function filterByLibraryIndex($libraryIndex = null, $comparison = null)
+    {
+        if (is_array($libraryIndex)) {
+            $useMinMax = false;
+            if (isset($libraryIndex['min'])) {
+                $this->addUsingAlias(PostTableMap::COL_LIBRARY_INDEX, $libraryIndex['min'], Criteria::GREATER_EQUAL);
+                $useMinMax = true;
+            }
+            if (isset($libraryIndex['max'])) {
+                $this->addUsingAlias(PostTableMap::COL_LIBRARY_INDEX, $libraryIndex['max'], Criteria::LESS_EQUAL);
+                $useMinMax = true;
+            }
+            if ($useMinMax) {
+                return $this;
+            }
+            if (null === $comparison) {
+                $comparison = Criteria::IN;
+            }
+        }
+
+        return $this->addUsingAlias(PostTableMap::COL_LIBRARY_INDEX, $libraryIndex, $comparison);
     }
 
     /**

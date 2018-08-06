@@ -138,6 +138,13 @@ abstract class Post implements ActiveRecordInterface
     protected $library_id;
 
     /**
+     * The value for the library_index field.
+     *
+     * @var        int
+     */
+    protected $library_index;
+
+    /**
      * @var        ChildUser
      */
     protected $aPostedByUser;
@@ -546,6 +553,16 @@ abstract class Post implements ActiveRecordInterface
     }
 
     /**
+     * Get the [library_index] column value.
+     *
+     * @return int
+     */
+    public function getLibraryIndex()
+    {
+        return $this->library_index;
+    }
+
+    /**
      * Set the value of [id] column.
      *
      * @param int $v new value
@@ -694,6 +711,26 @@ abstract class Post implements ActiveRecordInterface
     } // setLibraryId()
 
     /**
+     * Set the value of [library_index] column.
+     *
+     * @param int $v new value
+     * @return $this|\Post The current object (for fluent API support)
+     */
+    public function setLibraryIndex($v)
+    {
+        if ($v !== null) {
+            $v = (int) $v;
+        }
+
+        if ($this->library_index !== $v) {
+            $this->library_index = $v;
+            $this->modifiedColumns[PostTableMap::COL_LIBRARY_INDEX] = true;
+        }
+
+        return $this;
+    } // setLibraryIndex()
+
+    /**
      * Indicates whether the columns in this object are only set to default values.
      *
      * This method can be used in conjunction with isModified() to indicate whether an object is both
@@ -752,6 +789,9 @@ abstract class Post implements ActiveRecordInterface
 
             $col = $row[TableMap::TYPE_NUM == $indexType ? 6 + $startcol : PostTableMap::translateFieldName('LibraryId', TableMap::TYPE_PHPNAME, $indexType)];
             $this->library_id = (null !== $col) ? (int) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 7 + $startcol : PostTableMap::translateFieldName('LibraryIndex', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->library_index = (null !== $col) ? (int) $col : null;
             $this->resetModified();
 
             $this->setNew(false);
@@ -760,7 +800,7 @@ abstract class Post implements ActiveRecordInterface
                 $this->ensureConsistency();
             }
 
-            return $startcol + 7; // 7 = PostTableMap::NUM_HYDRATE_COLUMNS.
+            return $startcol + 8; // 8 = PostTableMap::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
             throw new PropelException(sprintf('Error populating %s object', '\\Post'), 0, $e);
@@ -1126,6 +1166,9 @@ abstract class Post implements ActiveRecordInterface
         if ($this->isColumnModified(PostTableMap::COL_LIBRARY_ID)) {
             $modifiedColumns[':p' . $index++]  = 'library_id';
         }
+        if ($this->isColumnModified(PostTableMap::COL_LIBRARY_INDEX)) {
+            $modifiedColumns[':p' . $index++]  = 'library_index';
+        }
 
         $sql = sprintf(
             'INSERT INTO post (%s) VALUES (%s)',
@@ -1157,6 +1200,9 @@ abstract class Post implements ActiveRecordInterface
                         break;
                     case 'library_id':
                         $stmt->bindValue($identifier, $this->library_id, PDO::PARAM_INT);
+                        break;
+                    case 'library_index':
+                        $stmt->bindValue($identifier, $this->library_index, PDO::PARAM_INT);
                         break;
                 }
             }
@@ -1241,6 +1287,9 @@ abstract class Post implements ActiveRecordInterface
             case 6:
                 return $this->getLibraryId();
                 break;
+            case 7:
+                return $this->getLibraryIndex();
+                break;
             default:
                 return null;
                 break;
@@ -1278,6 +1327,7 @@ abstract class Post implements ActiveRecordInterface
             $keys[4] => $this->getPostedDate(),
             $keys[5] => $this->getPostedByUserId(),
             $keys[6] => $this->getLibraryId(),
+            $keys[7] => $this->getLibraryIndex(),
         );
         if ($result[$keys[4]] instanceof \DateTimeInterface) {
             $result[$keys[4]] = $result[$keys[4]]->format('c');
@@ -1419,6 +1469,9 @@ abstract class Post implements ActiveRecordInterface
             case 6:
                 $this->setLibraryId($value);
                 break;
+            case 7:
+                $this->setLibraryIndex($value);
+                break;
         } // switch()
 
         return $this;
@@ -1465,6 +1518,9 @@ abstract class Post implements ActiveRecordInterface
         }
         if (array_key_exists($keys[6], $arr)) {
             $this->setLibraryId($arr[$keys[6]]);
+        }
+        if (array_key_exists($keys[7], $arr)) {
+            $this->setLibraryIndex($arr[$keys[7]]);
         }
     }
 
@@ -1527,6 +1583,9 @@ abstract class Post implements ActiveRecordInterface
         }
         if ($this->isColumnModified(PostTableMap::COL_LIBRARY_ID)) {
             $criteria->add(PostTableMap::COL_LIBRARY_ID, $this->library_id);
+        }
+        if ($this->isColumnModified(PostTableMap::COL_LIBRARY_INDEX)) {
+            $criteria->add(PostTableMap::COL_LIBRARY_INDEX, $this->library_index);
         }
 
         return $criteria;
@@ -1620,6 +1679,7 @@ abstract class Post implements ActiveRecordInterface
         $copyObj->setPostedDate($this->getPostedDate());
         $copyObj->setPostedByUserId($this->getPostedByUserId());
         $copyObj->setLibraryId($this->getLibraryId());
+        $copyObj->setLibraryIndex($this->getLibraryIndex());
 
         if ($deepCopy) {
             // important: temporarily setNew(false) because this affects the behavior of
@@ -3063,6 +3123,7 @@ abstract class Post implements ActiveRecordInterface
         $this->posted_date = null;
         $this->posted_by_user_id = null;
         $this->library_id = null;
+        $this->library_index = null;
         $this->alreadyInSave = false;
         $this->clearAllReferences();
         $this->resetModified();

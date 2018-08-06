@@ -59,7 +59,7 @@ class PostTableMap extends TableMap
     /**
      * The total number of columns
      */
-    const NUM_COLUMNS = 7;
+    const NUM_COLUMNS = 8;
 
     /**
      * The number of lazy-loaded columns
@@ -69,7 +69,7 @@ class PostTableMap extends TableMap
     /**
      * The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS)
      */
-    const NUM_HYDRATE_COLUMNS = 7;
+    const NUM_HYDRATE_COLUMNS = 8;
 
     /**
      * the column name for the id field
@@ -107,6 +107,11 @@ class PostTableMap extends TableMap
     const COL_LIBRARY_ID = 'post.library_id';
 
     /**
+     * the column name for the library_index field
+     */
+    const COL_LIBRARY_INDEX = 'post.library_index';
+
+    /**
      * The default string format for model objects of the related table
      */
     const DEFAULT_STRING_FORMAT = 'YAML';
@@ -118,11 +123,11 @@ class PostTableMap extends TableMap
      * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        self::TYPE_PHPNAME       => array('Id', 'Title', 'Hyperlink', 'Text', 'PostedDate', 'PostedByUserId', 'LibraryId', ),
-        self::TYPE_CAMELNAME     => array('id', 'title', 'hyperlink', 'text', 'postedDate', 'postedByUserId', 'libraryId', ),
-        self::TYPE_COLNAME       => array(PostTableMap::COL_ID, PostTableMap::COL_TITLE, PostTableMap::COL_HYPERLINK, PostTableMap::COL_TEXT, PostTableMap::COL_POSTED_DATE, PostTableMap::COL_POSTED_BY_USER_ID, PostTableMap::COL_LIBRARY_ID, ),
-        self::TYPE_FIELDNAME     => array('id', 'title', 'hyperlink', 'text', 'posted_date', 'posted_by_user_id', 'library_id', ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, )
+        self::TYPE_PHPNAME       => array('Id', 'Title', 'Hyperlink', 'Text', 'PostedDate', 'PostedByUserId', 'LibraryId', 'LibraryIndex', ),
+        self::TYPE_CAMELNAME     => array('id', 'title', 'hyperlink', 'text', 'postedDate', 'postedByUserId', 'libraryId', 'libraryIndex', ),
+        self::TYPE_COLNAME       => array(PostTableMap::COL_ID, PostTableMap::COL_TITLE, PostTableMap::COL_HYPERLINK, PostTableMap::COL_TEXT, PostTableMap::COL_POSTED_DATE, PostTableMap::COL_POSTED_BY_USER_ID, PostTableMap::COL_LIBRARY_ID, PostTableMap::COL_LIBRARY_INDEX, ),
+        self::TYPE_FIELDNAME     => array('id', 'title', 'hyperlink', 'text', 'posted_date', 'posted_by_user_id', 'library_id', 'library_index', ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, )
     );
 
     /**
@@ -132,11 +137,11 @@ class PostTableMap extends TableMap
      * e.g. self::$fieldKeys[self::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        self::TYPE_PHPNAME       => array('Id' => 0, 'Title' => 1, 'Hyperlink' => 2, 'Text' => 3, 'PostedDate' => 4, 'PostedByUserId' => 5, 'LibraryId' => 6, ),
-        self::TYPE_CAMELNAME     => array('id' => 0, 'title' => 1, 'hyperlink' => 2, 'text' => 3, 'postedDate' => 4, 'postedByUserId' => 5, 'libraryId' => 6, ),
-        self::TYPE_COLNAME       => array(PostTableMap::COL_ID => 0, PostTableMap::COL_TITLE => 1, PostTableMap::COL_HYPERLINK => 2, PostTableMap::COL_TEXT => 3, PostTableMap::COL_POSTED_DATE => 4, PostTableMap::COL_POSTED_BY_USER_ID => 5, PostTableMap::COL_LIBRARY_ID => 6, ),
-        self::TYPE_FIELDNAME     => array('id' => 0, 'title' => 1, 'hyperlink' => 2, 'text' => 3, 'posted_date' => 4, 'posted_by_user_id' => 5, 'library_id' => 6, ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, )
+        self::TYPE_PHPNAME       => array('Id' => 0, 'Title' => 1, 'Hyperlink' => 2, 'Text' => 3, 'PostedDate' => 4, 'PostedByUserId' => 5, 'LibraryId' => 6, 'LibraryIndex' => 7, ),
+        self::TYPE_CAMELNAME     => array('id' => 0, 'title' => 1, 'hyperlink' => 2, 'text' => 3, 'postedDate' => 4, 'postedByUserId' => 5, 'libraryId' => 6, 'libraryIndex' => 7, ),
+        self::TYPE_COLNAME       => array(PostTableMap::COL_ID => 0, PostTableMap::COL_TITLE => 1, PostTableMap::COL_HYPERLINK => 2, PostTableMap::COL_TEXT => 3, PostTableMap::COL_POSTED_DATE => 4, PostTableMap::COL_POSTED_BY_USER_ID => 5, PostTableMap::COL_LIBRARY_ID => 6, PostTableMap::COL_LIBRARY_INDEX => 7, ),
+        self::TYPE_FIELDNAME     => array('id' => 0, 'title' => 1, 'hyperlink' => 2, 'text' => 3, 'posted_date' => 4, 'posted_by_user_id' => 5, 'library_id' => 6, 'library_index' => 7, ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, )
     );
 
     /**
@@ -163,6 +168,7 @@ class PostTableMap extends TableMap
         $this->addColumn('posted_date', 'PostedDate', 'DATE', true, null, null);
         $this->addForeignKey('posted_by_user_id', 'PostedByUserId', 'INTEGER', 'user', 'id', true, null, null);
         $this->addForeignKey('library_id', 'LibraryId', 'INTEGER', 'library', 'id', true, null, null);
+        $this->addColumn('library_index', 'LibraryIndex', 'INTEGER', true, null, null);
     } // initialize()
 
     /**
@@ -370,6 +376,7 @@ class PostTableMap extends TableMap
             $criteria->addSelectColumn(PostTableMap::COL_POSTED_DATE);
             $criteria->addSelectColumn(PostTableMap::COL_POSTED_BY_USER_ID);
             $criteria->addSelectColumn(PostTableMap::COL_LIBRARY_ID);
+            $criteria->addSelectColumn(PostTableMap::COL_LIBRARY_INDEX);
         } else {
             $criteria->addSelectColumn($alias . '.id');
             $criteria->addSelectColumn($alias . '.title');
@@ -378,6 +385,7 @@ class PostTableMap extends TableMap
             $criteria->addSelectColumn($alias . '.posted_date');
             $criteria->addSelectColumn($alias . '.posted_by_user_id');
             $criteria->addSelectColumn($alias . '.library_id');
+            $criteria->addSelectColumn($alias . '.library_index');
         }
     }
 
