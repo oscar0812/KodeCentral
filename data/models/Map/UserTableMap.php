@@ -209,7 +209,7 @@ class UserTableMap extends TableMap
     public function getBehaviors()
     {
         return array(
-            'validate' => array('rule1' => array ('column' => 'username','validator' => 'NotNull',), 'rule2' => array ('column' => 'email','validator' => 'NotNull',), 'rule3' => array ('column' => 'email','validator' => 'Email',), 'rule4' => array ('column' => 'email','validator' => 'Unique',), 'rule5' => array ('column' => 'password','validator' => 'NotNull',), 'rule6' => array ('column' => 'bio','validator' => 'NotNull',), 'rule7' => array ('column' => 'join_date','validator' => 'NotNull',), ),
+            'validate' => array('rule1' => array ('column' => 'username','validator' => 'NotNull',), 'rule2' => array ('column' => 'username','validator' => 'Unique',), 'rule3' => array ('column' => 'email','validator' => 'NotNull',), 'rule4' => array ('column' => 'email','validator' => 'Email',), 'rule5' => array ('column' => 'email','validator' => 'Unique',), 'rule6' => array ('column' => 'password','validator' => 'NotNull',), 'rule7' => array ('column' => 'bio','validator' => 'NotNull',), 'rule8' => array ('column' => 'join_date','validator' => 'NotNull',), ),
         );
     } // getBehaviors()
 

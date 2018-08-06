@@ -39,11 +39,15 @@
   <table name="library" idMethod="native" phpName="Library">
     <column name="id" phpName="Id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
     <column name="name" phpName="Name" type="VARCHAR" size="128" required="true"/>
+    <unique name="name">
+      <unique-column name="name"/>
+    </unique>
     <vendor type="mysql">
       <parameter name="Engine" value="InnoDB"/>
     </vendor>
     <behavior name="validate">
       <parameter name="rule1" value="{column: name, validator: NotNull}"/>
+      <parameter name="rule4" value="{column: name, validator: Unique}"/>
     </behavior>
   </table>
   <table name="post" idMethod="native" phpName="Post">
@@ -112,16 +116,17 @@
     </vendor>
     <behavior name="validate">
       <parameter name="rule1" value="{column: username, validator: NotNull}"/>
+      <parameter name="rule2" value="{column: username, validator: Unique}"/>
 
-      <parameter name="rule2" value="{column: email, validator: NotNull}"/>
-      <parameter name="rule3" value="{column: email, validator: Email}"/>
-      <parameter name="rule4" value="{column: email, validator: Unique}"/>
+      <parameter name="rule3" value="{column: email, validator: NotNull}"/>
+      <parameter name="rule4" value="{column: email, validator: Email}"/>
+      <parameter name="rule5" value="{column: email, validator: Unique}"/>
 
-      <parameter name="rule5" value="{column: password, validator: NotNull}"/>
+      <parameter name="rule6" value="{column: password, validator: NotNull}"/>
 
-      <parameter name="rule6" value="{column: bio, validator: NotNull}"/>
+      <parameter name="rule7" value="{column: bio, validator: NotNull}"/>
 
-      <parameter name="rule7" value="{column: join_date, validator: NotNull}"/>
+      <parameter name="rule8" value="{column: join_date, validator: NotNull}"/>
     </behavior>
   </table>
   <table name="user_favorite" idMethod="native" phpName="UserFavorite" isCrossRef="true">

@@ -51,9 +51,29 @@ class LoggedInController
             return $this->view->render(
             $response,
             'create-and-edit-post.php',
-            ['router'=>$this->router, 'user'=>\User::current(), 'all_categories'=>\CategoryQuery::create()]
+            ['router'=>$this->router, 'user'=>\User::current(),
+            'all_categories'=>\CategoryQuery::create(),
+            'all_libraries'=>\LibraryQuery::create()]
         );
         })->setName('create-post');
+
+        // new lib info coming in, creating new library
+        $app->post('/create-post-lib', function ($request, $response, $args) {
+            $params = $request->getParsedBody();
+            if (!isset($params['lib-name'])) {
+                $response->withJson(['success'=>false, 'msg'=>'Invalid data']);
+            }
+            $lib = new \Library();
+            $lib->setName($params['lib-name']);
+
+            if (!$lib->validate()) {
+                $response->withJson(['success'=>false, 'msg'=>'Invalid data']);
+            }
+
+            //$lib->save();
+
+            return $response->withJson(['success'=>true, 'msg'=>$lib->getName()]);
+        })->setName('create-lib');
 
         // post information coming in, new post is being created
         $app->post('/create-post', function ($request, $response, $args) {
@@ -89,6 +109,7 @@ class LoggedInController
               'user'=>$user,
               'all_categories'=>\CategoryQuery::create(),
               'post_categories'=>$post->getCategories(),
+              'all_libraries'=>\LibraryQuery::create(),
               'post'=>$post]
             );
         })->setName('edit-post');

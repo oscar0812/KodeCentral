@@ -158,7 +158,7 @@ class LibraryTableMap extends TableMap
     public function getBehaviors()
     {
         return array(
-            'validate' => array('rule1' => array ('column' => 'name','validator' => 'NotNull',), ),
+            'validate' => array('rule1' => array ('column' => 'name','validator' => 'NotNull',), 'rule4' => array ('column' => 'name','validator' => 'Unique',), ),
         );
     } // getBehaviors()
 
