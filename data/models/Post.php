@@ -87,12 +87,12 @@ class Post extends BasePost
             $post = new \Post();
         }
 
-        $post->setText(preg_replace('/&nbsp;/', ' ', $data['text']));
+        $post->setText(preg_replace('/&nbsp;/', ' ', trim($data['text'])));
         $post->setPostedByUser(\User::current());
         $post->setPostedDate(getCurrentDate());
 
         // replace whitespace with 1 space
-        $new_title = preg_replace('/\s+/', ' ', $data['title']);
+        $new_title = preg_replace('/\s+/', ' ', trim($data['title']));
         $old_title = $post->getTitle();
 
         $post->setTitle($new_title);
