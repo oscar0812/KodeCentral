@@ -22,12 +22,29 @@ $(quill.root).html(preload.html());
 preload.remove();
 
 $(function() {
-  // choosing a library
-  $('#library-select').on('change', function() {
-    name = $(this).val();
-    url = $(this).data('posts-url');
+  $('#show-lib').on('click', function() {
+    $(this).remove();
+    $('#lib-row').removeClass('invisible');
+    return false;
+  });
 
-    append_select = $('#position-select');
+  // choosing a library
+  library_select = $('#library-select');
+  append_select = $('#position-select');
+
+  library_select.on('change', function() {
+    name = $(this).val();
+
+    if (name == "All") {
+      // if all, then dont show a position, just add to back
+      append_select.prop('disabled', true);
+      append_select.selectpicker('refresh');
+      return;
+    }
+
+    append_select.prop('disabled', false);
+
+    url = $(this).data('posts-url');
 
     // remove all previously set options
     append_select.find('option').remove();
@@ -44,11 +61,11 @@ $(function() {
         console.log(data);
         // append to #positon-select as: First-> Beginning of library,
         // Second + -> after title
-        append_select.append($('<option>').text("In the beginning"));
+        append_select.append($('<option>').text("In the beginning").val("-1"));
 
         // list of posts under this library
-        $.each(data, function(i, title){
-          append_select.append($('<option>').text("After "+title).val(title));
+        $.each(data, function(link, title) {
+          append_select.append($('<option>').text("After " + title).val(link));
         });
         append_select.selectpicker('refresh');
         // select the first option
@@ -60,12 +77,11 @@ $(function() {
   // creating a new library
   $('#library-form').on('submit', function(e) {
     ajaxForm(e.target, function(data) {
-      lib_dropdown = $('#library-select');
       if (data['success']) {
         // append a new library, then choose it and refresh the dropdown
-        lib_dropdown.append($('<option>').text(data['msg']).val(data['msg']));
-        lib_dropdown.val(data['msg']);
-        lib_dropdown.selectpicker('refresh');
+        library_select.append($('<option>').text(data['msg']).val(data['msg']));
+        library_select.val(data['msg']);
+        library_select.selectpicker('refresh');
         $('#library-modal').modal('toggle');
 
         Snackbar.show({
@@ -149,11 +165,15 @@ $(function() {
       data: {
         title: title,
         text: root.html(),
-        categories: categories
+        categories: categories,
+        library_name: library_select.val(),
+        library_index: append_select.val()
       },
       url: "",
       dataType: "json",
       success: function(data) {
+        console.log(data);
+        return false;
 
         if (data['success']) {
           // submitted, so stop saving the current text state

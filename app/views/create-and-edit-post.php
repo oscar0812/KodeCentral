@@ -74,7 +74,8 @@
                     } ?>
                   </select>
               </div>
-              <div class="row">
+              <button class="btn btn-block btn-raised btn-primary" id="show-lib">Show library options</button>
+              <div class="row invisible" id="lib-row">
                 <div class="col-lg-6">
                   <div class="form-group">
                     <span>Library</span>
@@ -98,9 +99,8 @@
                   <div class="form-group">
                     <span>Position</span>
                     <div class="input-group">
-                      <?php $c_lib = $editing?$post->getLibrary():null;?>
 
-                      <select id="position-select" class="selectpicker form-control" data-dropup-auto="false">
+                      <select id="position-select" class="selectpicker form-control" data-dropup-auto="false" disabled>
 
                       </select>
 

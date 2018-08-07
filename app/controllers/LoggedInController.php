@@ -86,7 +86,7 @@ class LoggedInController
             $posts = \PostQuery::create()->orderByLibraryIndex()->findByLibrary($lib)->toArray();
 
             // only return the title for security purposes
-            return $response->withJson(array_column($posts, 'Title'));
+            return $response->withJson(array_column($posts, 'Title', 'Hyperlink'));
         })->setName('ajax-lib-posts');
 
         // post information coming in, new post is being created

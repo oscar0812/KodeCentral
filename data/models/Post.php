@@ -12,6 +12,8 @@ use Base\Post as BasePost;
  * long as it does not already exist in the output directory.
  *
  */
+use Propel\Runtime\ActiveQuery\Criteria;
+
 class Post extends BasePost
 {
     // set nulls when empty strings for validation
@@ -108,8 +110,46 @@ class Post extends BasePost
 
         $post->setCategories($categories);
 
-        // TODO: set real library from input
-        $post->setLibraryId(1);
+        // set library and position
+        // first check if anything changed to avoid work
+        if ($data['library_name'] == 'All') {
+            // if all, just append, nothing else
+            $post->setLibraryId(1);
+        } else {
+            // if here then trying to move position of post in a lib
+            $lib = \LibraryQuery::create()->findOneByName($data['library_name']);
+
+            if ($lib == null) {
+                $post->setLibraryId(1);
+                return $post;
+            } else {
+                $post->setLibrary($lib);
+            }
+
+            // get all posts from library, except for one trying to move
+            $posts = \PostQuery::create()->
+              filterByHyperlink($post->getHyperlink(), CRITERIA::NOT_EQUAL)->
+              orderByLibraryIndex()->findByLibrary($lib);
+
+
+            $index = 0;
+            if ($data['library_index'] == '-1') {
+                // trying to add to very beginning of library
+                $post->setLibraryIndex(0);
+                $index = 1;
+            }
+
+            // loop through the posts of this library and move them down
+            foreach ($posts as $p) {
+                $p->setLibraryIndex($index++);
+                if ($p->getHyperlink() == $data['library_index']) {
+                    // trying to put after this one
+                    $post->setLibraryIndex($index++);
+                }
+            }
+
+            $posts->save();
+        }
 
         return $post;
     }
