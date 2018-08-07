@@ -36,8 +36,6 @@ $container['notFoundHandler'] = function ($c) {
 };
 
 $app->get('/test', function ($request, $response, $args) {
-    echo url();
-    return;
     return $this->view->render(
       $response,
       'test.php',

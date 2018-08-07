@@ -44,7 +44,6 @@ class AllController
         })->setName('library');
     }
 
-    // TODO: make contact page work (send email and stuff)
     public function contactUs($app)
     {
         $app->get('/contact', function ($request, $response, $args) {
@@ -54,6 +53,19 @@ class AllController
                 ['router'=>$this->router]
             );
         })->setName('contact-us');
+
+        // trying to send an email to us
+        $app->post('/contact', function ($request, $response, $args) {
+            $params = $request->getParsedBody();
+
+            if (!filter_var($params['email'], FILTER_VALIDATE_EMAIL) ||
+                  $params['message'] == "" || $params['message'] == null) {
+                return $response->withJson(['success'=>false, 'msg'=>'Invalid data']);
+            }
+
+            $arr = \App\Utils\Mail::contactUs($params['email'], $params['message']);
+            return $response->withJson($arr);
+        });
     }
 
     public function aboutUs($app)

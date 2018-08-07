@@ -70,7 +70,7 @@ class LoggedInController
                 $response->withJson(['success'=>false, 'msg'=>'Invalid data']);
             }
 
-            //$lib->save();
+            $lib->save();
 
             return $response->withJson(['success'=>true, 'msg'=>$lib->getName()]);
         })->setName('create-lib');
