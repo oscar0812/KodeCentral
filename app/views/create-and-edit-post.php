@@ -81,7 +81,8 @@
                     <span>Library</span>
                     <div class="input-group">
                       <?php $c_lib = $editing?$post->getLibrary():null;?>
-                      <select id="library-select" class="selectpicker form-control" data-dropup-auto="false" data-posts-url="<?=$router->pathFor('ajax-lib-posts')?>">
+                      <select id="library-select" class="selectpicker form-control" data-dropup-auto="false"
+                      data-posts-url="<?=$router->pathFor('ajax-lib-posts')?>" data-current-url="<?=$editing?$post->getHyperLink():""?>">
                           <?php
                           foreach ($all_libraries as $lib) {
                             $selected = false;

@@ -17,7 +17,7 @@ preload.find('code').each(function() {
   $(this).parent().addClass('ql-syntax').html($(this).html());
 });
 
-$(quill.root).html(preload.html());
+$(quill.root).html(preload.html().trim());
 // remove it once we get data out, to reduce html page size
 preload.remove();
 
@@ -32,8 +32,15 @@ $(function() {
   library_select = $('#library-select');
   append_select = $('#position-select');
 
-  library_select.on('change', function() {
-    name = $(this).val();
+  if (library_select.val() != "All") {
+    append_select.prop('disabled', false);
+    libraryChange();
+  }
+
+  library_select.on('change', libraryChange);
+
+  function libraryChange() {
+    name = $(library_select).val();
 
     if (name == "All") {
       // if all, then dont show a position, just add to back
@@ -44,7 +51,7 @@ $(function() {
 
     append_select.prop('disabled', false);
 
-    url = $(this).data('posts-url');
+    url = $(library_select).data('posts-url');
 
     // remove all previously set options
     append_select.find('option').remove();
@@ -58,21 +65,21 @@ $(function() {
       url: url,
       dataType: "json",
       success: function(data) {
-        console.log(data);
         // append to #positon-select as: First-> Beginning of library,
         // Second + -> after title
         append_select.append($('<option>').text("In the beginning").val("-1"));
 
         // list of posts under this library
         $.each(data, function(link, title) {
-          append_select.append($('<option>').text("After " + title).val(link));
+          if (link != library_select.data('current-url'))
+            append_select.append($('<option>').text("After " + title).val(link));
         });
         append_select.selectpicker('refresh');
         // select the first option
         append_select[0].selectedIndex = 0;
       }
     });
-  });
+  }
 
   // creating a new library
   $('#library-form').on('submit', function(e) {
@@ -99,8 +106,6 @@ $(function() {
   })
 
   // creating a new post
-  response = $('#submit-response');
-
   // if cookie was set, then user saved
   if (typeof Cookies.get(window.location.href) != 'undefined') {
     $(quill.root).html(Cookies.get(window.location.href));
@@ -112,9 +117,10 @@ $(function() {
       expires: 1
     });
 
-    response.removeClass('invisible').
-    removeClass('text-danger').addClass('text-success');
-    response.text('Text saved!');
+    Snackbar.show({
+      actionTextColor: '#00ff00',
+      text: "Text saved"
+    });
     return false;
   });
 
@@ -142,11 +148,6 @@ $(function() {
       return false;
     }
 
-    // show the user that something is happening
-    response.removeClass('invisible').
-    removeClass('text-danger').addClass('text-success');
-    response.text('Loading...');
-
     code = root.find('.ql-syntax');
     code.removeClass('.ql-syntax');
     code.each(function() {
@@ -172,8 +173,6 @@ $(function() {
       url: "",
       dataType: "json",
       success: function(data) {
-        console.log(data);
-        return false;
 
         if (data['success']) {
           // submitted, so stop saving the current text state
@@ -184,11 +183,16 @@ $(function() {
             return;
           }
 
-          response.addClass('text-success').removeClass('text-danger');
+          color = '#00ff00';
         } else {
-          response.addClass('text-danger').removeClass('text-success');
+          color = '#ff0000';
         }
-        response.text(data['text']);
+
+        Snackbar.show({
+          actionTextColor: color,
+          text: data['text']
+        });
+
       }
     });
 
