@@ -70,7 +70,7 @@
                   <li>
                     <strong>Posts: </strong> <span id="post-count"><?=$posts->count()?></span></li>
                 </ul>
-                <?php if($user->isSuper()) { ?>
+                <?php if(isset($user) && $user!= null && $user->isSuper()) { ?>
                 <a href="<?=$router->pathFor('create-post')?>" class="btn btn-raised btn-info btn-block btn-raised mt-2 no-mb">
                   <i class="zmdi zmdi-plus"></i> New</a>
                 <?php } ?>

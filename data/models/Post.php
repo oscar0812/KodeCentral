@@ -111,16 +111,14 @@ class Post extends BasePost
         $post->setCategories($categories);
 
         // set library and position
-        // first check if anything changed to avoid work
-        if ($data['library_name'] == 'All') {
-            // if all, just append, nothing else
-            $post->setLibraryId(1);
-        } else {
+        $post->setLibraryId(1);
+        $post->setLibraryIndex(0);
+
+        if ($data['library_name'] != 'All') {
             // if here then trying to move position of post in a lib
             $lib = \LibraryQuery::create()->findOneByName($data['library_name']);
 
             if ($lib == null) {
-                $post->setLibraryId(1);
                 return $post;
             } else {
                 $post->setLibrary($lib);

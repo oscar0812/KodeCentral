@@ -27,12 +27,12 @@ class AllController
         // the "library" groups posts together (useful for tutorials that need
         // more than one post to explain well)
         $app->get('/lib/{name}', function ($request, $response, $args) {
-            $name = $args['name'];
+            $lib = \LibraryQuery::create()->findOneByName($args['name']);
 
             return $this->view->render(
               $response,
               'post-list.php',
-              ['router'=>$this->router, 'posts'=>\PostQuery::create()->find(),
+              ['router'=>$this->router, 'posts'=>\PostQuery::create()->findByLibrary($lib),
               'title'=>'Library: '.$name]
           );
         })->setName('library');
