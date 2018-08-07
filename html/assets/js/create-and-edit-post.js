@@ -69,14 +69,21 @@ $(function() {
         // Second + -> after title
         append_select.append($('<option>').text("In the beginning").val("-1"));
 
+        current = "-1";
+        runner = "-1";
         // list of posts under this library
         $.each(data, function(link, title) {
-          if (link != library_select.data('current-url'))
+          if (link != library_select.data('current-url')) {
+            // found the current post, remove it from the positioning
+            current = link;
             append_select.append($('<option>').text("After " + title).val(link));
+          } else {
+            runner = current;
+          }
         });
+
+        append_select.val(runner);
         append_select.selectpicker('refresh');
-        // select the first option
-        append_select[0].selectedIndex = 0;
       }
     });
   }
