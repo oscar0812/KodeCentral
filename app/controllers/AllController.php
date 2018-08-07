@@ -29,11 +29,17 @@ class AllController
         $app->get('/lib/{name}', function ($request, $response, $args) {
             $lib = \LibraryQuery::create()->findOneByName($args['name']);
 
+            if ($lib == null) {
+                // invalid library, throw 404
+                throw new \Slim\Exception\NotFoundException($request, $response);
+            }
+
             return $this->view->render(
               $response,
               'post-list.php',
-              ['router'=>$this->router, 'posts'=>\PostQuery::create()->findByLibrary($lib),
-              'title'=>'Library: '.$name]
+              ['router'=>$this->router,
+              'posts'=>\PostQuery::create()->  orderByLibraryIndex()->findByLibrary($lib),
+              'title'=>'Library: '.$lib->getName()]
           );
         })->setName('library');
     }

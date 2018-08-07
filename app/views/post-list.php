@@ -40,7 +40,7 @@
                   <tbody>
                     <tr>
                       <td class="d-none d-sm-block">
-                        <img src="assets/img/default_pfp.png" class="avatar-50-50" alt="">
+                        <img src="<?=$home?>assets/img/default_pfp.png" class="avatar-50-50" alt="">
                       </td>
                       <td style="width: 60%">
                         <h4 class=""><?=$post->getTitle()?></h4>
