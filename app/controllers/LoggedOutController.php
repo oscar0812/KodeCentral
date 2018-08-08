@@ -21,7 +21,7 @@ class LoggedOutController
 
                 return $this->view->render(
                 $response,
-                'page-login_register.php',
+                'login_register.php',
                 ['router'=>$this->router]
             );
             })->setName('user-login-form');

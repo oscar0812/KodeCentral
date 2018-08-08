@@ -60,7 +60,7 @@ class AllController
         $app->get('/contact', function ($request, $response, $args) {
             return $this->view->render(
               $response,
-                'page-contact.php',
+                'contact.php',
                 ['router'=>$this->router]
             );
         })->setName('contact-us');
@@ -84,7 +84,7 @@ class AllController
         $app->get('/about-us', function ($request, $response, $args) {
             return $this->view->render(
               $response,
-                'page-about.php',
+                'about-us.php',
                 ['router'=>$this->router]
             );
         })->setName('about-us');
@@ -95,7 +95,7 @@ class AllController
         $app->get('/faq', function ($request, $response, $args) {
             return $this->view->render(
               $response,
-                'page-faq.php',
+                'faq.php',
                 ['router'=>$this->router]
             );
         })->setName('faq');
@@ -117,7 +117,7 @@ class AllController
         $app->get('/all', function ($request, $response, $args) {
             return $this->view->render(
               $response,
-                'page-all.php',
+                'all-pages.php',
                 ['router'=>$this->router, 'user'=>\User::current()]
             );
         })->setName('all-pages');
@@ -167,7 +167,7 @@ class AllController
 
             return $this->view->render(
               $response,
-                'page-profile.php',
+                'profile.php',
               ['router'=>$this->router, 'user'=>$user, 'visiting'=>$visiting]
           );
         })->setName('user-profile');

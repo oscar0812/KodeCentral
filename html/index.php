@@ -29,7 +29,7 @@ $container['notFoundHandler'] = function ($c) {
     return function ($request, $response) use ($c) {
         return $c['view']->render(
             $response->withStatus(404),
-            'page-404.php',
+            '404.php',
         ['router' => $c->router]
         );
     };
