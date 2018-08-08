@@ -197,13 +197,6 @@ class PostTableMap extends TableMap
     1 => ':id',
   ),
 ), null, null, 'Comments', false);
-        $this->addRelation('PostCategory', '\\PostCategory', RelationMap::ONE_TO_MANY, array (
-  0 =>
-  array (
-    0 => ':post_id',
-    1 => ':id',
-  ),
-), null, null, 'PostCategories', false);
         $this->addRelation('UserFavorite', '\\UserFavorite', RelationMap::ONE_TO_MANY, array (
   0 =>
   array (
@@ -211,7 +204,6 @@ class PostTableMap extends TableMap
     1 => ':id',
   ),
 ), null, null, 'UserFavorites', false);
-        $this->addRelation('Category', '\\Category', RelationMap::MANY_TO_MANY, array(), null, null, 'Categories');
         $this->addRelation('FavoriteUser', '\\User', RelationMap::MANY_TO_MANY, array(), null, null, 'FavoriteUsers');
     } // buildRelations()
 

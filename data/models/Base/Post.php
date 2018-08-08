@@ -2,15 +2,11 @@
 
 namespace Base;
 
-use \Category as ChildCategory;
-use \CategoryQuery as ChildCategoryQuery;
 use \Comment as ChildComment;
 use \CommentQuery as ChildCommentQuery;
 use \Library as ChildLibrary;
 use \LibraryQuery as ChildLibraryQuery;
 use \Post as ChildPost;
-use \PostCategory as ChildPostCategory;
-use \PostCategoryQuery as ChildPostCategoryQuery;
 use \PostQuery as ChildPostQuery;
 use \User as ChildUser;
 use \UserFavorite as ChildUserFavorite;
@@ -20,7 +16,6 @@ use \DateTime;
 use \Exception;
 use \PDO;
 use Map\CommentTableMap;
-use Map\PostCategoryTableMap;
 use Map\PostTableMap;
 use Map\UserFavoriteTableMap;
 use Propel\Runtime\Propel;
@@ -161,26 +156,10 @@ abstract class Post implements ActiveRecordInterface
     protected $collCommentsPartial;
 
     /**
-     * @var        ObjectCollection|ChildPostCategory[] Collection to store aggregation of ChildPostCategory objects.
-     */
-    protected $collPostCategories;
-    protected $collPostCategoriesPartial;
-
-    /**
      * @var        ObjectCollection|ChildUserFavorite[] Collection to store aggregation of ChildUserFavorite objects.
      */
     protected $collUserFavorites;
     protected $collUserFavoritesPartial;
-
-    /**
-     * @var        ObjectCollection|ChildCategory[] Cross Collection to store aggregation of ChildCategory objects.
-     */
-    protected $collCategories;
-
-    /**
-     * @var bool
-     */
-    protected $collCategoriesPartial;
 
     /**
      * @var        ObjectCollection|ChildUser[] Cross Collection to store aggregation of ChildUser objects.
@@ -219,12 +198,6 @@ abstract class Post implements ActiveRecordInterface
 
     /**
      * An array of objects scheduled for deletion.
-     * @var ObjectCollection|ChildCategory[]
-     */
-    protected $categoriesScheduledForDeletion = null;
-
-    /**
-     * An array of objects scheduled for deletion.
      * @var ObjectCollection|ChildUser[]
      */
     protected $favoriteUsersScheduledForDeletion = null;
@@ -234,12 +207,6 @@ abstract class Post implements ActiveRecordInterface
      * @var ObjectCollection|ChildComment[]
      */
     protected $commentsScheduledForDeletion = null;
-
-    /**
-     * An array of objects scheduled for deletion.
-     * @var ObjectCollection|ChildPostCategory[]
-     */
-    protected $postCategoriesScheduledForDeletion = null;
 
     /**
      * An array of objects scheduled for deletion.
@@ -871,11 +838,8 @@ abstract class Post implements ActiveRecordInterface
             $this->aLibrary = null;
             $this->collComments = null;
 
-            $this->collPostCategories = null;
-
             $this->collUserFavorites = null;
 
-            $this->collCategories = null;
             $this->collFavoriteUsers = null;
         } // if (deep)
     }
@@ -1010,35 +974,6 @@ abstract class Post implements ActiveRecordInterface
                 $this->resetModified();
             }
 
-            if ($this->categoriesScheduledForDeletion !== null) {
-                if (!$this->categoriesScheduledForDeletion->isEmpty()) {
-                    $pks = array();
-                    foreach ($this->categoriesScheduledForDeletion as $entry) {
-                        $entryPk = [];
-
-                        $entryPk[0] = $this->getId();
-                        $entryPk[1] = $entry->getId();
-                        $pks[] = $entryPk;
-                    }
-
-                    \PostCategoryQuery::create()
-                        ->filterByPrimaryKeys($pks)
-                        ->delete($con);
-
-                    $this->categoriesScheduledForDeletion = null;
-                }
-
-            }
-
-            if ($this->collCategories) {
-                foreach ($this->collCategories as $category) {
-                    if (!$category->isDeleted() && ($category->isNew() || $category->isModified())) {
-                        $category->save($con);
-                    }
-                }
-            }
-
-
             if ($this->favoriteUsersScheduledForDeletion !== null) {
                 if (!$this->favoriteUsersScheduledForDeletion->isEmpty()) {
                     $pks = array();
@@ -1079,23 +1014,6 @@ abstract class Post implements ActiveRecordInterface
 
             if ($this->collComments !== null) {
                 foreach ($this->collComments as $referrerFK) {
-                    if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
-                        $affectedRows += $referrerFK->save($con);
-                    }
-                }
-            }
-
-            if ($this->postCategoriesScheduledForDeletion !== null) {
-                if (!$this->postCategoriesScheduledForDeletion->isEmpty()) {
-                    \PostCategoryQuery::create()
-                        ->filterByPrimaryKeys($this->postCategoriesScheduledForDeletion->getPrimaryKeys(false))
-                        ->delete($con);
-                    $this->postCategoriesScheduledForDeletion = null;
-                }
-            }
-
-            if ($this->collPostCategories !== null) {
-                foreach ($this->collPostCategories as $referrerFK) {
                     if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
                         $affectedRows += $referrerFK->save($con);
                     }
@@ -1383,21 +1301,6 @@ abstract class Post implements ActiveRecordInterface
                 }
 
                 $result[$key] = $this->collComments->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
-            }
-            if (null !== $this->collPostCategories) {
-
-                switch ($keyType) {
-                    case TableMap::TYPE_CAMELNAME:
-                        $key = 'postCategories';
-                        break;
-                    case TableMap::TYPE_FIELDNAME:
-                        $key = 'post_categories';
-                        break;
-                    default:
-                        $key = 'PostCategories';
-                }
-
-                $result[$key] = $this->collPostCategories->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
             }
             if (null !== $this->collUserFavorites) {
 
@@ -1692,12 +1595,6 @@ abstract class Post implements ActiveRecordInterface
                 }
             }
 
-            foreach ($this->getPostCategories() as $relObj) {
-                if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
-                    $copyObj->addPostCategory($relObj->copy($deepCopy));
-                }
-            }
-
             foreach ($this->getUserFavorites() as $relObj) {
                 if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
                     $copyObj->addUserFavorite($relObj->copy($deepCopy));
@@ -1849,10 +1746,6 @@ abstract class Post implements ActiveRecordInterface
     {
         if ('Comment' == $relationName) {
             $this->initComments();
-            return;
-        }
-        if ('PostCategory' == $relationName) {
-            $this->initPostCategories();
             return;
         }
         if ('UserFavorite' == $relationName) {
@@ -2112,259 +2005,6 @@ abstract class Post implements ActiveRecordInterface
     }
 
     /**
-     * Clears out the collPostCategories collection
-     *
-     * This does not modify the database; however, it will remove any associated objects, causing
-     * them to be refetched by subsequent calls to accessor method.
-     *
-     * @return void
-     * @see        addPostCategories()
-     */
-    public function clearPostCategories()
-    {
-        $this->collPostCategories = null; // important to set this to NULL since that means it is uninitialized
-    }
-
-    /**
-     * Reset is the collPostCategories collection loaded partially.
-     */
-    public function resetPartialPostCategories($v = true)
-    {
-        $this->collPostCategoriesPartial = $v;
-    }
-
-    /**
-     * Initializes the collPostCategories collection.
-     *
-     * By default this just sets the collPostCategories collection to an empty array (like clearcollPostCategories());
-     * however, you may wish to override this method in your stub class to provide setting appropriate
-     * to your application -- for example, setting the initial array to the values stored in database.
-     *
-     * @param      boolean $overrideExisting If set to true, the method call initializes
-     *                                        the collection even if it is not empty
-     *
-     * @return void
-     */
-    public function initPostCategories($overrideExisting = true)
-    {
-        if (null !== $this->collPostCategories && !$overrideExisting) {
-            return;
-        }
-
-        $collectionClassName = PostCategoryTableMap::getTableMap()->getCollectionClassName();
-
-        $this->collPostCategories = new $collectionClassName;
-        $this->collPostCategories->setModel('\PostCategory');
-    }
-
-    /**
-     * Gets an array of ChildPostCategory objects which contain a foreign key that references this object.
-     *
-     * If the $criteria is not null, it is used to always fetch the results from the database.
-     * Otherwise the results are fetched from the database the first time, then cached.
-     * Next time the same method is called without $criteria, the cached collection is returned.
-     * If this ChildPost is new, it will return
-     * an empty collection or the current collection; the criteria is ignored on a new object.
-     *
-     * @param      Criteria $criteria optional Criteria object to narrow the query
-     * @param      ConnectionInterface $con optional connection object
-     * @return ObjectCollection|ChildPostCategory[] List of ChildPostCategory objects
-     * @throws PropelException
-     */
-    public function getPostCategories(Criteria $criteria = null, ConnectionInterface $con = null)
-    {
-        $partial = $this->collPostCategoriesPartial && !$this->isNew();
-        if (null === $this->collPostCategories || null !== $criteria  || $partial) {
-            if ($this->isNew() && null === $this->collPostCategories) {
-                // return empty collection
-                $this->initPostCategories();
-            } else {
-                $collPostCategories = ChildPostCategoryQuery::create(null, $criteria)
-                    ->filterByPost($this)
-                    ->find($con);
-
-                if (null !== $criteria) {
-                    if (false !== $this->collPostCategoriesPartial && count($collPostCategories)) {
-                        $this->initPostCategories(false);
-
-                        foreach ($collPostCategories as $obj) {
-                            if (false == $this->collPostCategories->contains($obj)) {
-                                $this->collPostCategories->append($obj);
-                            }
-                        }
-
-                        $this->collPostCategoriesPartial = true;
-                    }
-
-                    return $collPostCategories;
-                }
-
-                if ($partial && $this->collPostCategories) {
-                    foreach ($this->collPostCategories as $obj) {
-                        if ($obj->isNew()) {
-                            $collPostCategories[] = $obj;
-                        }
-                    }
-                }
-
-                $this->collPostCategories = $collPostCategories;
-                $this->collPostCategoriesPartial = false;
-            }
-        }
-
-        return $this->collPostCategories;
-    }
-
-    /**
-     * Sets a collection of ChildPostCategory objects related by a one-to-many relationship
-     * to the current object.
-     * It will also schedule objects for deletion based on a diff between old objects (aka persisted)
-     * and new objects from the given Propel collection.
-     *
-     * @param      Collection $postCategories A Propel collection.
-     * @param      ConnectionInterface $con Optional connection object
-     * @return $this|ChildPost The current object (for fluent API support)
-     */
-    public function setPostCategories(Collection $postCategories, ConnectionInterface $con = null)
-    {
-        /** @var ChildPostCategory[] $postCategoriesToDelete */
-        $postCategoriesToDelete = $this->getPostCategories(new Criteria(), $con)->diff($postCategories);
-
-
-        //since at least one column in the foreign key is at the same time a PK
-        //we can not just set a PK to NULL in the lines below. We have to store
-        //a backup of all values, so we are able to manipulate these items based on the onDelete value later.
-        $this->postCategoriesScheduledForDeletion = clone $postCategoriesToDelete;
-
-        foreach ($postCategoriesToDelete as $postCategoryRemoved) {
-            $postCategoryRemoved->setPost(null);
-        }
-
-        $this->collPostCategories = null;
-        foreach ($postCategories as $postCategory) {
-            $this->addPostCategory($postCategory);
-        }
-
-        $this->collPostCategories = $postCategories;
-        $this->collPostCategoriesPartial = false;
-
-        return $this;
-    }
-
-    /**
-     * Returns the number of related PostCategory objects.
-     *
-     * @param      Criteria $criteria
-     * @param      boolean $distinct
-     * @param      ConnectionInterface $con
-     * @return int             Count of related PostCategory objects.
-     * @throws PropelException
-     */
-    public function countPostCategories(Criteria $criteria = null, $distinct = false, ConnectionInterface $con = null)
-    {
-        $partial = $this->collPostCategoriesPartial && !$this->isNew();
-        if (null === $this->collPostCategories || null !== $criteria || $partial) {
-            if ($this->isNew() && null === $this->collPostCategories) {
-                return 0;
-            }
-
-            if ($partial && !$criteria) {
-                return count($this->getPostCategories());
-            }
-
-            $query = ChildPostCategoryQuery::create(null, $criteria);
-            if ($distinct) {
-                $query->distinct();
-            }
-
-            return $query
-                ->filterByPost($this)
-                ->count($con);
-        }
-
-        return count($this->collPostCategories);
-    }
-
-    /**
-     * Method called to associate a ChildPostCategory object to this object
-     * through the ChildPostCategory foreign key attribute.
-     *
-     * @param  ChildPostCategory $l ChildPostCategory
-     * @return $this|\Post The current object (for fluent API support)
-     */
-    public function addPostCategory(ChildPostCategory $l)
-    {
-        if ($this->collPostCategories === null) {
-            $this->initPostCategories();
-            $this->collPostCategoriesPartial = true;
-        }
-
-        if (!$this->collPostCategories->contains($l)) {
-            $this->doAddPostCategory($l);
-
-            if ($this->postCategoriesScheduledForDeletion and $this->postCategoriesScheduledForDeletion->contains($l)) {
-                $this->postCategoriesScheduledForDeletion->remove($this->postCategoriesScheduledForDeletion->search($l));
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @param ChildPostCategory $postCategory The ChildPostCategory object to add.
-     */
-    protected function doAddPostCategory(ChildPostCategory $postCategory)
-    {
-        $this->collPostCategories[]= $postCategory;
-        $postCategory->setPost($this);
-    }
-
-    /**
-     * @param  ChildPostCategory $postCategory The ChildPostCategory object to remove.
-     * @return $this|ChildPost The current object (for fluent API support)
-     */
-    public function removePostCategory(ChildPostCategory $postCategory)
-    {
-        if ($this->getPostCategories()->contains($postCategory)) {
-            $pos = $this->collPostCategories->search($postCategory);
-            $this->collPostCategories->remove($pos);
-            if (null === $this->postCategoriesScheduledForDeletion) {
-                $this->postCategoriesScheduledForDeletion = clone $this->collPostCategories;
-                $this->postCategoriesScheduledForDeletion->clear();
-            }
-            $this->postCategoriesScheduledForDeletion[]= clone $postCategory;
-            $postCategory->setPost(null);
-        }
-
-        return $this;
-    }
-
-
-    /**
-     * If this collection has already been initialized with
-     * an identical criteria, it returns the collection.
-     * Otherwise if this Post is new, it will return
-     * an empty collection; or if this Post has previously
-     * been saved, it will retrieve related PostCategories from storage.
-     *
-     * This method is protected by default in order to keep the public
-     * api reasonable.  You can provide public methods for those you
-     * actually need in Post.
-     *
-     * @param      Criteria $criteria optional Criteria object to narrow the query
-     * @param      ConnectionInterface $con optional connection object
-     * @param      string $joinBehavior optional join type to use (defaults to Criteria::LEFT_JOIN)
-     * @return ObjectCollection|ChildPostCategory[] List of ChildPostCategory objects
-     */
-    public function getPostCategoriesJoinCategory(Criteria $criteria = null, ConnectionInterface $con = null, $joinBehavior = Criteria::LEFT_JOIN)
-    {
-        $query = ChildPostCategoryQuery::create(null, $criteria);
-        $query->joinWith('Category', $joinBehavior);
-
-        return $this->getPostCategories($query, $con);
-    }
-
-    /**
      * Clears out the collUserFavorites collection
      *
      * This does not modify the database; however, it will remove any associated objects, causing
@@ -2615,249 +2255,6 @@ abstract class Post implements ActiveRecordInterface
         $query->joinWith('FavoriteUser', $joinBehavior);
 
         return $this->getUserFavorites($query, $con);
-    }
-
-    /**
-     * Clears out the collCategories collection
-     *
-     * This does not modify the database; however, it will remove any associated objects, causing
-     * them to be refetched by subsequent calls to accessor method.
-     *
-     * @return void
-     * @see        addCategories()
-     */
-    public function clearCategories()
-    {
-        $this->collCategories = null; // important to set this to NULL since that means it is uninitialized
-    }
-
-    /**
-     * Initializes the collCategories crossRef collection.
-     *
-     * By default this just sets the collCategories collection to an empty collection (like clearCategories());
-     * however, you may wish to override this method in your stub class to provide setting appropriate
-     * to your application -- for example, setting the initial array to the values stored in database.
-     *
-     * @return void
-     */
-    public function initCategories()
-    {
-        $collectionClassName = PostCategoryTableMap::getTableMap()->getCollectionClassName();
-
-        $this->collCategories = new $collectionClassName;
-        $this->collCategoriesPartial = true;
-        $this->collCategories->setModel('\Category');
-    }
-
-    /**
-     * Checks if the collCategories collection is loaded.
-     *
-     * @return bool
-     */
-    public function isCategoriesLoaded()
-    {
-        return null !== $this->collCategories;
-    }
-
-    /**
-     * Gets a collection of ChildCategory objects related by a many-to-many relationship
-     * to the current object by way of the post_category cross-reference table.
-     *
-     * If the $criteria is not null, it is used to always fetch the results from the database.
-     * Otherwise the results are fetched from the database the first time, then cached.
-     * Next time the same method is called without $criteria, the cached collection is returned.
-     * If this ChildPost is new, it will return
-     * an empty collection or the current collection; the criteria is ignored on a new object.
-     *
-     * @param      Criteria $criteria Optional query object to filter the query
-     * @param      ConnectionInterface $con Optional connection object
-     *
-     * @return ObjectCollection|ChildCategory[] List of ChildCategory objects
-     */
-    public function getCategories(Criteria $criteria = null, ConnectionInterface $con = null)
-    {
-        $partial = $this->collCategoriesPartial && !$this->isNew();
-        if (null === $this->collCategories || null !== $criteria || $partial) {
-            if ($this->isNew()) {
-                // return empty collection
-                if (null === $this->collCategories) {
-                    $this->initCategories();
-                }
-            } else {
-
-                $query = ChildCategoryQuery::create(null, $criteria)
-                    ->filterByPost($this);
-                $collCategories = $query->find($con);
-                if (null !== $criteria) {
-                    return $collCategories;
-                }
-
-                if ($partial && $this->collCategories) {
-                    //make sure that already added objects gets added to the list of the database.
-                    foreach ($this->collCategories as $obj) {
-                        if (!$collCategories->contains($obj)) {
-                            $collCategories[] = $obj;
-                        }
-                    }
-                }
-
-                $this->collCategories = $collCategories;
-                $this->collCategoriesPartial = false;
-            }
-        }
-
-        return $this->collCategories;
-    }
-
-    /**
-     * Sets a collection of Category objects related by a many-to-many relationship
-     * to the current object by way of the post_category cross-reference table.
-     * It will also schedule objects for deletion based on a diff between old objects (aka persisted)
-     * and new objects from the given Propel collection.
-     *
-     * @param  Collection $categories A Propel collection.
-     * @param  ConnectionInterface $con Optional connection object
-     * @return $this|ChildPost The current object (for fluent API support)
-     */
-    public function setCategories(Collection $categories, ConnectionInterface $con = null)
-    {
-        $this->clearCategories();
-        $currentCategories = $this->getCategories();
-
-        $categoriesScheduledForDeletion = $currentCategories->diff($categories);
-
-        foreach ($categoriesScheduledForDeletion as $toDelete) {
-            $this->removeCategory($toDelete);
-        }
-
-        foreach ($categories as $category) {
-            if (!$currentCategories->contains($category)) {
-                $this->doAddCategory($category);
-            }
-        }
-
-        $this->collCategoriesPartial = false;
-        $this->collCategories = $categories;
-
-        return $this;
-    }
-
-    /**
-     * Gets the number of Category objects related by a many-to-many relationship
-     * to the current object by way of the post_category cross-reference table.
-     *
-     * @param      Criteria $criteria Optional query object to filter the query
-     * @param      boolean $distinct Set to true to force count distinct
-     * @param      ConnectionInterface $con Optional connection object
-     *
-     * @return int the number of related Category objects
-     */
-    public function countCategories(Criteria $criteria = null, $distinct = false, ConnectionInterface $con = null)
-    {
-        $partial = $this->collCategoriesPartial && !$this->isNew();
-        if (null === $this->collCategories || null !== $criteria || $partial) {
-            if ($this->isNew() && null === $this->collCategories) {
-                return 0;
-            } else {
-
-                if ($partial && !$criteria) {
-                    return count($this->getCategories());
-                }
-
-                $query = ChildCategoryQuery::create(null, $criteria);
-                if ($distinct) {
-                    $query->distinct();
-                }
-
-                return $query
-                    ->filterByPost($this)
-                    ->count($con);
-            }
-        } else {
-            return count($this->collCategories);
-        }
-    }
-
-    /**
-     * Associate a ChildCategory to this object
-     * through the post_category cross reference table.
-     *
-     * @param ChildCategory $category
-     * @return ChildPost The current object (for fluent API support)
-     */
-    public function addCategory(ChildCategory $category)
-    {
-        if ($this->collCategories === null) {
-            $this->initCategories();
-        }
-
-        if (!$this->getCategories()->contains($category)) {
-            // only add it if the **same** object is not already associated
-            $this->collCategories->push($category);
-            $this->doAddCategory($category);
-        }
-
-        return $this;
-    }
-
-    /**
-     *
-     * @param ChildCategory $category
-     */
-    protected function doAddCategory(ChildCategory $category)
-    {
-        $postCategory = new ChildPostCategory();
-
-        $postCategory->setCategory($category);
-
-        $postCategory->setPost($this);
-
-        $this->addPostCategory($postCategory);
-
-        // set the back reference to this object directly as using provided method either results
-        // in endless loop or in multiple relations
-        if (!$category->isPostsLoaded()) {
-            $category->initPosts();
-            $category->getPosts()->push($this);
-        } elseif (!$category->getPosts()->contains($this)) {
-            $category->getPosts()->push($this);
-        }
-
-    }
-
-    /**
-     * Remove category of this object
-     * through the post_category cross reference table.
-     *
-     * @param ChildCategory $category
-     * @return ChildPost The current object (for fluent API support)
-     */
-    public function removeCategory(ChildCategory $category)
-    {
-        if ($this->getCategories()->contains($category)) {
-            $postCategory = new ChildPostCategory();
-            $postCategory->setCategory($category);
-            if ($category->isPostsLoaded()) {
-                //remove the back reference if available
-                $category->getPosts()->removeObject($this);
-            }
-
-            $postCategory->setPost($this);
-            $this->removePostCategory(clone $postCategory);
-            $postCategory->clear();
-
-            $this->collCategories->remove($this->collCategories->search($category));
-
-            if (null === $this->categoriesScheduledForDeletion) {
-                $this->categoriesScheduledForDeletion = clone $this->collCategories;
-                $this->categoriesScheduledForDeletion->clear();
-            }
-
-            $this->categoriesScheduledForDeletion->push($category);
-        }
-
-
-        return $this;
     }
 
     /**
@@ -3147,18 +2544,8 @@ abstract class Post implements ActiveRecordInterface
                     $o->clearAllReferences($deep);
                 }
             }
-            if ($this->collPostCategories) {
-                foreach ($this->collPostCategories as $o) {
-                    $o->clearAllReferences($deep);
-                }
-            }
             if ($this->collUserFavorites) {
                 foreach ($this->collUserFavorites as $o) {
-                    $o->clearAllReferences($deep);
-                }
-            }
-            if ($this->collCategories) {
-                foreach ($this->collCategories as $o) {
                     $o->clearAllReferences($deep);
                 }
             }
@@ -3170,9 +2557,7 @@ abstract class Post implements ActiveRecordInterface
         } // if ($deep)
 
         $this->collComments = null;
-        $this->collPostCategories = null;
         $this->collUserFavorites = null;
-        $this->collCategories = null;
         $this->collFavoriteUsers = null;
         $this->aPostedByUser = null;
         $this->aLibrary = null;
@@ -3252,15 +2637,6 @@ abstract class Post implements ActiveRecordInterface
 
             if (null !== $this->collComments) {
                 foreach ($this->collComments as $referrerFK) {
-                    if (method_exists($referrerFK, 'validate')) {
-                        if (!$referrerFK->validate($validator)) {
-                            $failureMap->addAll($referrerFK->getValidationFailures());
-                        }
-                    }
-                }
-            }
-            if (null !== $this->collPostCategories) {
-                foreach ($this->collPostCategories as $referrerFK) {
                     if (method_exists($referrerFK, 'validate')) {
                         if (!$referrerFK->validate($validator)) {
                             $failureMap->addAll($referrerFK->getValidationFailures());

@@ -46,9 +46,9 @@
                   </a> by
                   <a href="<?=$router->pathFor('user-profile', ['username'=>$username])?>">
                   <?=$post->getPostedByUser() == $user?$username." (You)":$username?></a> in
-                  <?php foreach ($post->getCategories() as $category) { ?>
-                  <a href="javascript:void(0)" class="ms-tag ms-tag-info"><?=$category->getName()?></a>
-                  <?php } ?>
+
+                  <a href="javascript:void(0)" class="ms-tag ms-tag-info"><?=$post->getLibrary()->getName()?></a>
+
                   <span class="ml-1 d-none d-sm-inline">
                     <i class="zmdi zmdi-time mr-05 color-info"></i>
                     <span class="color-medium-dark"><?=$post->getPostedDate()->format('F d, Y')?></span>

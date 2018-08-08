@@ -491,7 +491,7 @@ abstract class User implements ActiveRecordInterface
      *
      * @return string
      */
-    public function getProfilepicture()
+    public function getProfilePicture()
     {
         return $this->profile_picture;
     }
@@ -622,7 +622,7 @@ abstract class User implements ActiveRecordInterface
      * @param string $v new value
      * @return $this|\User The current object (for fluent API support)
      */
-    public function setProfilepicture($v)
+    public function setProfilePicture($v)
     {
         if ($v !== null) {
             $v = (string) $v;
@@ -634,7 +634,7 @@ abstract class User implements ActiveRecordInterface
         }
 
         return $this;
-    } // setProfilepicture()
+    } // setProfilePicture()
 
     /**
      * Sets the value of [join_date] column to a normalized version of the date/time value specified.
@@ -773,7 +773,7 @@ abstract class User implements ActiveRecordInterface
             $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : UserTableMap::translateFieldName('Email', TableMap::TYPE_PHPNAME, $indexType)];
             $this->email = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : UserTableMap::translateFieldName('Profilepicture', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : UserTableMap::translateFieldName('ProfilePicture', TableMap::TYPE_PHPNAME, $indexType)];
             $this->profile_picture = (null !== $col) ? (string) $col : null;
 
             $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : UserTableMap::translateFieldName('JoinDate', TableMap::TYPE_PHPNAME, $indexType)];
@@ -1217,7 +1217,7 @@ abstract class User implements ActiveRecordInterface
                 return $this->getEmail();
                 break;
             case 3:
-                return $this->getProfilepicture();
+                return $this->getProfilePicture();
                 break;
             case 4:
                 return $this->getJoinDate();
@@ -1264,7 +1264,7 @@ abstract class User implements ActiveRecordInterface
             $keys[0] => $this->getId(),
             $keys[1] => $this->getUsername(),
             $keys[2] => $this->getEmail(),
-            $keys[3] => $this->getProfilepicture(),
+            $keys[3] => $this->getProfilePicture(),
             $keys[4] => $this->getJoinDate(),
             $keys[5] => $this->getPassword(),
             $keys[6] => $this->getBio(),
@@ -1369,7 +1369,7 @@ abstract class User implements ActiveRecordInterface
                 $this->setEmail($value);
                 break;
             case 3:
-                $this->setProfilepicture($value);
+                $this->setProfilePicture($value);
                 break;
             case 4:
                 $this->setJoinDate($value);
@@ -1419,7 +1419,7 @@ abstract class User implements ActiveRecordInterface
             $this->setEmail($arr[$keys[2]]);
         }
         if (array_key_exists($keys[3], $arr)) {
-            $this->setProfilepicture($arr[$keys[3]]);
+            $this->setProfilePicture($arr[$keys[3]]);
         }
         if (array_key_exists($keys[4], $arr)) {
             $this->setJoinDate($arr[$keys[4]]);
@@ -1586,7 +1586,7 @@ abstract class User implements ActiveRecordInterface
     {
         $copyObj->setUsername($this->getUsername());
         $copyObj->setEmail($this->getEmail());
-        $copyObj->setProfilepicture($this->getProfilepicture());
+        $copyObj->setProfilePicture($this->getProfilePicture());
         $copyObj->setJoinDate($this->getJoinDate());
         $copyObj->setPassword($this->getPassword());
         $copyObj->setBio($this->getBio());

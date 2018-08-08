@@ -76,16 +76,6 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildPostQuery rightJoinWithComment() Adds a RIGHT JOIN clause and with to the query using the Comment relation
  * @method     ChildPostQuery innerJoinWithComment() Adds a INNER JOIN clause and with to the query using the Comment relation
  *
- * @method     ChildPostQuery leftJoinPostCategory($relationAlias = null) Adds a LEFT JOIN clause to the query using the PostCategory relation
- * @method     ChildPostQuery rightJoinPostCategory($relationAlias = null) Adds a RIGHT JOIN clause to the query using the PostCategory relation
- * @method     ChildPostQuery innerJoinPostCategory($relationAlias = null) Adds a INNER JOIN clause to the query using the PostCategory relation
- *
- * @method     ChildPostQuery joinWithPostCategory($joinType = Criteria::INNER_JOIN) Adds a join clause and with to the query using the PostCategory relation
- *
- * @method     ChildPostQuery leftJoinWithPostCategory() Adds a LEFT JOIN clause and with to the query using the PostCategory relation
- * @method     ChildPostQuery rightJoinWithPostCategory() Adds a RIGHT JOIN clause and with to the query using the PostCategory relation
- * @method     ChildPostQuery innerJoinWithPostCategory() Adds a INNER JOIN clause and with to the query using the PostCategory relation
- *
  * @method     ChildPostQuery leftJoinUserFavorite($relationAlias = null) Adds a LEFT JOIN clause to the query using the UserFavorite relation
  * @method     ChildPostQuery rightJoinUserFavorite($relationAlias = null) Adds a RIGHT JOIN clause to the query using the UserFavorite relation
  * @method     ChildPostQuery innerJoinUserFavorite($relationAlias = null) Adds a INNER JOIN clause to the query using the UserFavorite relation
@@ -96,7 +86,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildPostQuery rightJoinWithUserFavorite() Adds a RIGHT JOIN clause and with to the query using the UserFavorite relation
  * @method     ChildPostQuery innerJoinWithUserFavorite() Adds a INNER JOIN clause and with to the query using the UserFavorite relation
  *
- * @method     \UserQuery|\LibraryQuery|\CommentQuery|\PostCategoryQuery|\UserFavoriteQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
+ * @method     \UserQuery|\LibraryQuery|\CommentQuery|\UserFavoriteQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
  *
  * @method     ChildPost findOne(ConnectionInterface $con = null) Return the first ChildPost matching the query
  * @method     ChildPost findOneOrCreate(ConnectionInterface $con = null) Return the first ChildPost matching the query, or a new ChildPost object populated from the query conditions when no match is found
@@ -833,79 +823,6 @@ abstract class PostQuery extends ModelCriteria
     }
 
     /**
-     * Filter the query by a related \PostCategory object
-     *
-     * @param \PostCategory|ObjectCollection $postCategory the related object to use as filter
-     * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
-     *
-     * @return ChildPostQuery The current query, for fluid interface
-     */
-    public function filterByPostCategory($postCategory, $comparison = null)
-    {
-        if ($postCategory instanceof \PostCategory) {
-            return $this
-                ->addUsingAlias(PostTableMap::COL_ID, $postCategory->getPostId(), $comparison);
-        } elseif ($postCategory instanceof ObjectCollection) {
-            return $this
-                ->usePostCategoryQuery()
-                ->filterByPrimaryKeys($postCategory->getPrimaryKeys())
-                ->endUse();
-        } else {
-            throw new PropelException('filterByPostCategory() only accepts arguments of type \PostCategory or Collection');
-        }
-    }
-
-    /**
-     * Adds a JOIN clause to the query using the PostCategory relation
-     *
-     * @param     string $relationAlias optional alias for the relation
-     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
-     *
-     * @return $this|ChildPostQuery The current query, for fluid interface
-     */
-    public function joinPostCategory($relationAlias = null, $joinType = Criteria::INNER_JOIN)
-    {
-        $tableMap = $this->getTableMap();
-        $relationMap = $tableMap->getRelation('PostCategory');
-
-        // create a ModelJoin object for this join
-        $join = new ModelJoin();
-        $join->setJoinType($joinType);
-        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
-        if ($previousJoin = $this->getPreviousJoin()) {
-            $join->setPreviousJoin($previousJoin);
-        }
-
-        // add the ModelJoin to the current object
-        if ($relationAlias) {
-            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
-            $this->addJoinObject($join, $relationAlias);
-        } else {
-            $this->addJoinObject($join, 'PostCategory');
-        }
-
-        return $this;
-    }
-
-    /**
-     * Use the PostCategory relation PostCategory object
-     *
-     * @see useQuery()
-     *
-     * @param     string $relationAlias optional alias for the relation,
-     *                                   to be used as main alias in the secondary query
-     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
-     *
-     * @return \PostCategoryQuery A secondary query class using the current class as primary query
-     */
-    public function usePostCategoryQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
-    {
-        return $this
-            ->joinPostCategory($relationAlias, $joinType)
-            ->useQuery($relationAlias ? $relationAlias : 'PostCategory', '\PostCategoryQuery');
-    }
-
-    /**
      * Filter the query by a related \UserFavorite object
      *
      * @param \UserFavorite|ObjectCollection $userFavorite the related object to use as filter
@@ -976,23 +893,6 @@ abstract class PostQuery extends ModelCriteria
         return $this
             ->joinUserFavorite($relationAlias, $joinType)
             ->useQuery($relationAlias ? $relationAlias : 'UserFavorite', '\UserFavoriteQuery');
-    }
-
-    /**
-     * Filter the query by a related Category object
-     * using the post_category table as cross reference
-     *
-     * @param Category $category the related object to use as filter
-     * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
-     *
-     * @return ChildPostQuery The current query, for fluid interface
-     */
-    public function filterByCategory($category, $comparison = Criteria::EQUAL)
-    {
-        return $this
-            ->usePostCategoryQuery()
-            ->filterByCategory($category, $comparison)
-            ->endUse();
     }
 
     /**

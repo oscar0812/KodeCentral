@@ -52,7 +52,6 @@ class LoggedInController
             $response,
             'create-and-edit-post.php',
             ['router'=>$this->router, 'user'=>\User::current(),
-            'all_categories'=>\CategoryQuery::create(),
             'all_libraries'=>\LibraryQuery::create()]
         );
         })->setName('create-post');
@@ -92,9 +91,6 @@ class LoggedInController
         // post information coming in, new post is being created
         $app->post('/create-post', function ($request, $response, $args) {
             $params = $request->getParsedBody();
-            if (!isset($params['categories'])) {
-                return $response->withJSON(['success'=>false, 'text'=>'No categories']);
-            }
             $post = \Post::fromPostRequest($params);
             if (!$post->validate()) {
                 return $response->withJSON(['success'=>false, 'text'=>'Error!']);
@@ -121,8 +117,6 @@ class LoggedInController
                 'create-and-edit-post.php',
               ['router'=>$this->router,
               'user'=>$user,
-              'all_categories'=>\CategoryQuery::create(),
-              'post_categories'=>$post->getCategories(),
               'all_libraries'=>\LibraryQuery::create(),
               'post'=>$post]
             );

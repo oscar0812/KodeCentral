@@ -52,16 +52,12 @@
               </div>
               <div class="card-body no-pb">
                 <form class="form-horizontal">
-                  <h4 class="no-m color-primary">Categories</h4>
+                  <h4 class="no-m color-primary">Libraries</h4>
                   <div class="form-group mt-1">
+                    <?php foreach($all_libraries as $library) { ?>
                     <div class="radio no-mb">
                       <label>
-                        <input type="radio" name="optionsRadios" id="optionsRadios0" value="option0" checked="" class="filter" data-filter="all"> All </label>
-                    </div>
-                    <?php foreach($all_categories as $category) { ?>
-                    <div class="radio no-mb">
-                      <label>
-                        <input type="radio" name="optionsRadios" id="optionsRadios<?=$category->getId()?>" value="option<?=$category->getId()?>" class="filter" data-filter=".category-<?=$category->getName()?>"> <?=$category->getName()?> </label>
+                        <input type="radio" name="optionsRadios" id="optionsRadios<?=$library->getId()?>" value="option<?=$library->getId()?>" class="filter" data-filter=".library-<?=$library->getName()?>"> <?=$library->getName()?> </label>
                     </div>
                     <?php } ?>
 
@@ -72,7 +68,7 @@
           </div>
           <div class="col-md-9" id="Container">
             <?php foreach ($posts as $post) { ?>
-              <div class="card post-card mb-1 mix <?=$post->categoriesString()?> col-sm-12" data-url="<?=$router->pathFor('view-post', ['hyperlink'=>$post->getHyperlink()])?>">
+              <div class="card post-card mb-1 mix library-<?=$post->getLibrary()->getName()?> col-sm-12" data-url="<?=$router->pathFor('view-post', ['hyperlink'=>$post->getHyperlink()])?>">
                 <table class="table table-responsive table-no-border vertical-center">
                   <tbody>
                     <tr>
@@ -109,6 +105,8 @@
     <script src="assets/js/portfolio.js"></script>
     <script src="assets/js/component-snackbar.js"></script>
     <script type="text/javascript">
+    $('#optionsRadios1').trigger('click');
+
       $(function(){
         $('.post-card .favorite').on('click', function(){
           icon = $(this).find('.zmdi');

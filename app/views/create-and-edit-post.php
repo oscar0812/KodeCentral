@@ -56,24 +56,6 @@
                 <input class="form-control" id="title" type="text" value="<?=$editing?$post->getTitle():" "?>">
                 <p class="help-block">Short and simple</p>
               </div>
-              <div class="form-group">
-                <span>Categories</span>
-                <select id="categories-select" multiple="" class="selectpicker form-control" data-dropup-auto="false">
-                    <?php foreach ($all_categories as $ac) {
-                      $selected = false;
-
-                      foreach ($post_categories as $pc) {
-                        if ($ac->getId() == $pc->getId()) {
-                          $selected = true;
-                        }
-                      } ?>
-
-                        <option <?=$selected?"selected":""?>>
-                        <?=$ac->getName()?></option>
-                      <?php
-                    } ?>
-                  </select>
-              </div>
               <button class="btn btn-block btn-raised btn-primary" id="show-lib">Show library options</button>
               <div class="row invisible" id="lib-row">
                 <div class="col-lg-6">

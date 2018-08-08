@@ -41,15 +41,6 @@ class Post extends BasePost
         parent::setHyperlink($text);
     }
 
-    public function categoriesString()
-    {
-        $str = "";
-        foreach ($this->getCategories() as $category) {
-            $str .= ('category-'.$category->getName(). ' ');
-        }
-        return rtrim($str, ' ');
-    }
-
     // the summary is just a short description
     public function getSummary()
     {
@@ -104,11 +95,6 @@ class Post extends BasePost
             // hyperlink has to be unique
             $post->setUniqueHyperlink();
         }
-
-        // add the categories
-        $categories = \CategoryQuery::create()->filterByName($data['categories'])->find();
-
-        $post->setCategories($categories);
 
         // set library and position
         $post->setLibraryId(1);

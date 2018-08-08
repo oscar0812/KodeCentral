@@ -72,12 +72,10 @@
                     <span><?=$post->getSummary()?></span><br>
                     <span>
                       <i class="zmdi zmdi-time color-info-light"></i> <?=$post->getPostedDate()->format('F d, Y')?></span>
-                    <?php if($post->getCategories()->count() > 0) { ?>
                     <span>
                       <i class="zmdi zmdi-folder-outline color-warning-light"></i>
-                      <?=$post->getCategories()[0]->getName()?>
+                      <?=$post->getLibrary()->getName()?>
                     </span>
-                    <?php } ?>
                   </div>
                 </div>
               </div>

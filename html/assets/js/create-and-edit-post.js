@@ -135,15 +135,9 @@ $(function() {
     title = $('#title').val();
     root = $(quill.root).clone();
     html = root.html();
-    categories = $('#categories-select').val();
 
     if (title.trim() == "") {
       shake($('#title').parent());
-      return false;
-    }
-
-    if (categories.length == 0) {
-      shake($('#categories-select').parent());
       return false;
     }
 
@@ -173,7 +167,6 @@ $(function() {
       data: {
         title: title,
         text: root.html(),
-        categories: categories,
         library_name: library_select.val(),
         library_index: append_select.val()
       },
