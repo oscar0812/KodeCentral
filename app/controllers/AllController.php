@@ -47,12 +47,38 @@ class AllController
     public function search($app)
     {
         $app->get('/search', function ($request, $response, $args) {
+            $get = $request->getQueryParams();
+            $text = isset($get['text'])?$get['text']:'';
+
             return $this->view->render(
               $response,
                 'search.php',
-                ['router'=>$this->router]
+                ['router'=>$this->router, 'text'=>$text]
             );
         })->setName('search');
+
+        // trying to search for a term
+        $app->post('/search', function ($request, $response, $args) {
+            $params = $request->getParsedBody();
+
+            $array = array();
+            if (isset($_POST['text'])) {
+                $posts = \PostQuery::create()->search($_POST['text']);
+                $array = $posts->find()->toArray();
+            }
+
+            // dont show info not needed in front end
+            foreach (array_keys($array) as $key) {
+                unset($array[$key]['Id']);
+                unset($array[$key]['LibraryId']);
+                unset($array[$key]['LibraryIndex']);
+                unset($array[$key]['PostedByUserId']);
+                $array[$key]['Text'] = strip_tags($array[$key]['Text']);
+                $date = new \DateTime($array[$key]['PostedDate']);
+                $array[$key]['PostedDate'] = $date->format('F d, Y');
+            }
+            return $response->withJson($array);
+        });
     }
 
     public function contactUs($app)

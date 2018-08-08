@@ -12,7 +12,19 @@ use Base\PostQuery as BasePostQuery;
  * long as it does not already exist in the output directory.
  *
  */
+use Propel\Runtime\ActiveQuery\Criteria;
+
 class PostQuery extends BasePostQuery
 {
-
+    public function search($string)
+    {
+        if (trim($_POST['text']) != "") {
+            $terms = preg_split("/\s+/", trim($_POST['text']));
+            foreach ($terms as $term) {
+                $this->filterByTitle("%".$term."%", Criteria::LIKE)->
+            _or()->filterByText("%".$term."%", Criteria::LIKE)->_or();
+            }
+        }
+        return $this;
+    }
 }

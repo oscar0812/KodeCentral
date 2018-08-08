@@ -12,8 +12,8 @@
         <?php } ?>
       </div>
       <div class="ms-slidebar-title">
-        <form class="search-form">
-          <input id="search-box-slidebar" type="text" class="search-input" placeholder="Search..." name="q" />
+        <form class="search-form" action="<?=$router->pathFor('search')?>" method="get">
+          <input id="search-box-slidebar" type="text" class="search-input" placeholder="Search..." name="text" />
           <label for="search-box-slidebar">
             <i class="zmdi zmdi-search"></i>
           </label>
