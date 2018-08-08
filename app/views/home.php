@@ -67,7 +67,7 @@
                     <?php foreach($all_libraries as $library) { ?>
                     <div class="radio no-mb">
                       <label>
-                        <input type="radio" name="optionsRadios" id="optionsRadios<?=$library->getId()?>" value="option<?=$library->getId()?>" class="filter" data-filter=".library-<?=$library->getName()?>"> <?=$library->getName()?> </label>
+                        <input type="radio" name="optionsRadios" id="optionsRadios<?=$library->getId()?>" value="option<?=$library->getId()?>" class="filter" data-filter=".library-<?=preg_replace('/\s+/', '-', strtolower($library->getName()))?>"> <?=$library->getName()?> </label>
                     </div>
                     <?php } ?>
 
@@ -78,7 +78,7 @@
           </div>
           <div class="col-md-9" id="Container">
             <?php foreach ($posts as $post) { ?>
-              <div class="card post-card mb-1 mix library-<?=$post->getLibrary()->getName()?> col-sm-12" data-url="<?=$router->pathFor('view-post', ['hyperlink'=>$post->getHyperlink()])?>">
+              <div class="card post-card mb-1 mix library-<?=preg_replace('/\s+/', '-', strtolower($post->getLibrary()->getName()))?> col-sm-12" data-url="<?=$router->pathFor('view-post', ['hyperlink'=>$post->getHyperlink()])?>">
                 <table class="table table-responsive table-no-border vertical-center">
                   <tbody>
                     <tr>
