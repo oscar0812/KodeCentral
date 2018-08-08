@@ -52,8 +52,18 @@
               </div>
               <div class="card-body no-pb">
                 <form class="form-horizontal">
+                  <div class="form-group mt-1">
+                    <div class="radio no-mb neg-top">
+                      <label>
+                        <input type="radio" name="optionsRadios" id="optionsRadios0" value="option0" checked="" class="filter" data-filter="all"> Show All
+                      </label>
+                    </div>
+                  </div>
+
                   <h4 class="no-m color-primary">Libraries</h4>
                   <div class="form-group mt-1">
+
+
                     <?php foreach($all_libraries as $library) { ?>
                     <div class="radio no-mb">
                       <label>
@@ -105,7 +115,6 @@
     <script src="assets/js/portfolio.js"></script>
     <script src="assets/js/component-snackbar.js"></script>
     <script type="text/javascript">
-    $('#optionsRadios1').trigger('click');
 
       $(function(){
         $('.post-card .favorite').on('click', function(){

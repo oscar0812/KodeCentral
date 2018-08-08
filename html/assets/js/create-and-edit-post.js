@@ -32,7 +32,7 @@ $(function() {
   library_select = $('#library-select');
   append_select = $('#position-select');
 
-  if (library_select.val() != "All") {
+  if (library_select.val() != "None") {
     append_select.prop('disabled', false);
     libraryChange();
   }
@@ -42,7 +42,7 @@ $(function() {
   function libraryChange() {
     name = $(library_select).val();
 
-    if (name == "All") {
+    if (name == "None") {
       // if all, then dont show a position, just add to back
       append_select.prop('disabled', true);
       append_select.selectpicker('refresh');

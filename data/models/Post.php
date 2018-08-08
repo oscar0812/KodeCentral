@@ -100,7 +100,7 @@ class Post extends BasePost
         $post->setLibraryId(1);
         $post->setLibraryIndex(0);
 
-        if ($data['library_name'] != 'All') {
+        if ($data['library_name'] != 'None') {
             // if here then trying to move position of post in a lib
             $lib = \LibraryQuery::create()->findOneByName($data['library_name']);
 
