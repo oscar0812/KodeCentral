@@ -9,8 +9,8 @@
           <h3 class="ms-footbar-title">Sitemap</h3>
           <ul class="list-unstyled ms-icon-list three_cols">
             <li>
-              <a href="<?=$router->pathFor('home')?>">
-                <i class="zmdi zmdi-home"></i> Home</a>
+              <a href="<?=$router->pathFor('search')?>">
+                <i class="zmdi zmdi-search"></i> Search</a>
             </li>
             <li>
               <a href="<?=$router->pathFor('about-us')?>">
