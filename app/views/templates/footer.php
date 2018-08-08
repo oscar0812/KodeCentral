@@ -16,10 +16,6 @@
                 <i class="zmdi zmdi-favorite-outline"></i> About Us</a>
             </li>
             <li>
-              <a href="<?=$router->pathFor('our-team')?>">
-                <i class="zmdi zmdi-accounts"></i> Our Team</a>
-            </li>
-            <li>
               <a href="<?=$router->pathFor('faq')?>">
                 <i class="zmdi zmdi-help"></i> FAQ</a>
             </li>

@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="theme-color" content="#333">
-    <title>Kode Central</title>
+    <title>Kode Central | FAQ</title>
     <meta name="description" content="Kode Central, a place for programmers">
     <link rel="shortcut icon" href="assets/img/favicon.ico">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -44,104 +44,12 @@
                         <i class="zmdi zmdi-attachment-alt"></i> Question Number One </a>
                     </h4>
                   </div>
+                  <!-- take off "show" class to no open on load-->
                   <div id="collapseOne12" class="card-collapse collapse show" role="tabpanel" aria-labelledby="headingOne12" data-parent="#accordion12">
                     <div class="card-body">
-                      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias delectus laboriosam, ut placeat autem itaque, possimus illum dicta enim quia. Quam similique voluptate illo debitis corrupti sunt, vitae dicta officia impedit hic. Perferendis,
-                        odit consequuntur. Numquam doloremque aperiam ut, adipisci molestiae, delectus deleniti accusamus expedita sit suscipit nostrum voluptatem perspiciatis deserunt optio hic nihil distinctio nesciunt. Dolor assumenda repudiandae,
-                        tempora magni quidem maiores minima adipisci architecto porro accusamus alias fugit, doloremque fugiat veniam est totam.</p>
-                      <p>Quos cum sunt temporibus ipsam, voluptatibus cupiditate magnam quam officiis laborum facere ipsa molestiae ratione fugiat iusto perspiciatis dolorem veniam maxime tempore perferendis illum aliquam! Aspernatur quasi possimus rem tempora,
-                        facere sed voluptatibus sequi saepe consectetur necessitatibus a cumque fugiat earum error, maxime fugit voluptatum quae minima tenetur reiciendis dolor temporibus labore odit. Quos, ex architecto labore quasi nostrum tempora ipsam
-                        id numquam voluptatum, eos, tempore. Delectus, esse! Dolorum ipsam eos nesciunt soluta, voluptatum beatae?</p>
-                    </div>
-                  </div>
-                </div>
-                <div class="mb-0 card card-primary">
-                  <div class="card-header" role="tab" id="headingTwo12">
-                    <h4 class="card-title ms-rotate-icon">
-                      <a class="collapsed withripple" role="button" data-toggle="collapse" href="#collapseTwo12" aria-expanded="false" aria-controls="collapseTwo12">
-                        <i class="zmdi zmdi-attachment-alt"></i> Question Number Two </a>
-                    </h4>
-                  </div>
-                  <div id="collapseTwo12" class="card-collapse collapse" role="tabpanel" aria-labelledby="headingTwo12" data-parent="#accordion12">
-                    <div class="card-body">
-                      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias delectus laboriosam, ut placeat autem itaque, possimus illum dicta enim quia. Quam similique voluptate illo debitis corrupti sunt, vitae dicta officia impedit hic. Perferendis,
-                        odit consequuntur. Numquam doloremque aperiam ut, adipisci molestiae, delectus deleniti accusamus expedita sit suscipit nostrum voluptatem perspiciatis deserunt optio hic nihil distinctio nesciunt. Dolor assumenda repudiandae,
-                        tempora magni quidem maiores minima adipisci architecto porro accusamus alias fugit, doloremque fugiat veniam est totam.</p>
-                      <p>Quos cum sunt temporibus ipsam, voluptatibus cupiditate magnam quam officiis laborum facere ipsa molestiae ratione fugiat iusto perspiciatis dolorem veniam maxime tempore perferendis illum aliquam! Aspernatur quasi possimus rem tempora,
-                        facere sed voluptatibus sequi saepe consectetur necessitatibus a cumque fugiat earum error, maxime fugit voluptatum quae minima tenetur reiciendis dolor temporibus labore odit. Quos, ex architecto labore quasi nostrum tempora ipsam
-                        id numquam voluptatum, eos, tempore. Delectus, esse! Dolorum ipsam eos nesciunt soluta, voluptatum beatae?</p>
-                    </div>
-                  </div>
-                </div>
-                <div class="mb-0 card card-primary">
-                  <div class="card-header" role="tab" id="headingThree3">
-                    <h4 class="card-title ms-rotate-icon">
-                      <a class="collapsed withripple" role="button" data-toggle="collapse" href="#collapseThree3" aria-expanded="false" aria-controls="collapseThree3">
-                        <i class="zmdi zmdi-attachment-alt"></i> Question Number Three </a>
-                    </h4>
-                  </div>
-                  <div id="collapseThree3" class="card-collapse collapse" role="tabpanel" aria-labelledby="headingThree12" data-parent="#accordion12">
-                    <div class="card-body">
-                      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias delectus laboriosam, ut placeat autem itaque, possimus illum dicta enim quia. Quam similique voluptate illo debitis corrupti sunt, vitae dicta officia impedit hic. Perferendis,
-                        odit consequuntur. Numquam doloremque aperiam ut, adipisci molestiae, delectus deleniti accusamus expedita sit suscipit nostrum voluptatem perspiciatis deserunt optio hic nihil distinctio nesciunt. Dolor assumenda repudiandae,
-                        tempora magni quidem maiores minima adipisci architecto porro accusamus alias fugit, doloremque fugiat veniam est totam.</p>
-                      <p>Quos cum sunt temporibus ipsam, voluptatibus cupiditate magnam quam officiis laborum facere ipsa molestiae ratione fugiat iusto perspiciatis dolorem veniam maxime tempore perferendis illum aliquam! Aspernatur quasi possimus rem tempora,
-                        facere sed voluptatibus sequi saepe consectetur necessitatibus a cumque fugiat earum error, maxime fugit voluptatum quae minima tenetur reiciendis dolor temporibus labore odit. Quos, ex architecto labore quasi nostrum tempora ipsam
-                        id numquam voluptatum, eos, tempore. Delectus, esse! Dolorum ipsam eos nesciunt soluta, voluptatum beatae?</p>
-                    </div>
-                  </div>
-                </div>
-                <div class="mb-0 card card-primary">
-                  <div class="card-header" role="tab" id="headingThree3">
-                    <h4 class="card-title ms-rotate-icon">
-                      <a class="collapsed withripple" role="button" data-toggle="collapse" href="#collapseThree4" aria-expanded="false" aria-controls="collapseThree4">
-                        <i class="zmdi zmdi-attachment-alt"></i> Question Number Four </a>
-                    </h4>
-                  </div>
-                  <div id="collapseThree4" class="card-collapse collapse" role="tabpanel" aria-labelledby="headingThree12" data-parent="#accordion12">
-                    <div class="card-body">
-                      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias delectus laboriosam, ut placeat autem itaque, possimus illum dicta enim quia. Quam similique voluptate illo debitis corrupti sunt, vitae dicta officia impedit hic. Perferendis,
-                        odit consequuntur. Numquam doloremque aperiam ut, adipisci molestiae, delectus deleniti accusamus expedita sit suscipit nostrum voluptatem perspiciatis deserunt optio hic nihil distinctio nesciunt. Dolor assumenda repudiandae,
-                        tempora magni quidem maiores minima adipisci architecto porro accusamus alias fugit, doloremque fugiat veniam est totam.</p>
-                      <p>Quos cum sunt temporibus ipsam, voluptatibus cupiditate magnam quam officiis laborum facere ipsa molestiae ratione fugiat iusto perspiciatis dolorem veniam maxime tempore perferendis illum aliquam! Aspernatur quasi possimus rem tempora,
-                        facere sed voluptatibus sequi saepe consectetur necessitatibus a cumque fugiat earum error, maxime fugit voluptatum quae minima tenetur reiciendis dolor temporibus labore odit. Quos, ex architecto labore quasi nostrum tempora ipsam
-                        id numquam voluptatum, eos, tempore. Delectus, esse! Dolorum ipsam eos nesciunt soluta, voluptatum beatae?</p>
-                    </div>
-                  </div>
-                </div>
-                <div class="mb-0 card card-primary">
-                  <div class="card-header" role="tab" id="headingThree3">
-                    <h4 class="card-title ms-rotate-icon">
-                      <a class="collapsed withripple" role="button" data-toggle="collapse" href="#collapseThree5" aria-expanded="false" aria-controls="collapseThree5">
-                        <i class="zmdi zmdi-attachment-alt"></i> Question Number Five </a>
-                    </h4>
-                  </div>
-                  <div id="collapseThree5" class="card-collapse collapse" role="tabpanel" aria-labelledby="headingThree12" data-parent="#accordion12">
-                    <div class="card-body">
-                      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias delectus laboriosam, ut placeat autem itaque, possimus illum dicta enim quia. Quam similique voluptate illo debitis corrupti sunt, vitae dicta officia impedit hic. Perferendis,
-                        odit consequuntur. Numquam doloremque aperiam ut, adipisci molestiae, delectus deleniti accusamus expedita sit suscipit nostrum voluptatem perspiciatis deserunt optio hic nihil distinctio nesciunt. Dolor assumenda repudiandae,
-                        tempora magni quidem maiores minima adipisci architecto porro accusamus alias fugit, doloremque fugiat veniam est totam.</p>
-                      <p>Quos cum sunt temporibus ipsam, voluptatibus cupiditate magnam quam officiis laborum facere ipsa molestiae ratione fugiat iusto perspiciatis dolorem veniam maxime tempore perferendis illum aliquam! Aspernatur quasi possimus rem tempora,
-                        facere sed voluptatibus sequi saepe consectetur necessitatibus a cumque fugiat earum error, maxime fugit voluptatum quae minima tenetur reiciendis dolor temporibus labore odit. Quos, ex architecto labore quasi nostrum tempora ipsam
-                        id numquam voluptatum, eos, tempore. Delectus, esse! Dolorum ipsam eos nesciunt soluta, voluptatum beatae?</p>
-                    </div>
-                  </div>
-                </div>
-                <div class="mb-0 card card-primary">
-                  <div class="card-header" role="tab" id="headingThree3">
-                    <h4 class="card-title ms-rotate-icon">
-                      <a class="collapsed withripple" role="button" data-toggle="collapse" href="#collapseThree6" aria-expanded="false" aria-controls="collapseThree6">
-                        <i class="zmdi zmdi-attachment-alt"></i> Question Number Six </a>
-                    </h4>
-                  </div>
-                  <div id="collapseThree6" class="card-collapse collapse" role="tabpanel" aria-labelledby="headingThree12" data-parent="#accordion12">
-                    <div class="card-body">
-                      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias delectus laboriosam, ut placeat autem itaque, possimus illum dicta enim quia. Quam similique voluptate illo debitis corrupti sunt, vitae dicta officia impedit hic. Perferendis,
-                        odit consequuntur. Numquam doloremque aperiam ut, adipisci molestiae, delectus deleniti accusamus expedita sit suscipit nostrum voluptatem perspiciatis deserunt optio hic nihil distinctio nesciunt. Dolor assumenda repudiandae,
-                        tempora magni quidem maiores minima adipisci architecto porro accusamus alias fugit, doloremque fugiat veniam est totam.</p>
-                      <p>Quos cum sunt temporibus ipsam, voluptatibus cupiditate magnam quam officiis laborum facere ipsa molestiae ratione fugiat iusto perspiciatis dolorem veniam maxime tempore perferendis illum aliquam! Aspernatur quasi possimus rem tempora,
-                        facere sed voluptatibus sequi saepe consectetur necessitatibus a cumque fugiat earum error, maxime fugit voluptatum quae minima tenetur reiciendis dolor temporibus labore odit. Quos, ex architecto labore quasi nostrum tempora ipsam
-                        id numquam voluptatum, eos, tempore. Delectus, esse! Dolorum ipsam eos nesciunt soluta, voluptatum beatae?</p>
+                      <p>What is a library?</p>
+                      <p>A library is a collection of posts which purpose is to make posts easier to navigate and increase the user experience.
+                      Libraries are useful when making walk-throughs, tutorials, or just arranging similar posts together.</p>
                     </div>
                   </div>
                 </div>

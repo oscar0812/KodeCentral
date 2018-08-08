@@ -70,24 +70,13 @@ class AllController
 
     public function aboutUs($app)
     {
-        $app->get('/about', function ($request, $response, $args) {
+        $app->get('/about-us', function ($request, $response, $args) {
             return $this->view->render(
               $response,
                 'page-about.php',
                 ['router'=>$this->router]
             );
         })->setName('about-us');
-    }
-
-    public function ourTeam($app)
-    {
-        $app->get('/team', function ($request, $response, $args) {
-            return $this->view->render(
-              $response,
-                'page-team.php',
-                ['router'=>$this->router]
-            );
-        })->setName('our-team');
     }
 
     public function faq($app)
@@ -180,7 +169,6 @@ class AllController
         $controller->library($app);
         $controller->contactUs($app);
         $controller->aboutUs($app);
-        $controller->ourTeam($app);
         $controller->faq($app);
         $controller->appPost($app);
         $controller->allPages($app);

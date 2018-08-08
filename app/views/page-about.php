@@ -51,7 +51,8 @@
               </div>
               <div class="col-lg-6 text-justify">
                 <p>If you'd like to contribute to kodecentral make sure to create an account and to <a href="<?=$router->pathFor('contact-us')?>">contact us</a> requesting approval to post your knowledge on this website.</p>
-                <p>If you have any other questions make sure to look at our <a href="<?=$router->pathFor('faq')?>">Frequently Asked Questions</a> page, and if you don't find a solution make sure you contact us to recieve help as soon as possible.</p>
+                <p>If you have any other questions make sure to look at our <a href="<?=$router->pathFor('faq')?>">Frequently Asked Questions</a> page, and if you don't find a solution make sure you contact us to recieve help as soon as possible.
+                You are also welcome to visit Aszend and request a beautiful website like this one.</p>
               </div>
             </div>
           </div>
