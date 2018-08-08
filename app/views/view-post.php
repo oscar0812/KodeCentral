@@ -47,7 +47,8 @@
                   <a href="<?=$router->pathFor('user-profile', ['username'=>$username])?>">
                   <?=$post->getPostedByUser() == $user?$username." (You)":$username?></a> in
 
-                  <a href="javascript:void(0)" class="ms-tag ms-tag-info"><?=$post->getLibrary()->getName()?></a>
+                  <?php $lib_name = $post->getLibrary()->getName()?>
+                  <a href="<?=$router->pathFor('library', ['name'=>$lib_name])?>" class="ms-tag ms-tag-info"><?=$lib_name?></a>
 
                   <span class="ml-1 d-none d-sm-inline">
                     <i class="zmdi zmdi-time mr-05 color-info"></i>
@@ -124,14 +125,7 @@
             </div>
 
           </div>
-          <div class="col-lg-4">
-            <ol class="breadcrumb">
-
-              <li class="breadcrumb-item"><a href="<?=$router->pathFor('home')?>">Home</a></li>
-              <li class="breadcrumb-item"><a href="<?=$router->pathFor('library', ['name'=>$lib_name])?>"><?=$lib_name?></a></li>
-              <li class="breadcrumb-item active" aria-current="page"><?=$post->getTitle()?></li>
-
-            </ol>
+          <div class="col-lg-4 d-none d-lg-block">
             <div class="card card-primary animated fadeInUp animation-delay-7">
               <div class="card-header">
                 <h3 class="card-title">
