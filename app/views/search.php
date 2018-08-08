@@ -7,8 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="theme-color" content="#333">
     <title>Kode Central | Search</title>
-    <meta name="description" content="Material Style Theme">
-    <link rel="shortcut icon" href="assets/img/favicon.png?v=3">
+    <meta name="description" content="Kode Central, a place for programmers">
+    <link rel="shortcut icon" href="assets/img/favicon.ico">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="assets/css/preload.min.css">
     <link rel="stylesheet" href="assets/css/plugins.min.css">
