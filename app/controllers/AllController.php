@@ -14,7 +14,7 @@ class AllController
             return $this->view->render(
                 $response,
                 'home.php',
-                ['router'=>$this->router,
+                ['router'=>$this->router, 'on_home' => true,
                 'posts'=>\PostQuery::create()->orderByPostedDate('desc')->find(),
                 'all_libraries'=>\LibraryQuery::create()->find(),
                 'user'=>\User::current()]

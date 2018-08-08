@@ -28,7 +28,19 @@
       </div>
     </header>
     <ul class="ms-slidebar-menu" id="slidebar-menu" role="tablist" aria-multiselectable="true">
-      <?php if($c_user != null && $c_user->isSuper()) { ?>
+      <?php if(!isset($on_home)){ ?>
+      <li>
+        <a class="link" href="<?=$router->pathFor('home')?>">
+          <i class="zmdi zmdi-home"></i> Home
+        </a>
+      </li>
+      <?php }?>
+      <?php if($c_user != null) { ?>
+      <li>
+        <a class="link" href="<?=$router->pathFor('user-favorites')?>">
+          <i class="zmdi zmdi-home"></i> My Favorites</a>
+      </li>
+      <?php if($c_user->isSuper()) { ?>
       <li class="card" role="tab">
         <a class="collapsed" role="button" data-toggle="collapse" href="#sc1" aria-expanded="false" aria-controls="sc1">
           <i class="zmdi zmdi-comment"></i> Posts </a>
@@ -41,16 +53,8 @@
           </li>
         </ul>
       </li>
-    <?php } else { ?>
-      <li>
-        <a class="link" href="#">
-          <i class="zmdi zmdi-home"></i> My Favorites</a>
-      </li>
-    <?php } ?>
-      <li>
-        <a class="link" href="<?=$router->pathFor('home')?>">
-          <i class="zmdi zmdi-home"></i> Home</a>
-      </li>
+      <?php }
+        } ?>
       <li>
         <a class="link" href="<?=$router->pathFor('about-us')?>">
           <i class="zmdi zmdi-favorite-outline"></i> About Us</a>
