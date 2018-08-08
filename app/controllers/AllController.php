@@ -44,6 +44,17 @@ class AllController
         })->setName('library');
     }
 
+    public function search($app)
+    {
+        $app->get('/search', function ($request, $response, $args) {
+            return $this->view->render(
+              $response,
+                'search.php',
+                ['router'=>$this->router]
+            );
+        })->setName('search');
+    }
+
     public function contactUs($app)
     {
         $app->get('/contact', function ($request, $response, $args) {
@@ -167,6 +178,7 @@ class AllController
         $controller = new AllController();
         $controller->home($app);
         $controller->library($app);
+        $controller->search($app);
         $controller->contactUs($app);
         $controller->aboutUs($app);
         $controller->faq($app);

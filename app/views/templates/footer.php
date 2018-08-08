@@ -57,7 +57,7 @@
       </div>
       <div class="col-lg-5 col-md-7 ms-footer-col ms-footer-alt-color">
         <div class="ms-footbar-block">
-          <h3 class="ms-footbar-title text-center mb-2">Last Posts</h3>
+          <h3 class="ms-footbar-title text-center mb-2">Latest Posts</h3>
           <div class="ms-footer-media">
 
             <?php foreach ($latest_posts as $post) { ?>

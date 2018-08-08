@@ -55,6 +55,9 @@
               <div class="col-md-6">
                 <h3 class="color-primary mt-4">Other</h3>
                 <ul class="list-line">
+                  <li>
+                    <a href="<?=$router->pathFor('search')?>">Search</a>
+                  </li>
                   <?php if($user == null) { ?>
                   <li>
                     <li>
