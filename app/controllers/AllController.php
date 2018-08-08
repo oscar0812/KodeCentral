@@ -107,7 +107,7 @@ class AllController
             return $this->view->render(
               $response,
                 'page-all.php',
-                ['router'=>$this->router]
+                ['router'=>$this->router, 'user'=>\User::current()]
             );
         })->setName('all-pages');
     }

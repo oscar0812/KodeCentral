@@ -1,4 +1,3 @@
-<?php $c_user = \User::current()?>
 <div class="ms-slidebar sb-slidebar sb-left sb-style-overlay" id="ms-slidebar">
   <div class="sb-slidebar-container">
     <header class="ms-slidebar-header">

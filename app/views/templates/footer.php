@@ -1,4 +1,5 @@
-<?php if(!isset($home)) $home = '';
+<?php $c_user = \User::current();
+      if(!isset($home)) $home = '';
       $latest_posts = \PostQuery::create()->orderByPostedDate('desc')->limit(3)->find();?>
 <aside class="ms-footbar">
   <div class="container">
@@ -19,10 +20,17 @@
               <a href="<?=$router->pathFor('faq')?>">
                 <i class="zmdi zmdi-help"></i> FAQ</a>
             </li>
+            <?php if($c_user == null) { ?>
             <li>
               <a href="<?=$router->pathFor('user-login-form')?>">
                 <i class="zmdi zmdi-lock"></i> Login</a>
             </li>
+            <?php } else { ?>
+              <li>
+                <a href="<?=$router->pathFor('user-login-form')?>">
+                  <i class="zmdi zmdi-face"></i> Profile</a>
+              </li>
+            <?php }?>
             <li>
               <a href="<?=$router->pathFor('contact-us')?>">
                 <i class="zmdi zmdi-email"></i> Contact</a>
