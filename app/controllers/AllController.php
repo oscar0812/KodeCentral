@@ -114,7 +114,7 @@ class AllController
 
     public function allPages($app)
     {
-        $app->get('/all', function ($request, $response, $args) {
+        $app->get('/all-pages', function ($request, $response, $args) {
             return $this->view->render(
               $response,
                 'all-pages.php',

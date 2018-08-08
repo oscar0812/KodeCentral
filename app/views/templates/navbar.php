@@ -56,9 +56,9 @@
           </ul>
         </li>
       <?php } ?>
-      
+
         <li class="nav-item">
-          <a href="#" class="nav-link">All Pages
+          <a href="<?=$router->pathFor('all-pages')?>" class="nav-link">All Pages
           </a>
         </li>
       </ul>
