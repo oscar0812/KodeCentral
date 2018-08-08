@@ -26,10 +26,10 @@
                 <i class="zmdi zmdi-lock"></i> Login</a>
             </li>
             <?php } else { ?>
-              <li>
-                <a href="<?=$router->pathFor('user-login-form')?>">
+            <li>
+              <a href="<?=$router->pathFor('user-login-form')?>">
                   <i class="zmdi zmdi-face"></i> Profile</a>
-              </li>
+            </li>
             <?php }?>
             <li>
               <a href="<?=$router->pathFor('contact-us')?>">
@@ -61,29 +61,29 @@
           <div class="ms-footer-media">
 
             <?php foreach ($latest_posts as $post) { ?>
-              <!-- media block -->
-              <div class="media">
-                <div class="media-left media-middle">
-                  <a href="<?=$router->pathFor('view-post', ['hyperlink'=>$post->getHyperlink()])?>">
+            <!-- media block -->
+            <div class="media">
+              <div class="media-left media-middle">
+                <a href="<?=$router->pathFor('view-post', ['hyperlink'=>$post->getHyperlink()])?>">
                     <img class="media-object media-object-circle avatar-50-50" src="<?=$home?>assets/img/default_pfp.png" alt="..."> </a>
-                </div>
-                <div class="media-body">
-                  <h4 class="media-heading">
+              </div>
+              <div class="media-body">
+                <h4 class="media-heading">
                     <a href="<?=$router->pathFor('view-post', ['hyperlink'=>$post->getHyperlink()])?>">
                       <?=$post->getTitle()?></a>
                   </h4>
-                  <div class="media-footer">
-                    <span><?=$post->getSummary()?></span><br>
-                    <span>
+                <div class="media-footer">
+                  <span><?=$post->getSummary()?></span><br>
+                  <span>
                       <i class="zmdi zmdi-time color-info-light"></i> <?=$post->getPostedDate()->format('F d, Y')?></span>
-                    <span>
+                  <span>
                       <i class="zmdi zmdi-folder-outline color-warning-light"></i>
                       <?=$post->getLibrary()->getName()?>
                     </span>
-                  </div>
                 </div>
               </div>
-              <!-- /media block -->
+            </div>
+            <!-- /media block -->
             <?php } ?>
 
           </div>
@@ -99,41 +99,26 @@
           </div>
           <address class="no-mb">
             <p>
-              <i class="color-danger-light zmdi zmdi-pin mr-1"></i> 795 Folsom Ave, Suite 600</p>
+              <i class="color-danger-light zmdi zmdi-pin mr-1"></i> 413 Crosswinds Cir Dr</p>
             <p>
-              <i class="color-warning-light zmdi zmdi-map mr-1"></i> San Francisco, CA 94107</p>
+              <i class="color-warning-light zmdi zmdi-map mr-1"></i> Weslaco, TX 78596</p>
             <p>
               <i class="color-info-light zmdi zmdi-email mr-1"></i>
               <a href="mailto:team@aszend.com">team@aszend.com</a>
             </p>
             <p>
-              <i class="color-royal-light zmdi zmdi-phone mr-1"></i>+34 123 456 7890 </p>
-            <p>
-              <i class="color-success-light fa fa-fax mr-1"></i>+34 123 456 7890 </p>
+              <i class="color-danger-light zmdi zmdi-globe mr-1"></i>
+              <a href="https://aszend.com">Aszend Digital, LLC</a></p>
+
           </address>
         </div>
         <div class="ms-footbar-block">
           <h3 class="ms-footbar-title">Social Media</h3>
           <div class="ms-footbar-social">
-            <a href="javascript:void(0)" class="btn-circle btn-facebook">
-              <i class="zmdi zmdi-facebook"></i>
-            </a>
-            <a href="javascript:void(0)" class="btn-circle btn-twitter">
-              <i class="zmdi zmdi-twitter"></i>
-            </a>
-            <a href="javascript:void(0)" class="btn-circle btn-youtube">
-              <i class="zmdi zmdi-youtube-play"></i>
-            </a>
+            <a href="https://github.com/oscar0812" class="btn-circle btn-github">
+                    <i class="zmdi zmdi-github"></i>
+                  </a>
             <br>
-            <a href="javascript:void(0)" class="btn-circle btn-google">
-              <i class="zmdi zmdi-google"></i>
-            </a>
-            <a href="javascript:void(0)" class="btn-circle btn-instagram">
-              <i class="zmdi zmdi-instagram"></i>
-            </a>
-            <a href="javascript:void(0)" class="btn-circle btn-github">
-              <i class="zmdi zmdi-github"></i>
-            </a>
           </div>
         </div>
       </div>

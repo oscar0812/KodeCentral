@@ -41,13 +41,12 @@
                   <div class="card-header" role="tab" id="headingOne12">
                     <h4 class="card-title ms-rotate-icon">
                       <a class="withripple" role="button" data-toggle="collapse" href="#collapseOne12" aria-expanded="trie" aria-controls="collapseOne12">
-                        <i class="zmdi zmdi-attachment-alt"></i> Question Number One </a>
+                        <i class="zmdi zmdi-attachment-alt"></i> What is a library? </a>
                     </h4>
                   </div>
                   <!-- take off "show" class to no open on load-->
                   <div id="collapseOne12" class="card-collapse collapse show" role="tabpanel" aria-labelledby="headingOne12" data-parent="#accordion12">
                     <div class="card-body">
-                      <p>What is a library?</p>
                       <p>A library is a collection of posts which purpose is to make posts easier to navigate and increase the user experience.
                       Libraries are useful when making walk-throughs, tutorials, or just arranging similar posts together.</p>
                     </div>

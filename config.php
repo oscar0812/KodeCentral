@@ -7,11 +7,6 @@ function websiteName()
     return "Kode Central";
 }
 
-function copyright()
-{
-    return "Copyright © 2018. All Rights Reserved.";
-}
-
 function session_start_safe()
 {
     if (!isset($_SESSION)) {

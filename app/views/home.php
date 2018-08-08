@@ -35,10 +35,10 @@
             <h1 class="no-m ms-site-title color-white center-block ms-site-title-lg mt-2 animated zoomInDown animation-delay-5">Home</h1>
             <p class="lead lead-lg color-white text-center center-block mt-2 mb-4 mw-800 text-uppercase fw-300 animated fadeInUp animation-delay-7">Discover our projects and the
               <span class="color-warning">rigorous process</span> of creation. Our principles are creativity, design, experience and knowledge.</p>
-            <a href="<?=$router->pathFor('user-login-form')?>" class="btn btn-raised btn-warning animated fadeInUp animation-delay-10">
-              <i class="zmdi zmdi-accounts"></i> Become a member</a>
-            <a href="<?=$router->pathFor('contact-us')?>" class="btn btn-raised btn-info animated fadeInUp animation-delay-10">
-              <i class="zmdi zmdi-email"></i> Contact us</a>
+              <a href="<?=$router->pathFor('contact-us')?>" class="btn btn-raised btn-info animated fadeInUp animation-delay-10">
+                <i class="zmdi zmdi-email"></i> Contact us</a>
+              <a href="<?=$router->pathFor('faq')?>" class="btn btn-raised btn-warning animated fadeInUp animation-delay-10">
+                <i class="zmdi zmdi-accounts"></i> FAQ</a>
           </div>
         </div>
       </div>
