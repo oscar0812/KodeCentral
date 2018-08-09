@@ -15,7 +15,7 @@ class AllController
                 $response,
                 'home.php',
                 ['router'=>$this->router, 'on_home' => true,
-                'posts'=>\PostQuery::create()->orderByPostedDate('desc')->find(),
+                'posts'=>\PostQuery::create()->orderByLibraryIndex()->find(),
                 'all_libraries'=>\LibraryQuery::create()->find(),
                 'user'=>\User::current()]
             );
@@ -197,10 +197,18 @@ class AllController
                 $visiting = false;
             }
 
+            $posts = \PostQuery::create()->orderByPostedDate()->findByPostedByUser($user);
+            $comments = \CommentQuery::create()->findByUser($user);
+
+            // get the number of times this users posts have been favorited
+            $post_ids = array_column($posts->toArray(), 'Id');
+            $favorites = \UserFavoriteQuery::create()->findByPostId($post_ids);
+
             return $this->view->render(
               $response,
                 'profile.php',
-              ['router'=>$this->router, 'user'=>$user, 'visiting'=>$visiting]
+              ['router'=>$this->router, 'user'=>$user, 'visiting'=>$visiting,
+              'posts'=>$posts, 'comments'=>$comments, 'favorites'=>$favorites]
           );
         })->setName('user-profile');
     }

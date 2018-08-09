@@ -16,6 +16,28 @@ use Propel\Runtime\ActiveQuery\Criteria;
 
 class Post extends BasePost
 {
+    public function getTextNoTags()
+    {
+        $text = parent::getText();
+        // replace html tags with space
+        return strip_tags(str_replace('<', ' <', $text));
+    }
+
+    // return background color for profile cards
+    public function getBg()
+    {
+        $length = strlen($this->getTextNoTags());
+        if ($length > 3000) {
+            return "royal";
+        } elseif ($length > 1500) {
+            return "info";
+        } elseif ($length > 500) {
+            return "warning";
+        } else {
+            return "success";
+        }
+    }
+
     // set nulls when empty strings for validation
     public function setText($text)
     {
@@ -42,11 +64,11 @@ class Post extends BasePost
     }
 
     // the summary is just a short description
-    public function getSummary()
+    public function getSummary($max_length = 60)
     {
         // post text has html tags, take them off before sub stringing
-        $text = substr(strip_tags($this->getText()), 0, 60);
-        if (strlen($text) == 60) {
+        $text = substr($this->getTextNoTags(), 0, $max_length);
+        if (strlen($text) == $max_length) {
             return $text.'...';
         }
         return $text;
