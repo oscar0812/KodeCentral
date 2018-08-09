@@ -74,6 +74,12 @@ class AllController
                 unset($array[$key]['LibraryIndex']);
                 unset($array[$key]['PostedByUserId']);
                 $array[$key]['Text'] = strip_tags($array[$key]['Text']);
+
+                // send back the actual link to the post
+                $link = $array[$key]['Hyperlink'];
+                $link = $this->router->pathFor('view-post', ['hyperlink'=>$link]);
+                $array[$key]['Hyperlink'] = $link;
+
                 $date = new \DateTime($array[$key]['PostedDate']);
                 $array[$key]['PostedDate'] = $date->format('F d, Y');
             }

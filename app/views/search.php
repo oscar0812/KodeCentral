@@ -87,6 +87,8 @@
         paste = $('#paste');
 
         function goFetchPosts(searchThis) {
+          if(searchThis == '') return;
+
           button.attr('disabled', true);
           paste.children().remove();
           button.find('span').text('Searching...');
@@ -104,23 +106,32 @@
 
               $.each(data, function(i, post){
                 copy = template.clone().removeClass('invisible');
-                copy.data('url', post['Hyperlink']);
+                copy.attr('data-url', post['Hyperlink']);
                 copy.find('.post-title').text(post['Title']);
                 copy.find('.post-date').text(post['PostedDate']);
                 paste.prepend(copy);
               });
+              beginning = [location.protocol, '//', location.host, location.pathname].join('');
+              newUrl = beginning+"?text="+searchThis;
+              window.history.pushState(null, '', newUrl);
             }
           });
         }
 
         searchThis = $('#main-text');
-        if(searchThis.val() != ''){
-          goFetchPosts(searchThis.val());
-        }
+        goFetchPosts(searchThis.val());
 
         button.on('click', function(){
           goFetchPosts(searchThis.val());
-        })
+        });
+
+        // when enter is pressed, trigger the button click
+        searchThis.on('keyup', function(e) {
+          if (e.keyCode === 13) {
+            button.click();
+          }
+        });
+
       });
     </script>
   </body>
