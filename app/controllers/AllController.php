@@ -158,14 +158,22 @@ class AllController
     public function viewPost($app)
     {
         $app->get('/post/{hyperlink}', function ($request, $response, $args) {
-            $post = \PostQuery::create()->findOneByHyperlink($args['hyperlink']);
+            $query = \PostQuery::create();
+            $post = (clone $query)->findOneByHyperlink($args['hyperlink']);
 
             if ($post == null) {
                 // invalid post, throw 404
                 throw new \Slim\Exception\NotFoundException($request, $response);
             }
+
             // show three related posts
-            $r_p = \PostQuery::create()->limit(3)->find();
+            $r_p = (clone $query)->limit(3)->find();
+
+            // find previous and next post
+            $lib = $post->getLibrary();
+            $query = (clone $query)->filterByLibrary($lib);
+            $prev = (clone $query)->findOneByLibraryIndex($post->getLibraryIndex()-1);
+            $next = (clone $query)->findOneByLibraryIndex($post->getLibraryIndex()+1);
 
             // show comments for post (newest ones first)
             $comments = \CommentQuery::create()->
@@ -176,7 +184,7 @@ class AllController
                 'view-post.php',
                 ['router'=>$this->router, 'post'=>$post, 'comments'=>$comments,
                 'related_posts'=>$r_p , 'user'=>\User::current(),
-                'lib_name'=>$post->getLibrary()->getName()]
+                'lib_name'=>$lib->getName(), 'prev'=>$prev, 'next'=>$next]
             );
         })->setName('view-post');
     }
