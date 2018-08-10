@@ -62,23 +62,25 @@
 
             <?php foreach ($latest_posts as $post) { ?>
             <!-- media block -->
+            <?php $path = $router->pathFor('view-post', ['hyperlink'=>$post->getHyperlink()])?>
             <div class="media">
               <div class="media-left media-middle">
-                <a href="<?=$router->pathFor('view-post', ['hyperlink'=>$post->getHyperlink()])?>">
+                <a href="<?=$path?>">
                     <img class="media-object media-object-circle avatar-50-50" src="<?=$home?>assets/img/default_pfp.png" alt="..."> </a>
               </div>
               <div class="media-body">
                 <h4 class="media-heading">
-                    <a href="<?=$router->pathFor('view-post', ['hyperlink'=>$post->getHyperlink()])?>">
+                    <a href="<?=$path?>">
                       <?=$post->getTitle()?></a>
                   </h4>
                 <div class="media-footer">
-                  <span><?=$post->getSummary()?></span><br>
+                  <span data-url="<?=$path?>"><?=$post->getSummary()?></span><br>
                   <span>
                       <i class="zmdi zmdi-time color-info-light"></i> <?=$post->getPostedDate()->format('F d, Y')?></span>
                   <span>
                       <i class="zmdi zmdi-folder-outline color-warning-light"></i>
-                      <?=$post->getLibrary()->getName()?>
+                      <?php $lib_name = $post->getLibrary()->getName()?>
+                      <a href="<?=$router->pathFor('library', ['name'=>$lib_name])?>"><?=$lib_name?></a>
                     </span>
                 </div>
               </div>

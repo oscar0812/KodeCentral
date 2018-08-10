@@ -8,9 +8,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <meta name="theme-color" content="#333">
-  <title>Kode Central | <?=$post->getTitle()?>
+  <title><?=$post->getLibrary()->getName()?> | <?=$post->getTitle()?>
   </title>
-  <meta name="description" content="Kode Central, a place for programmers">
+  <meta name="description" content="<?=$post->getSummary(300)?>">
   <link rel="shortcut icon" href="<?=$home?>assets/img/favicon.ico">
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
   <link rel="stylesheet" href="<?=$home?>assets/css/preload.min.css">
