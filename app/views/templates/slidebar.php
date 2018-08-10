@@ -2,7 +2,7 @@
   <div class="sb-slidebar-container">
     <header class="ms-slidebar-header">
       <div class="ms-slidebar-login">
-        <?php $name = ($c_user == null)?'Account': $c_user->getUsername()?>
+        <?php $name = ($c_user == null)?'Log in': $c_user->getUsername()?>
         <a href="<?=$router->pathFor('user-login-form')?>" class="withripple">
           <i class="zmdi zmdi-account"></i> <?=$name?></a>
 
@@ -20,8 +20,8 @@
         </form>
         <div class="ms-slidebar-t">
           <span class="ms-logo ms-logo-sm">KC</span>
-          <h3>Kode
-            <span>Central</span>
+          <h3>Search
+            <span>Here</span>
           </h3>
         </div>
       </div>
