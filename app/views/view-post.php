@@ -100,7 +100,7 @@
             </ul>
           </nav>
 
-          <h2 class="right-line no-mt">Comments <span></span>(<?=$comments->count()?>)
+          <h2 class="right-line no-mt">Comments (<span id="comment-number"><?=$comments->count()?></span>)
               <?php if($comments->count() > 0) { ?>
               <a href="#" id="show-hide-comments" class="color-info"><i class="zmdi zmdi-eye-off"></i></a>
               <?php }?>
@@ -394,6 +394,8 @@
 
             // add the comment to the comment section
             comments.prepend(template);
+
+            $('#comment-number').text(parseInt($('#comment-number').text())+1);
           }
         });
         return false;
