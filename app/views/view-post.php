@@ -264,7 +264,7 @@
         arr.length = 10;
       }
 
-      Cookies.set('history', JSON.stringify(arr));
+      Cookies.set('history', JSON.stringify(arr), { expires: 30 });
 
       comments = $('#comment-body');
 
