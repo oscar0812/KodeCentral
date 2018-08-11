@@ -8,7 +8,7 @@
     <meta name="theme-color" content="#333">
     <title>Kode Cental | About us</title>
     <meta name="description" content="About us">
-    <link rel="shortcut icon" href="assets/img/favicon.png?v=3">
+    <link rel="shortcut icon" href="assets/img/favicon.ico">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="assets/css/preload.min.css">
     <link rel="stylesheet" href="assets/css/plugins.min.css">
