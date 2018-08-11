@@ -23,7 +23,7 @@
     <![endif]-->
 </head>
 
-<body>
+<body data-hyperlink="<?=$post->getHyperlink()?>" data-title="<?=$post->getTitle()?>">
   <div id="ms-preload" class="ms-preload">
     <div id="status">
       <div class="spinner">
@@ -78,7 +78,7 @@
           <nav aria-label="...">
             <ul class="pager d-flex justify-content-between">
               <?php if($prev != null) { ?>
-              <li class="page-item">
+              <li class="page-item" data-toggle="tooltip" data-placement="top" title="<?=$prev->getTitle()?>">
                 <a class="page-link" href="<?=$router->pathFor('view-post', ['hyperlink'=>$prev->getHyperlink()])?>">
                               <span aria-hidden="true">«</span> Previous</a>
               </li>
@@ -87,7 +87,7 @@
               <li class="page-item" style="visibility: hidden"></li>
 
             <?php } if($next != null ) { ?>
-              <li class="page-item">
+              <li class="page-item" data-toggle="tooltip" data-placement="top" title="<?=$next->getTitle()?>">
                 <a class="page-link" href="<?=$router->pathFor('view-post', ['hyperlink'=>$next->getHyperlink()])?>">Next
                               <span aria-hidden="true">»</span>
                             </a>
@@ -168,167 +168,41 @@
                 </h3>
             </div>
             <div class="card-tabs">
-              <ul class="nav nav-tabs nav-tabs-transparent indicator-primary nav-tabs-full nav-tabs-4" role="tablist">
+              <ul class="nav nav-tabs nav-tabs-transparent indicator-primary nav-tabs-full nav-tabs-2" role="tablist">
+
                 <li class="nav-item">
-                  <a href="#favorite" aria-controls="favorite" role="tab" data-toggle="tab" class="nav-link withoutripple active">
-                      <i class="no-mr zmdi zmdi-star"></i>
+                  <a href="#tags" aria-controls="tags" role="tab" data-toggle="tab" class="nav-link withoutripple active">
+                      <i class="no-mr zmdi zmdi-book"></i>
                     </a>
                 </li>
-                <li class="nav-item">
-                  <a href="#categories" aria-controls="categories" role="tab" data-toggle="tab" class="nav-link withoutripple">
-                      <i class="no-mr zmdi zmdi-folder"></i>
-                    </a>
-                </li>
+
                 <li class="nav-item">
                   <a href="#archives" aria-controls="archives" role="tab" data-toggle="tab" class="nav-link withoutripple">
                       <i class="no-mr zmdi zmdi-time"></i>
                     </a>
                 </li>
-                <li class="nav-item">
-                  <a href="#tags" aria-controls="tags" role="tab" data-toggle="tab" class="nav-link withoutripple">
-                      <i class="no-mr zmdi zmdi-tag-more"></i>
-                    </a>
-                </li>
+
               </ul>
             </div>
             <div class="tab-content">
-              <div role="tabpanel" class="tab-pane fade active show" id="favorite">
-                <div class="card-body">
-                  <div class="ms-media-list">
-                    <div class="media mb-2">
-                      <div class="media-left media-middle">
-                        <a href="#">
-                            <img class="d-flex mr-3 media-object media-object-circle" src="<?=$home?>assets/img/default_pfp.png" alt="..."> </a>
-                      </div>
-                      <div class="media-body">
-                        <a href="javascript:void(0)" class="media-heading">Lorem ipsum dolor sit amet in consectetur adipisicing</a>
-                        <div class="media-footer text-small">
-                          <span class="mr-1">
-                              <i class="zmdi zmdi-time color-info mr-05"></i> August 18, 2016</span>
-                          <span>
-                              <i class="zmdi zmdi-folder-outline color-success mr-05"></i>
-                              <a href="javascript:void(0)">Design</a>
-                            </span>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="media mb-2">
-                      <div class="media-left media-middle">
-                        <a href="#">
-                            <img class="d-flex mr-3 media-object media-object-circle" src="<?=$home?>assets/img/default_pfp.png" alt="..."> </a>
-                      </div>
-                      <div class="media-body">
-                        <a href="javascript:void(0)" class="media-heading">Nemo enim ipsam voluptatem quia voluptas sit aspernatur</a>
-                        <div class="media-footer text-small">
-                          <span class="mr-1">
-                              <i class="zmdi zmdi-time color-info mr-05"></i> August 18, 2016</span>
-                          <span>
-                              <i class="zmdi zmdi-folder-outline color-danger mr-05"></i>
-                              <a href="javascript:void(0)">Productivity</a>
-                            </span>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="media">
-                      <div class="media-left media-middle">
-                        <a href="#">
-                            <img class="d-flex mr-3 media-object media-object-circle" src="<?=$home?>assets/img/default_pfp.png" alt="..."> </a>
-                      </div>
-                      <div class="media-body">
-                        <a href="javascript:void(0)" class="media-heading">inventore veritatis et vitae quasi architecto beatae </a>
-                        <div class="media-footer text-small">
-                          <span class="mr-1">
-                              <i class="zmdi zmdi-time color-info mr-05"></i> August 18, 2016</span>
-                          <span>
-                              <i class="zmdi zmdi-folder-outline color-royal-light mr-05"></i>
-                              <a href="javascript:void(0)">Resources</a>
-                            </span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+              <div role="tabpanel" class="tab-pane fade active show" id="tags">
+                <div class="card-body overflow-hidden text-center">
+                  <?php foreach ($all_libraries as $lib){
+                    $lib_name = $lib->getName();?>
+                    <a href="<?=$router->pathFor('library', ['name'=>$lib_name])?>"
+                      class="ms-tag ms-tag-primary"><?=$lib_name?></a>
+                  <?php } ?>
                 </div>
               </div>
-              <div role="tabpanel" class="tab-pane fade" id="categories">
-                <div class="list-group">
-                  <a href="javascript:void(0)" class="list-group-item list-group-item-action withripple">
-                      <i class=" color-info zmdi zmdi-cocktail"></i>Design
-                      <span class="ml-auto badge-pill badge-pill-info">25</span>
-                    </a>
-                  <a href="javascript:void(0)" class="list-group-item list-group-item-action withripple">
-                      <i class=" color-warning zmdi zmdi-collection-image"></i> Graphics
-                      <span class="ml-auto badge-pill badge-pill-warning">14</span>
-                    </a>
-                  <a href="javascript:void(0)" class="list-group-item list-group-item-action withripple">
-                      <i class=" color-danger zmdi zmdi-case-check"></i> Productivity
-                      <span class="ml-auto badge-pill badge-pill-danger">7</span>
-                    </a>
-                  <a href="javascript:void(0)" class="list-group-item list-group-item-action withripple">
-                      <i class=" color-royal zmdi zmdi-folder-star-alt"></i>Resources
-                      <span class="ml-auto badge-pill badge-pill-royal">67</span>
-                    </a>
-                  <a href="javascript:void(0)" class="list-group-item list-group-item-action withripple">
-                      <i class=" color-success zmdi zmdi-play-circle-outline"></i>Multimedia
-                      <span class="ml-auto badge-pill badge-pill-success">32</span>
-                    </a>
-                </div>
-              </div>
+
               <div role="tabpanel" class="tab-pane fade" id="archives">
                 <div class="list-group">
-                  <a href="javascript:void(0)" class="list-group-item list-group-item-action withripple">
-                      <i class="zmdi zmdi-calendar"></i> January 2016
-                      <span class="ml-auto badge-pill">25</span>
-                    </a>
-                  <a href="javascript:void(0)" class="list-group-item list-group-item-action withripple">
-                      <i class="zmdi zmdi-calendar"></i> February 2016
-                      <span class="ml-auto badge-pill">14</span>
-                    </a>
-                  <a href="javascript:void(0)" class="list-group-item list-group-item-action withripple">
-                      <i class="zmdi zmdi-calendar"></i> March 2016
-                      <span class="ml-auto badge-pill">9</span>
-                    </a>
-                  <a href="javascript:void(0)" class="list-group-item list-group-item-action withripple">
-                      <i class="zmdi zmdi-calendar"></i> April 2016
-                      <span class="ml-auto badge-pill">12</span>
-                    </a>
-                  <a href="javascript:void(0)" class="list-group-item list-group-item-action withripple">
-                      <i class="zmdi zmdi-calendar"></i> June 2016
-                      <span class="ml-auto badge-pill">65</span>
+                  <a href="javascript:void(0)" class="list-group-item list-group-item-action withripple invisible">
+                      <span> Title</span>
                     </a>
                 </div>
               </div>
-              <div role="tabpanel" class="tab-pane fade" id="tags">
-                <div class="card-body overflow-hidden text-center">
-                  <a href="javascript:void(0)" class="ms-tag ms-tag-primary">Design</a>
-                  <a href="javascript:void(0)" class="ms-tag ms-tag-primary">Productivity</a>
-                  <a href="javascript:void(0)" class="ms-tag ms-tag-primary">Web</a>
-                  <a href="javascript:void(0)" class="ms-tag ms-tag-primary">Resources</a>
-                  <a href="javascript:void(0)" class="ms-tag ms-tag-primary">Multimedia</a>
-                  <a href="javascript:void(0)" class="ms-tag ms-tag-primary">HTML5</a>
-                  <a href="javascript:void(0)" class="ms-tag ms-tag-primary">CSS3</a>
-                  <a href="javascript:void(0)" class="ms-tag ms-tag-primary">Javascript</a>
-                  <a href="javascript:void(0)" class="ms-tag ms-tag-primary">Jquery</a>
-                  <a href="javascript:void(0)" class="ms-tag ms-tag-primary">Bootstrap</a>
-                  <a href="javascript:void(0)" class="ms-tag ms-tag-primary">Angular</a>
-                  <a href="javascript:void(0)" class="ms-tag ms-tag-primary">Gulp</a>
-                  <a href="javascript:void(0)" class="ms-tag ms-tag-primary">Atom</a>
-                  <a href="javascript:void(0)" class="ms-tag ms-tag-primary">Fonts</a>
-                  <a href="javascript:void(0)" class="ms-tag ms-tag-primary">Pictures</a>
-                  <a href="javascript:void(0)" class="ms-tag ms-tag-primary">Developers</a>
-                  <a href="javascript:void(0)" class="ms-tag ms-tag-primary">Code</a>
-                  <a href="javascript:void(0)" class="ms-tag ms-tag-primary">SASS</a>
-                  <a href="javascript:void(0)" class="ms-tag ms-tag-primary">Less</a>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="card card-primary animated fadeInUp animation-delay-7">
-            <div class="card-header">
-              <h3 class="card-title">
-                  <i class="zmdi zmdi-widgets"></i> Text Widget</h3>
-            </div>
-            <div class="card-body">
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugiat ipsam non eaque est architecto doloribus, labore nesciunt laudantium, ex id ea, cum facilis similique tenetur fugit nemo id minima possimus.</p>
+
             </div>
           </div>
         </div>
@@ -342,11 +216,56 @@
   <script src="<?=$home?>assets/js/plugins.min.js"></script>
   <script src="<?=$home?>assets/js/app.min.js"></script>
   <script src="<?=$home?>assets/js/highlight.min.js"></script>
-  <script>
-    hljs.initHighlightingOnLoad();
-  </script>
+  <script src="<?=$home?>assets/js/js-cookie.js"></script>
   <script type="text/javascript">
+    hljs.initHighlightingOnLoad();
+
     $(function() {
+      // load all the posts this person has seen
+
+      // try to store this page on the page visited history
+
+      cookie = Cookies.get('history');
+      cookie = typeof cookie == 'undefined'?'[]':cookie;
+      arr = $.parseJSON(cookie);
+
+      link = $('body').attr('data-hyperlink');
+      title = $('body').attr('data-title');
+
+      archives = $('#archives');
+      template = archives.find('.invisible').eq(0);
+
+      in_list = false;
+      arr.forEach(function(e){
+        if(e.link == link) {
+          // already in list, just update the date
+          e.date = new Date();
+          in_list = true;
+        } else{
+          // now that were here, just append to the list
+          copy = template.clone().removeClass('invisible').attr('href', e.link);
+          copy.find('span').text(e.title);
+          template.before(copy);
+        }
+      });
+
+      if(!in_list) {
+        arr.push({link: link, title: title, date: new Date()});
+      }
+
+      // sort by date, with newest date on top
+      arr.sort(function (x, y) {
+        var a = new Date(x.date),
+            b = new Date(y.date);
+            return b - a;
+      });
+
+      if(arr.length > 10){
+        arr.length = 10;
+      }
+
+      Cookies.set('history', JSON.stringify(arr));
+
       comments = $('#comment-body');
 
       $('#show-hide-comments').on('click', function() {

@@ -166,9 +166,6 @@ class AllController
                 throw new \Slim\Exception\NotFoundException($request, $response);
             }
 
-            // show three related posts
-            $r_p = (clone $query)->limit(3)->find();
-
             // find previous and next post
             $lib = $post->getLibrary();
             $query = (clone $query)->filterByLibrary($lib);
@@ -183,7 +180,7 @@ class AllController
                 $response,
                 'view-post.php',
                 ['router'=>$this->router, 'post'=>$post, 'comments'=>$comments,
-                'related_posts'=>$r_p , 'user'=>\User::current(),
+                'user'=>\User::current(), 'all_libraries'=>\LibraryQuery::create(),
                 'lib_name'=>$lib->getName(), 'prev'=>$prev, 'next'=>$next]
             );
         })->setName('view-post');
