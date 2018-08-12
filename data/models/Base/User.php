@@ -113,6 +113,13 @@ abstract class User implements ActiveRecordInterface
     protected $profile_picture;
 
     /**
+     * The value for the verification_key field.
+     *
+     * @var        string
+     */
+    protected $verification_key;
+
+    /**
      * The value for the join_date field.
      *
      * @var        DateTime
@@ -497,6 +504,16 @@ abstract class User implements ActiveRecordInterface
     }
 
     /**
+     * Get the [verification_key] column value.
+     *
+     * @return string
+     */
+    public function getVerificationKey()
+    {
+        return $this->verification_key;
+    }
+
+    /**
      * Get the [optionally formatted] temporal [join_date] column value.
      *
      *
@@ -635,6 +652,26 @@ abstract class User implements ActiveRecordInterface
 
         return $this;
     } // setProfilePicture()
+
+    /**
+     * Set the value of [verification_key] column.
+     *
+     * @param string $v new value
+     * @return $this|\User The current object (for fluent API support)
+     */
+    public function setVerificationKey($v)
+    {
+        if ($v !== null) {
+            $v = (string) $v;
+        }
+
+        if ($this->verification_key !== $v) {
+            $this->verification_key = $v;
+            $this->modifiedColumns[UserTableMap::COL_VERIFICATION_KEY] = true;
+        }
+
+        return $this;
+    } // setVerificationKey()
 
     /**
      * Sets the value of [join_date] column to a normalized version of the date/time value specified.
@@ -776,19 +813,22 @@ abstract class User implements ActiveRecordInterface
             $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : UserTableMap::translateFieldName('ProfilePicture', TableMap::TYPE_PHPNAME, $indexType)];
             $this->profile_picture = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : UserTableMap::translateFieldName('JoinDate', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : UserTableMap::translateFieldName('VerificationKey', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->verification_key = (null !== $col) ? (string) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 5 + $startcol : UserTableMap::translateFieldName('JoinDate', TableMap::TYPE_PHPNAME, $indexType)];
             if ($col === '0000-00-00') {
                 $col = null;
             }
             $this->join_date = (null !== $col) ? PropelDateTime::newInstance($col, null, 'DateTime') : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 5 + $startcol : UserTableMap::translateFieldName('Password', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 6 + $startcol : UserTableMap::translateFieldName('Password', TableMap::TYPE_PHPNAME, $indexType)];
             $this->password = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 6 + $startcol : UserTableMap::translateFieldName('Bio', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 7 + $startcol : UserTableMap::translateFieldName('Bio', TableMap::TYPE_PHPNAME, $indexType)];
             $this->bio = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 7 + $startcol : UserTableMap::translateFieldName('IsSuper', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 8 + $startcol : UserTableMap::translateFieldName('IsSuper', TableMap::TYPE_PHPNAME, $indexType)];
             $this->is_super = (null !== $col) ? (boolean) $col : null;
             $this->resetModified();
 
@@ -798,7 +838,7 @@ abstract class User implements ActiveRecordInterface
                 $this->ensureConsistency();
             }
 
-            return $startcol + 8; // 8 = UserTableMap::NUM_HYDRATE_COLUMNS.
+            return $startcol + 9; // 9 = UserTableMap::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
             throw new PropelException(sprintf('Error populating %s object', '\\User'), 0, $e);
@@ -1098,6 +1138,9 @@ abstract class User implements ActiveRecordInterface
         if ($this->isColumnModified(UserTableMap::COL_PROFILE_PICTURE)) {
             $modifiedColumns[':p' . $index++]  = 'profile_picture';
         }
+        if ($this->isColumnModified(UserTableMap::COL_VERIFICATION_KEY)) {
+            $modifiedColumns[':p' . $index++]  = 'verification_key';
+        }
         if ($this->isColumnModified(UserTableMap::COL_JOIN_DATE)) {
             $modifiedColumns[':p' . $index++]  = 'join_date';
         }
@@ -1132,6 +1175,9 @@ abstract class User implements ActiveRecordInterface
                         break;
                     case 'profile_picture':
                         $stmt->bindValue($identifier, $this->profile_picture, PDO::PARAM_STR);
+                        break;
+                    case 'verification_key':
+                        $stmt->bindValue($identifier, $this->verification_key, PDO::PARAM_STR);
                         break;
                     case 'join_date':
                         $stmt->bindValue($identifier, $this->join_date ? $this->join_date->format("Y-m-d H:i:s.u") : null, PDO::PARAM_STR);
@@ -1220,15 +1266,18 @@ abstract class User implements ActiveRecordInterface
                 return $this->getProfilePicture();
                 break;
             case 4:
-                return $this->getJoinDate();
+                return $this->getVerificationKey();
                 break;
             case 5:
-                return $this->getPassword();
+                return $this->getJoinDate();
                 break;
             case 6:
-                return $this->getBio();
+                return $this->getPassword();
                 break;
             case 7:
+                return $this->getBio();
+                break;
+            case 8:
                 return $this->getIsSuper();
                 break;
             default:
@@ -1265,13 +1314,14 @@ abstract class User implements ActiveRecordInterface
             $keys[1] => $this->getUsername(),
             $keys[2] => $this->getEmail(),
             $keys[3] => $this->getProfilePicture(),
-            $keys[4] => $this->getJoinDate(),
-            $keys[5] => $this->getPassword(),
-            $keys[6] => $this->getBio(),
-            $keys[7] => $this->getIsSuper(),
+            $keys[4] => $this->getVerificationKey(),
+            $keys[5] => $this->getJoinDate(),
+            $keys[6] => $this->getPassword(),
+            $keys[7] => $this->getBio(),
+            $keys[8] => $this->getIsSuper(),
         );
-        if ($result[$keys[4]] instanceof \DateTimeInterface) {
-            $result[$keys[4]] = $result[$keys[4]]->format('c');
+        if ($result[$keys[5]] instanceof \DateTimeInterface) {
+            $result[$keys[5]] = $result[$keys[5]]->format('c');
         }
 
         $virtualColumns = $this->virtualColumns;
@@ -1372,15 +1422,18 @@ abstract class User implements ActiveRecordInterface
                 $this->setProfilePicture($value);
                 break;
             case 4:
-                $this->setJoinDate($value);
+                $this->setVerificationKey($value);
                 break;
             case 5:
-                $this->setPassword($value);
+                $this->setJoinDate($value);
                 break;
             case 6:
-                $this->setBio($value);
+                $this->setPassword($value);
                 break;
             case 7:
+                $this->setBio($value);
+                break;
+            case 8:
                 $this->setIsSuper($value);
                 break;
         } // switch()
@@ -1422,16 +1475,19 @@ abstract class User implements ActiveRecordInterface
             $this->setProfilePicture($arr[$keys[3]]);
         }
         if (array_key_exists($keys[4], $arr)) {
-            $this->setJoinDate($arr[$keys[4]]);
+            $this->setVerificationKey($arr[$keys[4]]);
         }
         if (array_key_exists($keys[5], $arr)) {
-            $this->setPassword($arr[$keys[5]]);
+            $this->setJoinDate($arr[$keys[5]]);
         }
         if (array_key_exists($keys[6], $arr)) {
-            $this->setBio($arr[$keys[6]]);
+            $this->setPassword($arr[$keys[6]]);
         }
         if (array_key_exists($keys[7], $arr)) {
-            $this->setIsSuper($arr[$keys[7]]);
+            $this->setBio($arr[$keys[7]]);
+        }
+        if (array_key_exists($keys[8], $arr)) {
+            $this->setIsSuper($arr[$keys[8]]);
         }
     }
 
@@ -1485,6 +1541,9 @@ abstract class User implements ActiveRecordInterface
         }
         if ($this->isColumnModified(UserTableMap::COL_PROFILE_PICTURE)) {
             $criteria->add(UserTableMap::COL_PROFILE_PICTURE, $this->profile_picture);
+        }
+        if ($this->isColumnModified(UserTableMap::COL_VERIFICATION_KEY)) {
+            $criteria->add(UserTableMap::COL_VERIFICATION_KEY, $this->verification_key);
         }
         if ($this->isColumnModified(UserTableMap::COL_JOIN_DATE)) {
             $criteria->add(UserTableMap::COL_JOIN_DATE, $this->join_date);
@@ -1587,6 +1646,7 @@ abstract class User implements ActiveRecordInterface
         $copyObj->setUsername($this->getUsername());
         $copyObj->setEmail($this->getEmail());
         $copyObj->setProfilePicture($this->getProfilePicture());
+        $copyObj->setVerificationKey($this->getVerificationKey());
         $copyObj->setJoinDate($this->getJoinDate());
         $copyObj->setPassword($this->getPassword());
         $copyObj->setBio($this->getBio());
@@ -2677,6 +2737,7 @@ abstract class User implements ActiveRecordInterface
         $this->username = null;
         $this->email = null;
         $this->profile_picture = null;
+        $this->verification_key = null;
         $this->join_date = null;
         $this->password = null;
         $this->bio = null;
