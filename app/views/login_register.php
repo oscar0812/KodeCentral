@@ -70,7 +70,7 @@
                     </div>
                     <div class="row mt-2">
                       <div class="col-6">
-                        <label id="login-label" class="invisible text-danger">Incorrect Email or Password</label>
+
                       </div>
                       <div class="col-1"></div>
                       <div class="col-5">
@@ -79,15 +79,6 @@
                     </div>
                   </fieldset>
                 </form>
-                <div class="text-center">
-                  <h3>Login with</h3>
-                  <a href="javascript:void(0)" class="wave-effect-light btn btn-raised btn-facebook">
-                    <i class="zmdi zmdi-facebook"></i> Facebook</a>
-                  <a href="javascript:void(0)" class="wave-effect-light btn btn-raised btn-twitter">
-                    <i class="zmdi zmdi-twitter"></i> Twitter</a>
-                  <a href="javascript:void(0)" class="wave-effect-light btn btn-raised btn-google">
-                    <i class="zmdi zmdi-google"></i> Google</a>
-                </div>
               </div>
               <div role="tabpanel" class="tab-pane fade" id="ms-register-tab">
                 <form id="register-form" action="<?=$router->pathFor('user-credentials')?>" method="post">
@@ -117,21 +108,12 @@
                         <input type="password" id="ms-form-pass-r" name="Register[Password]" class="form-control"> </div>
                     </div>
                     <button class="btn btn-raised btn-block btn-primary">Register Now</button>
-                    <label id="register-label" class="invisible">Email is already in use</label>
                   </fieldset>
                 </form>
               </div>
               <div role="tabpanel" class="tab-pane fade" id="ms-recovery-tab">
                 <form id="forgot-form" action="<?=$router->pathFor('user-credentials')?>" method="post">
                 <fieldset>
-                  <div class="form-group label-floating">
-                    <div class="input-group">
-                      <span class="input-group-addon">
-                        <i class="zmdi zmdi-account"></i>
-                      </span>
-                      <label class="control-label" for="ms-form-user-recovery">Username</label>
-                      <input type="text" id="ms-form-user-recovery" name="Forgot[Username]" class="form-control"> </div>
-                  </div>
                   <div class="form-group label-floating">
                     <div class="input-group">
                       <span class="input-group-addon">
@@ -156,6 +138,7 @@
     <script src="assets/js/plugins.min.js"></script>
     <script src="assets/js/app.min.js"></script>
     <script src="assets/js/jquery.validate.min.js"></script>
+    <script src="assets/js/component-snackbar.js"></script>
     <script src="assets/js/login_register.js"></script>
   </body>
 </html>

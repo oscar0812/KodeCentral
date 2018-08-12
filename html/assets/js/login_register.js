@@ -7,7 +7,52 @@ $(function() {
       if (data['success']) {
         window.location.href = data['redirect_link'];
       } else {
-        $("#login-label").removeClass('invisible');
+
+        // resend vefication email through snackbar to avoid screen clutter
+        // show snackbar here
+        text = 'Ok';
+        callback = function(element) {
+          $(element).remove();
+        }
+
+        if (data['confirm']) {
+          text = 'Resend Email';
+          username = $('input[name="Login[Username]"]');
+
+          callback = function(element) {
+
+            if(username.val() == ""){
+              shake(username.parent());
+              return;
+            }
+
+            $.ajax({
+              type: "POST",
+              data: {
+                Resend: true,
+                username: username.val()
+              },
+              url: $('#login-form').attr('action'),
+              dataType: "json",
+              success: function(data) {
+                console.log(data);
+                Snackbar.show({
+                  actionTextColor: '#ffff00',
+                  duration: 0,
+                  text: 'Email sent..'
+                });
+              }
+            });
+          }
+        }
+
+        Snackbar.show({
+          actionTextColor: '#ff0000',
+          actionText: text,
+          duration: 0,
+          text: data['msg'],
+          onActionClick: callback
+        });
       }
     });
     return false;
@@ -62,13 +107,18 @@ $(function() {
     submitHandler: function(form) {
       // form to create admin account submitted
       ajaxForm(form, function(data) {
-        label = $('#register-label');
-        label.removeClass('invisible');
+        // show snackbar
         if (data['success']) {
-          label.addClass('text-success').text('Account Created! Please visit your email to verify.')
+          color = '#00ff00';
         } else {
-          label.addClass('text-danger').text('Something went wrong!')
+          color = '#ff0000';
         }
+
+        Snackbar.show({
+          actionTextColor: color,
+          duration: 0,
+          text: data['msg']
+        });
       });
     }
   });

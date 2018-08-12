@@ -18,6 +18,30 @@ use Propel\Runtime\Map\TableMap;
 
 class User extends BaseUser
 {
+    public function isConfirmed()
+    {
+        $key = $this->getConfirmationKey();
+        return $key == null || $key == "";
+    }
+
+    public function hasResetKey()
+    {
+        $key = $this->getResetKey();
+        return $key != null && $key != "";
+    }
+
+    public function setRandomConfirmKey()
+    {
+        //random 32 length string
+        parent::setConfirmKey(substr(str_shuffle(md5(time())), 0, 32));
+    }
+
+    public function setRandomResetKey()
+    {
+        //random 32 length string
+        parent::setResetKey(substr(str_shuffle(md5(time())), 0, 32));
+    }
+
     public function setPassword($password)
     {
         // hash password
@@ -43,8 +67,11 @@ class User extends BaseUser
     // log user in (save a session for it)
     public function logIn()
     {
-        session_start_safe();
-        $_SESSION['user_id'] = $this->getId();
+        // only allow log in if email is confirmed
+        if ($this->isConfirmed()) {
+            session_start_safe();
+            $_SESSION['user_id'] = $this->getId();
+        }
     }
 
     // log user out (remove session)

@@ -1,7 +1,7 @@
  <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Kode Central - Responsive Email Template</title>
+    <title>Kode Central - Email</title>
     <meta http-equiv="Content-Type" content="text/html;" charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -131,7 +131,7 @@
             <tr>
               <td style="padding: 16px 16px 16px 16px;" align="center" valign="top">
                 <a href="http://outlinemail.co.uk">
-                  <img style="display: block" src="assets/img/email/logo-white.png" width="380" height="28" border="0" alt="Outline Mail"> </a>
+                  <img style="display: block" src="https://kodecentral.com/assets/img/email/logo-white.png" width="380" height="28" border="0" alt="Outline Mail"> </a>
               </td>
             </tr>
           </table>
@@ -155,7 +155,7 @@
                         <tr>
                           <td style="padding: 0 0 16px 0;" align="center">
                             <a href="#" target="_blank">
-                              <img style="display: block; font-family: 'Roboto', Helvetica, Arial, sans-serif; color: #333333; font-size: 14px; width: 600px; height: 368px;" class="img-max" src="assets/img/email/img1.jpg" alt="Kode Central" width="600"
+                              <img style="display: block; font-family: 'Roboto', Helvetica, Arial, sans-serif; color: #333333; font-size: 14px; width: 600px; height: 368px;" class="img-max" src="https://kodecentral.com/assets/img/email/img1.jpg" alt="Kode Central" width="600"
                                 height="250" border="0"> </a>
                           </td>
                         </tr>
@@ -225,7 +225,7 @@
                         <tr>
                           <td align="center" valign="top">
                             <a href="#" target="_blank">
-                              <img style="display: block; padding: 0 0 8px 0; font-family: 'Roboto', Helvetica, Arial, sans-serif; color: #333333; font-size: 14px; width: 150px; height: 84px;" class="img-max" src="assets/img/email/img2.jpg" alt="Kode Central"
+                              <img style="display: block; padding: 0 0 8px 0; font-family: 'Roboto', Helvetica, Arial, sans-serif; color: #333333; font-size: 14px; width: 150px; height: 84px;" class="img-max" src="https://kodecentral.com/assets/img/email/img2.jpg" alt="Kode Central"
                                 width="150" height="84" border="0"> </a>
                           </td>
                         </tr>
@@ -278,7 +278,7 @@
                         <tr>
                           <td align="center" valign="top">
                             <a href="#" target="_blank">
-                              <img style="display: block; padding: 0 0 8px 0; font-family: 'Roboto', Helvetica, Arial, sans-serif; color: #333333; font-size: 14px; width: 150px; height: 84px;" class="img-max" src="assets/img/email/img3.jpg" alt="Kode Central"
+                              <img style="display: block; padding: 0 0 8px 0; font-family: 'Roboto', Helvetica, Arial, sans-serif; color: #333333; font-size: 14px; width: 150px; height: 84px;" class="img-max" src="https://kodecentral.com/assets/img/email/img3.jpg" alt="Kode Central"
                                 width="150" height="84" border="0"> </a>
                           </td>
                         </tr>
@@ -331,7 +331,7 @@
                         <tr>
                           <td align="center" valign="top">
                             <a href="#" target="_blank">
-                              <img style="display: block; padding: 0 0 8px 0; font-family: 'Roboto', Helvetica, Arial, sans-serif; color: #333333; font-size: 14px; width: 150px; height: 84px;" class="img-max" src="assets/img/email/img4.jpg" alt="Kode Central"
+                              <img style="display: block; padding: 0 0 8px 0; font-family: 'Roboto', Helvetica, Arial, sans-serif; color: #333333; font-size: 14px; width: 150px; height: 84px;" class="img-max" src="https://kodecentral.com/assets/img/email/img4.jpg" alt="Kode Central"
                                 width="150" height="84" border="0"> </a>
                           </td>
                         </tr>

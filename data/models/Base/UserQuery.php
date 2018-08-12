@@ -24,21 +24,23 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildUserQuery orderByUsername($order = Criteria::ASC) Order by the username column
  * @method     ChildUserQuery orderByEmail($order = Criteria::ASC) Order by the email column
  * @method     ChildUserQuery orderByProfilePicture($order = Criteria::ASC) Order by the profile_picture column
- * @method     ChildUserQuery orderByVerificationKey($order = Criteria::ASC) Order by the verification_key column
  * @method     ChildUserQuery orderByJoinDate($order = Criteria::ASC) Order by the join_date column
  * @method     ChildUserQuery orderByPassword($order = Criteria::ASC) Order by the password column
  * @method     ChildUserQuery orderByBio($order = Criteria::ASC) Order by the bio column
  * @method     ChildUserQuery orderByIsSuper($order = Criteria::ASC) Order by the is_super column
+ * @method     ChildUserQuery orderByConfirmationKey($order = Criteria::ASC) Order by the confirmation_key column
+ * @method     ChildUserQuery orderByResetKey($order = Criteria::ASC) Order by the reset_key column
  *
  * @method     ChildUserQuery groupById() Group by the id column
  * @method     ChildUserQuery groupByUsername() Group by the username column
  * @method     ChildUserQuery groupByEmail() Group by the email column
  * @method     ChildUserQuery groupByProfilePicture() Group by the profile_picture column
- * @method     ChildUserQuery groupByVerificationKey() Group by the verification_key column
  * @method     ChildUserQuery groupByJoinDate() Group by the join_date column
  * @method     ChildUserQuery groupByPassword() Group by the password column
  * @method     ChildUserQuery groupByBio() Group by the bio column
  * @method     ChildUserQuery groupByIsSuper() Group by the is_super column
+ * @method     ChildUserQuery groupByConfirmationKey() Group by the confirmation_key column
+ * @method     ChildUserQuery groupByResetKey() Group by the reset_key column
  *
  * @method     ChildUserQuery leftJoin($relation) Adds a LEFT JOIN clause to the query
  * @method     ChildUserQuery rightJoin($relation) Adds a RIGHT JOIN clause to the query
@@ -87,11 +89,12 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildUser findOneByUsername(string $username) Return the first ChildUser filtered by the username column
  * @method     ChildUser findOneByEmail(string $email) Return the first ChildUser filtered by the email column
  * @method     ChildUser findOneByProfilePicture(string $profile_picture) Return the first ChildUser filtered by the profile_picture column
- * @method     ChildUser findOneByVerificationKey(string $verification_key) Return the first ChildUser filtered by the verification_key column
  * @method     ChildUser findOneByJoinDate(string $join_date) Return the first ChildUser filtered by the join_date column
  * @method     ChildUser findOneByPassword(string $password) Return the first ChildUser filtered by the password column
  * @method     ChildUser findOneByBio(string $bio) Return the first ChildUser filtered by the bio column
- * @method     ChildUser findOneByIsSuper(boolean $is_super) Return the first ChildUser filtered by the is_super column *
+ * @method     ChildUser findOneByIsSuper(boolean $is_super) Return the first ChildUser filtered by the is_super column
+ * @method     ChildUser findOneByConfirmationKey(string $confirmation_key) Return the first ChildUser filtered by the confirmation_key column
+ * @method     ChildUser findOneByResetKey(string $reset_key) Return the first ChildUser filtered by the reset_key column *
 
  * @method     ChildUser requirePk($key, ConnectionInterface $con = null) Return the ChildUser by primary key and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildUser requireOne(ConnectionInterface $con = null) Return the first ChildUser matching the query and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
@@ -100,22 +103,24 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildUser requireOneByUsername(string $username) Return the first ChildUser filtered by the username column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildUser requireOneByEmail(string $email) Return the first ChildUser filtered by the email column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildUser requireOneByProfilePicture(string $profile_picture) Return the first ChildUser filtered by the profile_picture column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
- * @method     ChildUser requireOneByVerificationKey(string $verification_key) Return the first ChildUser filtered by the verification_key column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildUser requireOneByJoinDate(string $join_date) Return the first ChildUser filtered by the join_date column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildUser requireOneByPassword(string $password) Return the first ChildUser filtered by the password column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildUser requireOneByBio(string $bio) Return the first ChildUser filtered by the bio column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildUser requireOneByIsSuper(boolean $is_super) Return the first ChildUser filtered by the is_super column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildUser requireOneByConfirmationKey(string $confirmation_key) Return the first ChildUser filtered by the confirmation_key column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildUser requireOneByResetKey(string $reset_key) Return the first ChildUser filtered by the reset_key column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  *
  * @method     ChildUser[]|ObjectCollection find(ConnectionInterface $con = null) Return ChildUser objects based on current ModelCriteria
  * @method     ChildUser[]|ObjectCollection findById(int $id) Return ChildUser objects filtered by the id column
  * @method     ChildUser[]|ObjectCollection findByUsername(string $username) Return ChildUser objects filtered by the username column
  * @method     ChildUser[]|ObjectCollection findByEmail(string $email) Return ChildUser objects filtered by the email column
  * @method     ChildUser[]|ObjectCollection findByProfilePicture(string $profile_picture) Return ChildUser objects filtered by the profile_picture column
- * @method     ChildUser[]|ObjectCollection findByVerificationKey(string $verification_key) Return ChildUser objects filtered by the verification_key column
  * @method     ChildUser[]|ObjectCollection findByJoinDate(string $join_date) Return ChildUser objects filtered by the join_date column
  * @method     ChildUser[]|ObjectCollection findByPassword(string $password) Return ChildUser objects filtered by the password column
  * @method     ChildUser[]|ObjectCollection findByBio(string $bio) Return ChildUser objects filtered by the bio column
  * @method     ChildUser[]|ObjectCollection findByIsSuper(boolean $is_super) Return ChildUser objects filtered by the is_super column
+ * @method     ChildUser[]|ObjectCollection findByConfirmationKey(string $confirmation_key) Return ChildUser objects filtered by the confirmation_key column
+ * @method     ChildUser[]|ObjectCollection findByResetKey(string $reset_key) Return ChildUser objects filtered by the reset_key column
  * @method     ChildUser[]|\Propel\Runtime\Util\PropelModelPager paginate($page = 1, $maxPerPage = 10, ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
  *
  */
@@ -214,7 +219,7 @@ abstract class UserQuery extends ModelCriteria
      */
     protected function findPkSimple($key, ConnectionInterface $con)
     {
-        $sql = 'SELECT id, username, email, profile_picture, verification_key, join_date, password, bio, is_super FROM user WHERE id = :p0';
+        $sql = 'SELECT id, username, email, profile_picture, join_date, password, bio, is_super, confirmation_key, reset_key FROM user WHERE id = :p0';
         try {
             $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
@@ -421,31 +426,6 @@ abstract class UserQuery extends ModelCriteria
     }
 
     /**
-     * Filter the query on the verification_key column
-     *
-     * Example usage:
-     * <code>
-     * $query->filterByVerificationKey('fooValue');   // WHERE verification_key = 'fooValue'
-     * $query->filterByVerificationKey('%fooValue%', Criteria::LIKE); // WHERE verification_key LIKE '%fooValue%'
-     * </code>
-     *
-     * @param     string $verificationKey The value to use as filter.
-     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
-     *
-     * @return $this|ChildUserQuery The current query, for fluid interface
-     */
-    public function filterByVerificationKey($verificationKey = null, $comparison = null)
-    {
-        if (null === $comparison) {
-            if (is_array($verificationKey)) {
-                $comparison = Criteria::IN;
-            }
-        }
-
-        return $this->addUsingAlias(UserTableMap::COL_VERIFICATION_KEY, $verificationKey, $comparison);
-    }
-
-    /**
      * Filter the query on the join_date column
      *
      * Example usage:
@@ -563,6 +543,56 @@ abstract class UserQuery extends ModelCriteria
         }
 
         return $this->addUsingAlias(UserTableMap::COL_IS_SUPER, $isSuper, $comparison);
+    }
+
+    /**
+     * Filter the query on the confirmation_key column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByConfirmationKey('fooValue');   // WHERE confirmation_key = 'fooValue'
+     * $query->filterByConfirmationKey('%fooValue%', Criteria::LIKE); // WHERE confirmation_key LIKE '%fooValue%'
+     * </code>
+     *
+     * @param     string $confirmationKey The value to use as filter.
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildUserQuery The current query, for fluid interface
+     */
+    public function filterByConfirmationKey($confirmationKey = null, $comparison = null)
+    {
+        if (null === $comparison) {
+            if (is_array($confirmationKey)) {
+                $comparison = Criteria::IN;
+            }
+        }
+
+        return $this->addUsingAlias(UserTableMap::COL_CONFIRMATION_KEY, $confirmationKey, $comparison);
+    }
+
+    /**
+     * Filter the query on the reset_key column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByResetKey('fooValue');   // WHERE reset_key = 'fooValue'
+     * $query->filterByResetKey('%fooValue%', Criteria::LIKE); // WHERE reset_key LIKE '%fooValue%'
+     * </code>
+     *
+     * @param     string $resetKey The value to use as filter.
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildUserQuery The current query, for fluid interface
+     */
+    public function filterByResetKey($resetKey = null, $comparison = null)
+    {
+        if (null === $comparison) {
+            if (is_array($resetKey)) {
+                $comparison = Criteria::IN;
+            }
+        }
+
+        return $this->addUsingAlias(UserTableMap::COL_RESET_KEY, $resetKey, $comparison);
     }
 
     /**

@@ -76,11 +76,12 @@
     <column name="username" phpName="Username" type="VARCHAR" size="64" required="true"/>
     <column name="email" phpName="Email" type="VARCHAR" size="128" required="true"/>
     <column name="profile_picture" phpName="ProfilePicture" type="VARCHAR" size="128" required="true"/>
-    <column name="verification_key" phpName="VerificationKey" type="VARCHAR" size="64" required="true"/>
     <column name="join_date" phpName="JoinDate" type="DATE" required="true"/>
     <column name="password" phpName="Password" type="CHAR" size="60" required="true"/>
     <column name="bio" phpName="Bio" type="CHAR" size="128" required="true"/>
     <column name="is_super" phpName="IsSuper" type="BOOLEAN" size="1" required="true" defaultValue="false"/>
+    <column name="confirmation_key" phpName="ConfirmationKey" type="VARCHAR" size="32" required="true"/>
+    <column name="reset_key" phpName="ResetKey" type="VARCHAR" size="32" required="true"/>
     <unique name="username">
       <unique-column name="username"/>
     </unique>

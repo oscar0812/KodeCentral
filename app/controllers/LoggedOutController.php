@@ -52,9 +52,14 @@ class LoggedOutController
                     // trying to log in
                     $user = \UserQuery::create()->findOneByUsername($post['Login']['Username']);
 
-                    if ($user == null || !$user->verifyPassword($post['Login']['Password'])) {
-                        return $response->withJSON(['success'=>false]);
+                    if ($user != null && !$user->isConfirmed()) {
+                        return $response->withJSON(['success'=>false, 'confirm'=>true, 'msg'=>'Please verify email']);
                     }
+
+                    if ($user == null || !$user->verifyPassword($post['Login']['Password'])) {
+                        return $response->withJSON(['success'=>false, 'msg'=>'Incorrect Email or Password']);
+                    }
+
                     $user->logIn();
                     if ($route == null) {
                         $route = $this->router->pathFor('user-profile', ['username'=>$user->getUsername()]);
@@ -71,13 +76,22 @@ class LoggedOutController
                     $user->setJoinDate(getCurrentDate());
                     // validate here
                     if (!$user->validate()) {
-                        return $response->withJSON(['success'=>false]);
+                        return $response->withJSON(['success'=>false, 'msg'=>'Invalid data']);
                     }
+                    $user->setRandomConfirmKey();
                     $user->save();
                     return $response->withJSON(['success'=>true]);
                 } elseif (isset($post['Forgot'])) {
                     // trying to recover password
                     return $response->withJSON(['success'=>false]);
+                } elseif (isset($post['Resend'])) {
+                    // resend confirmation key through email requested
+                    $user = \UserQuery::create()->findOneByUsername($post['username']);
+                    $arr = array();
+                    if ($user!=null) {
+                        $arr = \App\Utils\Mail::sendConfirmation($user->getEmail(), $user->getUsername());
+                    }
+                    return $response->withJSON($arr);
                 } else {
                     // other, not valid
                     return $response->withJSON(['success'=>false]);
