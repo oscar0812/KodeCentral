@@ -121,24 +121,7 @@
   </head>
   <body style="margin: 0 !important; padding: 0 !important;">
     <!-- hidden preheader text - Remember to change it! -->
-    <div style="display: none; font-size: 1px; color: #fefefe; line-height: 1px; font-family: 'Roboto', Helvetica, Arial, sans-serif; max-height: 0px; max-width: 0px; opacity: 0; overflow: hidden;mso-hide:all;"> Kode Central - Responsive Email Template </div>
-    <!-- Don't forget to include a header -->
-    <!-- Header full centre -->
-    <table border="0" cellpadding="0" cellspacing="0" width="100%">
-      <tr>
-        <td bgcolor="#03A9F4" align="center">
-          <table style="min-width: 320px;" class="content-table" align="center" border="0" cellpadding="0" cellspacing="0" width="600">
-            <tr>
-              <td style="padding: 16px 16px 16px 16px;" align="center" valign="top">
-                <a href="http://outlinemail.co.uk">
-                  <img style="display: block" src="https://kodecentral.com/assets/img/email/logo-white.png" width="380" height="28" border="0" alt="Outline Mail"> </a>
-              </td>
-            </tr>
-          </table>
-        </td>
-      </tr>
-    </table>
-    <!-- /Header full centre -->
+    <div style="display: none; font-size: 1px; color: #fefefe; line-height: 1px; font-family: 'Roboto', Helvetica, Arial, sans-serif; max-height: 0px; max-width: 0px; opacity: 0; overflow: hidden;mso-hide:all;"> Kode Central - <?=$name?> </div>
     <!-- Include all your body email components here -->
     <!-- Hero image, title, text, cta centre -->
     <table border="0" cellpadding="0" cellspacing="0" width="100%">
@@ -152,6 +135,7 @@
                     <td style="padding: 0 16px 0 16px;" align="center" valign="top">
                       <!-- content -->
                       <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                        <?php if(isset($subscribed)) { ?>
                         <tr>
                           <td style="padding: 0 0 16px 0;" align="center">
                             <a href="#" target="_blank">
@@ -159,12 +143,12 @@
                                 height="250" border="0"> </a>
                           </td>
                         </tr>
+                        <?php } ?>
                         <tr>
-                          <td align="center" style="padding: 0 0 8px 0; color: #03A9F4; font-family: 'Roboto', Helvetica, Arial, sans-serif; font-size: 28px; font-weight: 400; line-height: 32px;"> The clean &amp; simple framework </td>
+                          <td align="center" style="padding: 0 0 8px 0; color: #03A9F4; font-family: 'Roboto', Helvetica, Arial, sans-serif; font-size: 28px; font-weight: 400; line-height: 32px;"> Kode Central </td>
                         </tr>
                         <tr>
-                          <td align="center" style="padding: 0 0 16px 0; color: #424242; font-family: 'Roboto', Helvetica, Arial, sans-serif; font-size: 16px; font-weight: normal; line-height: 28px;"> Outline is simple CSS starter boilerplate for any new web project. It's a modular, mobile-first framework which includes todays best practices for responsive design and core components I use on every project. Outline is designed
-                            to be a starting point. A solid foundation for your project, leaving the creativity up to you. </td>
+                          <td align="center" style="padding: 0 0 16px 0; color: #424242; font-family: 'Roboto', Helvetica, Arial, sans-serif; font-size: 16px; font-weight: normal; line-height: 28px;"><?=$body?></td>
                         </tr>
                         <tr>
                           <td>
@@ -176,7 +160,7 @@
                                     <tr>
                                       <td align="center">
                                         <a style="background-color: #03A9F4; border-top: 10px solid #03A9F4; border-right: 22px solid #03A9F4; border-bottom: 8px solid #03A9F4; border-left: 22px solid #03A9F4; display: inline-block; color: #fff; font-family: 'Roboto', Helvetica, Arial, sans-serif; font-size: 14px; font-weight: normal; line-height: 24px; text-decoration: none; box-shadow: 1px 1px 1px rgba(0,0,0,0.5); text-transform: uppercase;"
-                                          href="#" target="_blank">Get started</a>
+                                          href="#" target="_blank"><?=$btn?></a>
                                       </td>
                                     </tr>
                                   </table>
@@ -198,15 +182,14 @@
     </table>
     <!-- /Hero image, title, text, cta centre -->
     <!-- Articles title -->
+    <!--
     <table border="0" cellpadding="0" cellspacing="0" width="100%">
       <tr>
         <td style="padding: 32px 0 0 0;" bgcolor="#ffffff" align="center">
           <table class="content-table" align="center" border="0" cellpadding="0" cellspacing="0" width="600">
             <tr>
               <td style="padding: 0 16px 0 16px;" align="center" valign="top">
-                <!-- Two column -->
                 <table border="0" cellpadding="0" cellspacing="0" width="100%">
-                  <!-- Title -->
                   <tr>
                     <td align="left">
                       <table class="content-table" border="0" cellpadding="0" cellspacing="0" width="70%" align="right">
@@ -216,11 +199,9 @@
                       </table>
                     </td>
                   </tr>
-                  <!-- /Title -->
-                  <!-- Article 1 -->
+
                   <tr>
                     <td>
-                      <!-- content left -->
                       <table class="content-table" border="0" cellpadding="0" cellspacing="0" width="28%" align="left">
                         <tr>
                           <td align="center" valign="top">
@@ -230,8 +211,7 @@
                           </td>
                         </tr>
                       </table>
-                      <!-- /content left -->
-                      <!-- content right -->
+
                       <table class="content-table" border="0" cellpadding="0" cellspacing="0" width="70%" align="right">
                         <tr>
                           <td valign="top">
@@ -244,7 +224,6 @@
                               </tr>
                               <tr>
                                 <td style="padding: 0 0 32px 0;">
-                                  <!-- Button -->
                                   <table border="0" cellspacing="0" cellpadding="0" width="100%">
                                     <tr>
                                       <td align="left">
@@ -259,21 +238,17 @@
                                       </td>
                                     </tr>
                                   </table>
-                                  <!-- /Button -->
                                 </td>
                               </tr>
                             </table>
                           </td>
                         </tr>
                       </table>
-                      <!-- /content right -->
                     </td>
                   </tr>
-                  <!-- /Article 1 -->
-                  <!-- Article 2 -->
+
                   <tr>
                     <td>
-                      <!-- content left -->
                       <table class="content-table" border="0" cellpadding="0" cellspacing="0" width="28%" align="left">
                         <tr>
                           <td align="center" valign="top">
@@ -283,8 +258,7 @@
                           </td>
                         </tr>
                       </table>
-                      <!-- /content left -->
-                      <!-- content right -->
+
                       <table class="content-table" border="0" cellpadding="0" cellspacing="0" width="70%" align="right">
                         <tr>
                           <td valign="top">
@@ -297,7 +271,6 @@
                               </tr>
                               <tr>
                                 <td style="padding: 0 0 32px 0;">
-                                  <!-- Button -->
                                   <table border="0" cellspacing="0" cellpadding="0" width="100%">
                                     <tr>
                                       <td align="left">
@@ -305,28 +278,24 @@
                                           <tr>
                                             <td align="center">
                                               <a style="background-color: #03A9F4; border-top: 10px solid #03A9F4; border-right: 22px solid #03A9F4; border-bottom: 8px solid #03A9F4; border-left: 22px solid #03A9F4; display: inline-block; color: #fff; font-family: 'Roboto', Helvetica, Arial, sans-serif; font-size: 14px; font-weight: normal; line-height: 24px; text-decoration: none; box-shadow: 1px 1px 1px rgba(0,0,0,0.5); text-transform: uppercase;"
-                                                href="#" target="_blank">Get started</a>
+                                                href="#" target="_blank">Go</a>
                                             </td>
                                           </tr>
                                         </table>
                                       </td>
                                     </tr>
                                   </table>
-                                  <!-- /Button -->
                                 </td>
                               </tr>
                             </table>
                           </td>
                         </tr>
                       </table>
-                      <!-- /content right -->
                     </td>
                   </tr>
-                  <!-- /Article 2 -->
-                  <!-- Article 3 -->
+
                   <tr>
                     <td>
-                      <!-- content left -->
                       <table class="content-table" border="0" cellpadding="0" cellspacing="0" width="28%" align="left">
                         <tr>
                           <td align="center" valign="top">
@@ -336,8 +305,7 @@
                           </td>
                         </tr>
                       </table>
-                      <!-- /content left -->
-                      <!-- content right -->
+
                       <table class="content-table" border="0" cellpadding="0" cellspacing="0" width="70%" align="right">
                         <tr>
                           <td valign="top">
@@ -350,7 +318,6 @@
                               </tr>
                               <tr>
                                 <td style="padding: 0 0 32px 0;">
-                                  <!-- Button -->
                                   <table border="0" cellspacing="0" cellpadding="0" width="100%">
                                     <tr>
                                       <td align="left">
@@ -365,25 +332,22 @@
                                       </td>
                                     </tr>
                                   </table>
-                                  <!-- /Button -->
                                 </td>
                               </tr>
                             </table>
                           </td>
                         </tr>
                       </table>
-                      <!-- /content right -->
                     </td>
                   </tr>
-                  <!-- /Article 3 -->
                 </table>
-                <!-- /Two column -->
               </td>
             </tr>
           </table>
         </td>
       </tr>
     </table>
+    -->
     <!-- /Articles title -->
     <!-- Don't forget to include a footer -->
     <!-- footer full centre -->
@@ -400,13 +364,14 @@
                       <table border="0" cellpadding="0" cellspacing="0" width="100%">
                         <tr>
                           <td style="color: #90A4AE; font-family: 'Roboto', Helvetica, Arial, sans-serif; font-size: 14px; font-weight: normal; line-height: 21px;" align="center"> Kode Central is a project by
-                            <a style="color: #CFD8DC; text-decoration: none;" href="#">AGM Studio</a>
+                            <a style="color: #CFD8DC; text-decoration: none;" href="https://aszend.com">Aszend Digital, LLC</a>
                           </td>
                         </tr>
                         <tr>
                           <td style="color: #90A4AE; font-family: 'Roboto', Helvetica, Arial, sans-serif; font-size: 14px; font-weight: normal; line-height: 21px;" align="center">
-                            <a style="color: #CFD8DC; text-decoration: none;" href="#">View this email in your browser</a> |
-                            <a style="color: #CFD8DC; text-decoration: none;" href="#">Unsubscribe</a>
+                            <?php if(isset($subscribed)) { ?>
+                            | <a style="color: #CFD8DC; text-decoration: none;" href="#"> Unsubscribe</a>
+                            <?php } ?>
                           </td>
                         </tr>
                       </table>

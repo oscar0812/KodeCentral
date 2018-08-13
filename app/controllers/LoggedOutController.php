@@ -8,7 +8,7 @@ use Slim\Exception\NotFoundException;
 
 class LoggedOutController
 {
-    public static function setUpRouting($app)
+    public function account($app)
     {
         $app->group('/account', function () use ($app) {
             // show the login, register, forgot password forms
@@ -20,10 +20,10 @@ class LoggedOutController
                 }
 
                 return $this->view->render(
-                $response,
-                'login_register.php',
-                ['router'=>$this->router]
-            );
+              $response,
+              'login_register.php',
+              ['router'=>$this->router]
+          );
             })->setName('user-login-form');
 
             $app->post('/info', function ($request, $response, $args) {
@@ -31,10 +31,10 @@ class LoggedOutController
                 $post = $request->getParsedBody();
                 if (isset($post['email'])) {
                     $info = \UserQuery::create()
-                  ->findOneByEmail($request->getParsedBody()['email']);
+                ->findOneByEmail($request->getParsedBody()['email']);
                 } elseif ($post['username']) {
                     $info = \UserQuery::create()
-                  ->findOneByUsername($request->getParsedBody()['username']);
+                ->findOneByUsername($request->getParsedBody()['username']);
                 }
 
                 echo ($info== null)?"true":"false";
@@ -66,7 +66,7 @@ class LoggedOutController
                     }
                     setcookie('prev_route', '', time() - 3600);
                     return $response->withJSON(['success'=>true,
-                    'redirect_link'=> $route]);
+                  'redirect_link'=> $route]);
                 } elseif (isset($post['Register'])) {
                     // trying to make new account
                     $user = new \User();
@@ -85,7 +85,7 @@ class LoggedOutController
                     // trying to recover password
                     return $response->withJSON(['success'=>false]);
                 } elseif (isset($post['Resend'])) {
-                    // resend confirmation key through email requested
+                    // resend confirmation key through email
                     $user = \UserQuery::create()->findOneByUsername($post['username']);
                     $arr = array();
                     if ($user!=null) {
@@ -97,6 +97,14 @@ class LoggedOutController
                     return $response->withJSON(['success'=>false]);
                 }
             })->setName('user-credentials');
+        });
+    }
+
+    public static function setUpRouting($app)
+    {
+        $controller = new LoggedOutController();
+        $app->group('', function () use ($app, $controller) {
+            $controller->account($app);
         })->add(function ($request, $response, $next) {
             $user = \User::current();
             if ($user == null) {

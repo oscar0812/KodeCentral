@@ -1,5 +1,5 @@
 <?php
-namespace App\Controllers;
+namespace App\controllers;
 
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -229,7 +229,7 @@ class AllController
         $controller->faq($app);
         $controller->appPost($app);
         $controller->allPages($app);
-
+        
         $controller->viewPost($app);
         $controller->profile($app);
     }
