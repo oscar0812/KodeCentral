@@ -19,12 +19,20 @@ $(function() {
           text = 'Resend Email';
           username = $('input[name="Login[Username]"]');
 
+          clicked = false;
+
           callback = function(element) {
 
-            if(username.val() == ""){
+            if (username.val() == "") {
               shake(username.parent());
               return;
             }
+
+            if (clicked) {
+              return;
+            }
+
+            clicked = true;
 
             $.ajax({
               type: "POST",
@@ -35,6 +43,7 @@ $(function() {
               url: $('#login-form').attr('action'),
               dataType: "json",
               success: function(data) {
+                clicked = false;
                 console.log(data);
                 Snackbar.show({
                   actionTextColor: '#ffff00',
