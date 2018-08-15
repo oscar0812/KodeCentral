@@ -1,7 +1,6 @@
 <?php
 
-use App\Mail\Mail;
-use App\Controllers\LoggedInController;
+use app\controllers\LoggedInController;
 
 require '../vendor/autoload.php';
 

@@ -1,5 +1,5 @@
 <?php
-namespace App\Utils;
+namespace app\utils;
 
 class ImageUpload
 {

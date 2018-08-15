@@ -106,7 +106,7 @@ class AllController
                 return $response->withJson(['success'=>false, 'msg'=>'Invalid data']);
             }
 
-            $arr = \App\Utils\Mail::contactUs($params['email'], $params['message']);
+            $arr = \app\utils\Mail::contactUs($params['email'], $params['message']);
             return $response->withJson($arr);
         });
     }

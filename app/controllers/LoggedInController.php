@@ -202,7 +202,7 @@ class LoggedInController
 
             if ($params['file-text'] != '') {
                 // call ImageUpload which returns an array with flags and data
-                $arr = \App\Utils\ImageUpload::uploadPfp($user, $this->router->pathFor('home'));
+                $arr = \app\utils\ImageUpload::uploadPfp($user, $this->router->pathFor('home'));
 
                 if ($arr['success']) {
                     // successfully uploaded image, so set the path as the

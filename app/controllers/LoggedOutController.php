@@ -87,14 +87,14 @@ class LoggedOutController
                     if ($user!=null) {
                         $user->setRandomResetKey();
                         $user->save();
-                        \App\Utils\Mail::sendResetPassword($user, $this->router);
+                        \app\utils\Mail::sendResetPassword($user, $this->router);
                     }
                     return $response->withJSON([]);
                 } elseif (isset($post['Resend'])) {
                     // resend confirmation key through email
                     $user = \UserQuery::create()->findOneByUsername($post['username']);
                     if ($user!=null) {
-                        \App\Utils\Mail::sendConfirmation($user, $this->router);
+                        \app\utils\Mail::sendConfirmation($user, $this->router);
                     }
                     return $response->withJSON([]);
                 } else {
