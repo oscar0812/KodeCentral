@@ -57,30 +57,10 @@
           </div>
           <div class="col-xl-4 col-lg-5">
             <div class="card">
-              <div class="ms-hero-bg-primary ms-hero-img-mountain">
-                <h3 class="color-white index-1 text-center pb-4 pt-4 no-mb">Contact Us</h3>
-              </div>
-              <div class="card-body">
-                <h3 class="color-primary">You have more questions?</h3>
-                <form class="">
-                  <div class="form-group label-floating">
-                    <label for="inputName" class="control-label">Name</label>
-                    <input type="text" class="form-control" id="inputName"> </div>
-                  <div class="form-group label-floating">
-                    <label for="inputEmail" class="control-label">Email</label>
-                    <input type="email" class="form-control" id="inputEmail"> </div>
-                  <div class="form-group label-floating">
-                    <label for="inputSubject" class="control-label">Subject</label>
-                    <input type="text" class="form-control" id="inputSubject"> </div>
-                  <div class="form-group label-floating">
-                    <label for="textArea" class="control-label">Message</label>
-                    <textarea class="form-control" rows="5" id="textArea"></textarea>
-                  </div>
-                  <div class="form-group text-right">
-                    <button type="button" class="btn btn-danger">Cancel</button>
-                    <button type="submit" class="btn btn-raised btn-primary">Submit</button>
-                  </div>
-                </form>
+
+              <div class="card-body text-center">
+                <h3 class="color-primary">Have more questions?</h3>
+                <h4><a href="<?=$router->pathFor('contact-us')?>">Contact us</a></h4>
               </div>
             </div>
           </div>

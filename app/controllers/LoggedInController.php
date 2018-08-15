@@ -295,12 +295,12 @@ class LoggedInController
             $controller->resetPassword($app);
         })->add(function ($request, $response, $next) {
             $user = \User::current();
-            if ($user != null) {
-                // signed in, show them what they want
+            if ($user != null && $user->isConfirmed()) {
+                // signed in and confirmed email, show them what they want
                 return $next($request, $response);
             } else {
                 // not signed in, redirect to home page
-                return $response->withRedirect($this->router->pathFor('user-login-form'));
+                return $response->withRedirect($this->router->pathFor('user-logout'));
             }
         });
     }

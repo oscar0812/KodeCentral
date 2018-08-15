@@ -69,7 +69,7 @@
                   <i class="fa fa-sign-out"></i> Log Out</a>
             </div>
             <?php } ?>
-            <div class="col-lg-12 col-md-6 order-md-2 order-lg-3 d-none d-lg-block">
+            <div class="col-lg-12 col-md-6 order-md-2 order-lg-3">
               <div class="card animated fadeInUp animation-delay-12">
                 <div class="ms-hero-bg-royal ms-hero-img-mountain">
                   <h3 class="color-white index-1 text-center pb-4 pt-4">Recent Contacts</h3>
