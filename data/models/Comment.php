@@ -21,4 +21,14 @@ class Comment extends BaseComment
         }
         parent::setText($text);
     }
+
+    public function getSummary($max_length = 30)
+    {
+
+        $text = substr($this->getText(), 0, $max_length);
+        if (strlen($text) == $max_length) {
+            return $text.'...';
+        }
+        return $text;
+    }
 }
