@@ -1,6 +1,6 @@
 <?php
 // a controller for the /account route since its alot of code
-namespace App\Controllers;
+namespace app\controllers;
 
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;

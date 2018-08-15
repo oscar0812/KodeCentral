@@ -43,9 +43,9 @@ $app->get('/test', function ($request, $response, $args) {
   );
 });
 
-App\Controllers\AllController::setUpRouting($app);
-App\Controllers\LoggedInController::setUpRouting($app);
-App\Controllers\LoggedOutController::setUpRouting($app);
+app\controllers\AllController::setUpRouting($app);
+app\controllers\LoggedInController::setUpRouting($app);
+app\controllers\LoggedOutController::setUpRouting($app);
 
 
 $app->run();
