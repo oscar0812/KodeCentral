@@ -52,7 +52,7 @@ class User extends BaseUser
     {
         // hash password
         $options = ['cost' => 11];
-        $password = password_hash($this->getPassword(), PASSWORD_BCRYPT, $options);
+        $password = password_hash($password, PASSWORD_BCRYPT, $options);
 
         // store the Hash
         parent::setPassword($password);

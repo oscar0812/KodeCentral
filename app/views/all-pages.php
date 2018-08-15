@@ -68,6 +68,9 @@
                     <li>
                       <a href="<?=$router->pathFor('user-login-form')?>">Profile</a>
                     </li>
+                    <li>
+                      <a href="<?=$router->pathFor('reset-password')?>">Reset Password</a>
+                    </li>
                     <?php if($user->isSuper()) { ?>
                     <li>
                       <a href="<?=$router->pathFor('create-post')?>">Create post</a>
