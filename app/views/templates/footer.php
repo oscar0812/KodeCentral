@@ -117,6 +117,9 @@
         <div class="ms-footbar-block">
           <h3 class="ms-footbar-title">Social Media</h3>
           <div class="ms-footbar-social">
+            <a href="https://www.facebook.com/Aszend-Digital-889951031194641/" class="btn-circle btn-facebook">
+                    <i class="zmdi zmdi-facebook"></i>
+                  </a>
             <a href="https://github.com/oscar0812" class="btn-circle btn-github">
                     <i class="zmdi zmdi-github"></i>
                   </a>
