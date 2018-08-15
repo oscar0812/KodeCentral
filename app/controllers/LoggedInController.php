@@ -236,6 +236,37 @@ class LoggedInController
         })->setName('user-logout');
     }
 
+    public function resetPassword($app)
+    {
+        // show reset password form
+        $app->get('/reset-password', function ($request, $response, $args) {
+            return $this->view->render(
+              $response,
+              'reset-password.php',
+              ['router'=>$this->router, 'user'=>\User::current()]
+          );
+        })->setName('reset-password');
+
+        // new password being posted
+        $app->post('/reset-password', function ($request, $response) {
+            $params = $request->getParsedBody();
+            $user = \User::current();
+            if (!isset($params['password'])) {
+                return $response->withJson(['success'=>false, 'msg'=>'Invalid data']);
+            }
+
+            $user->setPassword($params['password']);
+
+            if (!$user->validate()) {
+                return $response->withJson(['success'=>false, 'msg'=>'Validation failed']);
+            }
+
+            $user->save();
+
+            return $response->withJson(['success'=>true, 'msg'=>'Password changed successfully!']);
+        });
+    }
+
     public static function setUpRouting($app)
     {
         // 2 middleware, first has all ability, 2nd can only post comments and
@@ -261,6 +292,7 @@ class LoggedInController
             $controller->postComment($app);
             $controller->logOut($app);
             $controller->changeProfileInfo($app);
+            $controller->resetPassword($app);
         })->add(function ($request, $response, $next) {
             $user = \User::current();
             if ($user != null) {

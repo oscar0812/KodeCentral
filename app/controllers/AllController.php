@@ -227,12 +227,12 @@ class AllController
                 // non existent user
                 return $response->withRedirect($this->router->pathFor('home'));
             } elseif ($user->getConfirmationKey() != $args['key']) {
-                // wrong key. For safety, assign a new confirm key
+                // wrong key. For safety, assign a new key
                 $user->setRandomConfirmKey();
                 $user->save();
                 return $response->withRedirect($this->router->pathFor('home'));
             } else {
-                // everything good
+                // everything good. Just confirm user and redirect them to their profile
                 $user->confirm();
                 $user->login();
                 $profile = $this->router->pathFor('user-profile', ['username'=>$user->getUsername()]);
@@ -244,9 +244,22 @@ class AllController
     public function resetPassword($app)
     {
         // route to reset password (when coming back from email)
-        $app->get('/reset-password/{email}/{key}', function ($request, $response, $args) {
-            print_r($args);
-        })->setName('reset-password');
+        $app->get('/reset-password-email/{email}/{key}', function ($request, $response, $args) {
+            $user = \UserQuery::create()->findOneByEmail($args['email']);
+            if ($user == null) {
+                // non existent user
+                return $response->withRedirect($this->router->pathFor('home'));
+            } elseif ($user->getResetKey() != $args['key']) {
+                // wrong key. For safety, assign a new key
+                $user->setRandomResetKey();
+                $user->save();
+                return $response->withRedirect($this->router->pathFor('home'));
+            } else {
+                // everything good. Login and redirect to reset password view
+                $user->login();
+                return $response->withRedirect($this->router->pathFor('reset-password'));
+            }
+        })->setName('reset-password-email');
     }
 
     public static function setUpRouting($app)

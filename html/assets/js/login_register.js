@@ -134,8 +134,18 @@ $(function() {
 
   // forgot password form submitted
   $('#forgot-form').on('submit', function(e){
+    Snackbar.show({
+      actionTextColor: '#ffff00',
+      duration: 0,
+      text: 'Sending Email..'
+    });
+
     ajaxForm(e.target, function(data){
-      console.log(data);
+      Snackbar.show({
+        actionTextColor: '#00ff00',
+        duration: 0,
+        text: 'Email sent..'
+      });
     });
     return false;
   })
