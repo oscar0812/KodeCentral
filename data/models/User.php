@@ -24,16 +24,22 @@ class User extends BaseUser
         return $key == null || $key == "";
     }
 
-    public function hasResetKey()
+    public function confirm()
     {
-        $key = $this->getResetKey();
-        return $key != null && $key != "";
+        $this->setConfirmationkey('');
+        $this->save();
     }
 
     public function setRandomConfirmKey()
     {
         //random 32 length string
         parent::setConfirmKey(substr(str_shuffle(md5(time())), 0, 32));
+    }
+
+    public function hasResetKey()
+    {
+        $key = $this->getResetKey();
+        return $key != null && $key != "";
     }
 
     public function setRandomResetKey()

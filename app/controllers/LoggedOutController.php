@@ -83,13 +83,20 @@ class LoggedOutController
                     return $response->withJSON(['success'=>true]);
                 } elseif (isset($post['Forgot'])) {
                     // trying to recover password
-                    return $response->withJSON(['success'=>false]);
+                    $user = \UserQuery::create()->findOneByEmail($post['Forgot']['Email']);
+                    $arr = ['success'=>false];
+                    if ($user!=null) {
+                        $user->setRandomResetKey();
+                        $user->save();
+                        $arr = \App\Utils\Mail::sendResetPassword($user, $this->router);
+                    }
+                    return $response->withJSON($arr);
                 } elseif (isset($post['Resend'])) {
                     // resend confirmation key through email
                     $user = \UserQuery::create()->findOneByUsername($post['username']);
-                    $arr = array();
+                    $arr = ['success'=>false];
                     if ($user!=null) {
-                        $arr = \App\Utils\Mail::sendConfirmation($user->getEmail(), $user->getUsername());
+                        $arr = \App\Utils\Mail::sendConfirmation($user, $this->router);
                     }
                     return $response->withJSON($arr);
                 } else {

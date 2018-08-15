@@ -218,6 +218,37 @@ class AllController
         })->setName('user-profile');
     }
 
+    public function confirmAccount($app)
+    {
+        // route to confirm email
+        $app->get('/confirm-account/{email}/{key}', function ($request, $response, $args) {
+            $user = \UserQuery::create()->findOneByEmail($args['email']);
+            if ($user == null) {
+                // non existent user
+                return $response->withRedirect($this->router->pathFor('home'));
+            } elseif ($user->getConfirmationKey() != $args['key']) {
+                // wrong key. For safety, assign a new confirm key
+                $user->setRandomConfirmKey();
+                $user->save();
+                return $response->withRedirect($this->router->pathFor('home'));
+            } else {
+                // everything good
+                $user->confirm();
+                $user->login();
+                $profile = $this->router->pathFor('user-profile', ['username'=>$user->getUsername()]);
+                return $response->withRedirect($profile);
+            }
+        })->setName('confirm-account');
+    }
+
+    public function resetPassword($app)
+    {
+        // route to reset password (when coming back from email)
+        $app->get('/reset-password/{email}/{key}', function ($request, $response, $args) {
+            print_r($args);
+        })->setName('reset-password');
+    }
+
     public static function setUpRouting($app)
     {
         $controller = new AllController();
@@ -229,8 +260,11 @@ class AllController
         $controller->faq($app);
         $controller->appPost($app);
         $controller->allPages($app);
-        
+
         $controller->viewPost($app);
         $controller->profile($app);
+
+        $controller->confirmAccount($app);
+        $controller->resetPassword($app);
     }
 }

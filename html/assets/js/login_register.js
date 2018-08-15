@@ -131,4 +131,12 @@ $(function() {
       });
     }
   });
+
+  // forgot password form submitted
+  $('#forgot-form').on('submit', function(e){
+    ajaxForm(e.target, function(data){
+      console.log(data);
+    });
+    return false;
+  })
 })
