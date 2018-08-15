@@ -171,7 +171,7 @@
               <ul class="ms-timeline">
                 <?php foreach($posts as $post) {
                         $date = $post->getPostedDate()?>
-                <li class="ms-timeline-item">
+                <li class="ms-timeline-item" data-url="<?=$router->pathFor('view-post', ['hyperlink'=>$post->getHyperlink()])?>">
                   <div class="ms-timeline-date">
                     <time class="timeline-time" datetime=""><?=$date->format('Y')?>
                         <span><?=$date->format('F')?></span>
