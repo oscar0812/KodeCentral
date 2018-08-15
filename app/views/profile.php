@@ -97,7 +97,7 @@
                                   <?=$post->getTitle()?></a>
                               </h4>
                             <div class="media-footer">
-                              <span data-url="<?=$path?>" class="color-dark"><?=$comment->getSummary()?></span><br>
+                              <p data-url="<?=$path?>"><?=$comment->getSummary()?></p><br>
                             </div>
                           </div>
                         </div>

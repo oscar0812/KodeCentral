@@ -15695,6 +15695,10 @@ body.lb-disable-scrolling {
   color: #bdbdbd
 }
 
+.media-footer p {
+  color: gray;
+}
+
 .ms-footer-media .media-footer span {
   margin-right: 10px;
   margin-right: 1rem
