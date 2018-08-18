@@ -105,7 +105,8 @@ class LoggedInController
     {
         // show view to edit a post
         $app->get('/edit-post/{hyperlink}', function ($request, $response, $args) {
-            $post = \PostQuery::create()->findOneByHyperlink($args['hyperlink']);
+            $query = \PostQuery::create();
+            $post = (clone $query)->findOneByHyperlink(urlencode($args['hyperlink']));
             $user = \User::current();
             if ($post == null || $post->getPostedByUser() != $user) {
                 // invalid post, or trying to edit something not yours, 404
@@ -124,7 +125,8 @@ class LoggedInController
 
         // post information coming in, post is being edited
         $app->post('/edit-post/{hyperlink}', function ($request, $response, $args) {
-            $post = \PostQuery::create()->findOneByHyperlink($args['hyperlink']);
+            $query = \PostQuery::create();
+            $post = (clone $query)->findOneByHyperlink(urlencode($args['hyperlink']));
 
             if ($post == null || $post->getPostedByUser() != \User::current()) {
                 return $response->withJson(['success'=>false]);
@@ -169,7 +171,8 @@ class LoggedInController
         $app->post('/post/comment/{hyperlink}', function ($request, $response, $args) {
             $text = $request->getParsedBody()['text'];
 
-            $post = \PostQuery::create()->findOneByHyperlink($args['hyperlink']);
+            $query = \PostQuery::create();
+            $post = (clone $query)->findOneByHyperlink(urlencode($args['hyperlink']));
 
             if ($post == null || $text == "" || $text == null) {
                 // post doesnt exist, or blank comment
