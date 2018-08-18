@@ -159,7 +159,7 @@ class AllController
     {
         $app->get('/post/{hyperlink}', function ($request, $response, $args) {
             $query = \PostQuery::create();
-            $post = (clone $query)->findOneByHyperlink($args['hyperlink']);
+            $post = (clone $query)->findOneByHyperlink(urlencode($args['hyperlink']));
 
             if ($post == null) {
                 // invalid post, throw 404
