@@ -5,8 +5,7 @@
     "league/oauth2-client": "^2.2",
     "slim/slim": "^3.9",
     "slim/php-view": "^2.2",
-    "paypal/rest-api-sdk-php": "^1.13",
-    "ckeditor/ckeditor": "dev-full/4.3.x"
+    "paypal/rest-api-sdk-php": "^1.13"
   },
   "autoload": {
     "classmap": [

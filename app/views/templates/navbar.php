@@ -5,7 +5,7 @@
         <!-- <img src="assets/img/default_pfp.png" alt=""> -->
         <span class="ms-logo ms-logo-sm">KC</span>
         <span class="ms-title">Kode
-          <strong>Cental</strong>
+          <strong>Central</strong>
         </span>
       </a>
     </div>

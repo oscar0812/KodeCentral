@@ -22,11 +22,6 @@ $(quill.root).html(preload.html().trim());
 preload.remove();
 
 $(function() {
-  $('#show-lib').on('click', function() {
-    $(this).remove();
-    $('#lib-row').removeClass('invisible');
-    return false;
-  });
 
   // choosing a library
   library_select = $('#library-select');

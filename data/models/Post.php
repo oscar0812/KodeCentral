@@ -149,16 +149,11 @@ class Post extends BasePost
             foreach ($posts as $p) {
                 $p->setLibraryIndex($index++);
                 if ($p->getHyperlink() == $data['library_index']) {
-                    $current_index = $post->getLibraryIndex();
                     // trying to put after this one
                     $post->setLibraryIndex($index++);
-
-                    if ($post->getLibraryIndex() != $current_index) {
-                        // only save if something changed
-                        $post->save();
-                    }
                 }
             }
+            $posts->save();
         }
 
         return $post;

@@ -56,8 +56,7 @@
                 <input class="form-control" id="title" type="text" value="<?=$editing?$post->getTitle():""?>">
                 <p class="help-block">Short and simple</p>
               </div>
-              <button class="btn btn-block btn-raised btn-primary" id="show-lib">Show library options</button>
-              <div class="row invisible" id="lib-row">
+              <div class="row" id="lib-row">
                 <div class="col-lg-6">
                   <div class="form-group">
                     <span>Library</span>
