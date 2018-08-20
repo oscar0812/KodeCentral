@@ -33,7 +33,7 @@ class User extends BaseUser
     public function setRandomConfirmKey()
     {
         //random 32 length string
-        parent::setConfirmKey(substr(str_shuffle(md5(time())), 0, 32));
+        parent::setConfirmationKey(substr(str_shuffle(md5(time())), 0, 32));
     }
 
     public function hasResetKey()

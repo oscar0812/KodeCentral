@@ -101,9 +101,7 @@
 
       <parameter name="rule6" value="{column: password, validator: NotNull}"/>
 
-      <parameter name="rule7" value="{column: bio, validator: NotNull}"/>
-
-      <parameter name="rule8" value="{column: join_date, validator: NotNull}"/>
+      <parameter name="rule7" value="{column: join_date, validator: NotNull}"/>
     </behavior>
   </table>
   <table name="user_favorite" idMethod="native" phpName="UserFavorite" isCrossRef="true">

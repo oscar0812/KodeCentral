@@ -2876,7 +2876,6 @@ abstract class User implements ActiveRecordInterface
         $metadata->addPropertyConstraint('email', new Email());
         $metadata->addPropertyConstraint('email', new Unique());
         $metadata->addPropertyConstraint('password', new NotNull());
-        $metadata->addPropertyConstraint('bio', new NotNull());
         $metadata->addPropertyConstraint('join_date', new NotNull());
     }
 
