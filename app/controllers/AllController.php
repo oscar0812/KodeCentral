@@ -202,7 +202,7 @@ class AllController
                 $visiting = false;
             }
 
-            $posts = \PostQuery::create()->orderByPostedDate()->findByPostedByUser($user);
+            $posts = \PostQuery::create()->orderByPostedDate('desc')->findByPostedByUser($user);
             $comments = \CommentQuery::create()->orderByPostedTime('desc')->filterByUser($user);
 
             // get the number of times this users posts have been favorited
