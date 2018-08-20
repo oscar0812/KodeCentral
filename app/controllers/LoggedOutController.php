@@ -80,7 +80,8 @@ class LoggedOutController
                     }
                     $user->setRandomConfirmKey();
                     $user->save();
-                    return $response->withJSON(['success'=>true]);
+                    \app\utils\Mail::sendConfirmation($user, $this->router);
+                    return $response->withJSON(['success'=>true, 'msg'=>'Check your email to confirm']);
                 } elseif (isset($post['Forgot'])) {
                     // trying to recover password
                     $user = \UserQuery::create()->findOneByEmail($post['Forgot']['Email']);
