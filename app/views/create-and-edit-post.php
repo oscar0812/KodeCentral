@@ -83,7 +83,7 @@
                     <span>Position</span>
                     <div class="input-group">
 
-                      <select id="position-select" class="selectpicker form-control" data-dropup-auto="false" disabled>
+                      <select id="position-select" class="selectpicker form-control" data-dropup-auto="false">
 
                       </select>
 

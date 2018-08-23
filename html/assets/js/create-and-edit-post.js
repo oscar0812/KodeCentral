@@ -30,22 +30,11 @@ $(function() {
   library_select = $('#library-select');
   append_select = $('#position-select');
 
-  if (library_select.val() != "None") {
-    append_select.prop('disabled', false);
-    libraryChange();
-  }
-
+  libraryChange();
   library_select.on('change', libraryChange);
 
   function libraryChange() {
     name = $(library_select).val();
-
-    if (name == "None") {
-      // if all, then dont show a position, just add to back
-      append_select.prop('disabled', true);
-      append_select.selectpicker('refresh');
-      return;
-    }
 
     append_select.prop('disabled', false);
 
@@ -151,7 +140,6 @@ $(function() {
     code.removeClass('.ql-syntax');
     code.each(function() {
       // grab the code blocks from here and convert to what hightlight.js
-      // likes
       text = $(this).text();
       $(this).empty();
       $(this).removeAttr('class').removeAttr('spellcheck');
