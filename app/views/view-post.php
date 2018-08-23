@@ -211,6 +211,12 @@
     <!-- container -->
     <?php require_once('templates/footer.php')?>
   </div>
+  <div class="modal" id="image-modal" tabindex="-1" role="dialog" aria-labelledby="image-modal">
+    <div class="modal-dialog animated zoomIn animated-3x" role="document">
+      <div class="modal-content">
+        <img src="assets/img/demo/m1.jpg" alt="" class="img-fluid"> </div>
+    </div>
+  </div>
   <!-- ms-site-container -->
   <?php require_once('templates/slidebar.php')?>
   <script src="<?=$home?>assets/js/plugins.min.js"></script>
@@ -221,10 +227,15 @@
     hljs.initHighlightingOnLoad();
 
     $(function() {
+      // show larger image in modal when image is clicked
+      $('#post-text img').on('click', function(){
+        modal = $('#image-modal');
+        modal.find('img').attr('src', $(this).attr('src'));
+        modal.modal();
+        return false;
+      })
+
       // load all the posts this person has seen
-
-      // try to store this page on the page visited history
-
       cookie = Cookies.get('history');
       cookie = typeof cookie == 'undefined'?'[]':cookie;
       arr = $.parseJSON(cookie);
@@ -249,6 +260,7 @@
         }
       });
 
+      // try to store this page on the page visited history
       if(!in_list) {
         arr.push({link: link, title: title, date: new Date()});
       }

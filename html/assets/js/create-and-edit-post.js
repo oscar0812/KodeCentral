@@ -2,7 +2,10 @@ var quill = new Quill('#editor-container', {
   modules: {
     formula: true,
     syntax: true,
-    toolbar: '#toolbar-container'
+    toolbar: '#toolbar-container',
+    imageResize: {
+      modules: ['Resize', 'DisplaySize', 'Toolbar']
+    }
   },
   placeholder: 'Write your mind off...',
   theme: 'snow'

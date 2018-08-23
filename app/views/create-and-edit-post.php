@@ -9,7 +9,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <meta name="theme-color" content="#333">
-  <title>Kode Central | <?=(isset($post) && $post!= null)?$post->getTitle():'Create new post'?></title>
+  <title>Kode Central |
+    <?=(isset($post) && $post!= null)?$post->getTitle():'Create new post'?>
+  </title>
   <meta name="description" content="Create/edit posts">
   <link rel="shortcut icon" href="<?=$home?>assets/img/favicon.ico">
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -53,7 +55,7 @@
             <fieldset class="container">
               <div class="form-group label-floating">
                 <label class="control-label" for="title">Title</label>
-                <input class="form-control" id="title" type="text" value="<?=$editing?$post->getTitle():""?>">
+                <input class="form-control" id="title" type="text" value="<?=$editing?$post->getTitle():" "?>">
                 <p class="help-block">Short and simple</p>
               </div>
               <div class="row" id="lib-row">
@@ -62,8 +64,7 @@
                     <span>Library</span>
                     <div class="input-group">
                       <?php $c_lib = $editing?$post->getLibrary():null;?>
-                      <select id="library-select" class="selectpicker form-control" data-dropup-auto="false"
-                      data-posts-url="<?=$router->pathFor('ajax-lib-posts')?>" data-current-url="<?=$editing?$post->getHyperLink():""?>">
+                      <select id="library-select" class="selectpicker form-control" data-dropup-auto="false" data-posts-url="<?=$router->pathFor('ajax-lib-posts')?>" data-current-url="<?=$editing?$post->getHyperLink():" "?>">
                           <?php
                           foreach ($all_libraries as $lib) {
                             $selected = false;
@@ -210,10 +211,13 @@
 
   <script src="<?=$home?>assets/js/katex.min.js"></script>
   <script src="<?=$home?>assets/js/highlight.min.js"></script>
-  <script src="<?=$home?>assets/js/quill.min.js"></script>
   <script src="<?=$home?>assets/js/component-snackbar.js"></script>
-  <script src="<?=$home?>assets/js/create-and-edit-post.js"></script>
 
+  <script src="<?=$home?>assets/js/quill.min.js"></script>
+  <script src="<?=$home?>assets/js/quill-paste.js"></script>
+  <script src="<?=$home?>assets/js/image-resize.min.js"></script>
+
+  <script src="<?=$home?>assets/js/create-and-edit-post.js"></script>
 </body>
 
 </html>
