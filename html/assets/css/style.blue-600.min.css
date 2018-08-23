@@ -33,8 +33,7 @@ blockquote {
 }
 
 #post-text img {
-  height: 100%;
-  width: 100%;
+  border: 1px solid #021a40;
 }
 
 .withripple {
