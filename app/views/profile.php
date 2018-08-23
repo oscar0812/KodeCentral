@@ -117,21 +117,21 @@
           <div class="row">
             <div class="col-sm-4">
               <div class="card card-info card-body overflow-hidden text-center">
-                <h2 class="counter color-info"><?=$posts->count()?></h2>
+                <h2 class="color-info"><?=$posts->count()?></h2>
                 <i class="fa fa-4x fa-file-text color-info"></i>
                 <p class="mt-2 no-mb lead small-caps color-info">Posts</p>
               </div>
             </div>
             <div class="col-sm-4">
               <div class="card card-success card-body overflow-hidden text-center">
-                <h2 class="counter color-success"><?=$favorites->count()?></h2>
+                <h2 class="color-success"><?=$favorites->count()?></h2>
                 <i class="fa fa-4x fa-star color-success"></i>
                 <p class="mt-2 no-mb lead small-caps color-success">times favorited</p>
               </div>
             </div>
             <div class="col-sm-4">
               <div class="card card-royal card-body overflow-hidden text-center">
-                <h2 class="counter color-royal"><?=$comments->count()?></h2>
+                <h2 class="color-royal"><?=$comments->count()?></h2>
                 <i class="fa fa-4x fa-comments-o color-royal"></i>
                 <p class="mt-2 no-mb lead small-caps color-royal">comments</p>
               </div>
