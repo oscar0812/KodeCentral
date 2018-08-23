@@ -121,7 +121,7 @@ class User extends BaseUser
     {
         $bio = parent::getBio();
         if ($bio == '') {
-            return 'Nothng about me...';
+            return 'Nothing about me...';
         }
         return $bio;
     }

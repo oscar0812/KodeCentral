@@ -41,8 +41,10 @@
             <div class="col-lg-12 col-md-6 order-md-1">
               <div class="card animated fadeInUp animation-delay-7">
                 <div class="ms-hero-bg-primary ms-hero-img-coffee">
+                  <?php if($user->isSuper()) { ?>
                   <h3 class="color-white index-1 text-center no-m pt-4">Status: <?=$user->getBadge()?></h3>
-                  <div class="color-medium index-1 text-center np-m">@
+                  <?php } ?>
+                  <div class="color-medium index-1 text-center np-m<?=$user->isSuper()?'':' pt-4'?>">@
                     <?=$user->getUsername()?>
                   </div>
                   <img src="<?=$user->getPfp($home)?>" alt="..." class="img-avatar-circle pfp">
