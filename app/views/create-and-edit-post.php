@@ -55,7 +55,7 @@
             <fieldset class="container">
               <div class="form-group label-floating">
                 <label class="control-label" for="title">Title</label>
-                <input class="form-control" id="title" type="text" value="<?=$editing?$post->getTitle():" "?>">
+                <input class="form-control" id="title" type="text" value="<?=$editing?$post->getTitle():""?>">
                 <p class="help-block">Short and simple</p>
               </div>
               <div class="row" id="lib-row">

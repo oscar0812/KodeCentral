@@ -32,6 +32,11 @@ blockquote {
   color: #444444;
 }
 
+#post-text img {
+  height: 100%;
+  width: 100%;
+}
+
 .withripple {
   position: relative
 }
