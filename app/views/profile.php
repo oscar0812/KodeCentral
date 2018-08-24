@@ -185,9 +185,7 @@
                       </div>
                       <div class="card-body">
                         <div class="row">
-                          <div class="col-sm-4">
-                            <img src="<?=$home?>assets/img/default_pfp.png" alt="" class="img-fluid"> </div>
-                          <div class="col-sm-8">
+                          <div class="col-sm-12">
                             <p>
                               <?=$post->getSummary(300)?>
                             </p>

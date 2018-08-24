@@ -64,10 +64,7 @@
             <!-- media block -->
             <?php $path = $router->pathFor('view-post', ['hyperlink'=>$post->getHyperlink()])?>
             <div class="media">
-              <div class="media-left media-middle">
-                <a href="<?=$path?>">
-                    <img class="media-object media-object-circle avatar-50-50" src="<?=$home?>assets/img/default_pfp.png" alt="..."> </a>
-              </div>
+
               <div class="media-body">
                 <h4 class="media-heading">
                     <a href="<?=$path?>">

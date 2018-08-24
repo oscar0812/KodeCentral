@@ -39,9 +39,6 @@
                 <table class="table table-responsive table-no-border vertical-center">
                   <tbody>
                     <tr>
-                      <td class="d-none d-sm-block">
-                        <img src="<?=$home?>assets/img/default_pfp.png" class="avatar-50-50" alt="">
-                      </td>
                       <td style="width: 60%">
                         <h4 class=""><?=$post->getTitle()?></h4>
                       </td>

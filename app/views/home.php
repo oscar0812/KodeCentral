@@ -82,9 +82,6 @@
                 <table class="table table-responsive table-no-border vertical-center">
                   <tbody>
                     <tr>
-                      <td class="d-none d-sm-block">
-                        <img src="assets/img/default_pfp.png" class="avatar-50-50" alt="">
-                      </td>
                       <td style="width: <?php if($user !=null) echo '60'; else echo '70';?>%">
                         <h4 class=""><?=$post->getTitle()?></h4>
                       </td>
