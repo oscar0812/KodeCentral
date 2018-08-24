@@ -45,7 +45,7 @@
     <column name="title" phpName="Title" type="VARCHAR" size="128" required="true"/>
     <column name="hyperlink" phpName="Hyperlink" type="VARCHAR" size="128" required="true"/>
     <column name="text" phpName="Text" type="VARCHAR" size="32768" required="true"/>
-    <column name="posted_date" phpName="PostedDate" type="DATE" required="true"/>
+    <column name="posted_date" phpName="PostedDate" type="TIMESTAMP" required="true"/>
     <column name="posted_by_user_id" phpName="PostedByUserId" type="INTEGER" required="true"/>
     <column name="library_id" phpName="LibraryId" type="INTEGER" required="true"/>
     <column name="library_index" phpName="LibraryIndex" type="INTEGER" required="true"/>

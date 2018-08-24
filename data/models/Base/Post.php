@@ -486,7 +486,7 @@ abstract class Post implements ActiveRecordInterface
      * @param      string|null $format The date/time format string (either date()-style or strftime()-style).
      *                            If format is NULL, then the raw DateTime object will be returned.
      *
-     * @return string|DateTime Formatted date/time value as string or DateTime object (if format is NULL), NULL if column is NULL, and 0 if column value is 0000-00-00
+     * @return string|DateTime Formatted date/time value as string or DateTime object (if format is NULL), NULL if column is NULL, and 0 if column value is 0000-00-00 00:00:00
      *
      * @throws PropelException - if unable to parse/validate the date/time value.
      */
@@ -620,7 +620,7 @@ abstract class Post implements ActiveRecordInterface
     {
         $dt = PropelDateTime::newInstance($v, null, 'DateTime');
         if ($this->posted_date !== null || $dt !== null) {
-            if ($this->posted_date === null || $dt === null || $dt->format("Y-m-d") !== $this->posted_date->format("Y-m-d")) {
+            if ($this->posted_date === null || $dt === null || $dt->format("Y-m-d H:i:s.u") !== $this->posted_date->format("Y-m-d H:i:s.u")) {
                 $this->posted_date = $dt === null ? null : clone $dt;
                 $this->modifiedColumns[PostTableMap::COL_POSTED_DATE] = true;
             }
@@ -746,7 +746,7 @@ abstract class Post implements ActiveRecordInterface
             $this->text = (null !== $col) ? (string) $col : null;
 
             $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : PostTableMap::translateFieldName('PostedDate', TableMap::TYPE_PHPNAME, $indexType)];
-            if ($col === '0000-00-00') {
+            if ($col === '0000-00-00 00:00:00') {
                 $col = null;
             }
             $this->posted_date = (null !== $col) ? PropelDateTime::newInstance($col, null, 'DateTime') : null;

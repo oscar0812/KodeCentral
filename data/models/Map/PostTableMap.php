@@ -165,7 +165,7 @@ class PostTableMap extends TableMap
         $this->addColumn('title', 'Title', 'VARCHAR', true, 128, null);
         $this->addColumn('hyperlink', 'Hyperlink', 'VARCHAR', true, 128, null);
         $this->addColumn('text', 'Text', 'VARCHAR', true, 32768, null);
-        $this->addColumn('posted_date', 'PostedDate', 'DATE', true, null, null);
+        $this->addColumn('posted_date', 'PostedDate', 'TIMESTAMP', true, null, null);
         $this->addForeignKey('posted_by_user_id', 'PostedByUserId', 'INTEGER', 'user', 'id', true, null, null);
         $this->addForeignKey('library_id', 'LibraryId', 'INTEGER', 'library', 'id', true, null, null);
         $this->addColumn('library_index', 'LibraryIndex', 'INTEGER', true, null, null);

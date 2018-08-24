@@ -104,7 +104,7 @@ class Post extends BasePost
 
         $post->setText(preg_replace('/&nbsp;/', ' ', trim($data['text'])));
         $post->setPostedByUser(\User::current());
-        $post->setPostedDate(getCurrentDate());
+        $post->setPostedDate(getCurrentDateTime());
 
         // replace whitespace with 1 space
         $new_title = preg_replace('/\s+/', ' ', trim($data['title']));
