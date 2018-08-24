@@ -39,18 +39,14 @@
                 <table class="table table-responsive table-no-border vertical-center">
                   <tbody>
                     <tr>
-                      <td style="width: 60%">
+                      <td></td>
+                      <td style="width: 70%">
                         <h4 class=""><?=$post->getTitle()?></h4>
                       </td>
                       <td style="width: 30%">
                         <span class="color-info"><?=$post->getPostedDate()->format('F d, Y')?></span>
                       </td>
-                      <?php if(isset($user) && $user!= null && (isset($favorites) && $favorites == true)) { ?>
-                      <td style="width: 10%">
-                        <button class="btn btn-warning child-click favorite" data-fav-url="<?=$router->pathFor('user-favorites')?>" data-post-link="<?=$post->getHyperlink()?>">
-                          <i class="zmdi zmdi-star<?php if(!$user->hasPostInFavorites($post))echo "-outline";?> child-click"></i><div class="ripple-container"></div></button>
-                      </td>
-                      <?php } ?>
+
                     </tr>
                   </tbody>
                 </table>

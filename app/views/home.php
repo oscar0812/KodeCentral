@@ -82,6 +82,7 @@
                 <table class="table table-responsive table-no-border vertical-center">
                   <tbody>
                     <tr>
+                      <td></td>
                       <td style="width: <?php if($user !=null) echo '60'; else echo '70';?>%">
                         <h4 class=""><?=$post->getTitle()?></h4>
                       </td>
