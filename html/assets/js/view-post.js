@@ -12,7 +12,7 @@ $(function() {
     }
     // need this in order to show in dialog
     link.attr('c', true).attr('data-lightbox', 'gallery');
-    $(this).parent().wrap($('<div class="zoom-img">'));
+    $(this).parent().wrap($('<div>'));
 
   });
 
