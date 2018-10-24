@@ -52,13 +52,13 @@
                 <table class="table table-responsive table-no-border vertical-center">
                   <tbody>
                     <tr>
-                      <td class="d-none d-sm-block">
-                        <img src="assets/img/default_pfp.png" class="avatar-50-50" alt="">
+                      <td style="width: 20%">
+                        <h4 class="post-title">hi</h4>
                       </td>
                       <td style="width: 70%">
-                        <h4 class="post-title"></h4>
+                        <h4 class="post-text">hi</h4>
                       </td>
-                      <td style="width: 30%">
+                      <td style="width: 20%">
                         <span class="color-info post-date">August 07, 2018</span>
                       </td>
                     </tr>
@@ -108,6 +108,7 @@
                 copy = template.clone().removeClass('invisible');
                 copy.attr('data-url', post['Hyperlink']);
                 copy.find('.post-title').text(post['Title']);
+                copy.find('.post-text').text(post['Text']);
                 copy.find('.post-date').text(post['PostedDate']);
                 paste.prepend(copy);
               });

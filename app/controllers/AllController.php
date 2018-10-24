@@ -73,7 +73,17 @@ class AllController
                 unset($array[$key]['LibraryId']);
                 unset($array[$key]['LibraryIndex']);
                 unset($array[$key]['PostedByUserId']);
-                $array[$key]['Text'] = strip_tags($array[$key]['Text']);
+
+                $text = $array[$key]['Text'];
+                $max_length = 60;
+                $text = strip_tags(str_replace('<', ' <', $text));
+
+                $text = substr($text, 0, $max_length);
+                if (strlen($text) == $max_length) {
+                    $text = $text.'...';
+                }
+
+                $array[$key]['Text'] = $text;
 
                 // send back the actual link to the post
                 $link = $array[$key]['Hyperlink'];
