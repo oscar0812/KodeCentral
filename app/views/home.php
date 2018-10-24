@@ -75,28 +75,11 @@
              <div class="card card-primary animated fadeInUp animation-delay-7">
                <div class="card-header">
                  <h3 class="card-title">
-                     <i class="zmdi zmdi-apps"></i> Navigation
+                     <i class="zmdi zmdi-apps"></i> Libraries
                    </h3>
                </div>
-               <div class="card-tabs">
-                 <ul class="nav nav-tabs nav-tabs-transparent indicator-primary nav-tabs-full nav-tabs-2" role="tablist">
-
-                   <li class="nav-item">
-                     <a href="#tags" aria-controls="tags" role="tab" data-toggle="tab" class="nav-link withoutripple active">
-                         <i class="no-mr zmdi zmdi-book"></i>
-                       </a>
-                   </li>
-
-                   <li class="nav-item">
-                     <a href="#archives" aria-controls="archives" role="tab" data-toggle="tab" class="nav-link withoutripple">
-                         <i class="no-mr zmdi zmdi-time"></i>
-                       </a>
-                   </li>
-
-                 </ul>
-               </div>
                <div class="tab-content">
-                 <div role="tabpanel" class="tab-pane fade active show" id="tags">
+                 <div role="tabpanel" class="tab-pane fade active show">
                    <div class="card-body overflow-hidden text-center">
                      <?php foreach ($all_libraries as $lib){
                        $lib_name = $lib->getName();?>
@@ -105,15 +88,6 @@
                      <?php } ?>
                    </div>
                  </div>
-
-                 <div role="tabpanel" class="tab-pane fade" id="archives">
-                   <div class="list-group">
-                     <a href="javascript:void(0)" class="list-group-item list-group-item-action withripple invisible">
-                         <span> Title</span>
-                       </a>
-                   </div>
-                 </div>
-
                </div>
              </div>
            </div>
@@ -127,7 +101,6 @@
     <script src="assets/js/app.min.js"></script>
     <script src="assets/js/portfolio.js"></script>
     <script src="assets/js/component-snackbar.js"></script>
-    <script src="assets/js/js-cookie.js"></script>
     <script type="text/javascript">
 
       $(function(){
