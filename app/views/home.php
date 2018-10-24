@@ -44,41 +44,9 @@
       </div>
       <div class="container-fluid">
         <div class="row">
-          <div class="col-md-3">
-            <div class="card card-primary">
-              <div class="card-header">
-                <h3 class="card-title">
-                  <i class="zmdi zmdi-filter-list"></i>Filter List</h3>
-              </div>
-              <div class="card-body no-pb">
-                <form class="form-horizontal">
-                  <div class="form-group mt-1">
-                    <div class="radio no-mb neg-top">
-                      <label>
-                        <input type="radio" name="optionsRadios" id="optionsRadios0" value="option0" checked="" class="filter" data-filter="all"> Show All
-                      </label>
-                    </div>
-                  </div>
-
-                  <h4 class="no-m color-primary">Libraries</h4>
-                  <div class="form-group mt-1">
-
-
-                    <?php foreach($all_libraries as $library) { ?>
-                    <div class="radio no-mb">
-                      <label>
-                        <input type="radio" name="optionsRadios" id="optionsRadios<?=$library->getId()?>" value="option<?=$library->getId()?>" class="filter" data-filter=".library-<?=preg_replace('/\s+/', '-', strtolower($library->getName()))?>"> <?=$library->getName()?> </label>
-                    </div>
-                    <?php } ?>
-
-                  </div>
-                </form>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-9" id="Container">
+          <div class="col-md-9">
             <?php foreach ($posts as $post) { ?>
-              <div class="card post-card mb-1 mix library-<?=preg_replace('/\s+/', '-', strtolower($post->getLibrary()->getName()))?> col-sm-12" data-url="<?=$router->pathFor('view-post', ['hyperlink'=>$post->getHyperlink()])?>">
+              <div class="card post-card mb-1 mix col-sm-12" data-url="<?=$router->pathFor('view-post', ['hyperlink'=>$post->getHyperlink()])?>">
                 <table class="table table-responsive table-no-border vertical-center">
                   <tbody>
                     <tr>
@@ -102,6 +70,53 @@
               <!-- item -->
              <?php } ?>
            </div>
+
+           <div class="col-md-3 d-lg-block">
+             <div class="card card-primary animated fadeInUp animation-delay-7">
+               <div class="card-header">
+                 <h3 class="card-title">
+                     <i class="zmdi zmdi-apps"></i> Navigation
+                   </h3>
+               </div>
+               <div class="card-tabs">
+                 <ul class="nav nav-tabs nav-tabs-transparent indicator-primary nav-tabs-full nav-tabs-2" role="tablist">
+
+                   <li class="nav-item">
+                     <a href="#tags" aria-controls="tags" role="tab" data-toggle="tab" class="nav-link withoutripple active">
+                         <i class="no-mr zmdi zmdi-book"></i>
+                       </a>
+                   </li>
+
+                   <li class="nav-item">
+                     <a href="#archives" aria-controls="archives" role="tab" data-toggle="tab" class="nav-link withoutripple">
+                         <i class="no-mr zmdi zmdi-time"></i>
+                       </a>
+                   </li>
+
+                 </ul>
+               </div>
+               <div class="tab-content">
+                 <div role="tabpanel" class="tab-pane fade active show" id="tags">
+                   <div class="card-body overflow-hidden text-center">
+                     <?php foreach ($all_libraries as $lib){
+                       $lib_name = $lib->getName();?>
+                       <a href="<?=$router->pathFor('library', ['name'=>$lib_name])?>"
+                         class="ms-tag ms-tag-primary"><?=$lib_name?></a>
+                     <?php } ?>
+                   </div>
+                 </div>
+
+                 <div role="tabpanel" class="tab-pane fade" id="archives">
+                   <div class="list-group">
+                     <a href="javascript:void(0)" class="list-group-item list-group-item-action withripple invisible">
+                         <span> Title</span>
+                       </a>
+                   </div>
+                 </div>
+
+               </div>
+             </div>
+           </div>
         </div>
       </div>
       <!-- container-fluid -->
@@ -112,6 +127,7 @@
     <script src="assets/js/app.min.js"></script>
     <script src="assets/js/portfolio.js"></script>
     <script src="assets/js/component-snackbar.js"></script>
+    <script src="assets/js/js-cookie.js"></script>
     <script type="text/javascript">
 
       $(function(){

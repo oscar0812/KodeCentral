@@ -8,8 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <meta name="theme-color" content="#333">
-  <title>Kode Central |
-    <?=$user->getUsername()?>
+  <title>Kode Central | <?=$user->getUsername()?> | <?=$user->getBio()?>
   </title>
   <meta name="description" content="Profile for <?=$user->getUsername()?>">
   <link rel="shortcut icon" href="<?=$home?>assets/img/favicon.ico">

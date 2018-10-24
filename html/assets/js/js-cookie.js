@@ -164,3 +164,55 @@
 
   return init(function() {});
 }));
+
+$(function(){
+  // load all the posts this person has seen
+  cookie = Cookies.get('history');
+  cookie = typeof cookie == 'undefined' ? '[]' : cookie;
+  arr = $.parseJSON(cookie);
+
+  link = $('body').attr('data-hyperlink');
+  title = $('body').attr('data-title');
+
+  archives = $('#archives');
+  template = archives.find('.invisible').eq(0);
+
+  in_list = false;
+  arr.forEach(function(e) {
+    if (e.link == link) {
+      // already in list, just update the date
+      e.date = new Date();
+      in_list = true;
+    } else {
+      // now that were here, just append to the list
+      copy = template.clone().removeClass('invisible').attr('href', e.link);
+      copy.find('span').text(e.title);
+      template.before(copy);
+    }
+  });
+
+  // try to store this page on the page visited history
+  if (!in_list) {
+    arr.push({
+      link: link,
+      title: title,
+      date: new Date()
+    });
+  }
+
+  // sort by date, with newest date on top
+  arr.sort(function(x, y) {
+    var a = new Date(x.date),
+      b = new Date(y.date);
+    return b - a;
+  });
+
+  if (arr.length > 10) {
+    arr.length = 10;
+  }
+
+  Cookies.set('history', JSON.stringify(arr), {
+    expires: 30
+  });
+
+});
