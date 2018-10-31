@@ -69,4 +69,27 @@ $(function() {
     });
     return false;
   });
+
+  // block adblockers
+  // Function called if AdBlock is not detected
+  function adBlockNotDetected() {
+    //console.log('AdBlock is not enabled');
+  }
+  // Function called if AdBlock is detected
+  function adBlockDetected() {
+    console.log('AdBlock is enabled');
+    // remove text
+    $('body .container .col-lg-8').remove();
+    $("#ad-modal").modal('show');
+  }
+
+  // Recommended audit because AdBlock lock the file 'blockadblock.js'
+  // If the file is not called, the variable does not exist 'blockAdBlock'
+  // This means that AdBlock is present
+  if (typeof blockAdBlock === 'undefined') {
+    adBlockDetected();
+  } else {
+    blockAdBlock.onDetected(adBlockDetected);
+    blockAdBlock.onNotDetected(adBlockNotDetected);
+  }
 });

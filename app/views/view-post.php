@@ -3,6 +3,13 @@
 <?php $home = replaceLast('index.php/', '', $router->pathFor('home'));?>
 
 <head>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({
+      google_ad_client: "ca-pub-9871595718411376",
+      enable_page_level_ads: true
+    });
+  </script>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -208,6 +215,25 @@
         </div>
       </div>
     </div>
+
+    <div class="modal" id="ad-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false">
+      <div class="modal-dialog modal-lg animated zoomIn animated-3x" role="document">
+        <div class="modal-content">
+            <fieldset>
+              <div class="modal-header">
+                <h3 class="modal-title color-danger" id="myModalLabel">Adblocker detected</h3>
+              </div>
+              <div class="modal-body container">
+                <p>Hate ads? I do too. Please turn off any ad blockers and reload this page. Thank you.</p>
+
+              </div>
+              <div class="modal-footer">
+                <button onclick="location.reload()" type="submit" class="btn btn-success">Reload</button>
+              </div>
+            </fieldset>
+        </div>
+      </div>
+    </div>
     <!-- container -->
     <?php require_once('templates/footer.php')?>
   </div>
@@ -217,6 +243,7 @@
   <script src="<?=$home?>assets/js/app.min.js"></script>
   <script src="<?=$home?>assets/js/highlight.min.js"></script>
   <script src="<?=$home?>assets/js/js-cookie.js"></script>
+  <script src="<?=$home?>assets/js/blockadblock.js"></script>
   <script src="<?=$home?>assets/js/view-post.js"></script>
 </body>
 

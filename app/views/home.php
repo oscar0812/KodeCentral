@@ -44,6 +44,26 @@
       </div>
       <div class="container-fluid">
         <div class="row">
+          <div class="col-md-3 d-lg-block">
+            <div class="card card-primary animated fadeInUp animation-delay-7">
+              <div class="card-header">
+                <h3 class="card-title">
+                    <i class="zmdi zmdi-apps"></i> Libraries
+                  </h3>
+              </div>
+              <div class="tab-content">
+                <div role="tabpanel" class="tab-pane fade active show">
+                  <div class="card-body overflow-hidden text-center">
+                    <?php foreach ($all_libraries as $lib){
+                      $lib_name = $lib->getName();?>
+                      <a href="<?=$router->pathFor('library', ['name'=>$lib_name])?>"
+                        class="ms-tag ms-tag-primary"><?=$lib_name?></a>
+                    <?php } ?>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
           <div class="col-md-9">
             <?php foreach ($posts as $post) { ?>
               <div class="card post-card mb-1 mix col-sm-12" data-url="<?=$router->pathFor('view-post', ['hyperlink'=>$post->getHyperlink()])?>">
@@ -69,27 +89,6 @@
               </div>
               <!-- item -->
              <?php } ?>
-           </div>
-
-           <div class="col-md-3 d-lg-block">
-             <div class="card card-primary animated fadeInUp animation-delay-7">
-               <div class="card-header">
-                 <h3 class="card-title">
-                     <i class="zmdi zmdi-apps"></i> Libraries
-                   </h3>
-               </div>
-               <div class="tab-content">
-                 <div role="tabpanel" class="tab-pane fade active show">
-                   <div class="card-body overflow-hidden text-center">
-                     <?php foreach ($all_libraries as $lib){
-                       $lib_name = $lib->getName();?>
-                       <a href="<?=$router->pathFor('library', ['name'=>$lib_name])?>"
-                         class="ms-tag ms-tag-primary"><?=$lib_name?></a>
-                     <?php } ?>
-                   </div>
-                 </div>
-               </div>
-             </div>
            </div>
         </div>
       </div>
