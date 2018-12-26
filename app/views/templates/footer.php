@@ -129,7 +129,7 @@
 </aside>
 <footer class="ms-footer">
   <div class="container">
-    <p>Copyright &copy; Kode Central 2018</p>
+    <p>Copyright &copy; Aszend Digital 2018-2019</p>
   </div>
 </footer>
 <div class="btn-back-top">
