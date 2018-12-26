@@ -121,7 +121,7 @@
   </head>
   <body style="margin: 0 !important; padding: 0 !important;">
     <!-- hidden preheader text - Remember to change it! -->
-    <div style="display: none; font-size: 1px; color: #fefefe; line-height: 1px; font-family: 'Roboto', Helvetica, Arial, sans-serif; max-height: 0px; max-width: 0px; opacity: 0; overflow: hidden;mso-hide:all;"> Kode Central - <?=$name?> </div>
+    <div style="display: none; font-size: 1px; color: #fefefe; line-height: 1px; font-family: 'Roboto', Helvetica, Arial, sans-serif; max-height: 0px; max-width: 0px; opacity: 0; overflow: hidden;mso-hide:all;"> Kode Central - <?=$username?> </div>
     <!-- Include all your body email components here -->
     <!-- Hero image, title, text, cta centre -->
     <table border="0" cellpadding="0" cellspacing="0" width="100%">

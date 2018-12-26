@@ -235,7 +235,7 @@ class LoggedInController
     {
         $app->get('/logout', function ($request, $response, $args) {
             \User::logOut();
-            return $response->withRedirect($this->router->pathFor('user-login-form'));
+            return $response->withRedirect($this->router->pathFor('home'));
         })->setName('user-logout');
     }
 
@@ -254,11 +254,12 @@ class LoggedInController
         $app->post('/reset-password', function ($request, $response) {
             $params = $request->getParsedBody();
             $user = \User::current();
-            if (!isset($params['password'])) {
-                return $response->withJson(['success'=>false, 'msg'=>'Invalid data']);
+            $pass = $params['password'];
+            if (!isset($pass) || $pass == '') {
+                return $response->withJson(['success'=>false, 'msg'=>'Invalid Password']);
             }
 
-            $user->setPassword($params['password']);
+            $user->setPassword($pass);
 
             if (!$user->validate()) {
                 return $response->withJson(['success'=>false, 'msg'=>'Validation failed']);
@@ -303,7 +304,7 @@ class LoggedInController
                 return $next($request, $response);
             } else {
                 // not signed in, redirect to home page
-                return $response->withRedirect($this->router->pathFor('user-logout'));
+                return $response->withRedirect($this->router->pathFor('home'));
             }
         });
     }

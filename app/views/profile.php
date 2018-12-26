@@ -43,9 +43,7 @@
                   <?php if($user->isSuper()) { ?>
                   <h3 class="color-white index-1 text-center no-m pt-4">Status: <?=$user->getBadge()?></h3>
                   <?php } ?>
-                  <div class="color-medium index-1 text-center np-m<?=$user->isSuper()?'':' pt-4'?>">@
-                    <?=$user->getUsername()?>
-                  </div>
+                  <div class="color-medium index-1 text-center np-m<?=$user->isSuper()?'':' pt-4'?>">@<?=$user->getUsername()?></div>
                   <img src="<?=$user->getPfp($home)?>" alt="..." class="img-avatar-circle pfp">
                 </div>
                 <div class="card-body pt-4 text-center">

@@ -31,9 +31,9 @@
     <div class="ms-site-container">
       <?php require_once('templates/navbar.php')?>
       <div class="container">
-        <h1 class="right-line mb-4"><?=$title?></h1>
+        <h1 class="right-line mb-4"><?=$title?> (<?=$posts->count()?>)</h1>
         <div class="row">
-          <div class="col-md-9">
+          <div class="col-sm-12">
             <?php foreach ($posts as $post) { ?>
               <div class="card post-card mb-1 mix col-sm-12" data-url="<?=$router->pathFor('view-post', ['hyperlink'=>$post->getHyperlink()])?>">
                 <table class="table table-responsive table-no-border vertical-center">
@@ -54,6 +54,7 @@
               <!-- item -->
              <?php } ?>
           </div>
+          <!--
           <div class="col-md-3">
             <div class="card card-info">
               <div class="card-header">
@@ -71,6 +72,7 @@
 
             </div>
           </div>
+        -->
         </div>
       </div>
       <!-- container -->
