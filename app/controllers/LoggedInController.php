@@ -207,12 +207,7 @@ class LoggedInController
                 // call ImageUpload which returns an array with flags and data
                 $arr = \app\utils\ImageUpload::uploadPfp($user, $this->router->pathFor('home'));
 
-                if ($arr['success']) {
-                    // successfully uploaded image, so set the path as the
-                    // users pfp url in db
-                    $user->setProfilePicture($arr['path']);
-                    $user->save();
-                } else {
+                if (!$arr['success']) {
                     // an error occured, return the array
                     return $response->withJson($arr);
                 }

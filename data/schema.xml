@@ -71,11 +71,23 @@
       <parameter name="rule4" value="{column: posted_date, validator: NotNull}"/>
     </behavior>
   </table>
+  <table name="subscribed" idMethod="native" phpName="Subscribed">
+    <column name="id" phpName="Id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="email" phpName="Email" type="VARCHAR" size="128" required="true"/>
+    <column name="unsubscribe_key" phpName="UnsubscribeKey" type="VARCHAR" size="128" required="true"/>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+    <behavior name="validate">
+      <parameter name="rule1" value="{column: email, validator: NotNull}"/>
+      <parameter name="rule2" value="{column: email, validator: Email}"/>
+      <parameter name="rule3" value="{column: email, validator: Unique}"/>
+    </behavior>
+  </table>
   <table name="user" idMethod="native" phpName="User">
     <column name="id" phpName="Id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
     <column name="username" phpName="Username" type="VARCHAR" size="64" required="true"/>
     <column name="email" phpName="Email" type="VARCHAR" size="128" required="true"/>
-    <column name="profile_picture" phpName="ProfilePicture" type="VARCHAR" size="128" required="true"/>
     <column name="join_date" phpName="JoinDate" type="DATE" required="true"/>
     <column name="password" phpName="Password" type="CHAR" size="60" required="true"/>
     <column name="bio" phpName="Bio" type="CHAR" size="128" required="true"/>

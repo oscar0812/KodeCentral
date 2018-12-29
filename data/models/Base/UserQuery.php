@@ -23,7 +23,6 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildUserQuery orderById($order = Criteria::ASC) Order by the id column
  * @method     ChildUserQuery orderByUsername($order = Criteria::ASC) Order by the username column
  * @method     ChildUserQuery orderByEmail($order = Criteria::ASC) Order by the email column
- * @method     ChildUserQuery orderByProfilePicture($order = Criteria::ASC) Order by the profile_picture column
  * @method     ChildUserQuery orderByJoinDate($order = Criteria::ASC) Order by the join_date column
  * @method     ChildUserQuery orderByPassword($order = Criteria::ASC) Order by the password column
  * @method     ChildUserQuery orderByBio($order = Criteria::ASC) Order by the bio column
@@ -34,7 +33,6 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildUserQuery groupById() Group by the id column
  * @method     ChildUserQuery groupByUsername() Group by the username column
  * @method     ChildUserQuery groupByEmail() Group by the email column
- * @method     ChildUserQuery groupByProfilePicture() Group by the profile_picture column
  * @method     ChildUserQuery groupByJoinDate() Group by the join_date column
  * @method     ChildUserQuery groupByPassword() Group by the password column
  * @method     ChildUserQuery groupByBio() Group by the bio column
@@ -88,7 +86,6 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildUser findOneById(int $id) Return the first ChildUser filtered by the id column
  * @method     ChildUser findOneByUsername(string $username) Return the first ChildUser filtered by the username column
  * @method     ChildUser findOneByEmail(string $email) Return the first ChildUser filtered by the email column
- * @method     ChildUser findOneByProfilePicture(string $profile_picture) Return the first ChildUser filtered by the profile_picture column
  * @method     ChildUser findOneByJoinDate(string $join_date) Return the first ChildUser filtered by the join_date column
  * @method     ChildUser findOneByPassword(string $password) Return the first ChildUser filtered by the password column
  * @method     ChildUser findOneByBio(string $bio) Return the first ChildUser filtered by the bio column
@@ -102,7 +99,6 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildUser requireOneById(int $id) Return the first ChildUser filtered by the id column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildUser requireOneByUsername(string $username) Return the first ChildUser filtered by the username column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildUser requireOneByEmail(string $email) Return the first ChildUser filtered by the email column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
- * @method     ChildUser requireOneByProfilePicture(string $profile_picture) Return the first ChildUser filtered by the profile_picture column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildUser requireOneByJoinDate(string $join_date) Return the first ChildUser filtered by the join_date column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildUser requireOneByPassword(string $password) Return the first ChildUser filtered by the password column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildUser requireOneByBio(string $bio) Return the first ChildUser filtered by the bio column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
@@ -114,7 +110,6 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildUser[]|ObjectCollection findById(int $id) Return ChildUser objects filtered by the id column
  * @method     ChildUser[]|ObjectCollection findByUsername(string $username) Return ChildUser objects filtered by the username column
  * @method     ChildUser[]|ObjectCollection findByEmail(string $email) Return ChildUser objects filtered by the email column
- * @method     ChildUser[]|ObjectCollection findByProfilePicture(string $profile_picture) Return ChildUser objects filtered by the profile_picture column
  * @method     ChildUser[]|ObjectCollection findByJoinDate(string $join_date) Return ChildUser objects filtered by the join_date column
  * @method     ChildUser[]|ObjectCollection findByPassword(string $password) Return ChildUser objects filtered by the password column
  * @method     ChildUser[]|ObjectCollection findByBio(string $bio) Return ChildUser objects filtered by the bio column
@@ -219,7 +214,7 @@ abstract class UserQuery extends ModelCriteria
      */
     protected function findPkSimple($key, ConnectionInterface $con)
     {
-        $sql = 'SELECT id, username, email, profile_picture, join_date, password, bio, is_super, confirmation_key, reset_key FROM user WHERE id = :p0';
+        $sql = 'SELECT id, username, email, join_date, password, bio, is_super, confirmation_key, reset_key FROM user WHERE id = :p0';
         try {
             $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
@@ -398,31 +393,6 @@ abstract class UserQuery extends ModelCriteria
         }
 
         return $this->addUsingAlias(UserTableMap::COL_EMAIL, $email, $comparison);
-    }
-
-    /**
-     * Filter the query on the profile_picture column
-     *
-     * Example usage:
-     * <code>
-     * $query->filterByProfilePicture('fooValue');   // WHERE profile_picture = 'fooValue'
-     * $query->filterByProfilePicture('%fooValue%', Criteria::LIKE); // WHERE profile_picture LIKE '%fooValue%'
-     * </code>
-     *
-     * @param     string $profilePicture The value to use as filter.
-     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
-     *
-     * @return $this|ChildUserQuery The current query, for fluid interface
-     */
-    public function filterByProfilePicture($profilePicture = null, $comparison = null)
-    {
-        if (null === $comparison) {
-            if (is_array($profilePicture)) {
-                $comparison = Criteria::IN;
-            }
-        }
-
-        return $this->addUsingAlias(UserTableMap::COL_PROFILE_PICTURE, $profilePicture, $comparison);
     }
 
     /**

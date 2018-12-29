@@ -110,11 +110,7 @@ class User extends BaseUser
 
     public function getPfp($home)
     {
-        $pfp = $this->getProfilePicture();
-        if ($pfp == "") {
-            return $home."assets/img/default_pfp.png";
-        }
-        return $pfp;
+        return $home."assets/img/pfp/".$this->getUsername().".png";
     }
 
     public function getBio()
