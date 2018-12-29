@@ -1,9 +1,9 @@
 <?php
 
-use Base\Subscribed as BaseSubscribed;
+use Base\SubscriptionQuery as BaseSubscriptionQuery;
 
 /**
- * Skeleton subclass for representing a row from the 'subscribed' table.
+ * Skeleton subclass for performing query and update operations on the 'subscription' table.
  *
  *
  *
@@ -12,7 +12,7 @@ use Base\Subscribed as BaseSubscribed;
  * long as it does not already exist in the output directory.
  *
  */
-class Subscribed extends BaseSubscribed
+class SubscriptionQuery extends BaseSubscriptionQuery
 {
 
 }

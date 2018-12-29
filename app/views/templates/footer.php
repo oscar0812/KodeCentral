@@ -44,14 +44,15 @@
         <div class="ms-footbar-block">
           <h3 class="ms-footbar-title">Subscribe</h3>
           <p class="">Stay in the loop with our fast and easy emailing system! Just enter your address and subscribe.</p>
-          <form>
+          <form method="post" action="<?=$router->pathFor('subscribe-submit')?>" id="subscribe-footer">
             <div class="form-group label-floating mt-2 mb-1">
               <div class="input-group ms-input-subscribe">
                 <label class="control-label" for="ms-subscribe">
                   <i class="zmdi zmdi-email"></i> Email Adress</label>
-                <input type="email" id="ms-subscribe" class="form-control"> </div>
+                <input type="email" id="ms-subscribe" name="email" class="form-control" value="<?=$c_user==null?'':$c_user->getEmail()?>">
+              </div>
             </div>
-            <button class="ms-subscribre-btn" type="button">Subscribe</button>
+            <button class="footer-subscribe-btn" type="submit">Subscribe</button>
           </form>
         </div>
       </div>

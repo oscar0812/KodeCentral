@@ -2,8 +2,8 @@
 
 namespace Map;
 
-use \Subscribed;
-use \SubscribedQuery;
+use \Subscription;
+use \SubscriptionQuery;
 use Propel\Runtime\Propel;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\InstancePoolTrait;
@@ -16,7 +16,7 @@ use Propel\Runtime\Map\TableMapTrait;
 
 
 /**
- * This class defines the structure of the 'subscribed' table.
+ * This class defines the structure of the 'subscription' table.
  *
  *
  *
@@ -26,7 +26,7 @@ use Propel\Runtime\Map\TableMapTrait;
  * (i.e. if it's a text column type).
  *
  */
-class SubscribedTableMap extends TableMap
+class SubscriptionTableMap extends TableMap
 {
     use InstancePoolTrait;
     use TableMapTrait;
@@ -34,7 +34,7 @@ class SubscribedTableMap extends TableMap
     /**
      * The (dot-path) name of this class
      */
-    const CLASS_NAME = '.Map.SubscribedTableMap';
+    const CLASS_NAME = '.Map.SubscriptionTableMap';
 
     /**
      * The default database name for this class
@@ -44,22 +44,22 @@ class SubscribedTableMap extends TableMap
     /**
      * The table name for this class
      */
-    const TABLE_NAME = 'subscribed';
+    const TABLE_NAME = 'subscription';
 
     /**
      * The related Propel class for this table
      */
-    const OM_CLASS = '\\Subscribed';
+    const OM_CLASS = '\\Subscription';
 
     /**
      * A class that can be returned by this tableMap
      */
-    const CLASS_DEFAULT = 'Subscribed';
+    const CLASS_DEFAULT = 'Subscription';
 
     /**
      * The total number of columns
      */
-    const NUM_COLUMNS = 3;
+    const NUM_COLUMNS = 4;
 
     /**
      * The number of lazy-loaded columns
@@ -69,22 +69,27 @@ class SubscribedTableMap extends TableMap
     /**
      * The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS)
      */
-    const NUM_HYDRATE_COLUMNS = 3;
+    const NUM_HYDRATE_COLUMNS = 4;
 
     /**
      * the column name for the id field
      */
-    const COL_ID = 'subscribed.id';
+    const COL_ID = 'subscription.id';
 
     /**
      * the column name for the email field
      */
-    const COL_EMAIL = 'subscribed.email';
+    const COL_EMAIL = 'subscription.email';
 
     /**
-     * the column name for the unsubscribe_key field
+     * the column name for the confirmation_key field
      */
-    const COL_UNSUBSCRIBE_KEY = 'subscribed.unsubscribe_key';
+    const COL_CONFIRMATION_KEY = 'subscription.confirmation_key';
+
+    /**
+     * the column name for the is_active field
+     */
+    const COL_IS_ACTIVE = 'subscription.is_active';
 
     /**
      * The default string format for model objects of the related table
@@ -98,11 +103,11 @@ class SubscribedTableMap extends TableMap
      * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        self::TYPE_PHPNAME       => array('Id', 'Email', 'UnsubscribeKey', ),
-        self::TYPE_CAMELNAME     => array('id', 'email', 'unsubscribeKey', ),
-        self::TYPE_COLNAME       => array(SubscribedTableMap::COL_ID, SubscribedTableMap::COL_EMAIL, SubscribedTableMap::COL_UNSUBSCRIBE_KEY, ),
-        self::TYPE_FIELDNAME     => array('id', 'email', 'unsubscribe_key', ),
-        self::TYPE_NUM           => array(0, 1, 2, )
+        self::TYPE_PHPNAME       => array('Id', 'Email', 'ConfirmationKey', 'IsActive', ),
+        self::TYPE_CAMELNAME     => array('id', 'email', 'confirmationKey', 'isActive', ),
+        self::TYPE_COLNAME       => array(SubscriptionTableMap::COL_ID, SubscriptionTableMap::COL_EMAIL, SubscriptionTableMap::COL_CONFIRMATION_KEY, SubscriptionTableMap::COL_IS_ACTIVE, ),
+        self::TYPE_FIELDNAME     => array('id', 'email', 'confirmation_key', 'is_active', ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, )
     );
 
     /**
@@ -112,11 +117,11 @@ class SubscribedTableMap extends TableMap
      * e.g. self::$fieldKeys[self::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        self::TYPE_PHPNAME       => array('Id' => 0, 'Email' => 1, 'UnsubscribeKey' => 2, ),
-        self::TYPE_CAMELNAME     => array('id' => 0, 'email' => 1, 'unsubscribeKey' => 2, ),
-        self::TYPE_COLNAME       => array(SubscribedTableMap::COL_ID => 0, SubscribedTableMap::COL_EMAIL => 1, SubscribedTableMap::COL_UNSUBSCRIBE_KEY => 2, ),
-        self::TYPE_FIELDNAME     => array('id' => 0, 'email' => 1, 'unsubscribe_key' => 2, ),
-        self::TYPE_NUM           => array(0, 1, 2, )
+        self::TYPE_PHPNAME       => array('Id' => 0, 'Email' => 1, 'ConfirmationKey' => 2, 'IsActive' => 3, ),
+        self::TYPE_CAMELNAME     => array('id' => 0, 'email' => 1, 'confirmationKey' => 2, 'isActive' => 3, ),
+        self::TYPE_COLNAME       => array(SubscriptionTableMap::COL_ID => 0, SubscriptionTableMap::COL_EMAIL => 1, SubscriptionTableMap::COL_CONFIRMATION_KEY => 2, SubscriptionTableMap::COL_IS_ACTIVE => 3, ),
+        self::TYPE_FIELDNAME     => array('id' => 0, 'email' => 1, 'confirmation_key' => 2, 'is_active' => 3, ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, )
     );
 
     /**
@@ -129,16 +134,17 @@ class SubscribedTableMap extends TableMap
     public function initialize()
     {
         // attributes
-        $this->setName('subscribed');
-        $this->setPhpName('Subscribed');
+        $this->setName('subscription');
+        $this->setPhpName('Subscription');
         $this->setIdentifierQuoting(false);
-        $this->setClassName('\\Subscribed');
+        $this->setClassName('\\Subscription');
         $this->setPackage('');
         $this->setUseIdGenerator(true);
         // columns
         $this->addPrimaryKey('id', 'Id', 'INTEGER', true, null, null);
         $this->addColumn('email', 'Email', 'VARCHAR', true, 128, null);
-        $this->addColumn('unsubscribe_key', 'UnsubscribeKey', 'VARCHAR', true, 128, null);
+        $this->addColumn('confirmation_key', 'ConfirmationKey', 'CHAR', true, 32, null);
+        $this->addColumn('is_active', 'IsActive', 'BOOLEAN', true, 1, false);
     } // initialize()
 
     /**
@@ -147,19 +153,6 @@ class SubscribedTableMap extends TableMap
     public function buildRelations()
     {
     } // buildRelations()
-
-    /**
-     *
-     * Gets the list of behaviors registered for this table
-     *
-     * @return array Associative array (name => parameters) of behaviors
-     */
-    public function getBehaviors()
-    {
-        return array(
-            'validate' => array('rule1' => array ('column' => 'email','validator' => 'NotNull',), 'rule2' => array ('column' => 'email','validator' => 'Email',), 'rule3' => array ('column' => 'email','validator' => 'Unique',), ),
-        );
-    } // getBehaviors()
 
     /**
      * Retrieves a string version of the primary key from the DB resultset row that can be used to uniquely identify a row in this table.
@@ -218,7 +211,7 @@ class SubscribedTableMap extends TableMap
      */
     public static function getOMClass($withPrefix = true)
     {
-        return $withPrefix ? SubscribedTableMap::CLASS_DEFAULT : SubscribedTableMap::OM_CLASS;
+        return $withPrefix ? SubscriptionTableMap::CLASS_DEFAULT : SubscriptionTableMap::OM_CLASS;
     }
 
     /**
@@ -232,22 +225,22 @@ class SubscribedTableMap extends TableMap
      *
      * @throws PropelException Any exceptions caught during processing will be
      *                         rethrown wrapped into a PropelException.
-     * @return array           (Subscribed object, last column rank)
+     * @return array           (Subscription object, last column rank)
      */
     public static function populateObject($row, $offset = 0, $indexType = TableMap::TYPE_NUM)
     {
-        $key = SubscribedTableMap::getPrimaryKeyHashFromRow($row, $offset, $indexType);
-        if (null !== ($obj = SubscribedTableMap::getInstanceFromPool($key))) {
+        $key = SubscriptionTableMap::getPrimaryKeyHashFromRow($row, $offset, $indexType);
+        if (null !== ($obj = SubscriptionTableMap::getInstanceFromPool($key))) {
             // We no longer rehydrate the object, since this can cause data loss.
             // See http://www.propelorm.org/ticket/509
             // $obj->hydrate($row, $offset, true); // rehydrate
-            $col = $offset + SubscribedTableMap::NUM_HYDRATE_COLUMNS;
+            $col = $offset + SubscriptionTableMap::NUM_HYDRATE_COLUMNS;
         } else {
-            $cls = SubscribedTableMap::OM_CLASS;
-            /** @var Subscribed $obj */
+            $cls = SubscriptionTableMap::OM_CLASS;
+            /** @var Subscription $obj */
             $obj = new $cls();
             $col = $obj->hydrate($row, $offset, false, $indexType);
-            SubscribedTableMap::addInstanceToPool($obj, $key);
+            SubscriptionTableMap::addInstanceToPool($obj, $key);
         }
 
         return array($obj, $col);
@@ -270,18 +263,18 @@ class SubscribedTableMap extends TableMap
         $cls = static::getOMClass(false);
         // populate the object(s)
         while ($row = $dataFetcher->fetch()) {
-            $key = SubscribedTableMap::getPrimaryKeyHashFromRow($row, 0, $dataFetcher->getIndexType());
-            if (null !== ($obj = SubscribedTableMap::getInstanceFromPool($key))) {
+            $key = SubscriptionTableMap::getPrimaryKeyHashFromRow($row, 0, $dataFetcher->getIndexType());
+            if (null !== ($obj = SubscriptionTableMap::getInstanceFromPool($key))) {
                 // We no longer rehydrate the object, since this can cause data loss.
                 // See http://www.propelorm.org/ticket/509
                 // $obj->hydrate($row, 0, true); // rehydrate
                 $results[] = $obj;
             } else {
-                /** @var Subscribed $obj */
+                /** @var Subscription $obj */
                 $obj = new $cls();
                 $obj->hydrate($row);
                 $results[] = $obj;
-                SubscribedTableMap::addInstanceToPool($obj, $key);
+                SubscriptionTableMap::addInstanceToPool($obj, $key);
             } // if key exists
         }
 
@@ -302,13 +295,15 @@ class SubscribedTableMap extends TableMap
     public static function addSelectColumns(Criteria $criteria, $alias = null)
     {
         if (null === $alias) {
-            $criteria->addSelectColumn(SubscribedTableMap::COL_ID);
-            $criteria->addSelectColumn(SubscribedTableMap::COL_EMAIL);
-            $criteria->addSelectColumn(SubscribedTableMap::COL_UNSUBSCRIBE_KEY);
+            $criteria->addSelectColumn(SubscriptionTableMap::COL_ID);
+            $criteria->addSelectColumn(SubscriptionTableMap::COL_EMAIL);
+            $criteria->addSelectColumn(SubscriptionTableMap::COL_CONFIRMATION_KEY);
+            $criteria->addSelectColumn(SubscriptionTableMap::COL_IS_ACTIVE);
         } else {
             $criteria->addSelectColumn($alias . '.id');
             $criteria->addSelectColumn($alias . '.email');
-            $criteria->addSelectColumn($alias . '.unsubscribe_key');
+            $criteria->addSelectColumn($alias . '.confirmation_key');
+            $criteria->addSelectColumn($alias . '.is_active');
         }
     }
 
@@ -321,7 +316,7 @@ class SubscribedTableMap extends TableMap
      */
     public static function getTableMap()
     {
-        return Propel::getServiceContainer()->getDatabaseMap(SubscribedTableMap::DATABASE_NAME)->getTable(SubscribedTableMap::TABLE_NAME);
+        return Propel::getServiceContainer()->getDatabaseMap(SubscriptionTableMap::DATABASE_NAME)->getTable(SubscriptionTableMap::TABLE_NAME);
     }
 
     /**
@@ -329,16 +324,16 @@ class SubscribedTableMap extends TableMap
      */
     public static function buildTableMap()
     {
-        $dbMap = Propel::getServiceContainer()->getDatabaseMap(SubscribedTableMap::DATABASE_NAME);
-        if (!$dbMap->hasTable(SubscribedTableMap::TABLE_NAME)) {
-            $dbMap->addTableObject(new SubscribedTableMap());
+        $dbMap = Propel::getServiceContainer()->getDatabaseMap(SubscriptionTableMap::DATABASE_NAME);
+        if (!$dbMap->hasTable(SubscriptionTableMap::TABLE_NAME)) {
+            $dbMap->addTableObject(new SubscriptionTableMap());
         }
     }
 
     /**
-     * Performs a DELETE on the database, given a Subscribed or Criteria object OR a primary key value.
+     * Performs a DELETE on the database, given a Subscription or Criteria object OR a primary key value.
      *
-     * @param mixed               $values Criteria or Subscribed object or primary key or array of primary keys
+     * @param mixed               $values Criteria or Subscription object or primary key or array of primary keys
      *              which is used to create the DELETE statement
      * @param  ConnectionInterface $con the connection to use
      * @return int             The number of affected rows (if supported by underlying database driver).  This includes CASCADE-related rows
@@ -349,27 +344,27 @@ class SubscribedTableMap extends TableMap
      public static function doDelete($values, ConnectionInterface $con = null)
      {
         if (null === $con) {
-            $con = Propel::getServiceContainer()->getWriteConnection(SubscribedTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(SubscriptionTableMap::DATABASE_NAME);
         }
 
         if ($values instanceof Criteria) {
             // rename for clarity
             $criteria = $values;
-        } elseif ($values instanceof \Subscribed) { // it's a model object
+        } elseif ($values instanceof \Subscription) { // it's a model object
             // create criteria based on pk values
             $criteria = $values->buildPkeyCriteria();
         } else { // it's a primary key, or an array of pks
-            $criteria = new Criteria(SubscribedTableMap::DATABASE_NAME);
-            $criteria->add(SubscribedTableMap::COL_ID, (array) $values, Criteria::IN);
+            $criteria = new Criteria(SubscriptionTableMap::DATABASE_NAME);
+            $criteria->add(SubscriptionTableMap::COL_ID, (array) $values, Criteria::IN);
         }
 
-        $query = SubscribedQuery::create()->mergeWith($criteria);
+        $query = SubscriptionQuery::create()->mergeWith($criteria);
 
         if ($values instanceof Criteria) {
-            SubscribedTableMap::clearInstancePool();
+            SubscriptionTableMap::clearInstancePool();
         } elseif (!is_object($values)) { // it's a primary key, or an array of pks
             foreach ((array) $values as $singleval) {
-                SubscribedTableMap::removeInstanceFromPool($singleval);
+                SubscriptionTableMap::removeInstanceFromPool($singleval);
             }
         }
 
@@ -377,20 +372,20 @@ class SubscribedTableMap extends TableMap
     }
 
     /**
-     * Deletes all rows from the subscribed table.
+     * Deletes all rows from the subscription table.
      *
      * @param ConnectionInterface $con the connection to use
      * @return int The number of affected rows (if supported by underlying database driver).
      */
     public static function doDeleteAll(ConnectionInterface $con = null)
     {
-        return SubscribedQuery::create()->doDeleteAll($con);
+        return SubscriptionQuery::create()->doDeleteAll($con);
     }
 
     /**
-     * Performs an INSERT on the database, given a Subscribed or Criteria object.
+     * Performs an INSERT on the database, given a Subscription or Criteria object.
      *
-     * @param mixed               $criteria Criteria or Subscribed object containing data that is used to create the INSERT statement.
+     * @param mixed               $criteria Criteria or Subscription object containing data that is used to create the INSERT statement.
      * @param ConnectionInterface $con the ConnectionInterface connection to use
      * @return mixed           The new primary key.
      * @throws PropelException Any exceptions caught during processing will be
@@ -399,22 +394,22 @@ class SubscribedTableMap extends TableMap
     public static function doInsert($criteria, ConnectionInterface $con = null)
     {
         if (null === $con) {
-            $con = Propel::getServiceContainer()->getWriteConnection(SubscribedTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(SubscriptionTableMap::DATABASE_NAME);
         }
 
         if ($criteria instanceof Criteria) {
             $criteria = clone $criteria; // rename for clarity
         } else {
-            $criteria = $criteria->buildCriteria(); // build Criteria from Subscribed object
+            $criteria = $criteria->buildCriteria(); // build Criteria from Subscription object
         }
 
-        if ($criteria->containsKey(SubscribedTableMap::COL_ID) && $criteria->keyContainsValue(SubscribedTableMap::COL_ID) ) {
-            throw new PropelException('Cannot insert a value for auto-increment primary key ('.SubscribedTableMap::COL_ID.')');
+        if ($criteria->containsKey(SubscriptionTableMap::COL_ID) && $criteria->keyContainsValue(SubscriptionTableMap::COL_ID) ) {
+            throw new PropelException('Cannot insert a value for auto-increment primary key ('.SubscriptionTableMap::COL_ID.')');
         }
 
 
         // Set the correct dbName
-        $query = SubscribedQuery::create()->mergeWith($criteria);
+        $query = SubscriptionQuery::create()->mergeWith($criteria);
 
         // use transaction because $criteria could contain info
         // for more than one table (I guess, conceivably)
@@ -423,7 +418,7 @@ class SubscribedTableMap extends TableMap
         });
     }
 
-} // SubscribedTableMap
+} // SubscriptionTableMap
 // This is the static code needed to register the TableMap for this table with the main Propel class.
 //
-SubscribedTableMap::buildTableMap();
+SubscriptionTableMap::buildTableMap();

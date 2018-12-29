@@ -272,6 +272,84 @@ class AllController
         })->setName('reset-password-email');
     }
 
+    public function subscribe($app)
+    {
+        // subscribe button on footer pressed
+        $app->post('/subscribe', function ($request, $response, $args) {
+            $params = $request->getParsedBody();
+            $email = $params['email'];
+
+            // check if valid email
+            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                return $response->withJson(['success'=>false, 'msg'=>'Invalid email']);
+            }
+
+            // check if subscription with this email already exists
+            $subscription = \SubscriptionQuery::create()->findOneByEmail($email);
+            if ($subscription != null) {
+                // exists already
+                if ($subscription->isActive()) {
+                    return $reponse->withJson(['success'=>true, 'msg'=>'Already subscribed']);
+                } else {
+                    return $response->withJson(['success'=>false, 'msg'=>'Verify your email']);
+                }
+            }
+
+            // here if new subscription
+            $subscription = new \Subscription();
+            $subscription->setEmail($email);
+            $subscription->setRandomKey();
+
+            // send email
+            $mail = \app\utils\Mail::sendSubscriptionConfirmation($subscription, $this->router);
+            if ($email['success']) {
+                $subscription->save();
+                return $response->withJson(['success'=>true, 'msg'=>'Check your email!']);
+            } else {
+                return $response->withJson(['success'=>false, 'msg'=>'Email failed to send']);
+            }
+        })->setName('subscribe-submit');
+
+        // route called when subscription email clicked (callback from footer sub click)
+        $app->get('/confirm-subscription/{email}/{key}', function ($request, $response, $args) {
+            // route to subscribe to emails
+            $sub = \SubscriptionQuery::create()->findOneByEmail($args['email']);
+            if ($sub == null) {
+                // non existent subscription
+                return $response->withRedirect($this->router->pathFor('home'));
+            } elseif ($sub->getConfirmationKey() != $args['key']) {
+                // wrong key. For safety, assign a new key
+                $sub->setRandomKey();
+                $sub->save();
+                return $response->withRedirect($this->router->pathFor('home'));
+            } else {
+                // everything good
+                $sub->setIsActive(true);
+                $sub->setRandomKey();
+                $sub->save();
+            }
+        })->setName('confirm-subscription');
+
+        $app->get('/unsubscribe/{email}/{key}', function ($request, $response, $args) {
+            // route to unsubscribe to emails
+            $sub = \SubscriptionQuery::create()->findOneByEmail($args['email']);
+            if ($sub == null) {
+                // non existent subscription
+                return $response->withRedirect($this->router->pathFor('home'));
+            } elseif ($sub->getConfirmationKey() != $args['key']) {
+                // wrong key. For safety, assign a new key
+                $sub->setRandomKey();
+                $sub->save();
+                return $response->withRedirect($this->router->pathFor('home'));
+            } else {
+                // everything good
+                $sub->setIsActive(false);
+                $sub->setRandomKey();
+                $sub->save();
+            }
+        })->setName('unsubscribe');
+    }
+
     public static function setUpRouting($app)
     {
         $controller = new AllController();
@@ -289,5 +367,7 @@ class AllController
 
         $controller->confirmAccount($app);
         $controller->resetPassword($app);
+
+        $controller->subscribe($app);
     }
 }

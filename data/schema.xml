@@ -71,18 +71,17 @@
       <parameter name="rule4" value="{column: posted_date, validator: NotNull}"/>
     </behavior>
   </table>
-  <table name="subscribed" idMethod="native" phpName="Subscribed">
+  <table name="subscription" idMethod="native" phpName="Subscription">
     <column name="id" phpName="Id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
     <column name="email" phpName="Email" type="VARCHAR" size="128" required="true"/>
-    <column name="unsubscribe_key" phpName="UnsubscribeKey" type="VARCHAR" size="128" required="true"/>
+    <column name="confirmation_key" phpName="ConfirmationKey" type="CHAR" size="32" required="true"/>
+    <column name="is_active" phpName="IsActive" type="BOOLEAN" size="1" required="true" defaultValue="false"/>
+    <unique name="email">
+      <unique-column name="email"/>
+    </unique>
     <vendor type="mysql">
       <parameter name="Engine" value="InnoDB"/>
     </vendor>
-    <behavior name="validate">
-      <parameter name="rule1" value="{column: email, validator: NotNull}"/>
-      <parameter name="rule2" value="{column: email, validator: Email}"/>
-      <parameter name="rule3" value="{column: email, validator: Unique}"/>
-    </behavior>
   </table>
   <table name="user" idMethod="native" phpName="User">
     <column name="id" phpName="Id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>

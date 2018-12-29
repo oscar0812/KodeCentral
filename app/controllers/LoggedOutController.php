@@ -80,6 +80,7 @@ class LoggedOutController
                     }
                     $user->setRandomConfirmKey();
                     $user->save();
+                    // TODO: check if email was sent successfully before saving user
                     \app\utils\Mail::sendConfirmation($user, $this->router);
                     return $response->withJSON(['success'=>true, 'msg'=>'Check your email to confirm']);
                 } elseif (isset($post['Forgot'])) {
