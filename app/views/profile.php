@@ -20,6 +20,13 @@
         <script src="<?=$home?>assets/js/html5shiv.min.js"></script>
         <script src="<?=$home?>assets/js/respond.min.js"></script>
     <![endif]-->
+
+  <script type="text/javascript">
+    function pfpError(image) {
+      image.src = '/assets/img/default_pfp.png';
+    }
+  </script>
+
 </head>
 
 <body>
@@ -44,7 +51,7 @@
                   <h3 class="color-white index-1 text-center no-m pt-4">Status: <?=$user->getBadge()?></h3>
                   <?php } ?>
                   <div class="color-medium index-1 text-center np-m<?=$user->isSuper()?'':' pt-4'?>">@<?=$user->getUsername()?></div>
-                  <img src="<?=$user->getPfp($home)?>" alt="..." class="img-avatar-circle pfp">
+                  <img src="<?=$user->getPfp($home)?>" alt="..." class="img-avatar-circle pfp" onerror="pfpError(this);">
                 </div>
                 <div class="card-body pt-4 text-center">
                   <h3 class="color-primary">Bio</h3>

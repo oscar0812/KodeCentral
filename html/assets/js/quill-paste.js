@@ -13,7 +13,7 @@ $(function() {
 
       matches.forEach(function(match) {
         var split = str.split(match);
-        if (match.match(/\.(png|jpg|jpeg|gif)$/) != null) {
+        if (match.match(/\.(png|jpg|jpeg|gif|svg)$/) != null) {
           var beforeLink = split.shift();
           ops.push({
             insert: beforeLink

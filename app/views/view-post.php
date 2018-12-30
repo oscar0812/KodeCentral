@@ -21,6 +21,12 @@
         <script src="<?=$home?>assets/js/html5shiv.min.js"></script>
         <script src="<?=$home?>assets/js/respond.min.js"></script>
     <![endif]-->
+
+    <script type="text/javascript">
+      function pfpError(image) {
+        image.src = '/assets/img/default_pfp.png';
+      }
+    </script>
 </head>
 
 <body data-hyperlink="<?=$post->getHyperlink()?>" data-title="<?=$post->getTitle()?>">

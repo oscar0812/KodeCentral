@@ -110,6 +110,7 @@ class User extends BaseUser
 
     public function getPfp($home)
     {
+
         return $home."assets/img/pfp/".$this->getUsername().".png";
     }
 
