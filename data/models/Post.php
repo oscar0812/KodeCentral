@@ -77,15 +77,23 @@ class Post extends BasePost
     // for emailing (get the first image to show it next to post)
     public function getFirstImgSrc()
     {
-        $doc = new DOMDocument();
-        @$doc->loadHTML($this->getText());
+        $result = array();
+        // get all <img.../>
+        preg_match_all('/<img[^>]+>/i', $this->getText(), $result);
 
-        $tags = $doc->getElementsByTagName('img');
+        $img = array();
+        // get all src
+        foreach ($result[0] as $img_tag) {
+            preg_match_all('/(src)=("[^"]*")/i', $img_tag, $img);
+        }
 
-        foreach ($tags as $tag) {
-            //echo $tag->getAttribute('src');
-            //echo "<br/></br/>";
-            return $tag->getAttribute('src');
+        if (count($img) > 0) {
+            $m = array();
+            // get src text between ""
+            preg_match('/"([^"]+)"/', $img[0][0], $m);
+            if(count($m) > 0){
+              return $m[1];
+            }
         }
 
         return "https://kodecentral.com/assets/img/default_pfp.png";

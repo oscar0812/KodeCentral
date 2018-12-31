@@ -40,6 +40,9 @@ function url()
 
 function urlFront()
 {
+    if(!isset($_SERVER['HTTP_HOST'])){
+      return 'https://kodecentral.com';
+    }
     if (isset($_SERVER['HTTPS'])) {
         $protocol = ($_SERVER['HTTPS'] && $_SERVER['HTTPS'] != "off") ? "https" : "http";
     } else {

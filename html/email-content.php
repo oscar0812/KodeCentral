@@ -215,7 +215,7 @@
                                           <tr>
                                             <td align="center">
                                               <a style="background-color: #03A9F4; border-top: 10px solid #03A9F4; border-right: 22px solid #03A9F4; border-bottom: 8px solid #03A9F4; border-left: 22px solid #03A9F4; display: inline-block; color: #fff; font-family: 'Roboto', Helvetica, Arial, sans-serif; font-size: 14px; font-weight: normal; line-height: 24px; text-decoration: none; box-shadow: 1px 1px 1px rgba(0,0,0,0.5); text-transform: uppercase;"
-                                                href="<?=urlFront()?><?=$router->pathFor('view-post', ['hyperlink'=>$post->getHyperlink()])?>"" target="_blank">View</a>
+                                                href="<?=urlFront()."/post/".$post->getHyperlink()?>" target="_blank">View</a>
                                             </td>
                                           </tr>
                                         </table>
