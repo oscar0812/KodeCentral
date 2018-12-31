@@ -74,6 +74,23 @@ class Post extends BasePost
         return $text;
     }
 
+    // for emailing (get the first image to show it next to post)
+    public function getFirstImgSrc()
+    {
+        $doc = new DOMDocument();
+        @$doc->loadHTML($this->getText());
+
+        $tags = $doc->getElementsByTagName('img');
+
+        foreach ($tags as $tag) {
+            //echo $tag->getAttribute('src');
+            //echo "<br/></br/>";
+            return $tag->getAttribute('src');
+        }
+
+        return "https://kodecentral.com/assets/img/default_pfp.png";
+    }
+
     public function setUniqueHyperlink($link = null)
     {
         if ($link == null) {

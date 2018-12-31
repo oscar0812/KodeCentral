@@ -135,15 +135,6 @@
                     <td style="padding: 0 16px 0 16px;" align="center" valign="top">
                       <!-- content -->
                       <table border="0" cellpadding="0" cellspacing="0" width="100%">
-                        <?php if(isset($subscribed)) { ?>
-                        <tr>
-                          <td style="padding: 0 0 16px 0;" align="center">
-                            <a href="#" target="_blank">
-                              <img style="display: block; font-family: 'Roboto', Helvetica, Arial, sans-serif; color: #333333; font-size: 14px; width: 600px; height: 368px;" class="img-max" src="https://kodecentral.com/assets/img/email/img1.jpg" alt="Kode Central" width="600"
-                                height="250" border="0"> </a>
-                          </td>
-                        </tr>
-                        <?php } ?>
                         <tr>
                           <td align="center" style="padding: 0 0 8px 0; color: #03A9F4; font-family: 'Roboto', Helvetica, Arial, sans-serif; font-size: 28px; font-weight: 400; line-height: 32px;"> Kode Central </td>
                         </tr>
@@ -151,6 +142,7 @@
                           <td align="center" style="padding: 0 0 16px 0; color: #424242; font-family: 'Roboto', Helvetica, Arial, sans-serif; font-size: 16px; font-weight: normal; line-height: 28px;"><?=$body?></td>
                         </tr>
                         <tr>
+                          <?php if(isset($btn)){ ?>
                           <td>
                             <!-- Button -->
                             <table align="center" border="0" cellspacing="0" cellpadding="0" width="100%">
@@ -169,6 +161,7 @@
                             </table>
                             <!-- /Button -->
                           </td>
+                        <?php } ?>
                         </tr>
                       </table>
                     </td>
@@ -182,7 +175,7 @@
     </table>
     <!-- /Hero image, title, text, cta centre -->
     <!-- Articles title -->
-    <!--
+    <?php if(isset($posts)) { ?>
     <table border="0" cellpadding="0" cellspacing="0" width="100%">
       <tr>
         <td style="padding: 32px 0 0 0;" bgcolor="#ffffff" align="center">
@@ -190,23 +183,14 @@
             <tr>
               <td style="padding: 0 16px 0 16px;" align="center" valign="top">
                 <table border="0" cellpadding="0" cellspacing="0" width="100%">
-                  <tr>
-                    <td align="left">
-                      <table class="content-table" border="0" cellpadding="0" cellspacing="0" width="70%" align="right">
-                        <tr>
-                          <td style="padding: 0 0 16px 0; color: #03A9F4; font-family: 'Roboto', Helvetica, Arial, sans-serif; font-size: 28px; font-weight: 400; line-height: 32px;"> Today's top picks </td>
-                        </tr>
-                      </table>
-                    </td>
-                  </tr>
-
+                  <?php foreach($posts as $post) { ?>
                   <tr>
                     <td>
                       <table class="content-table" border="0" cellpadding="0" cellspacing="0" width="28%" align="left">
                         <tr>
                           <td align="center" valign="top">
                             <a href="#" target="_blank">
-                              <img style="display: block; padding: 0 0 8px 0; font-family: 'Roboto', Helvetica, Arial, sans-serif; color: #333333; font-size: 14px; width: 150px; height: 84px;" class="img-max" src="https://kodecentral.com/assets/img/email/img2.jpg" alt="Kode Central"
+                              <img style="display: block; padding: 0 0 8px 0; font-family: 'Roboto', Helvetica, Arial, sans-serif; color: #333333; font-size: 14px; width: 150px; height: 84px;" class="img-max" src="<?=$post->getFirstImgSrc()?>" alt="Kode Central"
                                 width="150" height="84" border="0"> </a>
                           </td>
                         </tr>
@@ -217,10 +201,10 @@
                           <td valign="top">
                             <table border="0" cellpadding="0" cellspacing="0" width="100%">
                               <tr>
-                                <td style="padding: 0 0 8px 0; color: #333333; font-family: 'Roboto', Helvetica, Arial, sans-serif; font-size: 20px; font-weight: normal; line-height: 30px;" align="left"> A growing community for email professionals </td>
+                                <td style="padding: 0 0 8px 0; color: #333333; font-family: 'Roboto', Helvetica, Arial, sans-serif; font-size: 20px; font-weight: normal; line-height: 30px;" align="left"><?=$post->getTitle()?> </td>
                               </tr>
                               <tr>
-                                <td style="padding: 0 0 16px 0; color: #333333; font-family: 'Roboto', Helvetica, Arial, sans-serif; font-size: 16px; font-weight: normal; line-height: 24px;" align="left"> Share knowledge, ask code questions, and learn from a growing library of articles on all things email. </td>
+                                <td style="padding: 0 0 16px 0; color: #333333; font-family: 'Roboto', Helvetica, Arial, sans-serif; font-size: 16px; font-weight: normal; line-height: 24px;" align="left"><?=$post->getSummary(120)?></td>
                               </tr>
                               <tr>
                                 <td style="padding: 0 0 32px 0;">
@@ -231,7 +215,7 @@
                                           <tr>
                                             <td align="center">
                                               <a style="background-color: #03A9F4; border-top: 10px solid #03A9F4; border-right: 22px solid #03A9F4; border-bottom: 8px solid #03A9F4; border-left: 22px solid #03A9F4; display: inline-block; color: #fff; font-family: 'Roboto', Helvetica, Arial, sans-serif; font-size: 14px; font-weight: normal; line-height: 24px; text-decoration: none; box-shadow: 1px 1px 1px rgba(0,0,0,0.5); text-transform: uppercase;"
-                                                href="#" target="_blank">Get started</a>
+                                                href="<?=urlFront()?><?=$router->pathFor('view-post', ['hyperlink'=>$post->getHyperlink()])?>"" target="_blank">View</a>
                                             </td>
                                           </tr>
                                         </table>
@@ -246,100 +230,8 @@
                       </table>
                     </td>
                   </tr>
+                  <?php } ?>
 
-                  <tr>
-                    <td>
-                      <table class="content-table" border="0" cellpadding="0" cellspacing="0" width="28%" align="left">
-                        <tr>
-                          <td align="center" valign="top">
-                            <a href="#" target="_blank">
-                              <img style="display: block; padding: 0 0 8px 0; font-family: 'Roboto', Helvetica, Arial, sans-serif; color: #333333; font-size: 14px; width: 150px; height: 84px;" class="img-max" src="https://kodecentral.com/assets/img/email/img3.jpg" alt="Kode Central"
-                                width="150" height="84" border="0"> </a>
-                          </td>
-                        </tr>
-                      </table>
-
-                      <table class="content-table" border="0" cellpadding="0" cellspacing="0" width="70%" align="right">
-                        <tr>
-                          <td valign="top">
-                            <table border="0" cellpadding="0" cellspacing="0" width="100%">
-                              <tr>
-                                <td style="padding: 0 0 8px 0; color: #333333; font-family: 'Roboto', Helvetica, Arial, sans-serif; font-size: 20px; font-weight: normal; line-height: 30px;" align="left"> A growing community for email professionals </td>
-                              </tr>
-                              <tr>
-                                <td style="padding: 0 0 16px 0; color: #333333; font-family: 'Roboto', Helvetica, Arial, sans-serif; font-size: 16px; font-weight: normal; line-height: 24px;" align="left"> Share knowledge, ask code questions, and learn from a growing library of articles on all things email. </td>
-                              </tr>
-                              <tr>
-                                <td style="padding: 0 0 32px 0;">
-                                  <table border="0" cellspacing="0" cellpadding="0" width="100%">
-                                    <tr>
-                                      <td align="left">
-                                        <table class="mobile-button-wrap" border="0" cellspacing="0" cellpadding="0">
-                                          <tr>
-                                            <td align="center">
-                                              <a style="background-color: #03A9F4; border-top: 10px solid #03A9F4; border-right: 22px solid #03A9F4; border-bottom: 8px solid #03A9F4; border-left: 22px solid #03A9F4; display: inline-block; color: #fff; font-family: 'Roboto', Helvetica, Arial, sans-serif; font-size: 14px; font-weight: normal; line-height: 24px; text-decoration: none; box-shadow: 1px 1px 1px rgba(0,0,0,0.5); text-transform: uppercase;"
-                                                href="#" target="_blank">Go</a>
-                                            </td>
-                                          </tr>
-                                        </table>
-                                      </td>
-                                    </tr>
-                                  </table>
-                                </td>
-                              </tr>
-                            </table>
-                          </td>
-                        </tr>
-                      </table>
-                    </td>
-                  </tr>
-
-                  <tr>
-                    <td>
-                      <table class="content-table" border="0" cellpadding="0" cellspacing="0" width="28%" align="left">
-                        <tr>
-                          <td align="center" valign="top">
-                            <a href="#" target="_blank">
-                              <img style="display: block; padding: 0 0 8px 0; font-family: 'Roboto', Helvetica, Arial, sans-serif; color: #333333; font-size: 14px; width: 150px; height: 84px;" class="img-max" src="https://kodecentral.com/assets/img/email/img4.jpg" alt="Kode Central"
-                                width="150" height="84" border="0"> </a>
-                          </td>
-                        </tr>
-                      </table>
-
-                      <table class="content-table" border="0" cellpadding="0" cellspacing="0" width="70%" align="right">
-                        <tr>
-                          <td valign="top">
-                            <table border="0" cellpadding="0" cellspacing="0" width="100%">
-                              <tr>
-                                <td style="padding: 0 0 8px 0; color: #333333; font-family: 'Roboto', Helvetica, Arial, sans-serif; font-size: 20px; font-weight: normal; line-height: 30px;" align="left"> A growing community for email professionals </td>
-                              </tr>
-                              <tr>
-                                <td style="padding: 0 0 16px 0; color: #333333; font-family: 'Roboto', Helvetica, Arial, sans-serif; font-size: 16px; font-weight: normal; line-height: 24px;" align="left"> Share knowledge, ask code questions, and learn from a growing library of articles on all things email. </td>
-                              </tr>
-                              <tr>
-                                <td style="padding: 0 0 32px 0;">
-                                  <table border="0" cellspacing="0" cellpadding="0" width="100%">
-                                    <tr>
-                                      <td align="left">
-                                        <table class="mobile-button-wrap" border="0" cellspacing="0" cellpadding="0">
-                                          <tr>
-                                            <td align="center">
-                                              <a style="background-color: #03A9F4; border-top: 10px solid #03A9F4; border-right: 22px solid #03A9F4; border-bottom: 8px solid #03A9F4; border-left: 22px solid #03A9F4; display: inline-block; color: #fff; font-family: 'Roboto', Helvetica, Arial, sans-serif; font-size: 14px; font-weight: normal; line-height: 24px; text-decoration: none; box-shadow: 1px 1px 1px rgba(0,0,0,0.5); text-transform: uppercase;"
-                                                href="#" target="_blank">Get started</a>
-                                            </td>
-                                          </tr>
-                                        </table>
-                                      </td>
-                                    </tr>
-                                  </table>
-                                </td>
-                              </tr>
-                            </table>
-                          </td>
-                        </tr>
-                      </table>
-                    </td>
-                  </tr>
                 </table>
               </td>
             </tr>
@@ -347,7 +239,7 @@
         </td>
       </tr>
     </table>
-    -->
+    <?php } ?>
     <!-- /Articles title -->
     <!-- Don't forget to include a footer -->
     <!-- footer full centre -->
@@ -370,7 +262,7 @@
                         <tr>
                           <td style="color: #90A4AE; font-family: 'Roboto', Helvetica, Arial, sans-serif; font-size: 14px; font-weight: normal; line-height: 21px;" align="center">
                             <?php if(isset($subscribed)) { ?>
-                            | <a style="color: #CFD8DC; text-decoration: none;" href="#"> Unsubscribe</a>
+                              <a style="color: #CFD8DC; text-decoration: none;" href="<?=$subscribed?>"> Unsubscribe</a>
                             <?php } ?>
                           </td>
                         </tr>

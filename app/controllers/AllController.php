@@ -289,7 +289,7 @@ class AllController
             if ($subscription != null) {
                 // exists already
                 if ($subscription->isActive()) {
-                    return $reponse->withJson(['success'=>true, 'msg'=>'Already subscribed']);
+                    return $response->withJson(['success'=>true, 'msg'=>'Already subscribed']);
                 } else {
                     return $response->withJson(['success'=>false, 'msg'=>'Verify your email']);
                 }
@@ -302,7 +302,7 @@ class AllController
 
             // send email
             $mail = \app\utils\Mail::sendSubscriptionConfirmation($subscription, $this->router);
-            if ($email['success']) {
+            if ($mail['success']) {
                 $subscription->save();
                 return $response->withJson(['success'=>true, 'msg'=>'Check your email!']);
             } else {
@@ -311,8 +311,9 @@ class AllController
         })->setName('subscribe-submit');
 
         // route called when subscription email clicked (callback from footer sub click)
-        $app->get('/confirm-subscription/{email}/{key}', function ($request, $response, $args) {
-            // route to subscribe to emails
+        $app->get('/subscription/{type}/{email}/{key}', function ($request, $response, $args) {
+            // route to [un]subscribe to emails
+            // type = confirm || unsubscribe
             $sub = \SubscriptionQuery::create()->findOneByEmail($args['email']);
             if ($sub == null) {
                 // non existent subscription
@@ -323,31 +324,30 @@ class AllController
                 $sub->save();
                 return $response->withRedirect($this->router->pathFor('home'));
             } else {
-                // everything good
-                $sub->setIsActive(true);
-                $sub->setRandomKey();
-                $sub->save();
-            }
-        })->setName('confirm-subscription');
+                if ($args['type'] == 'confirm') {
+                    // everything good
+                    $sub->setIsActive(true);
+                    $sub->save();
 
-        $app->get('/unsubscribe/{email}/{key}', function ($request, $response, $args) {
-            // route to unsubscribe to emails
-            $sub = \SubscriptionQuery::create()->findOneByEmail($args['email']);
-            if ($sub == null) {
-                // non existent subscription
-                return $response->withRedirect($this->router->pathFor('home'));
-            } elseif ($sub->getConfirmationKey() != $args['key']) {
-                // wrong key. For safety, assign a new key
-                $sub->setRandomKey();
-                $sub->save();
-                return $response->withRedirect($this->router->pathFor('home'));
-            } else {
-                // everything good
-                $sub->setIsActive(false);
-                $sub->setRandomKey();
-                $sub->save();
+                    $title = "Thank you for subscribing! :)";
+                    $text = "Hello ".$args['email'].'! Thank you for subscribing.
+                            You will recieve updates on work I\'ve done throughout the week
+                            and I will be happy to answer any questions you have! Welcome
+                            to the Kode Central family.';
+                } elseif ($args['type'] == 'unsubscribe') {
+                  $sub->delete();
+                  $title = "I'm sorry to see you go! :(";
+                  $text = "Hello ".$args['email'].'! You will no longer recieve updates from Kode Central.
+                  You can come back by clicking on the large \'subscribe\' button on the bottom of the page.';
+                } else{
+                  // something wrong
+                  return $response->withRedirect($this->router->pathFor('home'));
+                }
             }
-        })->setName('unsubscribe');
+
+            return $this->view->render(
+              $response, 'subscription.php', ['router'=>$this->router, 'title'=>$title, 'text'=>$text]);
+        })->setName('subscription');
     }
 
     public static function setUpRouting($app)

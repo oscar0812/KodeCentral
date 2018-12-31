@@ -24,4 +24,13 @@ class PostQuery extends BasePostQuery
         }
         return $this;
     }
+
+    public function getFromLastWeek()
+    {
+        // get last weeks date
+        $previous_week = strtotime("-1 week +1 day");
+        $start_week = strtotime("last sunday midnight", $previous_week);
+        $start_week = date("Y-m-d", $start_week);
+        return $this->filterByPostedDate(array('min'=>$start_week.' 00:00:00'));
+    }
 }
