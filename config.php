@@ -40,8 +40,8 @@ function url()
 
 function urlFront()
 {
-    if(!isset($_SERVER['HTTP_HOST'])){
-      return 'https://kodecentral.com';
+    if (!isset($_SERVER['HTTP_HOST'])) {
+        return 'https://kodecentral.com';
     }
     if (isset($_SERVER['HTTPS'])) {
         $protocol = ($_SERVER['HTTPS'] && $_SERVER['HTTPS'] != "off") ? "https" : "http";
@@ -85,6 +85,16 @@ function getCurrentDate()
 function getCurrentTime()
 {
     return getCurrentDateTime()->getTimestamp();
+}
+
+function endsWith($haystack, $needle)
+{
+    $length = strlen($needle);
+    if ($length == 0) {
+        return true;
+    }
+
+    return (substr($haystack, -$length) === $needle);
 }
 
 function getUserIP()

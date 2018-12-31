@@ -9,213 +9,133 @@
 
 <url>
   <loc>https://kodecentral.com/</loc>
-  <lastmod>2018-12-26T19:06:51+00:00</lastmod>
+  <lastmod>2018-12-31T03:41:22+00:00</lastmod>
   <priority>1.00</priority>
 </url>
 <url>
   <loc>https://kodecentral.com/account</loc>
-  <lastmod>2018-12-26T19:06:51+00:00</lastmod>
+  <lastmod>2018-12-31T03:41:22+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://kodecentral.com/all-pages</loc>
-  <lastmod>2018-12-26T19:06:51+00:00</lastmod>
+  <lastmod>2018-12-31T03:41:22+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://kodecentral.com/contact</loc>
-  <lastmod>2018-12-26T19:06:51+00:00</lastmod>
+  <lastmod>2018-12-31T03:41:22+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://kodecentral.com/faq</loc>
-  <lastmod>2018-12-26T19:06:51+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://kodecentral.com/lib/Algorithms</loc>
-  <lastmod>2018-12-26T19:06:51+00:00</lastmod>
+  <lastmod>2018-12-31T03:41:22+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://kodecentral.com/lib/Dynamic</loc>
-  <lastmod>2018-12-26T19:06:51+00:00</lastmod>
+  <lastmod>2018-12-31T03:41:22+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://kodecentral.com/lib/Java%20Bot</loc>
-  <lastmod>2018-12-26T19:06:51+00:00</lastmod>
+  <lastmod>2018-12-31T03:41:22+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://kodecentral.com/lib/Java%20Tutorial</loc>
-  <lastmod>2018-12-26T19:06:51+00:00</lastmod>
+  <lastmod>2018-12-31T03:41:22+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://kodecentral.com/lib/Programming%20Help</loc>
-  <lastmod>2018-12-26T19:06:51+00:00</lastmod>
+  <lastmod>2018-12-31T03:41:22+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://kodecentral.com/lib/Sorting%20Algorithms</loc>
+  <lastmod>2018-12-31T03:41:22+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://kodecentral.com/lib/Web%20Dev</loc>
-  <lastmod>2018-12-26T19:06:51+00:00</lastmod>
+  <lastmod>2018-12-31T03:41:22+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://kodecentral.com/lib/Website%20Hosting</loc>
-  <lastmod>2018-12-26T19:06:51+00:00</lastmod>
+  <lastmod>2018-12-31T03:41:22+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://kodecentral.com/search</loc>
-  <lastmod>2018-12-26T19:06:51+00:00</lastmod>
+  <lastmod>2018-12-31T03:41:22+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://kodecentral.com/about-us</loc>
-  <lastmod>2018-12-26T19:06:51+00:00</lastmod>
+  <lastmod>2018-12-31T03:41:22+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://kodecentral.com/post/selection-sort</loc>
-  <lastmod>2018-12-26T19:06:51+00:00</lastmod>
+  <loc>https://kodecentral.com/post/quick-sort</loc>
+  <lastmod>2018-12-31T03:41:22+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://kodecentral.com/post/transferring-files-with-filezilla</loc>
-  <lastmod>2018-12-26T19:06:51+00:00</lastmod>
+  <loc>https://kodecentral.com/post/heap-sort</loc>
+  <lastmod>2018-12-31T03:41:22+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://kodecentral.com/post/creating-a-droplet-in-digital-ocean</loc>
-  <lastmod>2018-12-26T19:06:51+00:00</lastmod>
+  <loc>https://kodecentral.com/post/bubble-sort</loc>
+  <lastmod>2018-12-31T03:41:22+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://kodecentral.com/profile/bit</loc>
-  <lastmod>2018-12-26T19:06:51+00:00</lastmod>
+  <lastmod>2018-12-31T03:41:22+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
   <loc>https://kodecentral.com/profile/Bittle</loc>
-  <lastmod>2018-12-26T19:06:51+00:00</lastmod>
+  <lastmod>2018-12-31T03:41:22+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
-  <loc>https://kodecentral.com/profile/tim</loc>
-  <lastmod>2018-12-26T19:06:51+00:00</lastmod>
+  <loc>https://kodecentral.com/post/merge-sort</loc>
+  <lastmod>2018-12-31T03:41:22+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
-  <loc>https://kodecentral.com/post/connecting-filezilla-to-digital-ocean-droplet</loc>
-  <lastmod>2018-12-26T19:06:51+00:00</lastmod>
+  <loc>https://kodecentral.com/post/selection-sort</loc>
+  <lastmod>2018-12-31T03:41:22+00:00</lastmod>
   <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://kodecentral.com/post/common-errors-in-website-hosting</loc>
-  <lastmod>2018-12-26T19:06:51+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://kodecentral.com/post/installing-composer-in-digital-ocean-droplet</loc>
-  <lastmod>2018-12-26T19:06:51+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://kodecentral.com/post/ssl-certificate</loc>
-  <lastmod>2018-12-26T19:06:51+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://kodecentral.com/post/buying-url-at-namecheap</loc>
-  <lastmod>2018-12-26T19:06:51+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://kodecentral.com/post/connecting-url-with-droplet</loc>
-  <lastmod>2018-12-26T19:06:51+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://kodecentral.com/post/introduction-to-java</loc>
-  <lastmod>2018-12-26T19:06:51+00:00</lastmod>
-  <priority>0.51</priority>
 </url>
 <url>
   <loc>https://kodecentral.com/post/summing-the-sum</loc>
-  <lastmod>2018-12-26T19:06:51+00:00</lastmod>
+  <lastmod>2018-12-31T03:41:22+00:00</lastmod>
   <priority>0.51</priority>
 </url>
 <url>
-  <loc>https://kodecentral.com/post/importing-database-using-sequel-pro</loc>
-  <lastmod>2018-12-26T19:06:51+00:00</lastmod>
+  <loc>https://kodecentral.com/profile/tim</loc>
+  <lastmod>2018-12-31T03:41:22+00:00</lastmod>
   <priority>0.51</priority>
-</url>
-<url>
-  <loc>https://kodecentral.com/profile/LVZ</loc>
-  <lastmod>2018-12-26T19:06:51+00:00</lastmod>
-  <priority>0.51</priority>
-</url>
-<url>
-  <loc>https://kodecentral.com/post/website-hosting-introduction</loc>
-  <lastmod>2018-12-26T19:06:51+00:00</lastmod>
-  <priority>0.51</priority>
-</url>
-<url>
-  <loc>https://kodecentral.com/post/accessing-your-digital-ocean-droplet-via-ssh</loc>
-  <lastmod>2018-12-26T19:06:51+00:00</lastmod>
-  <priority>0.51</priority>
-</url>
-<url>
-  <loc>https://kodecentral.com/profile/Bit</loc>
-  <lastmod>2018-12-26T19:06:51+00:00</lastmod>
-  <priority>0.41</priority>
-</url>
-<url>
-  <loc>https://kodecentral.com/post/environment-setup</loc>
-  <lastmod>2018-12-26T19:06:51+00:00</lastmod>
-  <priority>0.41</priority>
 </url>
 <url>
   <loc>https://kodecentral.com/post/partitioning-into-two-contiguous-element-subarrays-with-equal-sums</loc>
-  <lastmod>2018-12-26T19:06:51+00:00</lastmod>
+  <lastmod>2018-12-31T03:41:22+00:00</lastmod>
   <priority>0.41</priority>
 </url>
 <url>
   <loc>https://kodecentral.com/post/dynamic-programming-algorithm-for-the-traveling-salesperson</loc>
-  <lastmod>2018-12-26T19:06:51+00:00</lastmod>
+  <lastmod>2018-12-31T03:41:22+00:00</lastmod>
   <priority>0.41</priority>
 </url>
 <url>
-  <loc>https://kodecentral.com/post/basic-syntax</loc>
-  <lastmod>2018-12-26T19:06:51+00:00</lastmod>
-  <priority>0.33</priority>
-</url>
-<url>
-  <loc>https://kodecentral.com/post/datatypes</loc>
-  <lastmod>2018-12-26T19:06:51+00:00</lastmod>
-  <priority>0.26</priority>
-</url>
-<url>
-  <loc>https://kodecentral.com/post/operators</loc>
-  <lastmod>2018-12-26T19:06:51+00:00</lastmod>
-  <priority>0.21</priority>
-</url>
-<url>
-  <loc>https://kodecentral.com/post/decision-making</loc>
-  <lastmod>2018-12-26T19:06:51+00:00</lastmod>
-  <priority>0.17</priority>
-</url>
-<url>
-  <loc>https://kodecentral.com/post/loops</loc>
-  <lastmod>2018-12-26T19:06:51+00:00</lastmod>
-  <priority>0.13</priority>
-</url>
-<url>
-  <loc>https://kodecentral.com/post/classes-%26-objects</loc>
-  <lastmod>2018-12-26T19:06:51+00:00</lastmod>
-  <priority>0.11</priority>
+  <loc>https://kodecentral.com/profile/Bit</loc>
+  <lastmod>2018-12-31T03:41:22+00:00</lastmod>
+  <priority>0.41</priority>
 </url>
 
 

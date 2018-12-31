@@ -87,16 +87,20 @@ class Post extends BasePost
             preg_match_all('/(src)=("[^"]*")/i', $img_tag, $img);
         }
 
-        if (count($img) > 0) {
-            $m = array();
-            // get src text between ""
-            preg_match('/"([^"]+)"/', $img[0][0], $m);
-            if(count($m) > 0){
-              return $m[1];
-            }
+        if (count($img) == 0) {
+            return "https://kodecentral.com/assets/img/default_pfp.png";
         }
 
-        return "https://kodecentral.com/assets/img/default_pfp.png";
+        foreach ($img[0] as $im) {
+            $m = array();
+            // get src text between ""
+            preg_match('/"([^"]+)"/', $im, $m);
+            if (isset($m[1])) {
+                if (!endsWith($m[1], '.svg')) {
+                    return $m[1];
+                }
+            }
+        }
     }
 
     public function setUniqueHyperlink($link = null)
