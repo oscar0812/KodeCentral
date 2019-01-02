@@ -34,12 +34,28 @@ $container['notFoundHandler'] = function ($c) {
     };
 };
 
-$app->get('/test', function ($request, $response, $args) {
+$app->get('/sitemap.xml', function ($request, $response, $args) {
+    /*
+    $arr = array();
+    foreach ($this->router->getRoutes() as $r) {
+        array_push($arr, $r->getPattern());
+    }
+
+    echo json_encode($arr);
+    return $response;
+    */
+
+    // took 2 days to find this line to output xml...
+    $response = $response->withHeader('Content-type', 'application/xml');
+
+    $posts = \PostQuery::create()->find();
+    $users = \UserQuery::create()->find();
+    $libs = \LibraryQuery::create()->find();
     return $this->view->render(
-      $response,
-      'test.php',
-      ['router'=>$this->router]
-  );
+          $response,
+          'sitemap.php',
+          ['router'=>$this->router, 'posts'=>$posts, 'users'=>$users, 'libs'=>$libs]
+      );
 });
 
 app\controllers\AllController::setUpRouting($app);

@@ -4,48 +4,62 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "cd3e6d5ab5c0f8d1282247db30555abc",
+    "content-hash": "181572c82ae6a68212de4befe42e87f0",
     "packages": [
         {
-            "name": "ckeditor/ckeditor",
-            "version": "dev-full/4.3.x",
+            "name": "akrabat/rka-content-type-renderer",
+            "version": "0.8.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/ckeditor/ckeditor-releases.git",
-                "reference": "252e512e911f21d880ea542fe162c4643885b317"
+                "url": "https://github.com/akrabat/rka-content-type-renderer.git",
+                "reference": "9b125eb7e92ea34ab374891e9cf1b1ddb2cd6ee5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ckeditor/ckeditor-releases/zipball/252e512e911f21d880ea542fe162c4643885b317",
-                "reference": "252e512e911f21d880ea542fe162c4643885b317",
+                "url": "https://api.github.com/repos/akrabat/rka-content-type-renderer/zipball/9b125eb7e92ea34ab374891e9cf1b1ddb2cd6ee5",
+                "reference": "9b125eb7e92ea34ab374891e9cf1b1ddb2cd6ee5",
                 "shasum": ""
             },
+            "require": {
+                "psr/http-message": "^1.0",
+                "willdurand/negotiation": "^2.0"
+            },
+            "require-dev": {
+                "crell/api-problem": "^2.0",
+                "nocarrier/hal": "^0.9.11",
+                "phpunit/phpunit": "^6.0",
+                "squizlabs/php_codesniffer": "^2.3",
+                "zendframework/zend-diactoros": "^1.1"
+            },
+            "suggest": {
+                "crell/api-problem": "For creating Api-Problem (RFC7801) data that can be rendered using ApiProblemRenderer",
+                "nocarrier/hal": "For creating HAL documents that can be rendered using HalRenderer"
+            },
             "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "RKA\\ContentTypeRenderer\\": "src"
+                }
+            },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "GPL-2.0+",
-                "LGPL-2.1+",
-                "MPL-1.1+"
+                "BSD-3-Clause"
             ],
             "authors": [
                 {
-                    "name": "CKSource - Frederico Knabben",
-                    "homepage": "http://cksource.com"
+                    "name": "Rob Allen",
+                    "email": "rob@akrabat.com",
+                    "homepage": "http://akrabat.com"
                 }
             ],
-            "description": "JavaScript WYSIWYG web text editor.",
-            "homepage": "http://ckeditor.com",
+            "description": "Render an array to a JSON/XML/HTML PSR-7 Response based on a PSR-7 Request's Accept header.",
+            "homepage": "http://github.com/akrabat/rka-content-type-renderer",
             "keywords": [
-                "CKEditor",
-                "editor",
-                "fckeditor",
-                "html",
-                "javascript",
-                "richtext",
-                "text",
-                "wysiwyg"
+                "json",
+                "psr7",
+                "xml"
             ],
-            "time": "2014-04-24T09:17:22+00:00"
+            "time": "2018-03-04T09:12:35+00:00"
         },
         {
             "name": "container-interop/container-interop",
@@ -797,54 +811,6 @@
             "time": "2016-10-10T12:19:37+00:00"
         },
         {
-            "name": "rych/phpass",
-            "version": "v3.0.0beta1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/rchouinard/phpass.git",
-                "reference": "f94d30f6ea9ead98ea9497818cbbb28db730ea7d"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/rchouinard/phpass/zipball/f94d30f6ea9ead98ea9497818cbbb28db730ea7d",
-                "reference": "f94d30f6ea9ead98ea9497818cbbb28db730ea7d",
-                "shasum": ""
-            },
-            "require": {
-                "ext-hash": "*",
-                "php": ">=5.3.8"
-            },
-            "suggest": {
-                "ext-mcrypt": "The Mcrypt extension is used as a source of cryptographically strong random data in the absence of ext-openssl.",
-                "ext-openssl": "The OpenSSL extension is used as the default source of cryptographically strong random data."
-            },
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "PHPassLib": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Ryan Chouinard",
-                    "email": "rchouinard@gmail.com",
-                    "homepage": "http://ryanchouinard.com"
-                }
-            ],
-            "description": "PHP Password Library: Easy, secure password management for PHP",
-            "homepage": "https://github.com/rchouinard/phpass",
-            "keywords": [
-                "cryptography",
-                "password",
-                "security"
-            ],
-            "time": "2012-08-14T03:45:21+00:00"
-        },
-        {
             "name": "slim/php-view",
             "version": "2.2.0",
             "source": {
@@ -1521,15 +1487,65 @@
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
             "time": "2018-07-26T11:24:31+00:00"
+        },
+        {
+            "name": "willdurand/negotiation",
+            "version": "v2.3.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/willdurand/Negotiation.git",
+                "reference": "03436ededa67c6e83b9b12defac15384cb399dc9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/willdurand/Negotiation/zipball/03436ededa67c6e83b9b12defac15384cb399dc9",
+                "reference": "03436ededa67c6e83b9b12defac15384cb399dc9",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.5"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.3-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Negotiation\\": "src/Negotiation"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "William Durand",
+                    "email": "will+git@drnd.me"
+                }
+            ],
+            "description": "Content Negotiation tools for PHP provided as a standalone library.",
+            "homepage": "http://williamdurand.fr/Negotiation/",
+            "keywords": [
+                "accept",
+                "content",
+                "format",
+                "header",
+                "negotiation"
+            ],
+            "time": "2017-05-14T17:21:12+00:00"
         }
     ],
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "propel/propel": 20,
-        "rych/phpass": 10,
-        "ckeditor/ckeditor": 20
+        "propel/propel": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

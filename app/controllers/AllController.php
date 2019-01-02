@@ -39,7 +39,7 @@ class AllController
               'post-list.php',
               ['router'=>$this->router,
               'posts'=>\PostQuery::create()->  orderByLibraryIndex()->findByLibrary($lib),
-              'title'=>'Library: '.$lib->getName()]
+              'title'=> $lib->getName()]
           );
         })->setName('library');
     }
