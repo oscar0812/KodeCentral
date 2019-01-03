@@ -191,6 +191,9 @@ $(function(){
     }
   });
 
+  // remove template
+  archives.find('a[href="#"]').remove();
+
   // try to store this page on the page visited history
   if (!in_list) {
     arr.push({

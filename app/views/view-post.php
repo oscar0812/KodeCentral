@@ -203,7 +203,7 @@
 
               <div role="tabpanel" class="tab-pane fade" id="archives">
                 <div class="list-group">
-                  <a href="javascript:void(0)" class="list-group-item list-group-item-action withripple invisible">
+                  <a href="#" class="list-group-item list-group-item-action withripple invisible">
                       <span> Title</span>
                     </a>
                 </div>
@@ -223,7 +223,7 @@
                 <h3 class="modal-title color-danger" id="myModalLabel">Adblocker detected</h3>
               </div>
               <div class="modal-body container">
-                <p>Hate ads? I do too. Please turn off any ad blockers and reload this page. Thank you.</p>
+                <p>Hate ads? I do too, but ads help me run this website. Please turn off any ad blockers and reload this page. Thank you.</p>
 
               </div>
               <div class="modal-footer">
