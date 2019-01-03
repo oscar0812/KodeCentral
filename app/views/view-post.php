@@ -174,10 +174,15 @@
                 </h3>
             </div>
             <div class="card-tabs">
-              <ul class="nav nav-tabs nav-tabs-transparent indicator-primary nav-tabs-full nav-tabs-2" role="tablist">
+              <ul class="nav nav-tabs nav-tabs-transparent indicator-primary nav-tabs-full nav-tabs-3" role="tablist">
+                <li class="nav-item">
+                  <a href="#posts" aria-controls="posts" role="tab" data-toggle="tab" class="nav-link withoutripple active">
+                      <i class="no-mr zmdi zmdi-format-list-bulleted"></i>
+                    </a>
+                </li>
 
                 <li class="nav-item">
-                  <a href="#tags" aria-controls="tags" role="tab" data-toggle="tab" class="nav-link withoutripple active">
+                  <a href="#tags" aria-controls="tags" role="tab" data-toggle="tab" class="nav-link withoutripple">
                       <i class="no-mr zmdi zmdi-book"></i>
                     </a>
                 </li>
@@ -191,7 +196,19 @@
               </ul>
             </div>
             <div class="tab-content">
-              <div role="tabpanel" class="tab-pane fade active show" id="tags">
+              <div role="tabpanel" class="tab-pane fade active show" id="posts">
+                <div class="list-group">
+                  <?php foreach ($all_posts as $p):
+                    $link = $router->pathFor('view-post', ['hyperlink'=>$p->getHyperlink()])?>
+                    <a href="<?=$link?>" class="list-group-item list-group-item-action withripple <?=$p == $post?"active":""?>">
+                        <span> <?=$p->getTitle()?></span>
+                      </a>
+                  <?php endforeach; ?>
+
+                </div>
+              </div>
+
+              <div role="tabpanel" class="tab-pane fade" id="tags">
                 <div class="card-body overflow-hidden text-center">
                   <?php foreach ($all_libraries as $lib){
                     $lib_name = $lib->getName();?>

@@ -191,7 +191,8 @@ class AllController
                 'view-post.php',
                 ['router'=>$this->router, 'post'=>$post, 'comments'=>$comments,
                 'user'=>\User::current(), 'all_libraries'=>\LibraryQuery::create(),
-                'lib_name'=>$lib->getName(), 'prev'=>$prev, 'next'=>$next]
+                'lib_name'=>$lib->getName(), 'prev'=>$prev, 'next'=>$next,
+                'all_posts'=>$query->orderByLibraryIndex()]
             );
         })->setName('view-post');
     }
