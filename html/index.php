@@ -45,16 +45,21 @@ $app->get('/sitemap.xml', function ($request, $response, $args) {
     return $response;
     */
 
-    // took 2 days to find this line to output xml...
+    // to render xml
     $response = $response->withHeader('Content-type', 'application/xml');
 
+    // base urls
+    $urls = ["/","/search","/contact","/about-us","/faq","/all-pages"];
+
+    // variables that have children links
+    // ex: post/{post-link}
     $posts = \PostQuery::create()->find();
     $users = \UserQuery::create()->find();
     $libs = \LibraryQuery::create()->find();
     return $this->view->render(
           $response,
           'sitemap.php',
-          ['router'=>$this->router, 'posts'=>$posts, 'users'=>$users, 'libs'=>$libs]
+          ['router'=>$this->router, 'urls'=>$urls, 'posts'=>$posts, 'users'=>$users, 'libs'=>$libs]
       );
 });
 

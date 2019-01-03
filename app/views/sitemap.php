@@ -1,15 +1,10 @@
 <?php
 $base_url = 'https://kodecentral.com';
-echo '<?xml version="1.0" encoding="UTF-8"?>
-<urlset
-      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
-            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">' . PHP_EOL;
 
-// base urls
-$urls = ["/","/search","/contact","/about-us","/faq","/all-pages"];
-$c = 0;
+// basic xml header info
+echo '<?xml version="1.0" encoding="UTF-8"?>'.PHP_EOL.
+'<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' . PHP_EOL;
+
 foreach ($urls as $url) {
     echo '<url>' . PHP_EOL;
     echo '<loc>'.$base_url.$url.'</loc>' . PHP_EOL;
@@ -41,5 +36,5 @@ foreach ($libs as $lib) {
     echo '</url>' . PHP_EOL;
 }
 
-
+// close tag
 echo '</urlset>' . PHP_EOL;
