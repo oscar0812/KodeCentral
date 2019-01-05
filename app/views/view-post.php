@@ -8,7 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <meta name="theme-color" content="#333">
-  <title><?=$post->getLibrary()->getName()?> | <?=$post->getTitle()?>
+  <title><?=$post->getTitle()?> | <?=$post->getLibrary()->getName()?>
   </title>
   <meta name="description" content="<?=$post->getSummary(300)?>">
   <link rel="shortcut icon" href="<?=$home?>assets/img/favicon.ico">
