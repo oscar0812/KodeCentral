@@ -58,6 +58,7 @@
                   <p class="bio-text">
                     <?=$user->getBio()?>
                   </p>
+                  <!--
                   <a href="javascript:void(0)" class="btn-circle btn-circle-raised btn-circle-xs mt-1 mr-1 no-mr-md btn-facebook">
                       <i class="zmdi zmdi-facebook"></i>
                     </a>
@@ -67,6 +68,7 @@
                   <a href="javascript:void(0)" class="btn-circle btn-circle-raised btn-circle-xs mt-1 mr-1 no-mr-md btn-instagram">
                       <i class="zmdi zmdi-instagram"></i>
                     </a>
+                  -->
                 </div>
               </div>
             </div>
@@ -218,6 +220,7 @@
                       <p class="bio-text">
                         <?=$user->getBio()?>
                       </p>
+                      <!--
                       <a href="javascript:void(0)" class="btn-circle btn-circle-raised btn-circle-xs mt-1 mr-1 no-mr-md btn-facebook">
                           <i class="zmdi zmdi-facebook"></i>
                         </a>
@@ -227,6 +230,7 @@
                       <a href="javascript:void(0)" class="btn-circle btn-circle-raised btn-circle-xs mt-1 mr-1 no-mr-md btn-instagram">
                           <i class="zmdi zmdi-instagram"></i>
                         </a>
+                      -->
                     </div>
                   </div>
                 </li>

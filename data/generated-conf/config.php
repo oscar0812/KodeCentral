@@ -6,7 +6,7 @@ $manager = new \Propel\Runtime\Connection\ConnectionManagerSingle();
 $manager->setConfiguration(array (
   'dsn' => 'mysql:host=127.0.0.1;port=3306;dbname=kodeCentral',
   'user' => 'root',
-  'password' => '',
+  'password' => 'e41d510c31a1068226592d18b0f928c04cfcf0b8708e7ca0',
   'settings' =>
   array (
     'charset' => 'utf8',
