@@ -5,4 +5,4 @@ chmod 755 html/assets/js/*
 chmod 755 html/assets/css/*
 composer dump-autoload -o
 crontab -r
-crontab /var/www/crontab.txt
+crontab /var/www/cron.txt
