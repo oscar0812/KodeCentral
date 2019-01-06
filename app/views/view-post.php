@@ -24,7 +24,7 @@
 
     <script type="text/javascript">
       function pfpError(image) {
-        image.src = '/assets/img/default_pfp.png';
+        image.src = '../assets/img/default_pfp.png';
       }
     </script>
 </head>
@@ -50,7 +50,7 @@
               <div class="mb-4" id="user-info">
                 <?php $username = $post->getPostedByUser()->getUsername();?>
                 <a href="<?=$router->pathFor('user-profile', ['username'=>$username])?>" class="btn-circle mr-2">
-                    <img src="<?=$post->getPostedByUser()->getPfp($home)?>" alt="..." class="img-circle mr-1 avatar-50-50">
+                    <img src="<?=$post->getPostedByUser()->getPfp($home)?>" alt="..." class="img-circle mr-1 avatar-50-50"  onerror="pfpError(this);">
                     <?=$post->getPostedByUser()->getBadge()?>
                   </a> by
                 <a href="<?=$router->pathFor('user-profile', ['username'=>$username])?>">
@@ -119,7 +119,7 @@
               <div class="invisible" id="comment-template">
                 <div class="ms-icon-feature-icon">
                   <a href="<?=$router->pathFor('user-profile', ['username'=>$user->getUsername()])?>" class="btn-circle mr-2">
-                      <img src="<?=$user->getPfp($home)?>" alt="..." class="img-circle mr-1 avatar-50-50">
+                      <img src="<?=$user->getPfp($home)?>" alt="..." class="img-circle mr-1 avatar-50-50"  onerror="pfpError(this);">
                       <?=$user->getBadge()?>
                     </a>
                 </div>
@@ -134,7 +134,7 @@
               <div class="ms-icon-feature">
                 <div class="ms-icon-feature-icon">
                   <a href="<?=$router->pathFor('user-profile', ['username'=>$comment->getUser()->getUsername()])?>" class="btn-circle mr-2">
-                        <img src="<?=$comment->getUser()->getPfp($home)?>" alt="..." class="img-circle mr-1 avatar-50-50">
+                        <img src="<?=$comment->getUser()->getPfp($home)?>" alt="..." class="img-circle mr-1 avatar-50-50" onerror="pfpError(this);">
                         <?=$comment->getUser()->getBadge()?>
                       </a>
                 </div>
@@ -200,7 +200,7 @@
                 <div class="list-group">
                   <?php foreach ($all_posts as $p):
                     $link = $router->pathFor('view-post', ['hyperlink'=>$p->getHyperlink()])?>
-                    <a href="<?=$link?>" class="list-group-item list-group-item-action withripple <?=$p == $post?"active":""?>">
+                    <a href="<?=$link?>" class="list-group-item list-group-item-action withripple <?=$p == $post?"bold":""?>">
                         <span> <?=$p->getTitle()?></span>
                       </a>
                   <?php endforeach; ?>

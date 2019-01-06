@@ -7810,7 +7810,7 @@ pre[class*=language-] {
   color: #fbc02d
 }
 
-.token.important, .token.bold {
+.token.important, .token.bold, .bold {
   font-weight: 700
 }
 

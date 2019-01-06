@@ -189,7 +189,7 @@
                       <table class="content-table" border="0" cellpadding="0" cellspacing="0" width="28%" align="left">
                         <tr>
                           <td align="center" valign="top">
-                            <a href="#" target="_blank">
+                            <a href="<?=urlFront()."/post/".$post->getHyperlink()?>" target="_blank">
                               <img style="display: block; padding: 0 0 8px 0; font-family: 'Roboto', Helvetica, Arial, sans-serif; color: #333333; font-size: 14px; width: 150px; height: 84px;" class="img-max" src="<?=$post->getFirstImgSrc()?>" alt="Kode Central"
                                 width="150" height="84" border="0"> </a>
                           </td>

@@ -24,6 +24,19 @@ class User extends BaseUser
         return $key == null || $key == "";
     }
 
+    public function subscribe()
+    {
+        try {
+            $sub = new \Subscription();
+            $sub->setEmail($this->getEmail());
+            $sub->setIsActive(true);
+            $sub->setRandomKey();
+            $sub->save();
+        } catch (Exception $e) {
+            // error subscribing user
+        }
+    }
+
     public function confirm()
     {
         $this->setConfirmationkey('');
@@ -110,7 +123,6 @@ class User extends BaseUser
 
     public function getPfp($home)
     {
-
         return $home."assets/img/pfp/".$this->getUsername().".png";
     }
 

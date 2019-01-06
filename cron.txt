@@ -1,1 +1,1 @@
-0 4 * * 1 php /var/sendEmails.php
+0 4 * * 0 php /var/sendEmails.php

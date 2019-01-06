@@ -23,7 +23,7 @@
 
   <script type="text/javascript">
     function pfpError(image) {
-      image.src = '/assets/img/default_pfp.png';
+      image.src = '../assets/img/default_pfp.png';
     }
   </script>
 
@@ -212,7 +212,7 @@
                       <div class="color-medium index-1 text-center np-m">@
                         <?=$user->getUsername()?>
                       </div>
-                      <img src="<?=$user->getPfp($home)?>" alt="..." class="img-avatar-circle pfp"> </div>
+                      <img src="<?=$user->getPfp($home)?>" alt="..." class="img-avatar-circle pfp" onerror="pfpError(this);"> </div>
                     <div class="card-body pt-4 text-center">
                       <h3 class="color-primary">Bio</h3>
                       <p class="bio-text">

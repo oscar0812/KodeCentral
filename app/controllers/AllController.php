@@ -244,6 +244,8 @@ class AllController
                 return $response->withRedirect($this->router->pathFor('home'));
             } else {
                 // everything good. Just confirm user and redirect them to their profile
+                // subscribe by default
+                $user->subscribe();
                 $user->confirm();
                 $user->login();
                 $profile = $this->router->pathFor('user-profile', ['username'=>$user->getUsername()]);
