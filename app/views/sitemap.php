@@ -15,7 +15,7 @@ foreach ($urls as $url) {
 // posts
 foreach ($posts as $post) {
     echo '<url>' . PHP_EOL;
-    echo '<loc>'.$base_url.'/post/'. urlencode($post->getHyperlink()) .'</loc>' . PHP_EOL;
+    echo '<loc>'.$base_url.'/post/'. $post->getHyperlink() .'</loc>' . PHP_EOL;
     echo '<changefreq>daily</changefreq>' . PHP_EOL;
     echo '</url>' . PHP_EOL;
 }
