@@ -42,7 +42,7 @@
     <?php require_once('templates/navbar.php')?>
     <div class="container">
       <div class="row">
-        <div class="col-lg-8">
+        <div class="col-lg-9">
           <div class="card animated fadeInLeftTiny animation-delay-5">
             <div class="card-body card-body-big">
               <h1 class="no-mt"><?=$post->getTitle()?></h1>
@@ -166,8 +166,8 @@
           </div>
 
         </div>
-        <div class="col-lg-4 d-none d-lg-block">
-          <div class="card card-primary animated fadeInUp animation-delay-7">
+        <div class="col-lg-3 d-none d-lg-block">
+          <div class="card card-primary animated fadeInUp animation-delay-7 sticky-top">
             <div class="card-header">
               <h3 class="card-title">
                   <i class="zmdi zmdi-apps"></i> Navigation
