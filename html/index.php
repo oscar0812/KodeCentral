@@ -35,17 +35,6 @@ $container['notFoundHandler'] = function ($c) {
 };
 
 $app->get('/sitemap.xml', function ($request, $response, $args) {
-    /*
-    $arr = array();
-    foreach ($this->router->getRoutes() as $r) {
-        array_push($arr, $r->getPattern());
-    }
-
-    echo json_encode($arr);
-    return $response;
-    */
-
-    // to render xml
     $response = $response->withHeader('Content-type', 'application/xml');
 
     // base urls
