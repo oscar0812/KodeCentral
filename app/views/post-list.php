@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="theme-color" content="#333">
     <title>Kode Central | <?=$title?></title>
-    <meta name="description" content="All libary posts in one place">
+    <meta name="description" content="<?=$posts[0]->getSummary(120)?>">
     <link rel="shortcut icon" href="<?=$home?>assets/img/favicon.ico">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="<?=$home?>assets/css/preload.min.css">
