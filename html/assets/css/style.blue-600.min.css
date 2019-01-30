@@ -4,6 +4,18 @@
   display: none !important;
 }
 
+#scroll-right-nav {
+    max-height: 80vh;
+    overflow: auto;
+}
+
+/* fill up the screen when on bigger screens */
+@media (min-width: 1000px){
+  .ms-site-container>.container {
+    max-width: 2000;
+  }
+}
+
 [data-url] {
   cursor: pointer !important;
 }

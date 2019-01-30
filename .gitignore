@@ -1,3 +1,4 @@
 vendor/*
 html/assets/img/pfp/*
+app/utils/Mail.php
 data/generated-conf/config.php

@@ -167,7 +167,7 @@
 
         </div>
         <div class="col-lg-3 d-none d-lg-block">
-          <div class="card card-primary animated fadeInUp animation-delay-7 sticky-top">
+          <div class="card card-primary sticky-top">
             <div class="card-header">
               <h3 class="card-title">
                   <i class="zmdi zmdi-apps"></i> Navigation
@@ -195,7 +195,7 @@
 
               </ul>
             </div>
-            <div class="tab-content">
+            <div class="tab-content" id="scroll-right-nav">
               <div role="tabpanel" class="tab-pane fade active show" id="posts">
                 <div class="list-group">
                   <?php foreach ($all_posts as $p):
