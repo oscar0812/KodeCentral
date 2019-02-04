@@ -19,8 +19,10 @@ class PostQuery extends BasePostQuery
     public function search($text)
     {
         if (trim($text) != "") {
-            $this->filterByTitle("%".$text."%", Criteria::LIKE)->
-            _or()->filterByText("%".$text."%", Criteria::LIKE);
+            // make the search case insensitive
+            $text = '%'.strtoupper($text).'%';
+            $this->where('UPPER(Post.Title) like ?', $text)
+            ->_or()->where('UPPER(Post.Text) like ?', $text);
         }
         return $this;
     }

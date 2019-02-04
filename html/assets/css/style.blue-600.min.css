@@ -11,8 +11,8 @@
 
 /* fill up the screen when on bigger screens */
 @media (min-width: 1000px){
-  .ms-site-container>.container {
-    max-width: 2000;
+  .container {
+    max-width: 1300px;
   }
 }
 

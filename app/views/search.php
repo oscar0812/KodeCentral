@@ -112,6 +112,8 @@
                 copy.find('.post-date').text(post['PostedDate']);
                 paste.prepend(copy);
               });
+              
+              // change url in case of reload
               beginning = [location.protocol, '//', location.host, location.pathname].join('');
               newUrl = beginning+"?text="+searchThis;
               window.history.pushState(null, '', newUrl);
