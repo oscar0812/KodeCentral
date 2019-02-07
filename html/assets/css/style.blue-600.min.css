@@ -9,6 +9,16 @@
     overflow: auto;
 }
 
+.highlight {
+  color: #1e88e5;
+  text-decoration: none;
+  border-bottom: 1px solid #1e88e5;
+}
+
+.highlight:hover {
+  border-bottom: 2px solid #1e88e5;
+}
+
 /* fill up the screen when on bigger screens */
 @media (min-width: 1000px){
   .container {

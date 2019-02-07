@@ -78,10 +78,12 @@ class AllController
                 $max_length = 60;
                 $text = strip_tags(str_replace('<', ' <', $text));
 
+                /*
                 $text = substr($text, 0, $max_length);
                 if (strlen($text) == $max_length) {
                     $text = $text.'...';
                 }
+                */
 
                 $array[$key]['Text'] = $text;
 

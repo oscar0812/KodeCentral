@@ -78,64 +78,8 @@
     <?php require_once('templates/slidebar.php')?>
     <script src="assets/js/plugins.min.js"></script>
     <script src="assets/js/app.min.js"></script>
+    <script src="assets/js/highlight-text.js"></script>
 
-    <script type="text/javascript">
-
-      $(function() {
-        button = $('#search-button');
-        template = $('#template');
-        paste = $('#paste');
-
-        function goFetchPosts(searchThis) {
-          if(searchThis == '') return;
-
-          button.attr('disabled', true);
-          paste.children().remove();
-          button.find('span').text('Searching...');
-
-          $.ajax({
-            type: "POST",
-            data: {
-              text: searchThis
-            },
-            url: "",
-            dataType: "json",
-            success: function(data) {
-              button.attr('disabled', false);
-              button.find('span').text('Search');
-
-              $.each(data, function(i, post){
-                copy = template.clone().removeClass('invisible');
-                copy.attr('data-url', post['Hyperlink']);
-                copy.find('.post-title').text(post['Title']);
-                copy.find('.post-text').text(post['Text']);
-                copy.find('.post-date').text(post['PostedDate']);
-                paste.prepend(copy);
-              });
-              
-              // change url in case of reload
-              beginning = [location.protocol, '//', location.host, location.pathname].join('');
-              newUrl = beginning+"?text="+searchThis;
-              window.history.pushState(null, '', newUrl);
-            }
-          });
-        }
-
-        searchThis = $('#main-text');
-        goFetchPosts(searchThis.val());
-
-        button.on('click', function(){
-          goFetchPosts(searchThis.val());
-        });
-
-        // when enter is pressed, trigger the button click
-        searchThis.on('keyup', function(e) {
-          if (e.keyCode === 13) {
-            button.click();
-          }
-        });
-
-      });
-    </script>
+    <script src="assets/js/search.js"></script>
   </body>
 </html>
