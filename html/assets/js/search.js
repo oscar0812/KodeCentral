@@ -41,7 +41,7 @@ function addPeriods(indices, searchThis, finalText) {
 
   if (indices.length == 0) {
     // none found in the post text, maybe just in post title
-    return finalText.substring(0, 80) + "...";
+    return finalText.substring(0, 90) + "...";
   }
 
   if (indices.length == 1) {

@@ -51,6 +51,12 @@
                         <textarea class="form-control" rows="3" id="textArea" placeholder="Your message..." name="message"></textarea>
                       </div>
                     </div>
+                    <div class="form-group row">
+                      <div class="col-lg-2"></div>
+                      <div class="col-lg-9">
+                        <div class="g-recaptcha" data-sitekey="6Le0VpMUAAAAAC1TLnK3ZgLqcPr7WPIOTQHtId-K"></div>
+                      </div>
+                    </div>
                     <div class="form-group row justify-content-end">
                       <div class="col-lg-10">
                         <button type="submit" class="btn btn-raised btn-primary">Submit</button>
@@ -73,28 +79,7 @@
     <script src="assets/js/plugins.min.js"></script>
     <script src="assets/js/app.min.js"></script>
     <script src="<?=$home?>assets/js/component-snackbar.js"></script>
-    <script type="text/javascript">
-    $(function(){
-      $('#contact-form').on('submit', function(e){
-        Snackbar.show({
-          actionTextColor: '#ffff00',
-          text: 'Sending email...'
-        });
-        ajaxForm(e.target, function(data){
-          color = '#ff0000';
-          if(data['success']){
-            color = '#00ff00';
-          }
-
-          Snackbar.show({
-            actionTextColor: color,
-            text: data['msg']
-          });
-
-        });
-        return false;
-      })
-    });
-    </script>
+    <script src='https://www.google.com/recaptcha/api.js'></script>
+    <script type="text/javascript" src="assets/js/contact.js"></script>
   </body>
 </html>

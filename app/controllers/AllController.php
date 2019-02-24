@@ -118,6 +118,17 @@ class AllController
                 return $response->withJson(['success'=>false, 'msg'=>'Invalid data']);
             }
 
+            // check captcha
+            $secret = "";
+            $captcha = $params['captcha'];
+
+            $verify=file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret={$secret}&response={$captcha}");
+            $captcha_success=json_decode($verify);
+
+            if ($captcha_success->success==false) {
+                return $response->withJson(['success'=>'false', 'msg'=>'Are you a robot?']);
+            }
+
             $arr = \app\utils\Mail::contactUs($params['email'], $params['message']);
             return $response->withJson($arr);
         });
@@ -340,18 +351,21 @@ class AllController
                             and I will be happy to answer any questions you have! Welcome
                             to the Kode Central family.';
                 } elseif ($args['type'] == 'unsubscribe') {
-                  $sub->delete();
-                  $title = "I'm sorry to see you go! :(";
-                  $text = "Hello ".$args['email'].'! You will no longer recieve updates from Kode Central.
+                    $sub->delete();
+                    $title = "I'm sorry to see you go! :(";
+                    $text = "Hello ".$args['email'].'! You will no longer recieve updates from Kode Central.
                   You can come back by clicking on the large \'subscribe\' button on the bottom of the page.';
-                } else{
-                  // something wrong
-                  return $response->withRedirect($this->router->pathFor('home'));
+                } else {
+                    // something wrong
+                    return $response->withRedirect($this->router->pathFor('home'));
                 }
             }
 
             return $this->view->render(
-              $response, 'subscription.php', ['router'=>$this->router, 'title'=>$title, 'text'=>$text]);
+              $response,
+                'subscription.php',
+                ['router'=>$this->router, 'title'=>$title, 'text'=>$text]
+            );
         })->setName('subscription');
     }
 
