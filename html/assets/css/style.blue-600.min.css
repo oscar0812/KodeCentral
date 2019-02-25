@@ -1081,22 +1081,21 @@ output {
 }
 
 @media(min-width:768px) {
-  .form-horizontal .control-label {
-    padding-top: 8px
+  .form-horizontal .form-group-sm .control-label {
+    padding-top: 4px;
+    font-size: 12px
   }
-}
-
-@media(min-width:768px) {
+  
   .form-horizontal .form-group-lg .control-label {
     padding-top: 13.0px;
     font-size: 20px
   }
-}
-
-@media(min-width:768px) {
-  .form-horizontal .form-group-sm .control-label {
-    padding-top: 4px;
-    font-size: 12px
+  .form-horizontal .control-label {
+    padding-top: 8px
+  }
+  .sticky-box {
+    padding-top: 10px;
+    margin-top: -10px;
   }
 }
 

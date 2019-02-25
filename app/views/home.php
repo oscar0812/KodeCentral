@@ -45,7 +45,8 @@
       <div class="container-fluid">
         <div class="row">
           <div class="col-md-3 d-lg-block">
-            <div class="card card-primary animated fadeInUp animation-delay-7">
+            <div class="sticky-box sticky-top">
+              <div class="card card-primary animated fadeInUp animation-delay-7">
               <div class="card-header">
                 <h3 class="card-title">
                     <i class="zmdi zmdi-apps"></i> Libraries
@@ -63,6 +64,8 @@
                 </div>
               </div>
             </div>
+            </div>
+
           </div>
           <div class="col-md-9">
             <?php foreach ($posts as $post) { ?>
