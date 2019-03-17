@@ -6,3 +6,5 @@ chmod 755 html/assets/css/*
 composer dump-autoload -o
 crontab -r
 crontab /var/www/cron.txt
+
+# Dont forget to set GLOBAL sql mode

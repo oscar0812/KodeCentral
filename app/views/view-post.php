@@ -3,6 +3,18 @@
 <?php $home = replaceLast('index.php/', '', $router->pathFor('home'));?>
 
 <head>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+  <script type="text/javascript">
+    (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-9871595718411376",
+    enable_page_level_ads: true
+    });
+
+    function pfpError(image) {
+      image.src = '../assets/img/default_pfp.png';
+    }
+  </script>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -21,12 +33,6 @@
         <script src="<?=$home?>assets/js/html5shiv.min.js"></script>
         <script src="<?=$home?>assets/js/respond.min.js"></script>
     <![endif]-->
-
-    <script type="text/javascript">
-      function pfpError(image) {
-        image.src = '../assets/img/default_pfp.png';
-      }
-    </script>
 </head>
 
 <body data-hyperlink="<?=$post->getHyperlink()?>" data-title="<?=$post->getTitle()?>">
