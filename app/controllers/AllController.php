@@ -119,7 +119,7 @@ class AllController
             }
 
             // check captcha
-            $secret = "googleCaptcha";
+            $secret = googleCaptcha();
             $captcha = $params['captcha'];
 
             $verify=file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret={$secret}&response={$captcha}");

@@ -1,4 +1,6 @@
 vendor/*
 html/assets/img/pfp/*
-app/utils/Mail.php
+
+dont_push.php
+
 data/generated-conf/config.php
