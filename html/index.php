@@ -7,6 +7,8 @@ require '../vendor/autoload.php';
 // adding an external config file
 require '../config.php';
 
+require '../dont_push.php';
+
 // to protect from fake urls
 $url = url();
 $url1= 'http://localhost/kode_central/html';
