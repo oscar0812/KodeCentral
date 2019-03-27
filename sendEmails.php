@@ -4,6 +4,7 @@ require dirname(__FILE__) .'/vendor/autoload.php';
 
 // adding an external config file
 require dirname(__FILE__) .'/config.php';
+require dirname(__FILE__) .'/dont_push.php';
 
 require dirname(__FILE__) .'/data/generated-conf/config.php';
 
