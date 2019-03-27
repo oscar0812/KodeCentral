@@ -3,8 +3,14 @@
 <?php $home = replaceLast('index.php/', '', $router->pathFor('home'));?>
 
 <head>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 
   <script type="text/javascript">
+    (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-9871595718411376",
+    enable_page_level_ads: true
+    });
+
     function pfpError(image) {
       image.src = '../assets/img/default_pfp.png';
     }
@@ -263,12 +269,6 @@
   <script src="<?=$home?>assets/js/js-cookie.js"></script>
   <script src="<?=$home?>assets/js/blockadblock.js"></script>
   <script src="<?=$home?>assets/js/view-post.js"></script>
-
-  <script type="text/javascript">
-    var infolinks_pid = 3169392;
-    var infolinks_wsid = 0;
-</script>
-<script type="text/javascript" src="//resources.infolinks.com/js/infolinks_main.js"></script>
 </body>
 
 </html>
